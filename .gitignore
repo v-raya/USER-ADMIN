@@ -16,15 +16,22 @@
 /tmp/*
 !/log/.keep
 !/tmp/.keep
+/coverage
 
 # Ignore uploaded files in development
 /storage/*
 
 /node_modules
 /yarn-error.log
+package-lock.json 
 
 /public/assets
 .byebug_history
+
+# Editor cruft
+*.sublime-workspace
+*.sublime-project
+/.vscode
 
 # Ignore master key for decrypting credentials and more.
 /config/master.key
