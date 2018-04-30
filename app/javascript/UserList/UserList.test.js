@@ -1,6 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import Cognito from './hello_react.jsx';
+import Cognito from './UserList.jsx';
 
 describe('Cognito', () => {
   let wrapper;
