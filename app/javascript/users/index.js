@@ -19,10 +19,6 @@ const store = createStore(reducer, compose(applyMiddleware(sagaMiddleware)));
 // run the saga
 sagaMiddleware.run(watcherSaga);
 
-// ReactDOM.render(<Provider store={store}>
-//     <Cognito />
-//   </Provider>, cognito);
-
 ReactDOM.render(
   <Provider store={store}>
     <Cognito />
