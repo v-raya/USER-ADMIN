@@ -10,7 +10,6 @@ import createSagaMiddleware from 'redux-saga';
 import reducer from '../reducers/reducers';
 import watcherSaga from '../sagas/sagas';
 
-
 const cognito = document.getElementById('root');
 // create the saga middleware
 const sagaMiddleware = createSagaMiddleware();
@@ -24,9 +23,7 @@ sagaMiddleware.run(watcherSaga);
 //     <Cognito />
 //   </Provider>, cognito);
 
-
-
-  ReactDOM.render(
+ReactDOM.render(
   <Provider store={store}>
     <Cognito />
   </Provider>,
