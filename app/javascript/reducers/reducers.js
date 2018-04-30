@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux';
-import * as actionTypes from '../constants/actionTypes';
+import * as actionTypes from '../actions/actionTypes';
 
 function fetchUserList(state = { userList: null, fetching: false }, action) {
   switch (action.type) {

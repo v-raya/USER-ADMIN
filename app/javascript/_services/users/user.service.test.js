@@ -20,8 +20,10 @@ describe('UserService', () => {
     it('calls fetch ApiService', () => {
       getSpy.mockReturnValue(Promise.resolve({}));
       expect(getSpy).not.toHaveBeenCalled();
-      UserService.fetchUserList(id);
-      expect(getSpy).toHaveBeenCalledWith('/');
+      UserService.fetch(id);
+      expect(getSpy).toHaveBeenCalledWith(
+        'https://dog.ceo/api/breeds/image/random'
+      );
     });
   });
 });

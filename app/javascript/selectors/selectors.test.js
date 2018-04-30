@@ -6,18 +6,17 @@ describe('selectors', () => {
       const state = {
         fetchUserList: {
           userList: {
-            records: ['first', 'second', 'third'],
+            records: { message: 'first', 0: 'second', 1: 'third' },
           },
         },
         other_stuff: { bad: 'ignore' },
       };
-
-      expect(selectUserRecords(state)).toEqual(['first', 'second', 'third']);
+      expect(selectUserRecords(state)).toEqual('first');
     });
 
     it('selects empty users', () => {
       const state = {
-        fetchUserList: {},
+        fetch: {},
         other_stuff: { bad: 'ignore' },
       };
       expect(selectUserRecords(state)).toBe(null);

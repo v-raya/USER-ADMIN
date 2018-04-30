@@ -1,11 +1,6 @@
 import UserService from '../_services/users';
-import * as actionTypes from '../constants/actionTypes';
+import * as actionTypes from '../actions/actionTypes';
 import { takeLatest, call, put } from 'redux-saga/effects';
-
-// watcher saga: watches for actions dispatched to the store, starts worker saga
-export default function* watcherSaga() {
-  yield takeLatest(actionTypes.FETCH_USERS_API_CALL_REQUEST, countyUsersList);
-}
 
 // worker saga: makes the api call when watcher saga sees the action
 export function* countyUsersList() {
@@ -25,4 +20,9 @@ export function* countyUsersList() {
       error,
     });
   }
+}
+
+// watcher saga: watches for actions dispatched to the store, starts worker saga
+export default function* getUserListSaga() {
+  yield takeLatest(actionTypes.FETCH_USERS_API_CALL_REQUEST, countyUsersList);
 }

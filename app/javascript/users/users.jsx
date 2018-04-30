@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
-import * as actionTypes from '../constants/actionTypes';
-import { selectUserRecords } from '../store/selectors.js';
+import * as actionTypes from '../actions/actionTypes';
+import { selectUserRecords } from '../selectors/selectors.js';
 
 import React from 'react';
 import PropTypes from 'prop-types';
