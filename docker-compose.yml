@@ -1,0 +1,36 @@
+version: '3.2'
+services:
+  county-admin-web:
+    build:
+      context: .
+      dockerfile: docker/web/Dockerfile
+    volumes:
+      - type: bind
+        source: ./app
+        target: /app/app
+    ports:
+      - ${COUNTY_ADMIN_APP_PORT}:3000
+      - ${COUNTY_ADMIN_APP_WEBPACK_PORT}:3035
+    environment:
+      SECRET_KEY_BASE: ${SECRET_KEY_BASE}
+      COUNTY_ADMIN_API_BASE_URL: "http://${DEV_IP}:${CASE_API_PORT}/"
+      COUNTY_ADMIN_APP_JS_API_URL: ${COUNTY_ADMIN_APP_JS_API_URL}
+      PERRY_API_BASE_URL: "http://${DEV_IP}:${PERRY_PORT}/perry"
+      GEO_API_BASE_URL: "http://${DEV_IP}:${GEO_API_PORT}/"
+      AUTHENTICATION: ${AUTHENTICATION}
+      FEATURE_DASHBOARD_CASE_ACTIONS: ${FEATURE_DASHBOARD_CASE_ACTIONS}
+      FEATURE_DASHBOARD_PLACEMENT_TOOL: ${FEATURE_DASHBOARD_PLACEMENT_TOOL}
+    command: ['bundle', 'exec', 'rails', 'server']
+  county-admin-test:
+    build:
+      context: .
+      dockerfile: docker/test/Dockerfile
+    volumes:
+      - type: bind
+        source: ./spec
+        target: /app/spec
+    environment:
+      - SECRET_KEY_BASE
+      - CASE_API_BASE_URL
+      - PERRY_API_BASE_URL
+      - COUNTY_ADMIN_WEB_BASE_URL
