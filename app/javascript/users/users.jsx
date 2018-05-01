@@ -5,7 +5,7 @@ import { selectUserRecords } from '../selectors/selectors.js';
 import React from 'react';
 import PropTypes from 'prop-types';
 
-class Cognito extends React.Component {
+class CountyUserList extends React.Component {
   render() {
     return (
       <h1>
@@ -15,11 +15,11 @@ class Cognito extends React.Component {
     );
   }
 }
-Cognito.propTypes = {
+CountyUserList.propTypes = {
   name: PropTypes.string,
   userList: PropTypes.string,
 };
-Cognito.defaultProps = {
+CountyUserList.defaultProps = {
   name: 'Hello Cognito App User!',
 };
 
@@ -34,4 +34,4 @@ const mapDispatchToProps = dispatch => {
   return {};
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Cognito);
+export default connect(mapStateToProps, mapDispatchToProps)(CountyUserList);
