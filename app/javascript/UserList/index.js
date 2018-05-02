@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Cognito from './UserList.jsx';
+import UsersList from './UsersList.jsx';
 
-const cognito = document.getElementById('root');
+const users = document.getElementById('root');
 
-ReactDOM.render(<Cognito />, cognito);
+ReactDOM.render(<UsersList />, users);
