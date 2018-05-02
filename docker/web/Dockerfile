@@ -1,6 +1,5 @@
-FROM ruby:2.4.2
+FROM ruby:2.5.1
 ENV ENVIRONMENT_REFRESH 2017-10-11
-RUN apt-get update -qq && apt-get install -y curl 
 RUN apt-get update -qq && apt-get install -y curl && \
      curl -sL https://deb.nodesource.com/setup_8.x  | bash - && \
      curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - && \
