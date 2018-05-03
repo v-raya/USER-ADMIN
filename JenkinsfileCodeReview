@@ -34,11 +34,11 @@ node('cm-slave') {
           sh "./cc-test-reporter upload-coverage -r ${CC_TEST_REPORTER_ID}"
         }*/
       }
-      /*stage('Acceptance Test') {
+      stage('Acceptance Test') {
         sh "docker-compose up -d --build"
         sh "sleep 120"
         sh "docker-compose exec -T county-admin-test bundle exec rspec spec/acceptance"
-      }*/
+      }
     } catch(Exception e) {
       currentBuild.result = "FAILURE"
         throw e
