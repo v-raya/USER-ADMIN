@@ -1,5 +1,5 @@
 DOCKER_GROUP = 'cwds'
-DOCKER_IMAGE = 'casemanagement'
+DOCKER_IMAGE = 'county-admin'
 DOCKER_REGISTRY_CREDENTIALS_ID = '6ba8d05c-ca13-4818-8329-15d41a089ec0'
 CC_TEST_REPORTER_ID = 'e90a72f974bf96ece9ade12a041c8559fef59fd7413cfb08f1db5adc04337197'
 DOCKER_CONTAINER_NAME = 'cm-latest'
@@ -68,7 +68,7 @@ node(node_to_run_on()) {
         stage('Acceptance Test') {
           sh "docker-compose up -d --build"
           sh "sleep 120"
-          sh "docker-compose exec -T --env CASE_AUTHORIZATION_ENABLED=true case-test bundle exec rspec spec/acceptance"
+          sh "docker-compose exec -T county-admin-test bundle exec rspec spec/acceptance"
         }
         stage('Publish Image') {
           withDockerRegistry([credentialsId: DOCKER_REGISTRY_CREDENTIALS_ID]) {
@@ -77,15 +77,15 @@ node(node_to_run_on()) {
           }
         }
         stage('Deploy Preint') {
-          sh "curl -v 'http://${JENKINS_USER}:${JENKINS_API_TOKEN}@jenkins.mgmt.cwds.io:8080/job/preint/job/deploy-case-mng/buildWithParameters?token=${JENKINS_TRIGGER_TOKEN}&cause=Caused%20by%20Build%20${env.BUILD_ID}&APP_VERSION=${env.BUILD_ID}'"
+          sh "curl -v 'http://${JENKINS_USER}:${JENKINS_API_TOKEN}@jenkins.mgmt.cwds.io:8080/job/preint/job/deploy-county-admin/buildWithParameters?token=${JENKINS_TRIGGER_TOKEN}&cause=Caused%20by%20Build%20${env.BUILD_ID}&APP_VERSION=${env.BUILD_ID}'"
         }
       } else {
         stage('Preint Acceptance Test') {
-          sh "docker-compose up -d --build case-test"
-          sh "docker-compose exec -T --env CASE_AUTHORIZATION_ENABLED=true --env CASE_WEB_BASE_URL=https://web.preint.cwds.io/casemng case-test bundle exec rspec spec/acceptance"
+          sh "docker-compose up -d --build county-admin-test"
+          sh "docker-compose exec -T --env COUNTY_AUTHORIZATION_ENABLED=true --env COUNTY_ADMIN_WEB_BASE_URL=https://web.preint.cwds.io/countyadmin county-admin-test bundle exec rspec spec/acceptance"
         }
         stage('Deploy Integration') {
-          build job: '/Integration Environment/deploy-case-mng/',
+          build job: '/Integration Environment/deploy-county-admin/',
             parameters: [
               string(name: 'APP_VERSION', value : "${APP_VERSION}"),
               string(name: 'inventory', value: 'inventories/integration/hosts.yml')
