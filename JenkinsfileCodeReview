@@ -26,6 +26,11 @@ node('cm-slave') {
         stage('Unit Test') {
           sh "docker exec -t ${container.id} yarn test"
         }
+        stage('Acceptance Test') {
+          sh "docker-compose up -d --build"
+          sh "sleep 120"
+          sh "docker-compose exec -T county-admin-test bundle exec rspec spec/acceptance"
+        }
         /*stage('Publish Coverage Reports') {
           sh "docker cp ${container.id}:/app/coverage ./coverage"
           sh "./cc-test-reporter format-coverage -p /app -t simplecov -o coverage/codeclimate.ruby.json coverage/ruby/.resultset.json"
@@ -33,11 +38,6 @@ node('cm-slave') {
           sh "./cc-test-reporter sum-coverage coverage/codeclimate.*.json -p 2"
           sh "./cc-test-reporter upload-coverage -r ${CC_TEST_REPORTER_ID}"
         }*/
-      }
-      stage('Acceptance Test') {
-        sh "docker-compose up -d --build"
-        sh "sleep 120"
-        sh "docker-compose exec -T county-admin-test bundle exec rspec spec/acceptance"
       }
     } catch(Exception e) {
       currentBuild.result = "FAILURE"
