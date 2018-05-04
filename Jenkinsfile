@@ -2,7 +2,7 @@ DOCKER_GROUP = 'cwds'
 DOCKER_IMAGE = 'county-admin'
 DOCKER_REGISTRY_CREDENTIALS_ID = '6ba8d05c-ca13-4818-8329-15d41a089ec0'
 CC_TEST_REPORTER_ID = 'e90a72f974bf96ece9ade12a041c8559fef59fd7413cfb08f1db5adc04337197'
-DOCKER_CONTAINER_NAME = 'cm-latest'
+DOCKER_CONTAINER_NAME = 'cap-latest'
 SLACK_CHANNEL = '#casemanagement-stream'
 SLACK_CREDENTIALS_ID = 'slackmessagetpt2'
 
@@ -20,7 +20,7 @@ def notify(String status) {
 }
 
 def node_to_run_on() {
-  env.NODE_NAME ?: 'cm-slave'
+  env.NODE_NAME ?: 'cap-slave'
 }
 
 node(node_to_run_on()) {
@@ -31,7 +31,7 @@ node(node_to_run_on()) {
           checkout scm
         }
 
-      if(env.NODE_NAME == 'cm-slave') {
+      if(env.NODE_NAME == 'cap-slave') {
         stage('Notify SaaS') {
           sh "curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter"
           sh "chmod +x ./cc-test-reporter"

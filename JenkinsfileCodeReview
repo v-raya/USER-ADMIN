@@ -2,7 +2,7 @@ DOCKER_GROUP = 'cwds'
 DOCKER_IMAGE = 'county-admin'
 // CC_TEST_REPORTER_ID = 'e90a72f974bf96ece9ade12a041c8559fef59fd7413cfb08f1db5adc04337197'
 
-node('cm-slave') {
+node('cap-slave') {
   def app
     try {
       deleteDir()
