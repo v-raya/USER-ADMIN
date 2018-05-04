@@ -18,6 +18,11 @@ node('cm-slave') {
         app = docker.build("${DOCKER_GROUP}/${DOCKER_IMAGE}:${env.BUILD_ID}", "-f docker/web/Dockerfile .")
       }
       app.withRun("-e CI=true") { container ->
+        stage('Acceptance Test') {
+          sh "docker-compose up -d --build"
+          sh "sleep 120"
+          sh "docker-compose exec -T county-admin-test bundle exec rspec spec/acceptance"
+        }
         stage('Lint') {
           sh "docker exec -t ${container.id} yarn lint"
           //sh "docker exec -t ${container.id} bundler-audit"
@@ -25,11 +30,6 @@ node('cm-slave') {
         }
         stage('Unit Test') {
           sh "docker exec -t ${container.id} yarn test"
-        }
-        stage('Acceptance Test') {
-          sh "docker-compose up -d --build"
-          sh "sleep 120"
-          sh "docker-compose exec -T county-admin-test bundle exec rspec spec/acceptance"
         }
         /*stage('Publish Coverage Reports') {
           sh "docker cp ${container.id}:/app/coverage ./coverage"
