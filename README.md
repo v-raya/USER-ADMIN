@@ -21,4 +21,4 @@ Things you may want to cover:
 
 * Deployment instructions
 
-* Pull Requests
+* Pull Requests and code climate
