@@ -50,7 +50,6 @@ node(node_to_run_on()) {
             sh "docker exec -t ${container.id} yarn test"
           }
           stage('Publish Coverage Reports') {
-            /*
             sh "docker cp ${container.id}:/app/coverage ./coverage"
             last_commit = sh(returnStdout: true, script: 'git rev-parse HEAD').trim()
             commited_at = sh(returnStdout: true, script: "git log -1 --pretty=format:'%ct'").trim()
@@ -64,7 +63,6 @@ node(node_to_run_on()) {
             sh "./cc-test-reporter format-coverage --debug -p /app -t lcov -o coverage/codeclimate.javascript.json coverage/javascript/lcov.info"
             sh "./cc-test-reporter sum-coverage coverage/codeclimate.*.json -p 2"
             sh "./cc-test-reporter upload-coverage --debug -r ${CC_TEST_REPORTER_ID}"
-            */
           }
         }
         stage('Acceptance Test') {
