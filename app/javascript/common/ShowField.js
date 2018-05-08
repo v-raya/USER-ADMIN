@@ -15,12 +15,12 @@ const ShowField = ({
     gridClassName={gridClassName}
     required={required}
   >
-    <span>{children || '\u00A0'}</span>
+    <span>{children}</span>
   </FormField>
 );
 
 ShowField.propTypes = {
-  children: PropTypes.any,
+  children: PropTypes.node,
   gridClassName: PropTypes.string,
   label: PropTypes.string.isRequired,
   labelClassName: PropTypes.string,

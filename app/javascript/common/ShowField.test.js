@@ -6,7 +6,7 @@ describe('ShowField', () => {
   let component;
   let formField;
 
-  const requiredProps = {
+  const props = {
     gridClassName: 'myWrapperTest',
     labelClassName: 'myLabelTest',
     label: 'this is my label',
@@ -14,7 +14,7 @@ describe('ShowField', () => {
 
   beforeEach(() => {
     component = shallow(
-      <ShowField {...requiredProps}>This is the show field value</ShowField>
+      <ShowField {...props}>This is the show field value</ShowField>
     );
     formField = component.find('FormField');
   });
@@ -23,10 +23,12 @@ describe('ShowField', () => {
     expect(formField.props().labelClassName).toEqual('myLabelTest');
     expect(formField.props().gridClassName).toEqual('myWrapperTest');
     expect(formField.props().label).toEqual('this is my label');
-    expect(formField.childAt(0).getElement().type).toEqual('span');
+    expect(formField.props().children).toEqual(
+      <span>This is the show field value</span>
+    );
   });
 
-  it('renders the show field value', () => {
+  it('renders the value of children', () => {
     expect(component.find('span').text()).toEqual(
       'This is the show field value'
     );
