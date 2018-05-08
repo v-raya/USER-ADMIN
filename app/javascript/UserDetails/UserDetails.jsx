@@ -5,7 +5,7 @@ import ShowField from '../common/ShowField';
 
 /* eslint camelcase: 0 */
 
-const UsersDetails = ({
+const UserDetails = ({
   last_name,
   first_name,
   middle_name,
@@ -83,7 +83,7 @@ const UsersDetails = ({
   </div>
 );
 
-UsersDetails.propTypes = {
+UserDetails.propTypes = {
   last_name: PropTypes.string,
   first_name: PropTypes.string,
   middle_name: PropTypes.string,
@@ -99,7 +99,7 @@ UsersDetails.propTypes = {
   county_name: PropTypes.string,
 };
 
-UsersDetails.defaultProps = {
+UserDetails.defaultProps = {
   last_name: 'LastName',
   first_name: 'FirstName',
   middle_name: 'MiddleName',
@@ -115,4 +115,4 @@ UsersDetails.defaultProps = {
   county_name: 'Sacramento',
 };
 
-export default UsersDetails;
+export default UserDetails;
