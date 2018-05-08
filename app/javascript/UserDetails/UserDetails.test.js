@@ -2,22 +2,22 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import UserDetails from './UserDetails.jsx';
 
-describe('UsersList', () => {
+describe('UserDetails', () => {
   let wrapper;
   beforeEach(() => {
     wrapper = shallow(<UserDetails />);
   });
 
-  describe('renders components', () => {
-    it('renders card component', () => {
+  describe('renders 3 components', () => {
+    it('renders component "Cards" ', () => {
       expect(wrapper.find('Cards').length).toBeGreaterThan(0);
     });
 
-    it('renders GlobalHeader component', () => {
+    it('renders component "GlobalHeader"', () => {
       expect(wrapper.find('GlobalHeader').length).toBe(1);
     });
 
-    it('renders PageHeader component', () => {
+    it('renders component "PageHeader"', () => {
       expect(wrapper.find('PageHeader').length).toBe(1);
     });
   });
