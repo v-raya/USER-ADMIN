@@ -1,42 +1,42 @@
 module.exports = {
   extends: [
-    "standard",
-    "plugin:react/recommended",
-    "plugin:jsx-a11y/recommended",
-    "plugin:jasmine/recommended",
-    "prettier",
-    "prettier/react",
-    "prettier/standard"
+    'standard',
+    'plugin:react/recommended',
+    'plugin:jsx-a11y/recommended',
+    'plugin:jasmine/recommended',
+    'prettier',
+    'prettier/react',
+    'prettier/standard',
   ],
-  plugins: ["react", "jsx-a11y", "jest", "prettier", "standard", "jasmine"],
+  plugins: ['react', 'jsx-a11y', 'jest', 'prettier', 'standard', 'jasmine'],
   env: {
     es6: true,
     node: true,
-    "jest/globals": true,
-    jasmine: true
+    'jest/globals': true,
+    jasmine: true,
   },
   rules: {
-    "prettier/prettier": "error",
-    "jsx-a11y/label-has-for": [
-      "error",
+    'prettier/prettier': 'error',
+    'jsx-a11y/label-has-for': [
+      'error',
       {
-        components: ["label"],
+        components: ['label'],
         required: {
-          some: ["nesting", "id"]
+          some: ['nesting', 'id'],
         },
-        allowChildren: true
-      }
+        allowChildren: true,
+      },
     ],
-    "jasmine/new-line-before-expect": 0,
-    "jasmine/new-line-between-declarations": 2,
-    "jasmine/no-spec-dupes": [2, "branch"]
+    'jasmine/new-line-before-expect': 0,
+    'jasmine/new-line-between-declarations': 2,
+    'jasmine/no-spec-dupes': [2, 'branch'],
   },
-  parser: "babel-eslint",
+  parser: 'babel-eslint',
   parserOptions: {
-    sourceType: "module",
+    sourceType: 'module',
     ecmaFeatures: {
       jsx: true,
-      experimentalObjectRestSpread: true
-    }
-  }
+      experimentalObjectRestSpread: true,
+    },
+  },
 };
