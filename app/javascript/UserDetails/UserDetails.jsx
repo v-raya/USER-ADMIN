@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import { GlobalHeader, PageHeader, Cards } from 'react-wood-duck';
 import ShowField from '../common/ShowField';
 
+/* eslint camelcase: 0 */
+
 const UsersDetails = ({
   last_name,
   first_name,
