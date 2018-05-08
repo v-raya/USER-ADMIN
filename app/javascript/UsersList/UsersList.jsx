@@ -9,12 +9,11 @@ export class UsersList extends React.Component {
       <div className="col-md-12">
         <br />
         <BootstrapTable bordered={false}>
+          <TableHeaderColumn dataField="id" dataSort isKey hidden />
           <TableHeaderColumn dataField="fullName" dataSort>
             Full Name
           </TableHeaderColumn>
-          <TableHeaderColumn dataField="status" isKey hidden>
-            Status
-          </TableHeaderColumn>
+          <TableHeaderColumn dataField="status">Status</TableHeaderColumn>
           <TableHeaderColumn dataField="last-login">
             Last Log in
           </TableHeaderColumn>
