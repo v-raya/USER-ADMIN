@@ -10,7 +10,7 @@ describe('UserDetails', () => {
 
   describe('renders 3 components', () => {
     it('renders component "Cards" ', () => {
-      expect(wrapper.find('Cards').length).toBeGreaterThan(0);
+      expect(wrapper.find('Cards').length).toBe(1);
     });
 
     it('renders component "GlobalHeader"', () => {
@@ -31,61 +31,61 @@ describe('UserDetails', () => {
           .find('ShowField')
           .at(0)
           .props().label
-      ).toContain('Full Name');
+      ).toEqual('Full Name');
       expect(
         wrapper
           .find('ShowField')
           .at(1)
           .props().label
-      ).toContain('Office Name');
+      ).toEqual('Office Name');
       expect(
         wrapper
           .find('ShowField')
           .at(2)
           .props().label
-      ).toContain('CWS Login');
+      ).toEqual('CWS Login');
       expect(
         wrapper
           .find('ShowField')
           .at(3)
           .props().label
-      ).toContain('Last Login');
+      ).toEqual('Last Login');
       expect(
         wrapper
           .find('ShowField')
           .at(4)
           .props().label
-      ).toContain('Email');
+      ).toEqual('Email');
       expect(
         wrapper
           .find('ShowField')
           .at(5)
           .props().label
-      ).toContain('Office Phone Number');
+      ).toEqual('Office Phone Number');
       expect(
         wrapper
           .find('ShowField')
           .at(6)
           .props().label
-      ).toContain('Start Date');
+      ).toEqual('Start Date');
       expect(
         wrapper
           .find('ShowField')
           .at(7)
           .props().label
-      ).toContain('End Date');
+      ).toEqual('End Date');
       expect(
         wrapper
           .find('ShowField')
           .at(8)
           .props().label
-      ).toContain('Status');
+      ).toEqual('Status');
       expect(
         wrapper
           .find('ShowField')
           .at(9)
           .props().label
-      ).toContain('Assigned Roles');
+      ).toEqual('Assigned Roles');
     });
   });
 });
