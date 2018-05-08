@@ -1,18 +1,20 @@
 FROM ruby:2.5.1
 ENV ENVIRONMENT_REFRESH 2017-10-11
 RUN apt-get update -qq && apt-get install -y curl && \
-     curl -sL https://deb.nodesource.com/setup_8.x  | bash - && \
-     curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - && \
-     echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list && \
-     apt-get update -qq && apt-get install -y build-essential libpq-dev yarn && \
-     rm -rf /var/lib/apt/lists/*
+  curl -sL https://deb.nodesource.com/setup_8.x  | bash - && \
+  curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - && \
+  echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list && \
+  apt-get update -qq && apt-get install -y build-essential libpq-dev yarn && \
+  rm -rf /var/lib/apt/lists/*
 
 RUN mkdir /app
 WORKDIR /app
 COPY Gemfile Gemfile.lock /app/
 RUN bundle install --jobs 20 --retry 5
 COPY package.json yarn.lock /app/
+RUN df -m
 RUN yarn install --production=false --non-interactive --frozen-lockfile
+RUN df -m
 COPY . /app
 RUN NODE_ENV=production RAILS_ENV=production bundle exec rails assets:precompile
 RUN yarn install --production=false --non-interactive --frozen-lockfile
