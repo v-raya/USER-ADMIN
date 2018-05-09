@@ -2,10 +2,10 @@
 
 require 'rails_helper'
 
-describe UsersListController do
+describe DashboardController do
   describe '#index' do
     it 'has route' do
-      expect(get: '/').to route_to(controller: 'users_list', action: 'index')
+      expect(get: '/').to route_to(controller: 'dashboard', action: 'index')
     end
 
     it 'renders a template' do
