@@ -77,7 +77,7 @@ node(node_to_run_on()) {
           }
         }
         stage('Deploy Preint') {
-          sh "curl -v 'http://${JENKINS_USER}:${JENKINS_API_TOKEN}@jenkins.mgmt.cwds.io:8080/job/preint/job/deploy-county-admin/buildWithParameters?token=${JENKINS_TRIGGER_TOKEN}&cause=Caused%20by%20Build%20${env.BUILD_ID}&APP_VERSION=${env.BUILD_ID}'"
+          sh "curl -v 'http://${JENKINS_USER}:${JENKINS_API_TOKEN}@jenkins.mgmt.cwds.io:8080/job/preint/job/deploy-cap/buildWithParameters?token=${JENKINS_TRIGGER_TOKEN}&cause=Caused%20by%20Build%20${env.BUILD_ID}&APP_VERSION=${env.BUILD_ID}'"
         }
       } else {
         stage('Preint Acceptance Test') {
@@ -85,7 +85,7 @@ node(node_to_run_on()) {
           sh "docker-compose exec -T --env COUNTY_AUTHORIZATION_ENABLED=true --env COUNTY_ADMIN_WEB_BASE_URL=https://web.preint.cwds.io/countyadmin county-admin-test bundle exec rspec spec/acceptance"
         }
         stage('Deploy Integration') {
-          build job: '/Integration Environment/deploy-county-admin/',
+          build job: '/Integration Environment/deploy-cap/',
             parameters: [
               string(name: 'APP_VERSION', value : "${APP_VERSION}"),
               string(name: 'inventory', value: 'inventories/integration/hosts.yml')
