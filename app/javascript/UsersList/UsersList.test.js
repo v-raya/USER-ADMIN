@@ -30,7 +30,7 @@ describe('UsersList', () => {
   describe('#displayList output', () => {
     it('displays table', () => {
       expect(wrapper.find('BootstrapTable').length).toBe(1);
-      expect(wrapper.find('TableHeaderColumn').length).toBe(5);
+      expect(wrapper.find('TableHeaderColumn').length).toBe(6);
     });
   });
 });
