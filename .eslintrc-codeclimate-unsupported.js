@@ -1,7 +1,7 @@
 module.exports = {
-  plugins: ["no-unsanitized"],
+  plugins: ['no-unsanitized'],
   rules: {
-    "no-unsanitized/method": "error",
-    "no-unsanitized/property": "error"
-  }
+    'no-unsanitized/method': 'error',
+    'no-unsanitized/property': 'error',
+  },
 };
