@@ -56,7 +56,7 @@ plugins:
     enabled: true
   rubocop:
     enabled: true
-    channel: rubocop-0-48
+    channel: rubocop-0-55
   git-legal:
     enabled: true
     config:
