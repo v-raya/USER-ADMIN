@@ -9,18 +9,19 @@ module Api
       let(:user) { Users::User.new(username: 'el') }
 
       it 'has a route' do
-        expect(get: 'api/perry/idm/users').to route_to(
+        expect(get: 'api/user_list').to route_to(
           controller: 'api/user_list',
-          action: 'list_users',
-          format: 'json',
-        ) 
+          action: 'index',
+          format: 'json'
+        )
       end
 
       it 'returns a userlist' do
         allow(Users::UserRepository).to receive(:new)
           .with(no_args).and_return(user_repository)
-        allow(user_repository).to receive(:get_users).and_return(user)
-        get :user_list
+        allow(user_repository).to receive(:get_users).with('token').and_return(user)
+        request.session[:token] = 'token'
+        get :index
         expect(response.body).to eq user.to_json
       end
     end
