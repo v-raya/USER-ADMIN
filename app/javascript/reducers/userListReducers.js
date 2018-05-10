@@ -7,11 +7,19 @@ function fetchUserList(state = { userList: null, fetching: false }, action) {
       return { ...state, fetching: true, error: null };
 
     case actionTypes.FETCH_USERS_API_CALL_SUCCESS:
-      const userRecords = {
-        XHRStatus: 'ready',
-        records: { ...action.userList },
+      const userRecords = [
+        {
+          XHRStatus: 'ready',
+          records: [...action.userList],
+        },
+      ];
+      return {
+        ...state,
+        fetching: false,
+        userList: userRecords,
+        error: null,
       };
-      return { ...state, fetching: false, userList: userRecords, error: null };
+
     case actionTypes.FETCH_USERS_API_CALL_FAILURE:
       return {
         ...state,

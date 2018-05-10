@@ -1,11 +1,11 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import UserDetails from './UserDetails.jsx';
+import UserDetail from './UserDetail.jsx';
 
-describe('UserDetails', () => {
+describe('UserDetail', () => {
   let wrapper;
   beforeEach(() => {
-    wrapper = shallow(<UserDetails />);
+    wrapper = shallow(<UserDetail />);
   });
 
   describe('renders 3 components', () => {
@@ -24,7 +24,7 @@ describe('UserDetails', () => {
 
   describe('when label and className props are passed', () => {
     it('renders the label inside the grid wrapper', () => {
-      wrapper = shallow(<UserDetails />);
+      wrapper = shallow(<UserDetail />);
       expect(wrapper.find('ShowField').length).toBe(10);
       expect(
         wrapper

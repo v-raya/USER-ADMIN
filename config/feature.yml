@@ -1,0 +1,10 @@
+development:
+  features:
+    authentication: <%= ENV.fetch('AUTHENTICATION', false) %>
+test:
+  features:
+    authentication: <%= ENV.fetch('AUTHENTICATION', true) %>
+
+production:
+  features:
+    authentication: <%= ENV.fetch('AUTHENTICATION', true) %>

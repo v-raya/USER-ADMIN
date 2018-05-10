@@ -1,11 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { GlobalHeader, PageHeader, Cards } from 'react-wood-duck';
-import ShowField from '../common/ShowField';
+import ShowField from '../../common/ShowField';
 
 /* eslint camelcase: 0 */
 
-const UserDetails = ({
+const UserDetail = ({
   last_name,
   first_name,
   middle_name,
@@ -83,7 +83,7 @@ const UserDetails = ({
   </div>
 );
 
-UserDetails.propTypes = {
+UserDetail.propTypes = {
   last_name: PropTypes.string,
   first_name: PropTypes.string,
   middle_name: PropTypes.string,
@@ -99,12 +99,12 @@ UserDetails.propTypes = {
   county_name: PropTypes.string,
 };
 
-UserDetails.defaultProps = {
+UserDetail.defaultProps = {
   last_name: 'LastName',
   first_name: 'FirstName',
   middle_name: 'MiddleName',
   office: 'Sacramento',
-  phone_number: 'XXX-XXX-XXXX',
+  phone_number: '000-000-0022',
   email: 'Hello@osi.ca.gov',
   last_login_date_time: Date(),
   racfid: 'BGDTYSH52681',
@@ -115,4 +115,4 @@ UserDetails.defaultProps = {
   county_name: 'Sacramento',
 };
 
-export default UserDetails;
+export default UserDetail;

@@ -1,5 +1,13 @@
 version: '3.2'
 services:
+  perry:
+    image: cwds/perry:3.0.1_532-RC
+    ports:
+      - ${PERRY_PORT}:8080
+      - ${PERRY_ADMIN_PORT}:9082
+    environment:
+      DEV_MODE: ${DEV_MODE}
+      LOG_LEVEL: "INFO"
   county-admin-web:
     build:
       context: .
@@ -13,7 +21,12 @@ services:
       - ${COUNTY_ADMIN_APP_WEBPACK_PORT}:3035
     environment:
       SECRET_KEY_BASE: ${SECRET_KEY_BASE}
+      COUNTY_ADMIN_APP_JS_API_URL: ${COUNTY_ADMIN_APP_JS_API_URL}
+      PERRY_API_BASE_URL: "http://${DEV_IP}:${PERRY_PORT}/perry"
+      AUTHENTICATION: ${AUTHENTICATION}
     command: ['bundle', 'exec', 'rails', 'server']
+    depends_on:
+      - perry
   county-admin-test:
     build:
       context: .
@@ -24,4 +37,6 @@ services:
         target: /app/spec
     environment:
       - SECRET_KEY_BASE
+      - PERRY_API_BASE_URL
       - COUNTY_ADMIN_WEB_BASE_URL
+

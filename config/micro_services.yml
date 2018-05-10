@@ -1,0 +1,8 @@
+defaults: &defaults
+  perry_api_base_url: <%= ENV.fetch('PERRY_API_BASE_URL', 'http://perry:8080') %>
+development:
+  <<: *defaults
+test:
+  perry_api_base_url: 'https://perry.test'
+production:
+  <<: *defaults

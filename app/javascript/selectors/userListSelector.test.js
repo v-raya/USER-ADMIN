@@ -1,4 +1,4 @@
-import { selectUserRecords } from './selectors';
+import { selectUserRecords } from './userListSelector';
 
 describe('selectors', () => {
   describe('#selectUserRecords', () => {
@@ -6,12 +6,18 @@ describe('selectors', () => {
       const state = {
         fetchUserList: {
           userList: {
-            records: { message: 'first', 0: 'second', 1: 'third' },
+            0: {
+              records: { message: 'first', 0: 'second', 1: 'third' },
+            },
           },
         },
         other_stuff: { bad: 'ignore' },
       };
-      expect(selectUserRecords(state)).toEqual('first');
+      expect(selectUserRecords(state)).toEqual({
+        message: 'first',
+        0: 'second',
+        1: 'third',
+      });
     });
 
     it('selects empty users', () => {
