@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+# rubocop:disable Style/RedundantReturn
+
 module Infrastructure
   class HttpService
     def initialize(base_url = Rails.configuration.micro_services['perry_api_base_url'])
@@ -38,3 +40,4 @@ module Infrastructure
     end
   end
 end
+# rubocop:enable Style/RedundantReturn
