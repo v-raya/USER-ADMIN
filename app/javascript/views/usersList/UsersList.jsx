@@ -17,8 +17,6 @@ const UserList = ({ userList }) => (
             <div className="col-md-12">
               <br />
               <BootstrapTable
-                search
-                searchPlaceholder="search by Last name"
                 bordered={false}
                 data={userList}
                 striped={true}
@@ -28,25 +26,16 @@ const UserList = ({ userList }) => (
                   Full Name
                 </TableHeaderColumn>
                 <TableHeaderColumn dataField="last_name" />
-                <TableHeaderColumn dataField="status" dataSort width="150">
+                <TableHeaderColumn dataField="status" width="150">
                   Status
                 </TableHeaderColumn>
-                <TableHeaderColumn
-                  dataField="last_login_date_time"
-                  dataSort
-                  width="180"
-                >
+                <TableHeaderColumn dataField="last_login_date_time" width="180">
                   Last Login
                 </TableHeaderColumn>
-                <TableHeaderColumn
-                  dataField="username"
-                  isKey
-                  dataSort
-                  width="120"
-                >
+                <TableHeaderColumn dataField="username" isKey width="120">
                   Username
                 </TableHeaderColumn>
-                <TableHeaderColumn dataField="end_date" dataSort width="150">
+                <TableHeaderColumn dataField="end_date" width="150">
                   End date
                 </TableHeaderColumn>
               </BootstrapTable>
@@ -59,7 +48,6 @@ const UserList = ({ userList }) => (
 );
 
 UserList.propTypes = {
-  name: PropTypes.string,
   userList: PropTypes.array,
 };
 

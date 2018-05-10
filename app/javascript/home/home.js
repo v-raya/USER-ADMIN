@@ -11,7 +11,7 @@ class Home extends React.Component {
     this.props.actions.fetchUsersActions();
   }
   render() {
-    return <CountyUsersListContainer userList={[this.props.userList]} />;
+    return <CountyUsersListContainer userList={this.props.userList} />;
   }
 }
 
