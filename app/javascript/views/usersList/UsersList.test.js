@@ -23,7 +23,7 @@ describe('UsersList', () => {
   });
 
   describe('#UserList output', () => {
-    it('UserList', () => {
+    it('contains Table and headers', () => {
       expect(wrapper.find('BootstrapTable').length).toBe(1);
       expect(wrapper.find('TableHeaderColumn').length).toBe(6);
     });
