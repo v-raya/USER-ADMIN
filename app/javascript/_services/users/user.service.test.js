@@ -4,10 +4,6 @@ jest.mock('../api');
 const ApiService = require('../api').default;
 
 describe('UserService', () => {
-  it('exists', () => {
-    expect(!!UserService).toBeTruthy();
-  });
-
   describe('#fetch', () => {
     let getSpy;
 
