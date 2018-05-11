@@ -13,11 +13,7 @@ describe('selectors', () => {
         },
         other_stuff: { bad: 'ignore' },
       };
-      expect(selectUserRecords(state)).toEqual({
-        message: 'first',
-        0: 'second',
-        1: 'third',
-      });
+      expect(selectUserRecords(state)).toEqual();
     });
 
     it('selects empty users', () => {
@@ -25,14 +21,14 @@ describe('selectors', () => {
         fetch: {},
         other_stuff: { bad: 'ignore' },
       };
-      expect(selectUserRecords(state)).toBe(null);
+      expect(selectUserRecords(state)).toEqual([]);
     });
 
     it('selects no users', () => {
       const state = {
         other_stuff: { bad: 'ignore' },
       };
-      expect(selectUserRecords(state)).toBe(null);
+      expect(selectUserRecords(state)).toEqual([]);
     });
   });
 });

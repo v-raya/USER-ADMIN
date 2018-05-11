@@ -20,13 +20,13 @@ Home.propTypes = {
   userList: PropTypes.array,
 };
 
-function mapStateToProps(state, _ownProps) {
+function mapStateToProps(state) {
   return {
     userList: selectUserRecords(state),
   };
 }
 
-function mapDispatchToProps(dispatch, _ownProps) {
+function mapDispatchToProps(dispatch) {
   const actions = { fetchUsersActions };
   return {
     actions: bindActionCreators(actions, dispatch),

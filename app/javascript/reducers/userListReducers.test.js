@@ -29,15 +29,13 @@ describe('reducer', () => {
     expect(reducer(state, responseAction)).toEqual({
       fetchUserList: {
         fetching: false,
-        userList: [
-          {
-            records: [
-              { id: 'key1', username: 'user1' },
-              { id: 'key2', username: 'user2' },
-            ],
-            XHRStatus: 'ready',
-          },
-        ],
+        userList: {
+          XHRStatus: 'ready',
+          records: [
+            { id: 'key1', username: 'user1' },
+            { id: 'key2', username: 'user2' },
+          ],
+        },
         error: null,
       },
     });
