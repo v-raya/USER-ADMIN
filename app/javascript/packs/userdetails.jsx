@@ -1,2 +1,2 @@
 import 'babel-polyfill';
-import '../UserDetails';
+import '../views/userDetail';

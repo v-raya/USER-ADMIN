@@ -22,13 +22,8 @@ describe('UsersList', () => {
     });
   });
 
-  it('#displayList function defined', () => {
-    const instance = wrapper.instance();
-    expect(instance.displayList()).toBeDefined();
-  });
-
-  describe('#displayList output', () => {
-    it('displays table', () => {
+  describe('#UserList output', () => {
+    it('contains Table and headers', () => {
       expect(wrapper.find('BootstrapTable').length).toBe(1);
       expect(wrapper.find('TableHeaderColumn').length).toBe(6);
     });

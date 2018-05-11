@@ -1,4 +1,4 @@
-import reducer from './reducers';
+import reducer from './userListReducers';
 import * as actionTypes from '../actions/actionTypes';
 
 describe('reducer', () => {
@@ -19,13 +19,23 @@ describe('reducer', () => {
   it('handles FETCH_USERS_API_CALL_SUCCESS', () => {
     const responseAction = {
       type: actionTypes.FETCH_USERS_API_CALL_SUCCESS,
-      userList: { 0: 'user1', 1: 'user2' },
+      userList: [
+        { id: 'key1', username: 'user1' },
+        { id: 'key2', username: 'user2' },
+      ],
     };
     const state = { userList: null, fetching: true, error: null };
+
     expect(reducer(state, responseAction)).toEqual({
       fetchUserList: {
         fetching: false,
-        userList: { records: { 0: 'user1', 1: 'user2' }, XHRStatus: 'ready' },
+        userList: {
+          XHRStatus: 'ready',
+          records: [
+            { id: 'key1', username: 'user1' },
+            { id: 'key2', username: 'user2' },
+          ],
+        },
         error: null,
       },
     });

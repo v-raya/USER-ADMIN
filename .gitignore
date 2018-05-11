@@ -33,6 +33,9 @@ package-lock.json
 *.sublime-project
 /.vscode
 
+
+/.env*
+
 # Ignore master key for decrypting credentials and more.
 /config/master.key
 /public/packs

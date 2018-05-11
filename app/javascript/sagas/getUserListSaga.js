@@ -23,6 +23,6 @@ export function* countyUsersList() {
 }
 
 // watcher saga: watches for actions dispatched to the store, starts worker saga
-export default function* getUserListSaga() {
+export default function* watcherSaga() {
   yield takeLatest(actionTypes.FETCH_USERS_API_CALL_REQUEST, countyUsersList);
 }

@@ -2,16 +2,19 @@
   "name": "county-admin",
   "private": true,
   "scripts": {
-    "prettier:check": "prettier --list-different --config ./.prettierrc \"app/javascript/**/*.js?(x)\"",
+    "prettier:check":
+      "prettier --list-different --config ./.prettierrc \"app/javascript/**/*.js?(x)\"",
     "test": "run-s test:*",
     "test:jest": "jest --env=jsdom --coverage --no-colors",
     "test:rspec": "bundle exec rspec --no-color spec/controllers",
     "test:jest:watch": "npm run test:jest -- --watch",
     "lint:test:eslint": "eslint --format tap \"app/javascript/**/*.{js,jsx}\"",
     "lint:test:rubocop": "bundle exec rubocop --format tap",
-    "lint:test:stylelint": "stylelint --custom-formatter scripts/stylelint-formatter.tap.js \"app/{assets,javascript}/**/*.{scss,css}\"",
+    "lint:test:stylelint":
+      "stylelint --custom-formatter scripts/stylelint-formatter.tap.js \"app/{assets,javascript}/**/*.{scss,css}\"",
     "lint:test": "run-p --print-label lint:test:*",
-    "lint:configtest": "eslint --print-config .eslintrc.js | eslint-config-prettier-check",
+    "lint:configtest":
+      "eslint --print-config .eslintrc.js | eslint-config-prettier-check",
     "lint": "npm-run-all lint:configtest lint:test",
     "license-dump": "license-checker --csv --out legal/licenses.csv",
     "clean": "rimraf public/packs*",
@@ -34,6 +37,7 @@
     "react": "^16.3.2",
     "react-bootstrap": "^0.32.1",
     "react-bootstrap-table": "^4.3.1",
+    "redux-devtools-extension": "^2.13.2",
     "react-dom": "^16.3.2",
     "react-redux": "^5.0.7",
     "react-router": "^4.2.0",

@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import UserDetails from './UserDetails.jsx';
+import UserDetail from './UserDetail.jsx';
 
 const details = document.getElementById('root');
 
-ReactDOM.render(<UserDetails />, details);
+ReactDOM.render(<UserDetail />, details);
