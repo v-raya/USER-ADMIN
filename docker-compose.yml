@@ -24,6 +24,8 @@ services:
       COUNTY_ADMIN_APP_JS_API_URL: ${COUNTY_ADMIN_APP_JS_API_URL}
       PERRY_API_BASE_URL: "http://${DEV_IP}:${PERRY_PORT}/perry"
       AUTHENTICATION: ${AUTHENTICATION}
+      COUNTY_ADMIN_WEB_BASE_URL: ${COUNTY_ADMIN_WEB_BASE_URL}
+      DASHBOARD_URL: ${DASHBOARD_URL}
     command: ['bundle', 'exec', 'rails', 'server']
     depends_on:
       - perry
@@ -39,4 +41,4 @@ services:
       - SECRET_KEY_BASE
       - PERRY_API_BASE_URL
       - COUNTY_ADMIN_WEB_BASE_URL
-
+      - DASHBOARD_URL
