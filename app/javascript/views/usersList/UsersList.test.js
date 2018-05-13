@@ -26,37 +26,22 @@ describe('UsersList', () => {
     it('contains Table and headers', () => {
       expect(wrapper.find('BootstrapTable').length).toBe(1);
       expect(wrapper.find('TableHeaderColumn').length).toBe(6);
-
-      describe('navigation links', () => {
-        it('renders navigatoin links to Dashboard', () => {
-          expect(
-            wrapper
-              .find('Link')
-              .at(0)
-              .html()
-          ).toContain('Dashboard');
-        });
-        it('renders navigatoin links to Dashboard', () => {
-          expect(
-            wrapper
-              .find('Link')
-              .at(1)
-              .html()
-          ).toContain('Manage Users');
-        });
-      });
-
-      it('#displayList function defined', () => {
-        const instance = wrapper.instance();
-        expect(instance.displayList()).toBeDefined();
-      });
-
-      describe('#displayList output', () => {
-        it('displays table', () => {
-          expect(wrapper.find('BootstrapTable').length).toBe(1);
-          expect(wrapper.find('TableHeaderColumn').length).toBe(6);
-        });
-      });
+    });
+    it('renders navigation link to Dashboard', () => {
+      expect(
+        wrapper
+          .find('Link')
+          .at(0)
+          .html()
+      ).toContain('Dashboard');
+    });
+    it('renders navigation link to User List', () => {
+      expect(
+        wrapper
+          .find('Link')
+          .at(1)
+          .html()
+      ).toContain('Manage Users');
     });
   });
 });
