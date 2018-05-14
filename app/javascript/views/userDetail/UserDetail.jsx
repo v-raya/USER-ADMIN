@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { GlobalHeader, PageHeader, Cards } from 'react-wood-duck';
+import { GlobalHeader, PageHeader, Cards, Link } from 'react-wood-duck';
 import ShowField from '../../common/ShowField';
 
 /* eslint camelcase: 0 */
@@ -19,10 +19,28 @@ const UserDetail = ({
   end_date,
   enabled,
   county_name,
+  dashboardUrl,
+  userListUrl,
+  userListClickHandler,
+  dashboardClickHandler,
 }) => (
   <div>
     <GlobalHeader profileName="County CWDS-Admin" profileId="profile.id" />
     <PageHeader pageTitle="Manage Users" button="" />
+    <div className="col-md-12">
+      Back to:{' '}
+      <Link
+        text="Dashboard"
+        href={dashboardUrl}
+        clickHandler={dashboardClickHandler}
+      />
+      &nbsp;&gt;&nbsp;
+      <Link
+        text="Manage Users"
+        href={userListUrl}
+        clickHandler={userListClickHandler}
+      />
+    </div>
     <div className="container">
       <div className="row">
         <div className="col-md-12">
@@ -97,6 +115,10 @@ UserDetail.propTypes = {
   end_date: PropTypes.string,
   enabled: PropTypes.bool,
   county_name: PropTypes.string,
+  dashboardUrl: PropTypes.string,
+  userListUrl: PropTypes.string,
+  userListClickHandler: PropTypes.func,
+  dashboardClickHandler: PropTypes.func,
 };
 
 UserDetail.defaultProps = {
@@ -113,6 +135,10 @@ UserDetail.defaultProps = {
   end_date: Date(),
   enabled: true,
   county_name: 'Sacramento',
+  userListUrl: '/#',
+  dashboardUrl: '/',
+  userListClickHandler: () => {},
+  dashboardClickHandler: () => {},
 };
 
 export default UserDetail;

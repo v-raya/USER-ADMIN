@@ -76,6 +76,8 @@ UserList.propTypes = {
 };
 
 UserList.defaultProps = {
+  userListUrl: '/#',
+  dashboardUrl: '/',
   userListClickHandler: () => {},
   dashboardClickHandler: () => {},
 };

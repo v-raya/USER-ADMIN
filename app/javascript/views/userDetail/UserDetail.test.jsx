@@ -8,7 +8,7 @@ describe('UserDetail', () => {
     wrapper = shallow(<UserDetail />);
   });
 
-  describe('renders 3 components', () => {
+  describe('renders 5 components', () => {
     it('renders component "Cards" ', () => {
       expect(wrapper.find('Cards').length).toBe(1);
     });
@@ -19,6 +19,24 @@ describe('UserDetail', () => {
 
     it('renders component "PageHeader"', () => {
       expect(wrapper.find('PageHeader').length).toBe(1);
+    });
+
+    it('renders navigation link to Dashboard', () => {
+      expect(
+        wrapper
+          .find('Link')
+          .at(0)
+          .html()
+      ).toContain('Dashboard');
+    });
+
+    it('renders navigation link to User List', () => {
+      expect(
+        wrapper
+          .find('Link')
+          .at(1)
+          .html()
+      ).toContain('Manage Users');
     });
   });
 

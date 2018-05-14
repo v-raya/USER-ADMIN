@@ -27,6 +27,7 @@ describe('UsersList', () => {
       expect(wrapper.find('BootstrapTable').length).toBe(1);
       expect(wrapper.find('TableHeaderColumn').length).toBe(6);
     });
+
     it('renders navigation link to Dashboard', () => {
       expect(
         wrapper
@@ -35,6 +36,7 @@ describe('UsersList', () => {
           .html()
       ).toContain('Dashboard');
     });
+
     it('renders navigation link to User List', () => {
       expect(
         wrapper
