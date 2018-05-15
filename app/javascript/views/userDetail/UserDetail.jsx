@@ -5,28 +5,14 @@ import ShowField from '../../common/ShowField';
 
 /* eslint camelcase: 0 */
 
-const UserDetail = ({
-  last_name,
-  first_name,
-  middle_name,
-  office,
-  phone_number,
-  email,
-  last_login_date_time,
-  racfid,
-  status,
-  start_date,
-  end_date,
-  enabled,
-  county_name,
-}) => (
+const UserDetail = ({ userDetail }) => (
   <div>
     <GlobalHeader profileName="County CWDS-Admin" profileId="profile.id" />
     <PageHeader pageTitle="Manage Users" button="" />
     <div className="container">
       <div className="row">
         <div className="col-md-12">
-          <Cards
+          {/* <Cards
             cardHeaderText="Manage Users: {county_name}"
             cardHeaderButton={true}
           >
@@ -34,49 +20,53 @@ const UserDetail = ({
               <div className="row">
                 <div className="col-md-3">
                   <ShowField label="Full Name">
-                    {last_name}
-                    {first_name}
-                    {middle_name}
+                    {userDetail.first_name}
+                    {userDetail.middle_name}
                   </ShowField>
                 </div>
                 <div className="col-md-3">
-                  <ShowField label="Office Name">{office}</ShowField>
+                  <ShowField label="Office Name">{userDetail.office}</ShowField>
                 </div>
                 <div className="col-md-3">
-                  <ShowField label="CWS Login">{racfid}</ShowField>
+                  <ShowField label="CWS Login">{userDetail.racfid}</ShowField>
                 </div>
                 <div className="col-md-3">
                   <ShowField label="Last Login">
-                    {last_login_date_time}
+                    {userDetail.last_login_date_time}
                   </ShowField>
                 </div>
               </div>
               <div className="row">
                 <div className="col-md-3">
-                  <ShowField label="Email">{email}</ShowField>
+                  <ShowField label="Email">{userDetail.email}</ShowField>
                 </div>
                 <div className="col-md-3">
                   <ShowField label="Office Phone Number">
-                    {phone_number}
+                    {userDetail.phone_number}
                   </ShowField>
                 </div>
                 <div className="col-md-3">
-                  <ShowField label="Start Date"> {start_date}</ShowField>
+                  <ShowField label="Start Date">
+                    {' '}
+                    {userDetail.start_date}
+                  </ShowField>
                 </div>
                 <div className="col-md-3">
-                  <ShowField label="End Date">{end_date}</ShowField>
+                  <ShowField label="End Date">{userDetail.end_date}</ShowField>
                 </div>
               </div>
               <div className="row">
                 <div className="col-md-3">
-                  <ShowField label="Status">{enabled}</ShowField>
+                  <ShowField label="Status">{userDetail.enabled}</ShowField>
                 </div>
                 <div className="col-md-3">
-                  <ShowField label="Assigned Roles">{status}</ShowField>
+                  <ShowField label="Assigned Roles">
+                    {userDetail.status}
+                  </ShowField>
                 </div>
               </div>
             </div>
-          </Cards>
+          </Cards> */}
         </div>
       </div>
     </div>
@@ -84,35 +74,23 @@ const UserDetail = ({
 );
 
 UserDetail.propTypes = {
-  last_name: PropTypes.string,
-  first_name: PropTypes.string,
-  middle_name: PropTypes.string,
-  office: PropTypes.string,
-  phone_number: PropTypes.string,
-  email: PropTypes.string,
-  last_login_date_time: PropTypes.string,
-  racfid: PropTypes.string,
-  status: PropTypes.string,
-  start_date: PropTypes.string,
-  end_date: PropTypes.string,
-  enabled: PropTypes.bool,
-  county_name: PropTypes.string,
+  userDetail: PropTypes.object,
 };
 
-UserDetail.defaultProps = {
-  last_name: 'LastName',
-  first_name: 'FirstName',
-  middle_name: 'MiddleName',
-  office: 'Sacramento',
-  phone_number: '000-000-0022',
-  email: 'Hello@osi.ca.gov',
-  last_login_date_time: Date(),
-  racfid: 'BGDTYSH52681',
-  status: 'Intake-core-county',
-  start_date: Date(),
-  end_date: Date(),
-  enabled: true,
-  county_name: 'Sacramento',
-};
+// UserDetail.defaultProps = {
+//   last_name: 'LastName',
+//   first_name: 'FirstName',
+//   middle_name: 'MiddleName',
+//   office: 'Sacramento',
+//   phone_number: '000-000-0022',
+//   email: 'Hello@osi.ca.gov',
+//   last_login_date_time: Date(),
+//   racfid: 'BGDTYSH52681',
+//   status: 'Intake-core-county',
+//   start_date: Date(),
+//   end_date: Date(),
+//   enabled: true,
+//   county_name: 'Sacramento',
+// };
 
 export default UserDetail;
