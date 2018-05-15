@@ -1,37 +1,33 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import CountyUsersListContainer from '../containers/usersListContainer';
-import { fetchUserDetailActions } from '../actions/userDetailsActions';
-
+import { fetchUsersActions } from '../actions/usersActions';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { selectUserDetailRecords } from '../selectors/userDetailSelector';
+import { selectUserRecords } from '../selectors/userListSelector';
 
 class Home extends React.Component {
   componentDidMount() {
-    // this.props.actions.fetchUsersActions();
-    this.props.actions.fetchUserDetailActions();
+    this.props.actions.fetchUsersActions();
   }
   render() {
-    return <CountyUsersListContainer userDetail={this.props.userDetail} />;
+    return <CountyUsersListContainer userList={this.props.userList} />;
   }
 }
 
 Home.propTypes = {
   actions: PropTypes.object.isRequired,
   userList: PropTypes.array,
-  userDetail: PropTypes.object,
 };
 
 function mapStateToProps(state) {
   return {
-    // userList: selectUserRecords(state),
-    userDetails: selectUserDetailRecords(state),
+    userList: selectUserRecords(state),
   };
 }
 
 function mapDispatchToProps(dispatch) {
-  const actions = { fetchUserDetailActions };
+  const actions = { fetchUsersActions };
   return {
     actions: bindActionCreators(actions, dispatch),
   };

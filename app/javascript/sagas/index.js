@@ -1,1 +1,1 @@
-export { default } from './getUserDetailsSaga';
+export { default } from './getUserListSaga';

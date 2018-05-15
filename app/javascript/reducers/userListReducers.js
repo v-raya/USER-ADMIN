@@ -1,9 +1,7 @@
+import { combineReducers } from 'redux';
 import * as actionTypes from '../actions/actionTypes';
 
-export function fetchUserList(
-  state = { userList: null, fetching: false },
-  action
-) {
+function fetchUserList(state = { userList: null, fetching: false }, action) {
   switch (action.type) {
     case actionTypes.FETCH_USERS_API_CALL_REQUEST:
       return { ...state, fetching: true, error: null };
@@ -31,3 +29,9 @@ export function fetchUserList(
       return state;
   }
 }
+
+const reducer = combineReducers({
+  fetchUserList,
+});
+
+export default reducer;
