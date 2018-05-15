@@ -1,4 +1,3 @@
-import { combineReducers } from 'redux';
 import * as actionTypes from '../actions/actionTypes';
 
 function fetchUserList(state = { userList: null, fetching: false }, action) {
@@ -30,8 +29,4 @@ function fetchUserList(state = { userList: null, fetching: false }, action) {
   }
 }
 
-const reducer = combineReducers({
-  fetchUserList,
-});
-
-export default reducer;
+export default fetchUserList;
