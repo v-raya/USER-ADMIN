@@ -6,6 +6,6 @@ describe('ApiService', () => {
   });
 
   it('has a baseUrl of /api/', () => {
-    expect(ApiService.defaults.baseURL).toBe('/countyadmin/api/');
+    expect(ApiService.defaults.baseURL).toBe('/cap/api/');
   });
 });
