@@ -14,22 +14,23 @@ const UserDetail = ({
 }) => (
   <div>
     <GlobalHeader profileName="County CWDS-Admin" profileId="profile.id" />
-    <PageHeader pageTitle="Manage Users" button="" />
-    <div className="col-md-12">
-      Back to:{' '}
-      <Link
-        text="Dashboard"
-        href={dashboardUrl}
-        clickHandler={dashboardClickHandler}
-      />
-      &nbsp;&gt;&nbsp;
-      <Link
-        text="Manage Users"
-        href={userListUrl}
-        clickHandler={userListClickHandler}
-      />
-    </div>
+    <PageHeader pageTitle="User Profile" button="" />
     <div className="container">
+      <div className="col-md-12">
+        Back to:{' '}
+        <Link
+          text="Dashboard"
+          href={dashboardUrl}
+          clickHandler={dashboardClickHandler}
+        />
+        &nbsp;&gt;&nbsp;
+        <Link
+          text="User List"
+          href={userListUrl}
+          clickHandler={userListClickHandler}
+        />
+      </div>
+
       <div className="row">
         <div className="col-md-12">
           <Cards
@@ -40,7 +41,7 @@ const UserDetail = ({
               <div className="row">
                 <div className="col-md-3">
                   <ShowField label="Full Name">
-                    {details.last_name}
+                    {details.last_name},
                     {details.first_name}
                     {details.middle_name}
                   </ShowField>
