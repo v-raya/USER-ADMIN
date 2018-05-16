@@ -82,7 +82,7 @@ node(node_to_run_on()) {
       } else {
         stage('Preint Acceptance Test') {
           sh "docker-compose up -d --build county-admin-test"
-          sh "docker-compose exec -T --env COUNTY_AUTHORIZATION_ENABLED=true --env COUNTY_ADMIN_WEB_BASE_URL=https://web.preint.cwds.io/countyadmin county-admin-test bundle exec rspec spec/acceptance"
+          sh "docker-compose exec -T --env COUNTY_AUTHORIZATION_ENABLED=true --env COUNTY_ADMIN_WEB_BASE_URL=https://web.preint.cwds.io/cap county-admin-test bundle exec rspec spec/acceptance"
         }
         stage('Deploy Integration') {
           build job: '/Integration Environment/deploy-cap/',
