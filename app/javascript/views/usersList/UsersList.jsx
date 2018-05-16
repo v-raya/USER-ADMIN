@@ -22,10 +22,10 @@ const UserList = ({ userList }) => (
                 striped={true}
                 hover={true}
               >
-                <TableHeaderColumn dataField="first_name" dataSort width="100">
+                <TableHeaderColumn dataField="last_name" dataSort width="100">
                   Full Name
                 </TableHeaderColumn>
-                <TableHeaderColumn dataField="last_name" />
+                <TableHeaderColumn dataField="first_name" />
                 <TableHeaderColumn dataField="status" width="150">
                   Status
                 </TableHeaderColumn>
