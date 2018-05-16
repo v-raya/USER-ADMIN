@@ -1,8 +1,8 @@
 import { selectDetailRecords } from './detailSelector';
 
 describe('selectors', () => {
-  describe('#selectUserRecords', () => {
-    it('selects the user records', () => {
+  describe('#selectDetailRecords', () => {
+    it('selects the user detail records', () => {
       const state = {
         fetchDetails: {
           details: {
@@ -17,7 +17,7 @@ describe('selectors', () => {
       });
     });
 
-    it('selects empty users', () => {
+    it('selects empty user details', () => {
       const state = {
         fetch: {},
         other_stuff: { bad: 'ignore' },
@@ -25,7 +25,7 @@ describe('selectors', () => {
       expect(selectDetailRecords(state)).toEqual({});
     });
 
-    it('selects no users', () => {
+    it('selects no user details', () => {
       const state = {
         other_stuff: { bad: 'ignore' },
       };

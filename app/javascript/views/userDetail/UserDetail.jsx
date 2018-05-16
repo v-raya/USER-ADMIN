@@ -13,7 +13,7 @@ const UserDetail = ({ details }) => (
       <div className="row">
         <div className="col-md-12">
           <Cards
-            cardHeaderText={'Manage Users: Sacramento'}
+            cardHeaderText={`Manage Users: ${details.county_name}`}
             cardHeaderButton={true}
           >
             <div className="col-md-12">
