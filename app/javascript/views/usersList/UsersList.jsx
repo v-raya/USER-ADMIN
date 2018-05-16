@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { GlobalHeader, PageHeader, Cards } from 'react-wood-duck';
 import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table';
 
-const UserList = ({ userList, link }) => (
+const UserList = ({ userList, nameFormat }) => (
   <div>
     <GlobalHeader profileName="County CWDS-Admin" profileId="profile.id" />
     <PageHeader pageTitle="Manage Users" button="" />
@@ -26,7 +26,7 @@ const UserList = ({ userList, link }) => (
                   dataField="last_name"
                   dataSort
                   width="200"
-                  dataFormat={link}
+                  dataFormat={nameFormat}
                 >
                   Full Name
                 </TableHeaderColumn>
@@ -53,7 +53,7 @@ const UserList = ({ userList, link }) => (
 
 UserList.propTypes = {
   userList: PropTypes.array,
-  link: PropTypes.func,
+  nameFormat: PropTypes.func,
 };
 
 export default UserList;

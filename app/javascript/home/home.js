@@ -11,7 +11,7 @@ class Home extends React.Component {
     this.props.actions.fetchUsersActions();
   }
 
-  link = (cell, row) => (
+  nameFormat = (cell, row) => (
     <a href={`/user_details/${row.id}`}>
       {row.last_name}, {row.first_name}
     </a>
@@ -20,7 +20,7 @@ class Home extends React.Component {
     return (
       <CountyUsersListContainer
         userList={this.props.userList}
-        link={this.link}
+        nameFormat={this.nameFormat}
       />
     );
   }
