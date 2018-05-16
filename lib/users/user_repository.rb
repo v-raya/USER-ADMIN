@@ -11,5 +11,11 @@ module Users
       return [] if response.status == 404
       response.body.map { |result| User.new(result) }
     end
+
+    def get_users_details(id, token)
+      response = @http_service.get("/perry/idm/users/#{id}", token)
+      return {} if response.status == 404
+      User.new(response.body)
+    end
   end
 end

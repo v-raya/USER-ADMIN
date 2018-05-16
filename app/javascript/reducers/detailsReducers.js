@@ -1,27 +1,27 @@
 import * as actionTypes from '../actions/actionTypes';
 
-function fetchUserList(state = { userList: null, fetching: false }, action) {
+function fetchDetails(state = { details: null, fetching: false }, action) {
   switch (action.type) {
-    case actionTypes.FETCH_USERS_API_CALL_REQUEST:
+    case actionTypes.FETCH_DETAILS_API_CALL_REQUEST:
       return { ...state, fetching: true, error: null };
 
-    case actionTypes.FETCH_USERS_API_CALL_SUCCESS:
+    case actionTypes.FETCH_DETAILS_API_CALL_SUCCESS:
       const userRecords = {
         XHRStatus: 'ready',
-        records: [...action.userList],
+        records: { ...action.details },
       };
       return {
         ...state,
         fetching: false,
-        userList: userRecords,
+        details: userRecords,
         error: null,
       };
 
-    case actionTypes.FETCH_USERS_API_CALL_FAILURE:
+    case actionTypes.FETCH_DETAILS_API_CALL_FAILURE:
       return {
         ...state,
         fetching: false,
-        userList: null,
+        details: null,
         error: action.error,
       };
     default:
@@ -29,4 +29,4 @@ function fetchUserList(state = { userList: null, fetching: false }, action) {
   }
 }
 
-export default fetchUserList;
+export default fetchDetails;

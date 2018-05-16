@@ -1,1 +1,3 @@
-export { default } from './getUserListSaga';
+export { countyUsersListSaga } from './getUserListSaga';
+
+export { detailsSaga } from './getDetailsSaga';

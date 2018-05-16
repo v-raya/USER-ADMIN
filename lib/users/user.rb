@@ -11,6 +11,7 @@ module Users
   class User < Dry::Struct
     constructor_type :schema
     attribute :username, Types::String.optional
+    attribute :id, Types::String.optional
     attribute :first_name, Types::String.optional
     attribute :last_name, Types::String.optional
     attribute :county_name, Types::String.optional
