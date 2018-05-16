@@ -58,7 +58,9 @@ const UserDetail = ({ details }) => (
               </div>
               <div className="row">
                 <div className="col-md-3">
-                  <ShowField label="Status">{details.enabled}</ShowField>
+                  <ShowField label="Status">
+                    {String(details.enabled)}
+                  </ShowField>
                 </div>
                 <div className="col-md-3">
                   <ShowField label="Assigned Roles">{details.status}</ShowField>
