@@ -5,68 +5,67 @@ import ShowField from '../../common/ShowField';
 
 /* eslint camelcase: 0 */
 
-const UserDetail = ({ userDetail }) => (
+const UserDetail = ({ details }) => (
   <div>
     <GlobalHeader profileName="County CWDS-Admin" profileId="profile.id" />
     <PageHeader pageTitle="Manage Users" button="" />
     <div className="container">
       <div className="row">
         <div className="col-md-12">
-          {/* <Cards
-            cardHeaderText="Manage Users: {county_name}"
+          <Cards
+            cardHeaderText={`Manage Users: ${details.county_name}`}
             cardHeaderButton={true}
           >
             <div className="col-md-12">
               <div className="row">
                 <div className="col-md-3">
                   <ShowField label="Full Name">
-                    {userDetail.first_name}
-                    {userDetail.middle_name}
+                    {details.last_name}
+                    {details.first_name}
+                    {details.middle_name}
                   </ShowField>
                 </div>
                 <div className="col-md-3">
-                  <ShowField label="Office Name">{userDetail.office}</ShowField>
+                  <ShowField label="Office Name">{details.office}</ShowField>
                 </div>
                 <div className="col-md-3">
-                  <ShowField label="CWS Login">{userDetail.racfid}</ShowField>
+                  <ShowField label="CWS Login">{details.racfid}</ShowField>
                 </div>
                 <div className="col-md-3">
                   <ShowField label="Last Login">
-                    {userDetail.last_login_date_time}
+                    {details.last_login_date_time}
                   </ShowField>
                 </div>
               </div>
               <div className="row">
                 <div className="col-md-3">
-                  <ShowField label="Email">{userDetail.email}</ShowField>
+                  <ShowField label="Email">{details.email}</ShowField>
                 </div>
                 <div className="col-md-3">
                   <ShowField label="Office Phone Number">
-                    {userDetail.phone_number}
+                    <span>{details.phone_number}</span>
                   </ShowField>
                 </div>
                 <div className="col-md-3">
                   <ShowField label="Start Date">
                     {' '}
-                    {userDetail.start_date}
+                    {details.start_date}
                   </ShowField>
                 </div>
                 <div className="col-md-3">
-                  <ShowField label="End Date">{userDetail.end_date}</ShowField>
+                  <ShowField label="End Date">{details.end_date}</ShowField>
                 </div>
               </div>
               <div className="row">
                 <div className="col-md-3">
-                  <ShowField label="Status">{userDetail.enabled}</ShowField>
+                  <ShowField label="Status">{details.enabled}</ShowField>
                 </div>
                 <div className="col-md-3">
-                  <ShowField label="Assigned Roles">
-                    {userDetail.status}
-                  </ShowField>
+                  <ShowField label="Assigned Roles">{details.status}</ShowField>
                 </div>
               </div>
             </div>
-          </Cards> */}
+          </Cards>
         </div>
       </div>
     </div>
@@ -74,23 +73,7 @@ const UserDetail = ({ userDetail }) => (
 );
 
 UserDetail.propTypes = {
-  userDetail: PropTypes.object,
+  details: PropTypes.object,
 };
-
-// UserDetail.defaultProps = {
-//   last_name: 'LastName',
-//   first_name: 'FirstName',
-//   middle_name: 'MiddleName',
-//   office: 'Sacramento',
-//   phone_number: '000-000-0022',
-//   email: 'Hello@osi.ca.gov',
-//   last_login_date_time: Date(),
-//   racfid: 'BGDTYSH52681',
-//   status: 'Intake-core-county',
-//   start_date: Date(),
-//   end_date: Date(),
-//   enabled: true,
-//   county_name: 'Sacramento',
-// };
 
 export default UserDetail;

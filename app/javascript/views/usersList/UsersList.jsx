@@ -32,8 +32,8 @@ const UserList = ({ userList }) => (
                 <TableHeaderColumn dataField="last_login_date_time" width="180">
                   Last Login
                 </TableHeaderColumn>
-                <TableHeaderColumn dataField="username" isKey width="120">
-                  Username
+                <TableHeaderColumn dataField="id" isKey width="120">
+                  CWS Login
                 </TableHeaderColumn>
                 <TableHeaderColumn dataField="end_date" width="150">
                   End date
