@@ -27,5 +27,14 @@ describe('UsersList', () => {
       expect(wrapper.find('BootstrapTable').length).toBe(1);
       expect(wrapper.find('TableHeaderColumn').length).toBe(5);
     });
+
+    it('renders navigation link to Dashboard', () => {
+      expect(
+        wrapper
+          .find('Link')
+          .at(0)
+          .html()
+      ).toContain('Dashboard');
+    });
   });
 });

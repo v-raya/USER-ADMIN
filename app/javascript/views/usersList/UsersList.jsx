@@ -1,15 +1,23 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { GlobalHeader, PageHeader, Cards } from 'react-wood-duck';
+import { GlobalHeader, PageHeader, Cards, Link } from 'react-wood-duck';
 import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table';
 
-const UserList = ({ userList, nameFormat }) => (
+const UserList = ({ userList, nameFormat, dashboardUrl, dashboardClickHandler }) => (
   <div>
     <GlobalHeader profileName="County CWDS-Admin" profileId="profile.id" />
     <PageHeader pageTitle="Manage Users" button="" />
     <div className="container">
       <div className="row">
         <div className="col-md-12">
+          <div className="col-md-12">
+            Back to:{' '}
+            <Link
+              text="Dashboard"
+              href={dashboardUrl}
+              clickHandler={dashboardClickHandler}
+            />
+          </div>
           <Cards
             cardHeaderText="Manage Users: Sacramento"
             cardActionButtons={false}
@@ -53,7 +61,13 @@ const UserList = ({ userList, nameFormat }) => (
 
 UserList.propTypes = {
   userList: PropTypes.array,
+  dashboardUrl: PropTypes.string,
+  dashboardClickHandler: PropTypes.func,
   nameFormat: PropTypes.func,
 };
 
+UserList.defaultProps = {
+  dashboardUrl: '/',
+  dashboardClickHandler: () => {},
+};
 export default UserList;
