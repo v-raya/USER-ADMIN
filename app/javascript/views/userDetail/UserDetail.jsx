@@ -14,7 +14,7 @@ const UserDetail = ({
 }) => (
   <div>
     <GlobalHeader profileName="County CWDS-Admin" profileId="profile.id" />
-    <PageHeader pageTitle="Manage Users" button="" />
+    <PageHeader pageTitle="User Profile" button="" />
     <div className="col-md-12">
       Back to:{' '}
       <Link
