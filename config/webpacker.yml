@@ -61,6 +61,7 @@ test:
 
 production:
   <<: *default
+  public_output_path: cap/packs
 
   # Production depends on precompilation of packs prior to booting for performance.
   compile: false

@@ -3,9 +3,16 @@ import { shallow } from 'enzyme';
 import UserDetail from './UserDetail.jsx';
 
 describe('UserDetail', () => {
+  const details = {
+    id: 'id',
+    first_name: 'Firstname0',
+    last_name: 'Lastname0',
+    county_name: 'MyCounty',
+  };
+
   let wrapper;
   beforeEach(() => {
-    wrapper = shallow(<UserDetail />);
+    wrapper = shallow(<UserDetail details={details} />);
   });
 
   describe('renders 5 components', () => {
@@ -42,8 +49,9 @@ describe('UserDetail', () => {
 
   describe('when label and className props are passed', () => {
     it('renders the label inside the grid wrapper', () => {
-      wrapper = shallow(<UserDetail />);
+      wrapper = shallow(<UserDetail details={details} />);
       expect(wrapper.find('ShowField').length).toBe(10);
+
       expect(
         wrapper
           .find('ShowField')

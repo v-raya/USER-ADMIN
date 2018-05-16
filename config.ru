@@ -4,4 +4,10 @@
 
 require_relative 'config/environment'
 
-run Rails.application
+app = Rack::Builder.new do
+  map ENV['RAILS_RELATIVE_URL_ROOT'] || '/' do
+    run CountyAdmin::Application
+  end
+end
+
+run app

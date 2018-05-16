@@ -6,19 +6,7 @@ import ShowField from '../../common/ShowField';
 /* eslint camelcase: 0 */
 
 const UserDetail = ({
-  last_name,
-  first_name,
-  middle_name,
-  office,
-  phone_number,
-  email,
-  last_login_date_time,
-  racfid,
-  status,
-  start_date,
-  end_date,
-  enabled,
-  county_name,
+  details,
   dashboardUrl,
   userListUrl,
   userListClickHandler,
@@ -45,52 +33,57 @@ const UserDetail = ({
       <div className="row">
         <div className="col-md-12">
           <Cards
-            cardHeaderText="Manage Users: {county_name}"
+            cardHeaderText={`Manage Users: ${details.county_name}`}
             cardHeaderButton={true}
           >
             <div className="col-md-12">
               <div className="row">
                 <div className="col-md-3">
                   <ShowField label="Full Name">
-                    {last_name}
-                    {first_name}
-                    {middle_name}
+                    {details.last_name}
+                    {details.first_name}
+                    {details.middle_name}
                   </ShowField>
                 </div>
                 <div className="col-md-3">
-                  <ShowField label="Office Name">{office}</ShowField>
+                  <ShowField label="Office Name">{details.office}</ShowField>
                 </div>
                 <div className="col-md-3">
-                  <ShowField label="CWS Login">{racfid}</ShowField>
+                  <ShowField label="CWS Login">{details.racfid}</ShowField>
                 </div>
                 <div className="col-md-3">
                   <ShowField label="Last Login">
-                    {last_login_date_time}
+                    {details.last_login_date_time}
                   </ShowField>
                 </div>
               </div>
               <div className="row">
                 <div className="col-md-3">
-                  <ShowField label="Email">{email}</ShowField>
+                  <ShowField label="Email">{details.email}</ShowField>
                 </div>
                 <div className="col-md-3">
                   <ShowField label="Office Phone Number">
-                    {phone_number}
+                    <span>{details.phone_number}</span>
                   </ShowField>
                 </div>
                 <div className="col-md-3">
-                  <ShowField label="Start Date"> {start_date}</ShowField>
+                  <ShowField label="Start Date">
+                    {' '}
+                    {details.start_date}
+                  </ShowField>
                 </div>
                 <div className="col-md-3">
-                  <ShowField label="End Date">{end_date}</ShowField>
+                  <ShowField label="End Date">{details.end_date}</ShowField>
                 </div>
               </div>
               <div className="row">
                 <div className="col-md-3">
-                  <ShowField label="Status">{enabled}</ShowField>
+                  <ShowField label="Status">
+                    {String(details.enabled)}
+                  </ShowField>
                 </div>
                 <div className="col-md-3">
-                  <ShowField label="Assigned Roles">{status}</ShowField>
+                  <ShowField label="Assigned Roles">{details.status}</ShowField>
                 </div>
               </div>
             </div>
@@ -102,19 +95,7 @@ const UserDetail = ({
 );
 
 UserDetail.propTypes = {
-  last_name: PropTypes.string,
-  first_name: PropTypes.string,
-  middle_name: PropTypes.string,
-  office: PropTypes.string,
-  phone_number: PropTypes.string,
-  email: PropTypes.string,
-  last_login_date_time: PropTypes.string,
-  racfid: PropTypes.string,
-  status: PropTypes.string,
-  start_date: PropTypes.string,
-  end_date: PropTypes.string,
-  enabled: PropTypes.bool,
-  county_name: PropTypes.string,
+  details: PropTypes.object,
   dashboardUrl: PropTypes.string,
   userListUrl: PropTypes.string,
   userListClickHandler: PropTypes.func,
@@ -122,19 +103,6 @@ UserDetail.propTypes = {
 };
 
 UserDetail.defaultProps = {
-  last_name: 'LastName',
-  first_name: 'FirstName',
-  middle_name: 'MiddleName',
-  office: 'Sacramento',
-  phone_number: '000-000-0022',
-  email: 'Hello@osi.ca.gov',
-  last_login_date_time: Date(),
-  racfid: 'BGDTYSH52681',
-  status: 'Intake-core-county',
-  start_date: Date(),
-  end_date: Date(),
-  enabled: true,
-  county_name: 'Sacramento',
   userListUrl: '/#',
   dashboardUrl: '/',
   userListClickHandler: () => {},

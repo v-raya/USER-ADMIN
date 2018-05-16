@@ -8,6 +8,7 @@ module Users
     describe 'attributes' do
       subject { User }
       it { is_expected.to have_attribute(:username, Types::String.optional) }
+      it { is_expected.to have_attribute(:id, Types::String.optional) }
       it { is_expected.to have_attribute(:first_name, Types::String.optional) }
       it { is_expected.to have_attribute(:last_name, Types::String.optional) }
       it { is_expected.to have_attribute(:county_name, Types::String.optional) }
