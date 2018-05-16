@@ -2,6 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { GlobalHeader, PageHeader, Cards } from 'react-wood-duck';
 import ShowField from '../../common/ShowField';
+import { fetchUserDetailActions } from '../../actions/userDetailsActions';
+import UserDetailsContainer from '../../containers/userDetailsContainer';
+import selectUserDetailRecords from '../../selectors/userDetailSelector';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
 
 /* eslint camelcase: 0 */
 
@@ -68,12 +73,34 @@ const UserDetail = ({ details }) => (
           </Cards>
         </div>
       </div>
-    </div>
-  </div>
-);
+    );
+  }
+}
 
 UserDetail.propTypes = {
+<<<<<<< HEAD
   details: PropTypes.object,
 };
 
 export default UserDetail;
+=======
+  userDetail: PropTypes.object,
+  actions: PropTypes.object.isRequired,
+  params: PropTypes.object.isRequired,
+};
+
+export function mapStateToProps(state, _ownProps) {
+  return {
+    userDetail: selectUserDetailRecords(state),
+  };
+}
+
+function mapDispatchToProps(dispatch, _ownProps) {
+  const actions = { fetchUserDetailActions };
+  return {
+    actions: bindActionCreators(actions, dispatch),
+  };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(UserDetail);
+>>>>>>> afa7582dad691ecb6ec33d63c784817bf1e87c17
