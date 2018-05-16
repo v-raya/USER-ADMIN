@@ -6,6 +6,8 @@ import { selectUserRecords } from '../selectors/userListSelector';
 const mapStateToProps = state => {
   return {
     userList: selectUserRecords(state),
+    userListUrl: '/#',
+    dashboardUrl: '/',
   };
 };
 
