@@ -4,7 +4,7 @@ import DetailsPage from './detailsPage';
 import { store } from '../store/configureStore';
 import { Provider } from 'react-redux';
 
-const list = document.getElementById('root');
+const details = document.getElementById('root');
 
 export class DetailsApp extends React.Component {
   render() {
@@ -18,4 +18,4 @@ export class DetailsApp extends React.Component {
 
 DetailsApp.propTypes = {};
 
-ReactDOM.render(<DetailsApp />, list);
+ReactDOM.render(<DetailsApp />, details);

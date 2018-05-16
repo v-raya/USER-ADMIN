@@ -6,14 +6,38 @@ describe('selectors', () => {
       const state = {
         fetchUserList: {
           userList: {
-            0: {
-              records: { message: 'first', 0: 'second', 1: 'third' },
-            },
+            records: [
+              {
+                0: {
+                  first_name: 'username1',
+                  id: '2',
+                  county_name: 'mycounty',
+                },
+                1: {
+                  first_name: 'username',
+                  id: '1',
+                  county_name: 'my county1',
+                },
+              },
+            ],
           },
         },
         other_stuff: { bad: 'ignore' },
       };
-      expect(selectUserRecords(state)).toEqual();
+      expect(selectUserRecords(state)).toEqual([
+        {
+          0: {
+            first_name: 'username1',
+            id: '2',
+            county_name: 'mycounty',
+          },
+          1: {
+            first_name: 'username',
+            id: '1',
+            county_name: 'my county1',
+          },
+        },
+      ]);
     });
 
     it('selects empty users', () => {
