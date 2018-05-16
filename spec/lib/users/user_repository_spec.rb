@@ -37,7 +37,7 @@ module Users
 
       describe '#get_users_details' do
         let(:response) { instance_double('Faraday::Response') }
-  
+
         context 'with no user' do
           it 'returns an empty user_detail' do
             allow(response).to receive(:status).and_return(404)
@@ -48,7 +48,7 @@ module Users
             expect(user_repository.get_users_details('22', token)).to eq({})
           end
         end
-  
+
         context 'with a user' do
           it 'returns a user_detail' do
             allow(response).to receive(:status).and_return(200)

@@ -22,7 +22,7 @@ module Api
           .with(no_args).and_return(user_repository)
         allow(user_repository).to receive(:get_users_details).with('12', 'token').and_return(user)
         request.session[:token] = 'token'
-        get :show , params: { id: '12' }
+        get :show, params: { id: '12' }
         expect(response.body).to eq user.to_json
       end
     end
