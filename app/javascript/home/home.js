@@ -10,8 +10,19 @@ class Home extends React.Component {
   componentDidMount() {
     this.props.actions.fetchUsersActions();
   }
+
+  nameFormat = (cell, row) => (
+    <a href={`/user_details/${row.id}`}>
+      {row.last_name}, {row.first_name}
+    </a>
+  );
   render() {
-    return <CountyUsersListContainer userList={this.props.userList} />;
+    return (
+      <CountyUsersListContainer
+        userList={this.props.userList}
+        nameFormat={this.nameFormat}
+      />
+    );
   }
 }
 
