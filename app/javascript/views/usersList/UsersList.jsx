@@ -3,7 +3,12 @@ import PropTypes from 'prop-types';
 import { GlobalHeader, PageHeader, Cards, Link } from 'react-wood-duck';
 import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table';
 
-const UserList = ({ userList, nameFormat, dashboardUrl, dashboardClickHandler }) => (
+const UserList = ({
+  userList,
+  nameFormat,
+  dashboardUrl,
+  dashboardClickHandler,
+}) => (
   <div>
     <GlobalHeader profileName="County CWDS-Admin" profileId="profile.id" />
     <PageHeader pageTitle="Manage Users" button="" />
