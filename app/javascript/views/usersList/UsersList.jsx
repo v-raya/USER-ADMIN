@@ -25,21 +25,21 @@ const UserList = ({ userList, link }) => (
                 <TableHeaderColumn
                   dataField="last_name"
                   dataSort
-                  width="180"
+                  width="200"
                   dataFormat={link}
                 >
                   Full Name
                 </TableHeaderColumn>
-                <TableHeaderColumn dataField="status" width="150">
+                <TableHeaderColumn dataField="status" width="80">
                   Status
                 </TableHeaderColumn>
-                <TableHeaderColumn dataField="last_login_date_time" width="150">
+                <TableHeaderColumn dataField="last_login_date_time" width="100">
                   Last Login
                 </TableHeaderColumn>
-                <TableHeaderColumn dataField="id" isKey width="120">
+                <TableHeaderColumn dataField="id" isKey width="80">
                   CWS Login
                 </TableHeaderColumn>
-                <TableHeaderColumn dataField="end_date" width="150">
+                <TableHeaderColumn dataField="end_date" width="60">
                   End date
                 </TableHeaderColumn>
               </BootstrapTable>

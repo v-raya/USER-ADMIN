@@ -13,7 +13,7 @@ class Home extends React.Component {
 
   link = (cell, row) => (
     <a href={`/user_details/${row.id}`}>
-      {row.last_name} {row.first_name}
+      {row.last_name}, {row.first_name}
     </a>
   );
   render() {
