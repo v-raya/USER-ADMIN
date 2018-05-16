@@ -36,14 +36,5 @@ describe('UsersList', () => {
           .html()
       ).toContain('Dashboard');
     });
-
-    it('renders navigation link to User List', () => {
-      expect(
-        wrapper
-          .find('Link')
-          .at(1)
-          .html()
-      ).toContain('Manage Users');
-    });
   });
 });

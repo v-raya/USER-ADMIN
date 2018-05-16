@@ -3,13 +3,7 @@ import PropTypes from 'prop-types';
 import { GlobalHeader, PageHeader, Cards, Link } from 'react-wood-duck';
 import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table';
 
-const UserList = ({
-  userList,
-  dashboardUrl,
-  userListUrl,
-  userListClickHandler,
-  dashboardClickHandler,
-}) => (
+const UserList = ({ userList, dashboardUrl, dashboardClickHandler }) => (
   <div>
     <GlobalHeader profileName="County CWDS-Admin" profileId="profile.id" />
     <PageHeader pageTitle="Manage Users" button="" />
@@ -22,12 +16,6 @@ const UserList = ({
               text="Dashboard"
               href={dashboardUrl}
               clickHandler={dashboardClickHandler}
-            />
-            &nbsp;&gt;&nbsp;
-            <Link
-              text="Manage Users"
-              href={userListUrl}
-              clickHandler={userListClickHandler}
             />
           </div>
           <Cards
@@ -70,15 +58,11 @@ const UserList = ({
 UserList.propTypes = {
   userList: PropTypes.array,
   dashboardUrl: PropTypes.string,
-  userListUrl: PropTypes.string,
-  userListClickHandler: PropTypes.func,
   dashboardClickHandler: PropTypes.func,
 };
 
 UserList.defaultProps = {
-  userListUrl: '/#',
   dashboardUrl: '/',
-  userListClickHandler: () => {},
   dashboardClickHandler: () => {},
 };
 export default UserList;
