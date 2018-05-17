@@ -43,13 +43,13 @@ const UserList = ({
                 >
                   Full Name
                 </TableHeaderColumn>
-                <TableHeaderColumn dataField="status" width="80">
+                <TableHeaderColumn dataField="enabled" width="40">
                   Status
                 </TableHeaderColumn>
                 <TableHeaderColumn dataField="last_login_date_time" width="100">
                   Last Login
                 </TableHeaderColumn>
-                <TableHeaderColumn dataField="id" isKey width="80">
+                <TableHeaderColumn dataField="racfid" isKey width="80">
                   CWS Login
                 </TableHeaderColumn>
                 <TableHeaderColumn dataField="end_date" width="60">
