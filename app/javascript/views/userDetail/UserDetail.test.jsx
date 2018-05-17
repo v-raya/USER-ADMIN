@@ -43,7 +43,7 @@ describe('UserDetail', () => {
           .find('Link')
           .at(1)
           .html()
-      ).toContain('Manage Users');
+      ).toContain('User List');
     });
   });
 

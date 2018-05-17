@@ -15,20 +15,6 @@ const UserDetail = ({
   <div>
     <GlobalHeader profileName="County CWDS-Admin" profileId="profile.id" />
     <PageHeader pageTitle="User Profile" button="" />
-    <div className="col-md-12">
-      Back to:{' '}
-      <Link
-        text="Dashboard"
-        href={dashboardUrl}
-        clickHandler={dashboardClickHandler}
-      />
-      &nbsp;&gt;&nbsp;
-      <Link
-        text="Manage Users"
-        href={userListUrl}
-        clickHandler={userListClickHandler}
-      />
-    </div>
     <div className="container">
       <div className="col-md-12">
         Back to:{' '}
