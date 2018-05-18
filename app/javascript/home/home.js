@@ -12,7 +12,13 @@ class Home extends React.Component {
   }
 
   nameFormat = (cell, row) => (
-    <a href={`/user_details/${row.id}`}>
+    <a
+      href={`${[
+        process.env.RAILS_RELATIVE_URL_ROOT,
+        'user_details',
+        row.id,
+      ].join('/')}`}
+    >
       {row.last_name}, {row.first_name}
     </a>
   );

@@ -103,8 +103,6 @@ UserDetail.propTypes = {
   dashboardClickHandler: PropTypes.func,
 };
 
-console.log('RAILS_RELATIVE_URL_ROOT IS ', process.env.RAILS_RELATIVE_URL_ROOT);
-
 UserDetail.defaultProps = {
   userListUrl: process.env.RAILS_RELATIVE_URL_ROOT
     ? process.env.RAILS_RELATIVE_URL_ROOT
