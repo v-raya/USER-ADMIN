@@ -37,13 +37,15 @@ describe('UserDetail', () => {
       ).toContain('Dashboard');
     });
 
-    it('renders navigation link to User List', () => {
-      expect(
-        wrapper
-          .find('Link')
-          .at(1)
-          .html()
-      ).toContain('User List');
+    describe('Link to user list', () => {
+      let link;
+      beforeEach(() => {
+        link = wrapper.find('Link').at(1);
+      });
+
+      it('link is labeled User List', () => {
+        expect(link.html()).toContain('User List');
+      });
     });
   });
 
