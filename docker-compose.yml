@@ -26,6 +26,7 @@ services:
       AUTHENTICATION: ${AUTHENTICATION}
       COUNTY_ADMIN_WEB_BASE_URL: ${COUNTY_ADMIN_WEB_BASE_URL}
       DASHBOARD_URL: ${DASHBOARD_URL}
+      RAILS_RELATIVE_URL_ROOT: ${RAILS_RELATIVE_URL_ROOT}
     command: ['bundle', 'exec', 'rails', 'server']
     depends_on:
       - perry
