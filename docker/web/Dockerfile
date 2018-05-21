@@ -15,8 +15,11 @@ RUN bundle install --jobs 20 --retry 5
 COPY package.json yarn.lock /app/
 RUN yarn install --production=false --non-interactive --frozen-lockfile
 COPY . /app
-
+COPY ./app/assets /app/cap/assets
 RUN NODE_ENV=production RAILS_ENV=production bundle exec rails assets:precompile
 RUN yarn install --production=false --non-interactive --frozen-lockfile
+# Required because we have mapping issues in nginx
+RUN ln -s /app/public/cap/packs /app/public/packs
+RUN ln -s /app/public/cap/assets /app/public/assets
 EXPOSE 3000 3035
 CMD ["bundle", "exec", "rails", "server"]
