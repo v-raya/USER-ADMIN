@@ -25,7 +25,7 @@ RUN ln -s /app/public/cap/packs /app/public/packs
 RUN ln -s /app/public/cap/assets /app/public/assets
 
 RUN mkdir -p /app/public/assets/bootstrap/dist/css
-RUN cp ./node_modules/bootstrap/dist/css/bootstrap.css /app/public/assets/bootstrap/dist/css
+RUN cp ./node_modules/bootstrap/dist/css/* /app/public/assets/bootstrap/dist/css
 
 RUN mkdir -p /app/public/assets/react-wood-duck/dist/styles
 RUN cp ./node_modules/react-wood-duck/dist/styles/application.css /app/public/assets/react-wood-duck/dist/styles
