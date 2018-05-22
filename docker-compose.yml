@@ -1,7 +1,7 @@
 version: '3.2'
 services:
   perry:
-    image: cwds/perry:3.0.1_539-RC
+    image: cwds/perry:latest
     ports:
       - ${PERRY_PORT}:8080
       - ${PERRY_ADMIN_PORT}:9082
