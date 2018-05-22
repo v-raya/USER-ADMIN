@@ -29,7 +29,9 @@ RUN cp ./node_modules/bootstrap/dist/css/bootstrap.css /app/public/assets/bootst
 
 RUN mkdir -p /app/public/assets/react-wood-duck/dist/styles
 RUN cp ./node_modules/react-wood-duck/dist/styles/application.css /app/public/assets/react-wood-duck/dist/styles
-RUN cp ./node_modules/react-bootstrap-table/css/react-bootstrap-table.css /app/assets/react-bootstrap-table/css/react-bootstrap-table.css
+
+RUN mkdir -p /app/public/assets/react-bootstrap-table/css
+RUN cp ./node_modules/react-bootstrap-table/css/react-bootstrap-table.css /app/public/assets/react-bootstrap-table/css/react-bootstrap-table.css
 
 EXPOSE 3000 3035
 CMD ["bundle", "exec", "rails", "server"]
