@@ -24,6 +24,6 @@ module CountyAdmin
     config.log_level = :debug
     config.micro_services = config_for(:micro_services)
     config.relative_url_root = ENV['RAILS_RELATIVE_URL_ROOT'] || '/'
-    config.assets.prefix = "#{ENV['RAILS_RELATIVE_URL_ROOT']}/assets"
+    # config.assets.prefix = "#{ENV['RAILS_RELATIVE_URL_ROOT']}/assets"
   end
 end
