@@ -9,29 +9,18 @@ RUN apt-get update -qq && apt-get install -y curl && \
   apt-get update -qq && apt-get install -y build-essential libpq-dev yarn && \
   rm -rf /var/lib/apt/lists/*
 
-RUN mkdir /app
-WORKDIR /app
-COPY Gemfile Gemfile.lock /app/
+RUN mkdir /cap
+WORKDIR /cap
+COPY Gemfile Gemfile.lock /cap/
 RUN bundle install --jobs 20 --retry 5
-COPY package.json yarn.lock /app/
+COPY package.json yarn.lock /cap/
 RUN yarn install --production=false --non-interactive --frozen-lockfile
-COPY . /app
-# COPY ./app/assets /app/cap/assets
+COPY . /cap
+
 RUN NODE_ENV=production RAILS_ENV=production bundle exec rails assets:precompile
 RUN yarn install --production=false --non-interactive --frozen-lockfile
 # Required because we have mapping issues in nginx
-RUN ln -s /app/public/cap/packs /app/public/packs
-#  RUN ln -s /app/public/cap/assets /app/public/assets
-#
 
-# RUN mkdir -p /app/public/assets/bootstrap/dist/css
-# RUN cp ./node_modules/bootstrap/dist/css/* /app/public/assets/bootstrap/dist/css
-
-# RUN mkdir -p /app/public/assets/react-wood-duck/dist/styles
-# RUN cp ./node_modules/react-wood-duck/dist/styles/application.css /app/public/assets/react-wood-duck/dist/styles
-
-# RUN mkdir -p /app/public/assets/react-bootstrap-table/css
-# RUN cp ./node_modules/react-bootstrap-table/css/react-bootstrap-table.css /app/public/assets/react-bootstrap-table/css/react-bootstrap-table.css
-
+VOLUME /cap
 EXPOSE 3000 3035
 CMD ["bundle", "exec", "rails", "server"]
