@@ -21,18 +21,16 @@ RUN NODE_ENV=production RAILS_ENV=production bundle exec rails assets:precompile
 RUN yarn install --production=false --non-interactive --frozen-lockfile
 # Required because we have mapping issues in nginx
 # RUN ln -s /app/public/cap/packs /app/public/packs
-RUN ln -s /app/public/assets /app/public/cap/assets
+#  RUN ln -s /app/public/cap/assets /app/public/assets
+#
+RUN mkdir -p /app/public/assets/bootstrap/dist/css
+RUN cp ./node_modules/bootstrap/dist/css/* /app/public/assets/bootstrap/dist/css
 
-VOLUME /app
-#
-#  RUN mkdir -p /app/public/assets/bootstrap/dist/css
-#  RUN cp ./node_modules/bootstrap/dist/css/* /app/public/assets/bootstrap/dist/css
-#
-#  RUN mkdir -p /app/public/assets/react-wood-duck/dist/styles
-#  RUN cp ./node_modules/react-wood-duck/dist/styles/application.css /app/public/assets/react-wood-duck/dist/styles
-#
-#  RUN mkdir -p /app/public/assets/react-bootstrap-table/css
-#  RUN cp ./node_modules/react-bootstrap-table/css/react-bootstrap-table.css /app/public/assets/react-bootstrap-table/css/react-bootstrap-table.css
+RUN mkdir -p /app/public/assets/react-wood-duck/dist/styles
+RUN cp ./node_modules/react-wood-duck/dist/styles/application.css /app/public/assets/react-wood-duck/dist/styles
+
+RUN mkdir -p /app/public/assets/react-bootstrap-table/css
+RUN cp ./node_modules/react-bootstrap-table/css/react-bootstrap-table.css /app/public/assets/react-bootstrap-table/css/react-bootstrap-table.css
 
 EXPOSE 3000 3035
 CMD ["bundle", "exec", "rails", "server"]
