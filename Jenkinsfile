@@ -50,7 +50,7 @@ node(node_to_run_on()) {
             sh "docker exec -t ${container.id} yarn test"
           }
           stage('Publish Coverage Reports') {
-            sh "docker cp ${container.id}:/app/coverage ./coverage"
+            sh "docker cp ${container.id}:/cap/coverage ./coverage"
             last_commit = sh(returnStdout: true, script: 'git rev-parse HEAD').trim()
             commited_at = sh(returnStdout: true, script: "git log -1 --pretty=format:'%ct'").trim()
             sh "chmod 755 code_climate_coverage_branch.sh"
@@ -59,8 +59,8 @@ node(node_to_run_on()) {
             sh "export GIT_COMMIT_SHA=${last_commit}"
             sh "export GIT_COMMITED_AT=${commited_at}"
             sh "export GIT_BRANCH=${branch}"
-            sh "./cc-test-reporter format-coverage --debug -p /app -t simplecov -o coverage/codeclimate.ruby.json coverage/ruby/.resultset.json"
-            sh "./cc-test-reporter format-coverage --debug -p /app -t lcov -o coverage/codeclimate.javascript.json coverage/javascript/lcov.info"
+            sh "./cc-test-reporter format-coverage --debug -p /cap -t simplecov -o coverage/codeclimate.ruby.json coverage/ruby/.resultset.json"
+            sh "./cc-test-reporter format-coverage --debug -p /cap -t lcov -o coverage/codeclimate.javascript.json coverage/javascript/lcov.info"
             sh "./cc-test-reporter sum-coverage coverage/codeclimate.*.json -p 2"
             sh "./cc-test-reporter upload-coverage --debug -r ${CC_TEST_REPORTER_ID}"
           }
