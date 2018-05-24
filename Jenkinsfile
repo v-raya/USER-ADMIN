@@ -42,33 +42,33 @@ node(node_to_run_on()) {
         }
         app.withRun("--env CI=true") { container ->
           stage('Lint') {
-            sh "docker exec -t ${container.id} yarn lint"
-            sh "docker exec -t ${container.id} bundler-audit"
-            sh "docker exec -t ${container.id} brakeman"
+            // sh "docker exec -t ${container.id} yarn lint"
+            // sh "docker exec -t ${container.id} bundler-audit"
+            // sh "docker exec -t ${container.id} brakeman"
           }
           stage('Unit Test') {
-            sh "docker exec -t ${container.id} yarn test"
+            // sh "docker exec -t ${container.id} yarn test"
           }
           stage('Publish Coverage Reports') {
-            sh "docker cp ${container.id}:/cap/coverage ./coverage"
-            last_commit = sh(returnStdout: true, script: 'git rev-parse HEAD').trim()
-            commited_at = sh(returnStdout: true, script: "git log -1 --pretty=format:'%ct'").trim()
-            sh "chmod 755 code_climate_coverage_branch.sh"
-            branch = sh(returnStdout: true, script: './code_climate_coverage_branch.sh').trim()
-            sh "export GIT_COMMIT=${last_commit}"
-            sh "export GIT_COMMIT_SHA=${last_commit}"
-            sh "export GIT_COMMITED_AT=${commited_at}"
-            sh "export GIT_BRANCH=${branch}"
-            sh "./cc-test-reporter format-coverage --debug -p /cap -t simplecov -o coverage/codeclimate.ruby.json coverage/ruby/.resultset.json"
-            sh "./cc-test-reporter format-coverage --debug -p /cap -t lcov -o coverage/codeclimate.javascript.json coverage/javascript/lcov.info"
-            sh "./cc-test-reporter sum-coverage coverage/codeclimate.*.json -p 2"
-            sh "./cc-test-reporter upload-coverage --debug -r ${CC_TEST_REPORTER_ID}"
+            // sh "docker cp ${container.id}:/cap/coverage ./coverage"
+            // last_commit = sh(returnStdout: true, script: 'git rev-parse HEAD').trim()
+            // commited_at = sh(returnStdout: true, script: "git log -1 --pretty=format:'%ct'").trim()
+            // sh "chmod 755 code_climate_coverage_branch.sh"
+            // branch = sh(returnStdout: true, script: './code_climate_coverage_branch.sh').trim()
+            // sh "export GIT_COMMIT=${last_commit}"
+            // sh "export GIT_COMMIT_SHA=${last_commit}"
+            // sh "export GIT_COMMITED_AT=${commited_at}"
+            // sh "export GIT_BRANCH=${branch}"
+            // sh "./cc-test-reporter format-coverage --debug -p /cap -t simplecov -o coverage/codeclimate.ruby.json coverage/ruby/.resultset.json"
+            // sh "./cc-test-reporter format-coverage --debug -p /cap -t lcov -o coverage/codeclimate.javascript.json coverage/javascript/lcov.info"
+            // sh "./cc-test-reporter sum-coverage coverage/codeclimate.*.json -p 2"
+            // sh "./cc-test-reporter upload-coverage --debug -r ${CC_TEST_REPORTER_ID}"
           }
         }
         stage('Acceptance Test') {
-          sh "docker-compose up -d --build"
-          sh "sleep 120"
-          sh "docker-compose exec -T county-admin-test bundle exec rspec spec/acceptance"
+          // sh "docker-compose up -d --build"
+          // sh "sleep 120"
+          // sh "docker-compose exec -T county-admin-test bundle exec rspec spec/acceptance"
         }
         stage('Publish Image') {
           withDockerRegistry([credentialsId: DOCKER_REGISTRY_CREDENTIALS_ID]) {
