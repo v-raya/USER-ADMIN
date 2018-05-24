@@ -38,7 +38,7 @@ node(node_to_run_on()) {
           sh "./cc-test-reporter before-build --debug"
         }
         stage('Build Docker Image') {
-          app = docker.build("${DOCKER_GROUP}/${DOCKER_IMAGE}:${env.BUILD_ID}", "-f docker/web/Dockerfile .")
+          app = docker.build("${DOCKER_GROUP}/${DOCKER_IMAGE}:0.72.${env.BUILD_ID}", "-f docker/web/Dockerfile .")
         }
         app.withRun("--env CI=true") { container ->
           stage('Lint') {
