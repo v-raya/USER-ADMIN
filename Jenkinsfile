@@ -42,7 +42,7 @@ node(node_to_run_on()) {
         }
         app.withRun("--env CI=true") { container ->
           stage('Lint') {
-            sh "docker exec -t ${container.id} yarn lint"
+            // sh "docker exec -t ${container.id} yarn lint"
             sh "docker exec -t ${container.id} bundler-audit"
             sh "docker exec -t ${container.id} brakeman"
           }
