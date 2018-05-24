@@ -8,8 +8,8 @@ git_source(:github) do |repo_name|
 end
 
 gem 'addressable', '~> 2.5.2'
-gem 'bootstrap-sass', '~> 3.3.6'
 gem 'bootstrap'
+gem 'bootstrap-sass', '~> 3.3.6'
 gem 'dry-struct', '~> 0.4.0'
 gem 'dry-types', '~> 0.12.2'
 gem 'faraday', '~> 0.13.1'
