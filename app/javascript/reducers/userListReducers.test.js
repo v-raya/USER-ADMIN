@@ -50,4 +50,13 @@ describe('reducer', () => {
       error: 'error happened',
     });
   });
+
+  it('handles unexpected actiontypes gracefully', () => {
+    const unexpectedAction = {
+      type: 'END_OF_THE_WORLD',
+      details: { hello: 'world' },
+    };
+    const state = { userList: ['item1', 'item2'], fetching: true, error: null };
+    expect(fetchUserList(state, unexpectedAction)).toEqual(state);
+  });
 });
