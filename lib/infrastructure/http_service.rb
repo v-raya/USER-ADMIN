@@ -14,6 +14,12 @@ module Infrastructure
       return Faraday::Response.new(status: 404)
     end
 
+    def get_users(url, parameter, token)
+      http_connection.get("#{url}?lastName=#{parameter}&token=#{token}")
+    rescue StandardError
+      return Faraday::Response.new(status: 404)
+    end
+    
     def post(url, parameters, token)
       http_connection.post do |request|
         request.url "#{url}?token=#{token}"
