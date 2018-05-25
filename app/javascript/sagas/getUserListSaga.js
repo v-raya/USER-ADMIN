@@ -22,7 +22,31 @@ export function* countyUsersList() {
   }
 }
 
+export function* fetchUserListBySearch() {
+  const id = 'man';
+  try {
+    const userList = yield call(UserService.usersByLastName, id);
+
+    // dispatch a success action to the store with the new users
+    yield put({
+      type: actionTypes.FETCH_SEARCH_API_CALL_REQUEST,
+      userList,
+    });
+    // console.log("userList:"+ userList.message);
+  } catch (error) {
+    // dispatch a failure action to the store with the error
+    yield put({
+      type: actionTypes.FETCH_SEARCH_API_CALL_REQUEST,
+      error,
+    });
+  }
+}
 // watcher saga: watches for actions dispatched to the store, starts worker saga
 export function* countyUsersListSaga() {
-  yield takeLatest(actionTypes.FETCH_USERS_API_CALL_REQUEST, countyUsersList);
+  yield takeLatest(
+    actionTypes.FETCH_USERS_API_CALL_REQUEST,
+    countyUsersList,
+    actionTypes.FETCH_SEARCH_API_CALL_REQUEST,
+    fetchUserListBySearch
+  );
 }

@@ -16,6 +16,7 @@ class Home extends React.Component {
       {row.last_name}, {row.first_name}
     </a>
   );
+
   render() {
     return (
       <CountyUsersListContainer
