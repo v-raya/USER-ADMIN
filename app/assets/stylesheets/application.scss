@@ -13,9 +13,10 @@
  *= require_tree .
  *= require_self
  */
-@import 'bootstrap/dist/css/bootstrap.css';
-@import 'react-wood-duck/dist/styles/application.css';
-@import 'react-bootstrap-table/css/react-bootstrap-table.css';
+
+@import 'bootstrap-sprockets';
+@import 'bootstrap';
+@import 'react-wood-duck/dist/styles/application.scss';
 
 .col-md-3 {
   padding-left: 0;
