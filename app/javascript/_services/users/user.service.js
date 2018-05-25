@@ -1,8 +1,12 @@
 import ApiService from '../api';
 
 class UserService {
-  static fetch() {
-    return ApiService.get('/user_list/').then(response => response.data);
+  static fetch(id) {
+    return ApiService.get(`/user_list/`).then(response => response.data);
+  }
+
+  static usersByLastName(id) {
+    return ApiService.get(`/search_user/${id}`).then(response => response.data);
   }
 
   static fetchUserDetails(id) {
