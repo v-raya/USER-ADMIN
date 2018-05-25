@@ -16,11 +16,10 @@ module LoginHelper
     {
       'user': 'RACFID',
       'staffId': 'aa1',
-      'roles': ['Supervisor'],
+      'roles': [ 'CWS-admin', 'Supervisor' ],
       'county_code': '56',
       'county_cws_code': '1123',
       'county_name': 'Placer',
-      'roles': [ 'CWS-admin', 'Supervisor' ],
       'privileges': [
         'CWS Case Management System',
         'Resource Management',
