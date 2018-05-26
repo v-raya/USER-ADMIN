@@ -6,9 +6,7 @@ import { takeLatest, call, put } from 'redux-saga/effects';
 export function* getDetails() {
   try {
     const id = getUserId(currentPathname());
-    // console.log(id);
     const details = yield call(UserService.fetchUserDetails, id);
-    console.log(details);
     // dispatch a success action to the store with the new users
     yield put({
       type: actionTypes.FETCH_DETAILS_API_CALL_SUCCESS,
