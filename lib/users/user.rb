@@ -15,7 +15,7 @@ module Users
     attribute :first_name, Types::String.optional
     attribute :last_name, Types::String.optional
     attribute :county_name, Types::String.optional
-    attribute :racfid, Types::String.optional
+    attribute :RACFID, Types::String.optional
     attribute :start_date, Types::String.optional
     attribute :end_date, Types::String.optional
     attribute :office, Types::String.optional
@@ -26,5 +26,7 @@ module Users
     attribute :last_login_date_time, Types::String.optional
     attribute :enabled, Types::String.optional
     attribute :status, Types::String.optional
+    attribute :permissions, Types::Array.optional
+
   end
 end
