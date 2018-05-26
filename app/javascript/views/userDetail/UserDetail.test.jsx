@@ -12,7 +12,13 @@ describe('UserDetail', () => {
 
   let wrapper;
   beforeEach(() => {
-    wrapper = shallow(<UserDetail details={details} />);
+    wrapper = shallow(
+      <UserDetail
+        details={details}
+        dashboardUrl={'dburl'}
+        userListUrl={'myUserList'}
+      />
+    );
   });
 
   describe('renders 5 components', () => {
@@ -46,6 +52,14 @@ describe('UserDetail', () => {
       it('link is labeled User List', () => {
         expect(link.html()).toContain('User List');
       });
+    });
+
+    it('first link is pointed at dashboardf', () => {
+      expect(wrapper.find('Link').get(0).props['href']).toEqual('dburl');
+    });
+
+    it('link is pointed at user list', () => {
+      expect(wrapper.find('Link').get(1).props['href']).toEqual('myUserList');
     });
   });
 
