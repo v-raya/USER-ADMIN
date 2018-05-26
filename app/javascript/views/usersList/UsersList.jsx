@@ -49,7 +49,7 @@ const UserList = ({
                 <TableHeaderColumn dataField="last_login_date_time" width="100">
                   Last Login
                 </TableHeaderColumn>
-                <TableHeaderColumn dataField="racfid" isKey width="80">
+                <TableHeaderColumn dataField="RACFID" isKey width="80">
                   CWS Login
                 </TableHeaderColumn>
                 <TableHeaderColumn dataField="end_date" width="60">

@@ -84,7 +84,9 @@ const UserDetail = ({
                   </ShowField>
                 </div>
                 <div className="col-md-3">
-                  <ShowField label="Assigned Roles">{details.status}</ShowField>
+                  <ShowField label="Assigned Roles">
+                    {details.permissions}
+                  </ShowField>
                 </div>
               </div>
             </div>
