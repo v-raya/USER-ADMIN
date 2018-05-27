@@ -7,5 +7,6 @@ Rails.application.routes.draw do
     end
     resources :user_detail, only: [:show] do
     end
+    get 'account', to: 'account#index'
   end
 end
