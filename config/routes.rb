@@ -7,7 +7,5 @@ Rails.application.routes.draw do
     end
     resources :user_detail, only: [:show] do
     end
-    resources :search_user, only: [:show] do
-    end
   end
 end

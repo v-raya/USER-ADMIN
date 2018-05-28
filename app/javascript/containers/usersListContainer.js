@@ -1,12 +1,11 @@
 import { connect } from 'react-redux';
 import UsersList from '../views/usersList/UsersList.jsx';
 import * as actionTypes from '../actions/actionTypes';
-import { selectUserRecords, handleClick } from '../selectors/userListSelector';
+import { selectUserRecords } from '../selectors/userListSelector';
 
 const mapStateToProps = state => {
   return {
     userList: selectUserRecords(state),
-    handleClick: handleClick(),
     userListUrl: '/#',
     dashboardUrl: '/',
   };

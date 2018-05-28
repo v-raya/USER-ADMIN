@@ -6,14 +6,8 @@ module Users
       @http_service = http_service
     end
 
-    def get_users(token)
-      response = @http_service.get('/perry/idm/users', token)
-      return [] if response.status == 404
-      response.body.map { |result| User.new(result) }
-    end
-
-    def search_users(id, token)
-      response = @http_service.get_users("/perry/idm/users", id, token)
+    def get_users(last_name, token)
+      response = @http_service.search("/perry/idm/users", last_name, token)
       return [] if response.status == 404
       response.body.map { |result| User.new(result) }
     end

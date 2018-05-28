@@ -2,13 +2,14 @@ import UserService from '../_services/users';
 import * as actionTypes from '../actions/actionTypes';
 import { takeLatest, call, put } from 'redux-saga/effects';
 
-const id = 'id';
 // worker saga: makes the api call when watcher saga sees the action
 export function* getDetails() {
   try {
+    const id = getUserId();
     const details = yield call(UserService.fetchUserDetails, id);
 
     // dispatch a success action to the store with the new users
+
     yield put({
       type: actionTypes.FETCH_DETAILS_API_CALL_SUCCESS,
       details,
@@ -21,6 +22,12 @@ export function* getDetails() {
       error,
     });
   }
+}
+
+export function getUserId() {
+  const pathArray = window.location.pathname.split('/');
+  const id = pathArray[pathArray.length - 1];
+  return id;
 }
 
 // watcher saga: watches for actions dispatched to the store, starts worker saga

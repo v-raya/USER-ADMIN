@@ -7,8 +7,9 @@ import { connect } from 'react-redux';
 import { selectUserRecords } from '../selectors/userListSelector';
 
 class Home extends React.Component {
-  componentDidMount() {
-    this.props.actions.fetchUsersActions();
+  constructor(props) {
+    super(props);
+    this.handleTextChange = this.handleTextChange.bind(this);
   }
 
   nameFormat = (cell, row) => (
@@ -17,11 +18,23 @@ class Home extends React.Component {
     </a>
   );
 
+  handleOnClick = event => {
+    console.log('im clicked');
+  };
+
+  handleTextChange = event => {
+    var searchKey = event.target.value;
+    console.log(searchKey);
+    return searchKey;
+  };
+
   render() {
     return (
       <CountyUsersListContainer
         userList={this.props.userList}
         nameFormat={this.nameFormat}
+        handleTextChange={this.handleTextChange}
+        handleOnClick={this.handleOnClick}
       />
     );
   }

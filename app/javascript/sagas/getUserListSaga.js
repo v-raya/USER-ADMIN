@@ -1,11 +1,17 @@
 import UserService from '../_services/users';
 import * as actionTypes from '../actions/actionTypes';
-import { takeLatest, call, put } from 'redux-saga/effects';
+import { takeLatest, call, put, select } from 'redux-saga/effects';
+
+export const getSearchValue = state => state.searchKey;
 
 // worker saga: makes the api call when watcher saga sees the action
-export function* countyUsersList() {
+export function* countyUsersList(lastName) {
   try {
-    const userList = yield call(UserService.fetch);
+    let searchKey = yield select(getSearchValue);
+    if (!searchKey) {
+      searchKey = '';
+    }
+    const userList = yield call(UserService.fetch, searchKey);
 
     // dispatch a success action to the store with the new users
     yield put({
@@ -22,31 +28,6 @@ export function* countyUsersList() {
   }
 }
 
-export function* fetchUserListBySearch() {
-  const id = 'man';
-  try {
-    const userList = yield call(UserService.usersByLastName, id);
-
-    // dispatch a success action to the store with the new users
-    yield put({
-      type: actionTypes.FETCH_SEARCH_API_CALL_REQUEST,
-      userList,
-    });
-    // console.log("userList:"+ userList.message);
-  } catch (error) {
-    // dispatch a failure action to the store with the error
-    yield put({
-      type: actionTypes.FETCH_SEARCH_API_CALL_REQUEST,
-      error,
-    });
-  }
-}
-// watcher saga: watches for actions dispatched to the store, starts worker saga
 export function* countyUsersListSaga() {
-  yield takeLatest(
-    actionTypes.FETCH_USERS_API_CALL_REQUEST,
-    countyUsersList,
-    actionTypes.FETCH_SEARCH_API_CALL_REQUEST,
-    fetchUserListBySearch
-  );
+  yield takeLatest(actionTypes.FETCH_USERS_API_CALL_REQUEST, countyUsersList);
 }

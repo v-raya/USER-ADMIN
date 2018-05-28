@@ -5,7 +5,6 @@ import {
   PageHeader,
   Cards,
   Link,
-  Button,
   InputComponent,
 } from 'react-wood-duck';
 import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table';
@@ -14,7 +13,8 @@ const buttonAllign = { marginTop: '-9px' };
 
 const UserList = ({
   userList,
-  handleClick,
+  handleTextChange,
+  handleOnClick,
   nameFormat,
   dashboardUrl,
   dashboardClickHandler,
@@ -41,12 +41,13 @@ const UserList = ({
               gridClassName="col-md-10 col-sm-6 col-xs-12"
               fieldClassName="form-group"
               type="text"
+              onChange={handleTextChange}
             />
             <div className="col-md-2" style={buttonAllign}>
               <button
                 type="button"
                 className="btn btn-primary btn-sm"
-                onClick={handleClick}
+                onClick={handleOnClick}
               >
                 Search
               </button>
@@ -93,7 +94,8 @@ UserList.propTypes = {
   dashboardUrl: PropTypes.string,
   dashboardClickHandler: PropTypes.func,
   nameFormat: PropTypes.func,
-  handleClick: PropTypes.func,
+  handleOnClick: PropTypes.func,
+  handleTextChange: PropTypes.func,
 };
 
 UserList.defaultProps = {

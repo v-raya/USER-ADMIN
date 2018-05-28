@@ -12,6 +12,7 @@ function configureStore(initialState) {
     composeWithDevTools(applyMiddleware(sagaMiddleware))
   );
   initSagas(sagaMiddleware);
+  window.store = store;
   return store;
 }
 
