@@ -27,6 +27,5 @@ module Users
     attribute :enabled, Types::String.optional
     attribute :status, Types::String.optional
     attribute :permissions, Types::Array.optional
-
   end
 end
