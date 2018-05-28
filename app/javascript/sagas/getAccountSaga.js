@@ -2,7 +2,6 @@ import AccountService from '../_services/account';
 import * as actionTypes from '../actions/actionTypes';
 import { takeLatest, call, put } from 'redux-saga/effects';
 
-const id = 'id';
 // worker saga: makes the api call when watcher saga sees the action
 export function* getAccount() {
   try {
