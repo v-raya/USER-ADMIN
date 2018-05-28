@@ -5,6 +5,7 @@ import { selectUserRecords, selectCounty } from '../selectors/userListSelector';
 
 const componentDidMount = () => {
   //this.fetchUser();
+  //this.fetchAccount();
 };
 
 const mapStateToProps = state => {
@@ -17,8 +18,6 @@ const mapStateToProps = state => {
 };
 
 const mapDispatchToProps = dispatch => {
-  dispatch({ type: actionTypes.FETCH_USERS_API_CALL_REQUEST });
-  dispatch({ type: actionTypes.FETCH_ACCOUNT_API_CALL_REQUEST });
   return {};
 };
 
