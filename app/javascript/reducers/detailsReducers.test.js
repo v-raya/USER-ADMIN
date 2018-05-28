@@ -44,4 +44,13 @@ describe('reducer', () => {
       error: 'error happened',
     });
   });
+
+  it('handles unexpected actiontypes gracefully', () => {
+    const unexpectedAction = {
+      type: 'END_OF_THE_WORLD',
+      details: { hello: 'world' },
+    };
+    const state = { details: null, fetching: true, error: null };
+    expect(fetchDetails(state, unexpectedAction)).toEqual(state);
+  });
 });
