@@ -18,7 +18,6 @@ services:
     hostname: postgresql_data
     ports:
       - ${DB_POSTGRES_PORT}:${DB_POSTGRES_PORT}
-    env_file: .env
   county-admin-web:
     build:
       context: .
