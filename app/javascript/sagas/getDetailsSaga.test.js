@@ -9,9 +9,6 @@ import {
 import * as actionTypes from '../actions/actionTypes';
 import { takeLatest, call, put } from 'redux-saga/effects';
 
-// const id = 'id';
-// UserService.fetchUserDetails(id);
-
 describe('sagas', () => {
   it('starts the worker fetch saga', () => {
     const gen = detailsSaga();
