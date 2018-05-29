@@ -12,7 +12,7 @@ class Home extends React.Component {
   }
 
   nameFormat = (cell, row) => (
-    <a href={`/user_details/${row.id}`}>
+    <a href={`${makeUserDetailPath(row.id)}`}>
       {row.last_name}, {row.first_name}
     </a>
   );
@@ -31,6 +31,15 @@ Home.propTypes = {
   userList: PropTypes.array,
 };
 
+export function makeUserDetailPath(userId) {
+  var relativeRoot = process.env.RAILS_RELATIVE_URL_ROOT
+    ? process.env.RAILS_RELATIVE_URL_ROOT
+    : '/';
+  if (!relativeRoot.endsWith('/')) {
+    relativeRoot = relativeRoot + '/';
+  }
+  return relativeRoot + ['user_details', encodeURIComponent(userId)].join('/');
+}
 function mapStateToProps(state) {
   return {
     userList: selectUserRecords(state),
