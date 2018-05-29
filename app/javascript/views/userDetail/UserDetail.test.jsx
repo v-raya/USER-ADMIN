@@ -15,6 +15,24 @@ describe('UserDetail', () => {
     wrapper = shallow(<UserDetail details={details} />);
   });
 
+  describe('Setting enableSave state', () => {
+    describe('#onStatusChange', () => {
+      it('should set the enableSave state onStatusChange', () => {
+        const instance = wrapper.instance();
+        instance.onStatusChange();
+        expect(instance.state.enableSave).toBe(false);
+      });
+    });
+
+    describe('#onRoleChange', () => {
+      it('should set the enableSave state onRoleChange', () => {
+        const instance = wrapper.instance();
+        instance.onRoleChange();
+        expect(instance.state.enableSave).toBe(false);
+      });
+    });
+  });
+
   describe('renders 5 components', () => {
     it('renders component "Cards" ', () => {
       expect(wrapper.find('Cards').length).toBe(1);
