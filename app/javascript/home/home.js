@@ -31,16 +31,14 @@ Home.propTypes = {
   userList: PropTypes.array,
 };
 
-export function makeUserDetailPath(user_id) {
-  var relative_root = process.env.RAILS_RELATIVE_URL_ROOT
+export function makeUserDetailPath(userId) {
+  var relativeRoot = process.env.RAILS_RELATIVE_URL_ROOT
     ? process.env.RAILS_RELATIVE_URL_ROOT
     : '/';
-  if (!relative_root.endsWith('/')) {
-    relative_root = relative_root + '/';
+  if (!relativeRoot.endsWith('/')) {
+    relativeRoot = relativeRoot + '/';
   }
-  return (
-    relative_root + ['user_details', encodeURIComponent(user_id)].join('/')
-  );
+  return relativeRoot + ['user_details', encodeURIComponent(userId)].join('/');
 }
 function mapStateToProps(state) {
   return {
