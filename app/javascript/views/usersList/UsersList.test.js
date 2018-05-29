@@ -37,7 +37,7 @@ describe('UsersList', () => {
       ).toContain('Dashboard');
     });
 
-    it('first link is pointed at dsashboardf', () => {
+    it('first link is pointed at dashboard', () => {
       expect(wrapper.find('Link').get(0).props['href']).toEqual('dburl');
     });
   });
