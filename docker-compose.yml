@@ -13,13 +13,11 @@ services:
     hostname: cals_db2_data
     ports:
       - ${DB_CMS_DB2_PORT}:50000
-    env_file: .env
   postgresql_data:
     image: cwds/postgresql_data
     hostname: postgresql_data
     ports:
       - ${DB_POSTGRES_PORT}:${DB_POSTGRES_PORT}
-    env_file: .env
   county-admin-web:
     build:
       context: .
