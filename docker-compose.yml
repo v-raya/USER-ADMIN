@@ -1,13 +1,23 @@
 version: '3.2'
 services:
   perry:
-    image: cwds/perry:latest
+    image: cwds/perry
     ports:
       - ${PERRY_PORT}:8080
       - ${PERRY_ADMIN_PORT}:9082
     environment:
       DEV_MODE: ${DEV_MODE}
       LOG_LEVEL: "INFO"
+  cals_db2_data:
+    image: cwds/db2data
+    hostname: cals_db2_data
+    ports:
+      - ${DB_CMS_DB2_PORT}:50000
+  postgresql_data:
+    image: cwds/postgresql_data
+    hostname: postgresql_data
+    ports:
+      - ${DB_POSTGRES_PORT}:${DB_POSTGRES_PORT}
   county-admin-web:
     build:
       context: .
