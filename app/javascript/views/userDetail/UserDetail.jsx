@@ -23,6 +23,16 @@ export default class UserDetail extends Component {
     this.setState({ enableSave: false });
   };
 
+  alert = () => {
+    if (this.state.alert) {
+      return (
+        <Alert alertClassName="success" faIcon="fa-check-circle">
+          {'Your changes have been made successfuly'}
+        </Alert>
+      );
+    }
+  };
+
   render() {
     const {
       details,
@@ -31,51 +41,41 @@ export default class UserDetail extends Component {
       userListClickHandler,
       dashboardClickHandler,
     } = this.props;
-
     return (
       <div>
-        <div>
-          <GlobalHeader
-            profileName="County CWDS-Admin"
-            profileId="profile.id"
-          />
-          <PageHeader pageTitle="User Profile" button="" />
-          <div className="container">
-            <div className="col-md-12">
-              {this.state.alert && (
-                <Alert alertClassName="success" faIcon="fa-check-circle">
-                  {'Your changes have been made successfuly'}
-                </Alert>
-              )}
-              Back to:{' '}
-              <Link
-                text="Dashboard"
-                href={dashboardUrl}
-                clickHandler={dashboardClickHandler}
-              />
-              &nbsp;&gt;&nbsp;
-              <Link
-                text="User List"
-                href={userListUrl}
-                clickHandler={userListClickHandler}
-              />
-            </div>
-            {this.state.isEdit ? (
-              <UserDetailEdit
-                details={details}
-                onCancel={() => this.setState({ isEdit: false })}
-                onSave={() => this.setState({ isEdit: false, alert: true })}
-                onStatusChange={this.onStatusChange}
-                onRoleChange={this.onRoleChange}
-                enableSave={this.state.enableSave}
-              />
-            ) : (
-              <UserDetailShow
-                details={details}
-                onEdit={() => this.setState({ isEdit: true })}
-              />
-            )}
+        <GlobalHeader profileName="County CWDS-Admin" profileId="profile.id" />
+        <PageHeader pageTitle="User Profile" button="" />
+        <div className="container">
+          <div className="col-md-12">
+            {this.alert()}
+            Back to:{' '}
+            <Link
+              text="Dashboard"
+              href={dashboardUrl}
+              clickHandler={dashboardClickHandler}
+            />
+            &nbsp;&gt;&nbsp;
+            <Link
+              text="User List"
+              href={userListUrl}
+              clickHandler={userListClickHandler}
+            />
           </div>
+          {this.state.isEdit ? (
+            <UserDetailEdit
+              details={details}
+              onCancel={() => this.setState({ isEdit: false })}
+              onSave={() => this.setState({ isEdit: false, alert: true })}
+              onStatusChange={this.onStatusChange}
+              onRoleChange={this.onRoleChange}
+              enableSave={this.state.enableSave}
+            />
+          ) : (
+            <UserDetailShow
+              details={details}
+              onEdit={() => this.setState({ isEdit: true })}
+            />
+          )}
         </div>
       </div>
     );
