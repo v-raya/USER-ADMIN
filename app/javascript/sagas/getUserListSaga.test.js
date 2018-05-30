@@ -1,5 +1,4 @@
 import UserService from '../_services/users';
-
 import { countyUsersListSaga, countyUsersList } from './getUserListSaga';
 import * as actionTypes from '../actions/actionTypes';
 import { takeLatest, call, put } from 'redux-saga/effects';
@@ -21,8 +20,11 @@ describe('sagas', () => {
 
     describe('when successful', () => {
       it('executes the happy-path saga', () => {
-        const gen = countyUsersList();
-        expect(gen.next().value).toEqual(call(UserService.fetch));
+        const action = { payload: { lastName: 'man' } };
+        const gen = countyUsersList(action);
+        expect(gen.next().value).toEqual(
+          call(UserService.fetch, action.payload.lastName)
+        );
         expect(gen.next([1234, 5678]).value).toEqual(
           put({
             type: actionTypes.FETCH_USERS_API_CALL_SUCCESS,
@@ -35,8 +37,11 @@ describe('sagas', () => {
 
     describe('when failures come back from the fetch', () => {
       it('handles the error', () => {
-        const gen = countyUsersList();
-        expect(gen.next().value).toEqual(call(UserService.fetch));
+        const action = { payload: { id: 'man' } };
+        const gen = countyUsersList(action);
+        expect(gen.next().value).toEqual(
+          call(UserService.fetch, action.payload.lastName)
+        );
         expect(gen.throw('I have made a huge mistake').value).toEqual(
           put({
             type: actionTypes.FETCH_USERS_API_CALL_FAILURE,

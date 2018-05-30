@@ -1,17 +1,17 @@
 import UserService from '../_services/users';
 import * as actionTypes from '../actions/actionTypes';
-import { takeLatest, call, put, select } from 'redux-saga/effects';
-
-export const getSearchValue = state => state.searchKey;
+import { takeLatest, call, put } from 'redux-saga/effects';
 
 // worker saga: makes the api call when watcher saga sees the action
-export function* countyUsersList(lastName) {
+export function* countyUsersList(action) {
   try {
-    let searchKey = yield select(getSearchValue);
+    // const searchKey = yield select(action.payload);
+    let searchKey = action.payload;
     if (!searchKey) {
       searchKey = '';
     }
-    const userList = yield call(UserService.fetch, searchKey);
+    console.log(action.payload.lastName);
+    const userList = yield call(UserService.fetch, searchKey.lastName);
 
     // dispatch a success action to the store with the new users
     yield put({
