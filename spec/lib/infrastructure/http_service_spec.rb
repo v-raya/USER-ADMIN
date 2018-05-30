@@ -5,7 +5,7 @@ require 'rails_helper'
 module Infrastructure
   describe HttpService do
     let(:connection) { instance_double('Faraday::Connection') }
-    let(:last_name) {'my_name'}
+    let(:last_name) { 'my_name' }
 
     describe '#get' do
       context 'returns a valid API response' do
@@ -13,7 +13,8 @@ module Infrastructure
           allow(Faraday).to receive(:new)
             .with(url: 'https://perry.test')
             .and_return(connection)
-          expect(connection).to receive(:get).with("/resource?lastName=#{last_name}&token=showbiz_pizza_token")
+          expect(connection).to receive(:get)
+            .with("/resource?lastName=#{last_name}&token=showbiz_pizza_token")
           Infrastructure::HttpService.new.get('/resource', last_name, 'showbiz_pizza_token')
         end
 

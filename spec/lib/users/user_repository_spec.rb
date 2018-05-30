@@ -7,7 +7,7 @@ module Users
     let(:http_service) { instance_double('Infrastructure::HttpService') }
     let(:user_repository) { UserRepository.new(http_service) }
     let(:token) { 'sample_token' }
-    let(:last_name) {'manzo'}
+    let(:last_name) { 'manzo' }
 
     describe '#get_user' do
       let(:response) { instance_double('Faraday::Response') }

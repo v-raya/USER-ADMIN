@@ -14,7 +14,7 @@ module Infrastructure
     rescue StandardError
       return Faraday::Response.new(status: 404)
     end
-    
+
     def post(url, parameters, token)
       http_connection.post do |request|
         request.url "#{url}?token=#{token}"

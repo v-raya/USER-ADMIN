@@ -8,7 +8,6 @@ module Api
       let(:user_repository) { instance_double('User::UserRepository') }
       let(:user) { Users::User.new(username: 'el') }
 
-
       it 'has a route' do
         expect(get: 'api/user_list').to route_to(
           controller: 'api/user_list',
