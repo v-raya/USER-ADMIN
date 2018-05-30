@@ -75,6 +75,18 @@ describe('UserDetail', () => {
       ).toContain('Dashboard');
     });
 
+    describe('renders DetailShow and detailEdit', () => {
+      it('should display <UserDetailShow/>', () => {
+        wrapper.setState({ isEdit: false });
+        expect(wrapper.find('UserDetailShow').length).toBe(1);
+      });
+
+      it('should display <UserDetailEdit/>', () => {
+        wrapper.setState({ isEdit: true });
+        expect(wrapper.find('UserDetailEdit').length).toBe(1);
+      });
+    });
+
     describe('Link to user list', () => {
       let link;
       beforeEach(() => {
