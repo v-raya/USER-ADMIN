@@ -7,6 +7,7 @@ const UserList = ({
   userList,
   nameFormat,
   dashboardUrl,
+  accountCounty,
   dashboardClickHandler,
 }) => (
   <div>
@@ -24,7 +25,7 @@ const UserList = ({
             />
           </div>
           <Cards
-            cardHeaderText="Manage Users: Sacramento"
+            cardHeaderText={'Manage Users: ' + accountCounty}
             cardActionButtons={false}
           >
             <div className="col-md-12">
@@ -67,6 +68,7 @@ const UserList = ({
 UserList.propTypes = {
   userList: PropTypes.array,
   dashboardUrl: PropTypes.string,
+  accountCounty: PropTypes.string,
   dashboardClickHandler: PropTypes.func,
   nameFormat: PropTypes.func,
 };

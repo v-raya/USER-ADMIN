@@ -1,18 +1,17 @@
 import { connect } from 'react-redux';
 import UsersList from '../views/usersList/UsersList.jsx';
-import * as actionTypes from '../actions/actionTypes';
-import { selectUserRecords } from '../selectors/userListSelector';
+import { selectUserRecords, selectCounty } from '../selectors/userListSelector';
 
 const mapStateToProps = state => {
   return {
     userList: selectUserRecords(state),
+    accountCounty: selectCounty(state),
     userListUrl: '/#',
     dashboardUrl: '/',
   };
 };
 
 const mapDispatchToProps = dispatch => {
-  dispatch({ type: actionTypes.FETCH_USERS_API_CALL_REQUEST });
   return {};
 };
 
