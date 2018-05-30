@@ -9,7 +9,14 @@ import { selectUserRecords } from '../selectors/userListSelector';
 class Home extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      searchKey: '',
+    };
     this.handleTextChange = this.handleTextChange.bind(this);
+  }
+
+  componentDidMount() {
+    this.props.actions.fetchUsersActions(this.state.searchKey);
   }
 
   nameFormat = (cell, row) => (
@@ -18,15 +25,10 @@ class Home extends React.Component {
     </a>
   );
 
-  handleOnClick = event => {
-    console.log('im clicked');
-  };
+  handleOnClick = () =>
+    this.props.actions.fetchUsersActions(this.state.searchKey);
 
-  handleTextChange = event => {
-    var searchKey = event.target.value;
-    console.log(searchKey);
-    return searchKey;
-  };
+  handleTextChange = event => this.setState({ searchKey: event.target.value });
 
   render() {
     return (
@@ -43,6 +45,7 @@ class Home extends React.Component {
 Home.propTypes = {
   actions: PropTypes.object.isRequired,
   userList: PropTypes.array,
+  fetchUsersActions: PropTypes.func,
 };
 
 function mapStateToProps(state) {
@@ -53,6 +56,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   const actions = { fetchUsersActions };
+
   return {
     actions: bindActionCreators(actions, dispatch),
   };
