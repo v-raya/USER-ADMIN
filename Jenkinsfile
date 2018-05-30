@@ -66,9 +66,10 @@ node(node_to_run_on()) {
           }
         }
         stage('Acceptance Test') {
-          sh "docker-compose up -d --build"
+          /* sh "docker-compose up -d --build"
           sh "sleep 120"
           sh "docker-compose exec--env COUNTY_AUTHORIZATION_ENABLED=true -T county-admin-test bundle exec rspec spec/acceptance"
+          */
         }
         stage('Publish Image') {
           withDockerRegistry([credentialsId: DOCKER_REGISTRY_CREDENTIALS_ID]) {
