@@ -14,10 +14,11 @@ describe('UserService', () => {
     });
 
     it('calls fetch ApiService', () => {
+      const lastName = 'don';
       getSpy.mockReturnValue(Promise.resolve({}));
       expect(getSpy).not.toHaveBeenCalled();
-      UserService.fetch();
-      expect(getSpy).toHaveBeenCalledWith('/user_list/');
+      UserService.fetch(lastName);
+      expect(getSpy).toHaveBeenCalledWith(`/user_list?last_name=${lastName}`);
     });
 
     it('calls #fetchUsersDetails ApiService', () => {

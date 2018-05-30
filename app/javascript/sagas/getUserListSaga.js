@@ -3,9 +3,10 @@ import * as actionTypes from '../actions/actionTypes';
 import { takeLatest, call, put } from 'redux-saga/effects';
 
 // worker saga: makes the api call when watcher saga sees the action
-export function* countyUsersList() {
+export function* countyUsersList(action) {
   try {
-    const userList = yield call(UserService.fetch);
+    let searchKey = action.payload;
+    const userList = yield call(UserService.fetch, searchKey.lastName);
 
     // dispatch a success action to the store with the new users
     yield put({
@@ -22,7 +23,6 @@ export function* countyUsersList() {
   }
 }
 
-// watcher saga: watches for actions dispatched to the store, starts worker saga
 export function* countyUsersListSaga() {
   yield takeLatest(actionTypes.FETCH_USERS_API_CALL_REQUEST, countyUsersList);
 }

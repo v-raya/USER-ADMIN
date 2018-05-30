@@ -8,8 +8,15 @@ import { connect } from 'react-redux';
 import { selectUserRecords } from '../selectors/userListSelector';
 
 class Home extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      searchKey: '',
+    };
+  }
+
   componentDidMount() {
-    this.props.actions.fetchUsersActions();
+    this.props.actions.fetchUsersActions(this.state.searchKey);
     this.props.actions.fetchAccountActions();
   }
 
@@ -18,11 +25,19 @@ class Home extends React.Component {
       {row.last_name}, {row.first_name}
     </a>
   );
+
+  handleOnClick = () =>
+    this.props.actions.fetchUsersActions(this.state.searchKey);
+
+  handleTextChange = event => this.setState({ searchKey: event.target.value });
+
   render() {
     return (
       <CountyUsersListContainer
         userList={this.props.userList}
         nameFormat={this.nameFormat}
+        handleTextChange={this.handleTextChange}
+        handleOnClick={this.handleOnClick}
       />
     );
   }
@@ -31,6 +46,7 @@ class Home extends React.Component {
 Home.propTypes = {
   actions: PropTypes.object.isRequired,
   userList: PropTypes.array,
+  fetchUsersActions: PropTypes.func,
 };
 
 export function makeUserDetailPath(userId) {

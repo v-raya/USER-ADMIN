@@ -4,6 +4,7 @@ module LoginHelper
   def login(login_config = default_json)
     visit ENV['RAILS_RELATIVE_URL_ROOT'] || '/'
     puts "visited: landed on  #{current_url}"
+
     return unless ENV.fetch('COUNTY_AUTHORIZATION_ENABLED', false)
     fill_in 'Authorization JSON', with: JSON.generate(login_config)
     click_button 'Sign In'
