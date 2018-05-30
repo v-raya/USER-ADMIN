@@ -1,4 +1,4 @@
-import { selectUserRecords } from './userListSelector';
+import { selectUserRecords, selectCounty } from './userListSelector';
 
 describe('selectors', () => {
   describe('#selectUserRecords', () => {
@@ -53,6 +53,25 @@ describe('selectors', () => {
         other_stuff: { bad: 'ignore' },
       };
       expect(selectUserRecords(state)).toEqual([]);
+    });
+  });
+
+  describe('#selectCounty', () => {
+    it('selects the county when availble', () => {
+      const state = {
+        fetchAccount: {
+          account: {
+            XHRStatus: 'ready',
+            account: {
+              user: 'RACFID',
+              staff_id: '0X5',
+              county_code: '20',
+              county_name: 'Sacramento',
+            },
+          },
+        },
+      };
+      expect(selectCounty(state)).toEqual('Sacramento');
     });
   });
 });
