@@ -13,7 +13,6 @@ class Home extends React.Component {
     this.state = {
       searchKey: '',
     };
-    this.handleTextChange = this.handleTextChange.bind(this);
   }
 
   componentDidMount() {

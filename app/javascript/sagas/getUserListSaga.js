@@ -10,7 +10,6 @@ export function* countyUsersList(action) {
     if (!searchKey) {
       searchKey = '';
     }
-    console.log(action.payload.lastName);
     const userList = yield call(UserService.fetch, searchKey.lastName);
 
     // dispatch a success action to the store with the new users
