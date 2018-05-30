@@ -27,6 +27,13 @@ describe('UserService', () => {
     beforeEach(() => {
       getSpy = jest.spyOn(ApiService, 'get');
     });
+  });
+  describe('#fetchUserDetails', () => {
+    let getSpy;
+
+    beforeEach(() => {
+      getSpy = jest.spyOn(ApiService, 'get');
+    });
 
     it('calls #fetchUsersDetails ApiService', () => {
       getSpy.mockReturnValue(Promise.resolve({}));
