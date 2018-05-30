@@ -20,11 +20,32 @@ describe('UserService', () => {
       UserService.fetch(lastName);
       expect(getSpy).toHaveBeenCalledWith(`/user_list?last_name=${lastName}`);
     });
+  });
+  describe('#fetchUserDetails', () => {
+    let getSpy;
+
+    beforeEach(() => {
+      getSpy = jest.spyOn(ApiService, 'get');
+    });
 
     it('calls #fetchUsersDetails ApiService', () => {
       getSpy.mockReturnValue(Promise.resolve({}));
       UserService.fetchUserDetails(id);
       expect(getSpy).toHaveBeenCalledWith('/user_detail/id');
+    });
+  });
+
+  describe('#savehUserDetails', () => {
+    let patchSpy;
+
+    beforeEach(() => {
+      patchSpy = jest.spyOn(ApiService, 'patch');
+    });
+
+    it('calls #fetchUsersDetails ApiService', () => {
+      patchSpy.mockReturnValue(Promise.resolve({}));
+      UserService.saveUserDetails(id);
+      expect(patchSpy).toHaveBeenCalledWith('/user_detail/id');
     });
   });
 });
