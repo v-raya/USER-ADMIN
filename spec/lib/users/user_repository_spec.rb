@@ -7,6 +7,7 @@ module Users
     let(:http_service) { instance_double('Infrastructure::HttpService') }
     let(:user_repository) { UserRepository.new(http_service) }
     let(:token) { 'sample_token' }
+    let(:last_name) {'manzo'}
 
     describe '#get_user' do
       let(:response) { instance_double('Faraday::Response') }
@@ -16,9 +17,9 @@ module Users
           allow(response).to receive(:status).and_return(404)
           allow(http_service)
             .to receive(:get)
-            .with('/perry/idm/users', token)
+            .with('/perry/idm/users', last_name, token)
             .and_return(response)
-          expect(user_repository.get_users(token)).to eq([])
+          expect(user_repository.get_users(last_name, token)).to eq([])
         end
       end
 
@@ -28,9 +29,9 @@ module Users
           allow(response).to receive(:body).and_return([{ username: 'El' }])
           allow(http_service)
             .to receive(:get)
-            .with('/perry/idm/users', token)
+            .with('/perry/idm/users', last_name, token)
             .and_return(response)
-          expect(user_repository.get_users(token))
+          expect(user_repository.get_users(last_name, token))
             .to eq [User.new(username: 'El')]
         end
       end
@@ -43,9 +44,9 @@ module Users
             allow(response).to receive(:status).and_return(404)
             allow(http_service)
               .to receive(:get)
-              .with('/perry/idm/users/22', token)
+              .with('/perry/idm/users/22', last_name, token)
               .and_return(response)
-            expect(user_repository.get_users_details('22', token)).to eq({})
+            expect(user_repository.get_users_details('22', last_name, token)).to eq({})
           end
         end
 
@@ -55,9 +56,9 @@ module Users
             allow(response).to receive(:body).and_return(id: 'El')
             allow(http_service)
               .to receive(:get)
-              .with('/perry/idm/users/33', token)
+              .with('/perry/idm/users/33', last_name, token)
               .and_return(response)
-            expect(user_repository.get_users_details('33', token))
+            expect(user_repository.get_users_details('33', last_name, token))
               .to eq User.new(id: 'El')
           end
         end
