@@ -1,8 +1,8 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import UserDetail from './UserDetail.jsx';
+import UserDetailShow from './UserDetailShow';
 
-describe('UserDetail', () => {
+describe('UserDetailEdit', () => {
   const details = {
     id: 'id',
     first_name: 'Firstname0',
@@ -12,62 +12,13 @@ describe('UserDetail', () => {
 
   let wrapper;
   beforeEach(() => {
-    wrapper = shallow(
-      <UserDetail
-        details={details}
-        dashboardUrl={'dburl'}
-        userListUrl={'myUserList'}
-      />
-    );
-  });
-
-  describe('renders 5 components', () => {
-    it('renders component "Cards" ', () => {
-      expect(wrapper.find('Cards').length).toBe(1);
-    });
-
-    it('renders component "GlobalHeader"', () => {
-      expect(wrapper.find('GlobalHeader').length).toBe(1);
-    });
-
-    it('renders component "PageHeader"', () => {
-      expect(wrapper.find('PageHeader').length).toBe(1);
-    });
-
-    it('renders navigation link to Dashboard', () => {
-      expect(
-        wrapper
-          .find('Link')
-          .at(0)
-          .html()
-      ).toContain('Dashboard');
-    });
-
-    describe('Link to user list', () => {
-      let link;
-      beforeEach(() => {
-        link = wrapper.find('Link').at(1);
-      });
-
-      it('link is labeled User List', () => {
-        expect(link.html()).toContain('User List');
-      });
-    });
-
-    it('first link is pointed at dashboardf', () => {
-      expect(wrapper.find('Link').get(0).props['href']).toEqual('dburl');
-    });
-
-    it('link is pointed at user list', () => {
-      expect(wrapper.find('Link').get(1).props['href']).toEqual('myUserList');
-    });
+    wrapper = shallow(<UserDetailShow details={details} />);
   });
 
   describe('when label and className props are passed', () => {
     it('renders the label inside the grid wrapper', () => {
-      wrapper = shallow(<UserDetail details={details} />);
+      wrapper = shallow(<UserDetailShow details={details} />);
       expect(wrapper.find('ShowField').length).toBe(10);
-
       expect(
         wrapper
           .find('ShowField')
