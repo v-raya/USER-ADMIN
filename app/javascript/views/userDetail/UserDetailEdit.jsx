@@ -4,7 +4,7 @@ import Cards from '../../common/Card';
 import ShowField from '../../common/ShowField';
 import DropDownField from 'react-wood-duck/dist/DropDownField';
 import MultiSelect from '../../common/MultiSelect';
-import { STATUS } from '../../_constants/userDetailConstants';
+import { STATUS, ROLES } from '../../_constants/userDetailConstants';
 
 /* eslint camelcase: 0 */
 
@@ -78,6 +78,7 @@ const UserDetailEdit = ({
               <MultiSelect
                 id="Multiselect1"
                 selectedOption={details.permissions}
+                options={ROLES}
                 label="Assigned Roles"
                 onChange={onRoleChange}
               />
