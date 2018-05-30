@@ -1,8 +1,8 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import UserDetail from './UserDetail.jsx';
+import UserDetailEdit from './UserDetailEdit';
 
-describe('UserDetail', () => {
+describe('UserDetailEdit', () => {
   const details = {
     id: 'id',
     first_name: 'Firstname0',
@@ -12,46 +12,13 @@ describe('UserDetail', () => {
 
   let wrapper;
   beforeEach(() => {
-    wrapper = shallow(<UserDetail details={details} />);
-  });
-
-  describe('renders 5 components', () => {
-    it('renders component "Cards" ', () => {
-      expect(wrapper.find('Cards').length).toBe(1);
-    });
-
-    it('renders component "GlobalHeader"', () => {
-      expect(wrapper.find('GlobalHeader').length).toBe(1);
-    });
-
-    it('renders component "PageHeader"', () => {
-      expect(wrapper.find('PageHeader').length).toBe(1);
-    });
-
-    it('renders navigation link to Dashboard', () => {
-      expect(
-        wrapper
-          .find('Link')
-          .at(0)
-          .html()
-      ).toContain('Dashboard');
-    });
-
-    it('renders navigation link to User List', () => {
-      expect(
-        wrapper
-          .find('Link')
-          .at(1)
-          .html()
-      ).toContain('User List');
-    });
+    wrapper = shallow(<UserDetailEdit details={details} />);
   });
 
   describe('when label and className props are passed', () => {
     it('renders the label inside the grid wrapper', () => {
-      wrapper = shallow(<UserDetail details={details} />);
-      expect(wrapper.find('ShowField').length).toBe(10);
-
+      wrapper = shallow(<UserDetailEdit details={details} />);
+      expect(wrapper.find('ShowField').length).toBe(8);
       expect(
         wrapper
           .find('ShowField')
@@ -100,18 +67,8 @@ describe('UserDetail', () => {
           .at(7)
           .props().label
       ).toEqual('End Date');
-      expect(
-        wrapper
-          .find('ShowField')
-          .at(8)
-          .props().label
-      ).toEqual('Status');
-      expect(
-        wrapper
-          .find('ShowField')
-          .at(9)
-          .props().label
-      ).toEqual('Assigned Roles');
+      expect(wrapper.find('[label="Status"]').exists()).toBe(true);
+      expect(wrapper.find('[label="Assigned Roles"]').exists()).toBe(true);
     });
   });
 });

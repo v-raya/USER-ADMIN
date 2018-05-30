@@ -1,99 +1,86 @@
-import React from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { GlobalHeader, PageHeader, Cards, Link } from 'react-wood-duck';
-import ShowField from '../../common/ShowField';
+import { GlobalHeader, PageHeader, Link, Alert } from 'react-wood-duck';
+import UserDetailEdit from '../userDetail/UserDetailEdit';
+import UserDetailShow from '../userDetail/UserDetailShow';
 
 /* eslint camelcase: 0 */
+export default class UserDetail extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      isEdit: false,
+      alert: false,
+      enableSave: true,
+    };
+  }
 
-const UserDetail = ({
-  details,
-  dashboardUrl,
-  userListUrl,
-  userListClickHandler,
-  dashboardClickHandler,
-}) => (
-  <div>
-    <GlobalHeader profileName="County CWDS-Admin" profileId="profile.id" />
-    <PageHeader pageTitle="User Profile" button="" />
-    <div className="container">
-      <div className="col-md-12">
-        Back to:{' '}
-        <Link
-          text="Dashboard"
-          href={dashboardUrl}
-          clickHandler={dashboardClickHandler}
-        />
-        &nbsp;&gt;&nbsp;
-        <Link
-          text="User List"
-          href={userListUrl}
-          clickHandler={userListClickHandler}
-        />
-      </div>
+  onStatusChange = value => {
+    this.setState({ enableSave: false });
+  };
 
-      <div className="row">
-        <div className="col-md-12">
-          <Cards
-            cardHeaderText={`Manage Users: ${details.county_name}`}
-            cardHeaderButton={true}
-          >
-            <div className="col-md-12">
-              <div className="row">
-                <div className="col-md-3">
-                  <ShowField label="Full Name">
-                    {details.last_name},
-                    {details.first_name}
-                    {details.middle_name}
-                  </ShowField>
-                </div>
-                <div className="col-md-3">
-                  <ShowField label="Office Name">{details.office}</ShowField>
-                </div>
-                <div className="col-md-3">
-                  <ShowField label="CWS Login">{details.racfid}</ShowField>
-                </div>
-                <div className="col-md-3">
-                  <ShowField label="Last Login">
-                    {details.last_login_date_time}
-                  </ShowField>
-                </div>
-              </div>
-              <div className="row">
-                <div className="col-md-3">
-                  <ShowField label="Email">{details.email}</ShowField>
-                </div>
-                <div className="col-md-3">
-                  <ShowField label="Office Phone Number">
-                    <span>{details.phone_number}</span>
-                  </ShowField>
-                </div>
-                <div className="col-md-3">
-                  <ShowField label="Start Date">
-                    {' '}
-                    {details.start_date}
-                  </ShowField>
-                </div>
-                <div className="col-md-3">
-                  <ShowField label="End Date">{details.end_date}</ShowField>
-                </div>
-              </div>
-              <div className="row">
-                <div className="col-md-3">
-                  <ShowField label="Status">
-                    {String(details.enabled)}
-                  </ShowField>
-                </div>
-                <div className="col-md-3">
-                  <ShowField label="Assigned Roles">{details.status}</ShowField>
-                </div>
-              </div>
-            </div>
-          </Cards>
+  onRoleChange = value => {
+    this.setState({ enableSave: false });
+  };
+
+  alert = () => {
+    if (this.state.alert) {
+      return (
+        <Alert alertClassName="success" faIcon="fa-check-circle">
+          {'Your changes have been made successfuly'}
+        </Alert>
+      );
+    }
+  };
+
+  render() {
+    const {
+      details,
+      dashboardUrl,
+      userListUrl,
+      userListClickHandler,
+      dashboardClickHandler,
+    } = this.props;
+    return (
+      <div>
+        <GlobalHeader profileName="County CWDS-Admin" profileId="profile.id" />
+        <PageHeader pageTitle="User Profile" button="" />
+        <div className="container">
+          <div className="col-md-12">
+            {this.alert()}
+            Back to:{' '}
+            <Link
+              text="Dashboard"
+              href={dashboardUrl}
+              clickHandler={dashboardClickHandler}
+            />
+            &nbsp;&gt;&nbsp;
+            <Link
+              text="User List"
+              href={userListUrl}
+              clickHandler={userListClickHandler}
+            />
+          </div>
+          {this.state.isEdit ? (
+            <UserDetailEdit
+              details={details}
+              onCancel={() => this.setState({ isEdit: false })}
+              onSave={() => this.setState({ isEdit: false, alert: true })}
+              onStatusChange={this.onStatusChange}
+              onRoleChange={this.onRoleChange}
+              enableSave={this.state.enableSave}
+            />
+          ) : (
+            <UserDetailShow
+              details={details}
+              onEdit={() => this.setState({ isEdit: true })}
+            />
+          )}
         </div>
       </div>
-    </div>
-  </div>
-);
+    );
+  }
+}
 
 UserDetail.propTypes = {
   details: PropTypes.object,
@@ -104,10 +91,10 @@ UserDetail.propTypes = {
 };
 
 UserDetail.defaultProps = {
-  userListUrl: '/#',
+  userListUrl: process.env.RAILS_RELATIVE_URL_ROOT
+    ? process.env.RAILS_RELATIVE_URL_ROOT
+    : '/',
   dashboardUrl: '/',
   userListClickHandler: () => {},
   dashboardClickHandler: () => {},
 };
-
-export default UserDetail;

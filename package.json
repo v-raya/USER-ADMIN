@@ -5,7 +5,7 @@
     "prettier:check": "prettier --list-different --config ./.prettierrc \"app/javascript/**/*.js?(x)\"",
     "test": "run-s test:*",
     "test:jest": "jest --env=jsdom --coverage --no-colors",
-    "test:rspec": "bundle exec rspec --no-color spec/controllers",
+    "test:rspec": "bundle exec rspec --no-color  spec/lib spec/controllers",
     "test:jest:watch": "npm run test:jest -- --watch",
     "lint:test:eslint": "eslint --format tap \"app/javascript/**/*.{js,jsx}\"",
     "lint:test:rubocop": "bundle exec rubocop --format tap",

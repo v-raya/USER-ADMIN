@@ -17,6 +17,7 @@ const UserList = ({
   handleOnClick,
   nameFormat,
   dashboardUrl,
+  accountCounty,
   dashboardClickHandler,
 }) => (
   <div>
@@ -34,7 +35,7 @@ const UserList = ({
             />
           </div>
           <Cards
-            cardHeaderText="Manage Users: Sacramento"
+            cardHeaderText={'Manage Users: ' + accountCounty}
             cardActionButtons={false}
           >
             <InputComponent
@@ -75,7 +76,7 @@ const UserList = ({
                 <TableHeaderColumn dataField="last_login_date_time" width="100">
                   Last Login
                 </TableHeaderColumn>
-                <TableHeaderColumn dataField="racfid" isKey width="80">
+                <TableHeaderColumn dataField="RACFID" isKey width="80">
                   CWS Login
                 </TableHeaderColumn>
                 <TableHeaderColumn dataField="end_date" width="60">
@@ -93,6 +94,7 @@ const UserList = ({
 UserList.propTypes = {
   userList: PropTypes.array,
   dashboardUrl: PropTypes.string,
+  accountCounty: PropTypes.string,
   dashboardClickHandler: PropTypes.func,
   nameFormat: PropTypes.func,
   handleOnClick: PropTypes.func,
