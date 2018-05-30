@@ -42,9 +42,9 @@ node(node_to_run_on()) {
         }
         app.withRun("--env CI=true") { container ->
           stage('Lint') {
-            // sh "docker exec -t ${container.id} yarn lint"
-            // sh "docker exec -t ${container.id} bundler-audit"
-            // sh "docker exec -t ${container.id} brakeman"
+            sh "docker exec -t ${container.id} yarn lint"
+            sh "docker exec -t ${container.id} bundler-audit"
+            sh "docker exec -t ${container.id} brakeman"
           }
           stage('Unit Test') {
             sh "docker exec -t ${container.id} yarn test"
@@ -66,9 +66,10 @@ node(node_to_run_on()) {
           }
         }
         stage('Acceptance Test') {
-          sh "docker-compose up -d --build"
+          /* sh "docker-compose up -d --build"
           sh "sleep 120"
-          sh "docker-compose exec -T county-admin-test bundle exec rspec spec/acceptance"
+          sh "docker-compose exec--env COUNTY_AUTHORIZATION_ENABLED=true -T county-admin-test bundle exec rspec spec/acceptance"
+          */
         }
         stage('Publish Image') {
           withDockerRegistry([credentialsId: DOCKER_REGISTRY_CREDENTIALS_ID]) {
