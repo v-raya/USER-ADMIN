@@ -3,39 +3,57 @@ import { shallow } from 'enzyme';
 import UserDetail from './UserDetail.jsx';
 
 describe('UserDetail', () => {
-  const details = {
-    id: 'id',
-    first_name: 'Firstname0',
-    last_name: 'Lastname0',
-    county_name: 'MyCounty',
-  };
-
   let wrapper;
   beforeEach(() => {
     wrapper = shallow(
       <UserDetail
-        details={details}
+        details={{}}
         dashboardUrl={'dburl'}
         userListUrl={'myUserList'}
       />
     );
   });
 
-  describe('Setting enableSave state', () => {
-    describe('#onStatusChange', () => {
-      it('should set the enableSave state onStatusChange', () => {
+  describe('#componentWillReceiveProps()', () => {
+    it('should change the details state', () => {
+      const value = { status: true };
+      const wrapper = shallow(<UserDetail details={value} />);
+      wrapper.setProps({ details: value });
+      expect(wrapper.state('details')).toEqual(value);
+    });
+  });
+
+  describe('Setting state', () => {
+    describe('#onStatusChange() function', () => {
+      it('should set the Status state when event is triggered', () => {
+        const expectedvalue = { enabled: true };
         const instance = wrapper.instance();
-        instance.onStatusChange();
+        const myFunction = instance.onStatusChange('enabled');
+        expect(() => myFunction({ value: true })).not.toThrow();
+        expect(instance.state.details).toEqual(expectedvalue);
         expect(instance.state.enableSave).toBe(false);
       });
     });
 
-    describe('#onRoleChange', () => {
-      it('should set the enableSave state onRoleChange', () => {
+    describe('#onRoleChange()  function', () => {
+      it('should set the Permissions state when event is triggered', () => {
+        const expectedValue = { permissions: { 0: 'Hotline-rollout' } };
         const instance = wrapper.instance();
-        instance.onRoleChange();
+        const myFunction = instance.onRoleChange;
+        expect(() => myFunction({ 0: 'Hotline-rollout' })).not.toThrow();
+        expect(instance.state.details).toEqual(expectedValue);
         expect(instance.state.enableSave).toBe(false);
       });
+    });
+  });
+
+  describe('#alert()', () => {
+    it('should display <Alert/>', () => {
+      wrapper.setState({ alert: true });
+      expect(wrapper.find('Alert').length).toBe(1);
+      expect(wrapper.find('Alert').props().children).toBe(
+        'Your changes have been made successfuly'
+      );
     });
   });
 
