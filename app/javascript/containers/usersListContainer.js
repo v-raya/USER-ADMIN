@@ -5,7 +5,7 @@ import { selectUserRecords, selectCounty } from '../selectors/userListSelector';
 const mapStateToProps = state => {
   return {
     userList: selectUserRecords(state),
-    account_county: selectCounty(state),
+    accountCounty: selectCounty(state),
     userListUrl: '/#',
     dashboardUrl: '/',
   };
