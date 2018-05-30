@@ -5,7 +5,7 @@ import UsersList from './UsersList.jsx';
 describe('UsersList', () => {
   let wrapper;
   beforeEach(() => {
-    wrapper = shallow(<UsersList />);
+    wrapper = shallow(<UsersList dashboardUrl={'dburl'} />);
   });
 
   describe('renders components', () => {
@@ -35,6 +35,10 @@ describe('UsersList', () => {
           .at(0)
           .html()
       ).toContain('Dashboard');
+    });
+
+    it('first link is pointed at dashboard', () => {
+      expect(wrapper.find('Link').get(0).props['href']).toEqual('dburl');
     });
   });
 });
