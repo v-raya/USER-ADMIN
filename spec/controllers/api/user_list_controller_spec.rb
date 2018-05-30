@@ -19,9 +19,9 @@ module Api
       it 'returns a userlist' do
         allow(Users::UserRepository).to receive(:new)
           .with(no_args).and_return(user_repository)
-        allow(user_repository).to receive(:get_users).with('token').and_return(user)
+        allow(user_repository).to receive(:get_users).with('my_name', 'token').and_return(user)
         request.session[:token] = 'token'
-        get :index
+        get :index, params: { last_name: 'my_name' }
         expect(response.body).to eq user.to_json
       end
     end

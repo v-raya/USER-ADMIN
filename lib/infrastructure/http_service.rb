@@ -8,8 +8,8 @@ module Infrastructure
       @base_url = base_url
     end
 
-    def get(url, token)
-      http_connection.get("#{url}?token=#{token}")
+    def get(url, last_name, token)
+      http_connection.get("#{url}?lastName=#{last_name}&token=#{token}")
     rescue StandardError
       return Faraday::Response.new(status: 404)
     end
