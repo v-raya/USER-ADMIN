@@ -42,6 +42,7 @@ const UserList = ({
               fieldClassName="form-group"
               type="text"
               onChange={handleTextChange}
+              placeholder="...search by last name"
             />
             <div className="col-md-2" style={buttonAllign}>
               <button
