@@ -1,10 +1,20 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { GlobalHeader, PageHeader, Cards, Link } from 'react-wood-duck';
+import {
+  GlobalHeader,
+  PageHeader,
+  Cards,
+  Link,
+  InputComponent,
+} from 'react-wood-duck';
 import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table';
+
+const buttonAllign = { marginTop: '-9px' };
 
 const UserList = ({
   userList,
+  handleTextChange,
+  handleOnClick,
   nameFormat,
   dashboardUrl,
   accountCounty,
@@ -28,6 +38,22 @@ const UserList = ({
             cardHeaderText={'Manage Users: ' + accountCounty}
             cardActionButtons={false}
           >
+            <InputComponent
+              gridClassName="col-md-10 col-sm-6 col-xs-12"
+              fieldClassName="form-group"
+              type="text"
+              onChange={handleTextChange}
+              placeholder="...search by last name"
+            />
+            <div className="col-md-2" style={buttonAllign}>
+              <button
+                type="button"
+                className="btn btn-primary btn-sm"
+                onClick={handleOnClick}
+              >
+                Search
+              </button>
+            </div>
             <div className="col-md-12">
               <br />
               <BootstrapTable
@@ -71,6 +97,8 @@ UserList.propTypes = {
   accountCounty: PropTypes.string,
   dashboardClickHandler: PropTypes.func,
   nameFormat: PropTypes.func,
+  handleOnClick: PropTypes.func,
+  handleTextChange: PropTypes.func,
 };
 
 UserList.defaultProps = {
