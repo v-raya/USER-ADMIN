@@ -42,7 +42,7 @@ node('cap-slave') {
       stage('Acceptance Test') {
         sh "docker-compose up -d --build"
         sh "sleep 120"
-        sh "docker-compose exec -T county-admin-test bundle exec rspec spec/acceptance"
+        sh "docker-compose exec --env COUNTY_AUTHORIZATION_ENABLED=true -T county-admin-test bundle exec rspec spec/acceptance"
       }
     } catch(Exception e) {
       currentBuild.result = "FAILURE"
