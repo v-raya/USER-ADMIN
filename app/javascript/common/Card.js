@@ -4,21 +4,22 @@ import classNames from 'classnames';
 import { Button } from 'react-wood-duck';
 
 function renderCancelSaveButtons(props, onCancel, enableSave, onSave) {
-  {
+  return (
     props.cardActionButtons &&
-      !props.cardHeaderButton && (
-        <div className="pull-right">
-          <Button btnClassName="default" btnName="cancel" onClick={onCancel} />
-          <Button
-            btnClassName="primary"
-            disabled={enableSave}
-            btnName="save"
-            onClick={onSave}
-          />
-        </div>
-      );
-  }
+    !props.cardHeaderButton && (
+      <div className="pull-right">
+        <Button btnClassName="default" btnName="cancel" onClick={onCancel} />
+        <Button
+          btnClassName="primary"
+          disabled={enableSave}
+          btnName="save"
+          onClick={onSave}
+        />
+      </div>
+    )
+  );
 }
+
 const Cards = props => {
   const {
     children,
