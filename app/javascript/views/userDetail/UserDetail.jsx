@@ -49,7 +49,6 @@ export default class UserDetail extends Component {
 
   render() {
     const {
-      details,
       dashboardUrl,
       userListUrl,
       userListClickHandler,
@@ -77,16 +76,16 @@ export default class UserDetail extends Component {
           </div>
           {this.state.isEdit ? (
             <UserDetailEdit
-              details={details}
+              details={this.state.details}
               onCancel={() => this.setState({ isEdit: false })}
               onSave={() => this.setState({ isEdit: false, alert: true })}
-              onStatusChange={this.onStatusChange}
+              onStatusChange={this.onStatusChange('enabled')}
               onRoleChange={this.onRoleChange}
               enableSave={this.state.enableSave}
             />
           ) : (
             <UserDetailShow
-              details={details}
+              details={this.state.details}
               onEdit={() => this.setState({ isEdit: true })}
             />
           )}
