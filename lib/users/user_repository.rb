@@ -17,5 +17,10 @@ module Users
       return {} if response.status == 404
       User.new(response.body)
     end
+
+    def update_user(id, enabled, permissions, token)
+      response = @http_service.patch("/perry/idm/users/#{id}", enabled, permissions, token)
+      User.new(response.body)
+    end
   end
 end

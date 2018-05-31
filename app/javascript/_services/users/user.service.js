@@ -10,6 +10,12 @@ class UserService {
   static fetchUserDetails(id) {
     return ApiService.get(`/user_detail/${id}`).then(response => response.data);
   }
+
+  static updateUser(id, data) {
+    return ApiService.post(`/user_detail/${id}`, data).then(
+      response => response.data
+    );
+  }
 }
 
 export default UserService;

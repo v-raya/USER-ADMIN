@@ -6,6 +6,9 @@ Rails.application.routes.draw do
     resources :user_list, only: [:index] do
     end
     resources :user_detail, only: [:show] do
+      member do
+        put ':update', to: 'user_detail#save_user'
+      end
     end
     get 'account', to: 'account#index'
   end
