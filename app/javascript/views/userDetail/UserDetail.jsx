@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import { GlobalHeader, PageHeader, Link, Alert } from 'react-wood-duck';
 import UserDetailEdit from '../userDetail/UserDetailEdit';
 import UserDetailShow from '../userDetail/UserDetailShow';
+import UserService from '../../_services/users';
+import { currentPathname, getUserId } from '../../sagas/getDetailsSaga';
 
 /* eslint camelcase: 0 */
 export default class UserDetail extends Component {
@@ -35,6 +37,13 @@ export default class UserDetail extends Component {
       enableSave: false,
       details: { ...details, permissions: value },
     });
+  };
+
+  onSaveDetails = () => {
+    const id = getUserId(currentPathName());
+    response = UserService.saveUserDetails(id, this.state.details);
+    console.log('save response', response);
+    this.setState({ isEdit: false, alert: true });
   };
 
   alert = () => {
@@ -78,7 +87,7 @@ export default class UserDetail extends Component {
             <UserDetailEdit
               details={this.state.details}
               onCancel={() => this.setState({ isEdit: false })}
-              onSave={() => this.setState({ isEdit: false, alert: true })}
+              onSave={this.onSaveDetails}
               onStatusChange={this.onStatusChange('enabled')}
               onRoleChange={this.onRoleChange}
               enableSave={this.state.enableSave}

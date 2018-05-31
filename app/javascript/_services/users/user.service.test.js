@@ -51,8 +51,14 @@ describe('UserService', () => {
 
     it('calls #fetchUsersDetails ApiService', () => {
       patchSpy.mockReturnValue(Promise.resolve({}));
-      UserService.saveUserDetails(id);
-      expect(patchSpy).toHaveBeenCalledWith('/user_detail/id');
+      UserService.saveUserDetails(id, {
+        enabled: true,
+        permissions: ['drivethebus', 'getapuppy'],
+        first_name: 'HackerElite',
+      });
+      expect(patchSpy).toHaveBeenCalledWith(
+        '/user_detail/id&enabled=true&permissions=drivethebus&permissions=getapuppy'
+      );
     });
   });
 });
