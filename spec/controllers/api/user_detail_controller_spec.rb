@@ -6,8 +6,12 @@ module Api
   describe UserDetailController do
     let(:user_repository) { instance_double('User::UserRepository') }
     let(:user) { Users::User.new(username: 'el') }
-    let(:enabled) { 'true'}
-    let(:permissions) { ['snapshot', 'hotline']}
+    let(:token) { 'my_token' }
+
+    # before do 
+    #   allow(User::UserRepository).to receive(:new).and_return(user_repository)
+    # end 
+
 
     describe '#show' do
       it 'has a route' do
@@ -40,11 +44,12 @@ module Api
       end
 
       it 'updates a user' do
+        allow(Users::UserRepository).to receive(:new).and_return(user_repository)
         allow(user_repository).to receive(:update_user)
-          .with('55', '5', enabled, 'token')
+          .with("55", {enabled: 'false', permissions: ['snapshot','hotline']}, token)
           .and_return(user)
-        request.session[:token] = 'token'
-        patch :save_user,  params: { id: '55', enabled: 'false', permissions: ['snapshot','hotline']}
+        request.session[:token] = 'my_token'
+        patch :save_user,  params: { id: 55, enabled: 'false', permissions: ['snapshot','hotline']}
         expect(response.body).to eq user.to_json
       end
     end

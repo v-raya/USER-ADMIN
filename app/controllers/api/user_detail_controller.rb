@@ -13,11 +13,10 @@ module Api
       render json: updated_user
     end
 
-
     private
 
     def allowed_params_for_update
-      params.permit(Users::User.attribute_names).to_h
+      params.permit([:enabled, permissions: []]).to_h
     end
   end 
 end
