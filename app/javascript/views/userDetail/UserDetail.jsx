@@ -12,15 +12,29 @@ export default class UserDetail extends Component {
       isEdit: false,
       alert: false,
       enableSave: true,
+      details: props.details,
     };
   }
 
-  onStatusChange = value => {
-    this.setState({ enableSave: false });
+  componentWillReceiveProps(nextProps) {
+    let details = nextProps.details;
+    this.setState({ details });
+  }
+
+  onStatusChange = name => ({ value }) => {
+    const { details } = this.state;
+    this.setState({
+      details: { ...details, [name]: value },
+      enableSave: false,
+    });
   };
 
   onRoleChange = value => {
-    this.setState({ enableSave: false });
+    const { details } = this.state;
+    this.setState({
+      enableSave: false,
+      details: { ...details, permissions: value },
+    });
   };
 
   alert = () => {
@@ -35,7 +49,6 @@ export default class UserDetail extends Component {
 
   render() {
     const {
-      details,
       dashboardUrl,
       userListUrl,
       userListClickHandler,
@@ -63,16 +76,16 @@ export default class UserDetail extends Component {
           </div>
           {this.state.isEdit ? (
             <UserDetailEdit
-              details={details}
+              details={this.state.details}
               onCancel={() => this.setState({ isEdit: false })}
               onSave={() => this.setState({ isEdit: false, alert: true })}
-              onStatusChange={this.onStatusChange}
+              onStatusChange={this.onStatusChange('enabled')}
               onRoleChange={this.onRoleChange}
               enableSave={this.state.enableSave}
             />
           ) : (
             <UserDetailShow
-              details={details}
+              details={this.state.details}
               onEdit={() => this.setState({ isEdit: true })}
             />
           )}

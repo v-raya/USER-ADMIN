@@ -4,7 +4,7 @@ import Cards from '../../common/Card';
 import ShowField from '../../common/ShowField';
 import DropDownField from 'react-wood-duck/dist/DropDownField';
 import MultiSelect from '../../common/MultiSelect';
-import { STATUS } from '../../_constants/userDetailConstants';
+import { STATUS, ROLES } from '../../_constants/userDetailConstants';
 
 /* eslint camelcase: 0 */
 
@@ -31,7 +31,7 @@ const UserDetailEdit = ({
           <div className="row">
             <div className="col-md-3">
               <ShowField label="Full Name">
-                {details.last_name}
+                {details.last_name},
                 {details.first_name}
                 {details.middle_name}
               </ShowField>
@@ -78,6 +78,7 @@ const UserDetailEdit = ({
               <MultiSelect
                 id="Multiselect1"
                 selectedOption={details.permissions}
+                options={ROLES}
                 label="Assigned Roles"
                 onChange={onRoleChange}
               />
