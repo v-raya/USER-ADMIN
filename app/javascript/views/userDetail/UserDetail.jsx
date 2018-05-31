@@ -40,8 +40,8 @@ export default class UserDetail extends Component {
   };
 
   onSaveDetails = () => {
-    const id = getUserId(currentPathName());
-    response = UserService.saveUserDetails(id, this.state.details);
+    const id = getUserId(currentPathname());
+    const response = UserService.saveUserDetails(id, this.state.details);
     console.log('save response', response);
     this.setState({ isEdit: false, alert: true });
   };

@@ -21,13 +21,7 @@ describe('UserService', () => {
       expect(getSpy).toHaveBeenCalledWith(`/user_list?last_name=${lastName}`);
     });
   });
-  describe('#fetchUserDetails', () => {
-    let getSpy;
 
-    beforeEach(() => {
-      getSpy = jest.spyOn(ApiService, 'get');
-    });
-  });
   describe('#fetchUserDetails', () => {
     let getSpy;
 

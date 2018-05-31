@@ -15,9 +15,13 @@ class UserService {
     let params = [];
     params.push('enabled' + '=' + encodeURIComponent(details['enabled']));
 
-    details['permissions'].forEach(value => {
-      params.push('permissions' + '=' + encodeURIComponent(value));
-    });
+    if (details['permissions'] && details['permissions'].length > 0) {
+      details['permissions'].forEach(value => {
+        params.push('permissions' + '=' + encodeURIComponent(value));
+      });
+    } else {
+      params.push('permissions=');
+    }
 
     const query = params.join('&');
 

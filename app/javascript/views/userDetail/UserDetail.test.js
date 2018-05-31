@@ -1,6 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 import UserDetail from './UserDetail.jsx';
+import UserService from '../../_services/users';
 
 describe('UserDetail', () => {
   let wrapper;
@@ -48,12 +49,28 @@ describe('UserDetail', () => {
   });
 
   describe('#alert()', () => {
-    it('should display <Alert/>', () => {
+    it('displays <Alert/>', () => {
       wrapper.setState({ alert: true });
       expect(wrapper.find('Alert').length).toBe(1);
       expect(wrapper.find('Alert').props().children).toBe(
         'Your changes have been made successfuly'
       );
+    });
+  });
+
+  describe('#onSaveDetails', () => {
+    let serviceSpy;
+
+    beforeEach(() => {
+      serviceSpy = jest.spyOn(UserService, 'saveUserDetails');
+    });
+
+    it('calls the service to patch the user record', () => {
+      const instance = wrapper.instance();
+      const mySaveFunction = instance.onSaveDetails;
+      expect(() => mySaveFunction()).not.toThrow();
+      mySaveFunction();
+      expect(serviceSpy).toHaveBeenCalledWith('blank');
     });
   });
 
