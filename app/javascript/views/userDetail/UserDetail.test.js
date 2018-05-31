@@ -70,7 +70,7 @@ describe('UserDetail', () => {
       const mySaveFunction = instance.onSaveDetails;
       expect(() => mySaveFunction()).not.toThrow();
       mySaveFunction();
-      expect(serviceSpy).toHaveBeenCalledWith('blank');
+      expect(serviceSpy).toHaveBeenCalledWith('blank', {});
     });
   });
 
