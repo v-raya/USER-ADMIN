@@ -4,10 +4,12 @@ require 'rails_helper'
 
 module Api
   describe UserDetailController do
-    describe '#show' do
-      let(:user_repository) { instance_double('User::UserRepository') }
-      let(:user) { Users::User.new(username: 'el') }
+    let(:user_repository) { instance_double('User::UserRepository') }
+    let(:user) { Users::User.new(username: 'el') }
+    let(:enabled) { 'true'}
+    let(:permissions) { ['snapshot', 'hotline']}
 
+    describe '#show' do
       it 'has a route' do
         expect(get: 'api/user_detail/12').to route_to(
           controller: 'api/user_detail',
@@ -23,6 +25,26 @@ module Api
         allow(user_repository).to receive(:get_users_details).with('12', 'token').and_return(user)
         request.session[:token] = 'token'
         get :show, params: { id: '12' }
+        expect(response.body).to eq user.to_json
+      end
+    end
+
+    describe '#save_user' do
+      it 'has a route' do
+        expect(patch: 'api/user_detail/33/save_user').to route_to(
+          format: 'json',
+          controller: 'api/user_detail',
+          action: 'save_user',
+          id: '33',
+        )
+      end
+
+      it 'updates a user' do
+        allow(user_repository).to receive(:update_user)
+          .with('55', '5', enabled, 'token')
+          .and_return(user)
+        request.session[:token] = 'token'
+        patch :save_user,  params: { id: '55', enabled: 'false', permissions: ['snapshot','hotline']}
         expect(response.body).to eq user.to_json
       end
     end
