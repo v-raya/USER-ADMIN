@@ -9,7 +9,7 @@ import {
 } from 'react-wood-duck';
 import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table';
 
-const buttonAllign = { marginTop: '-9px' };
+const buttonAlign = { marginTop: '-9px' };
 
 const UserList = ({
   userList,
@@ -45,7 +45,7 @@ const UserList = ({
               onChange={handleTextChange}
               placeholder="...search by last name"
             />
-            <div className="col-md-2" style={buttonAllign}>
+            <div className="col-md-2" style={buttonAlign}>
               <button
                 type="button"
                 className="btn btn-primary btn-sm"
