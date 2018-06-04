@@ -14,6 +14,12 @@ module Infrastructure
       return Faraday::Response.new(status: 404)
     end
 
+    def get_permissions(url, token)
+      http_connection.get("#{url}?token=#{token}")
+    rescue StandardError
+      return Faraday::Response.new(status: 404)
+    end
+
     def post(url, parameters, token)
       http_connection.post do |request|
         request.url "#{url}?token=#{token}"
