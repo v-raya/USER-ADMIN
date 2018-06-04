@@ -30,7 +30,7 @@ describe('UserService', () => {
     it('calls #fetchPermissionList ApiService', () => {
       getSpy.mockReturnValue(Promise.resolve({}));
       UserService.fetchPermissionsList();
-      expect(getSpy).toHaveBeenCalledWith('/permissions/');
+      expect(getSpy).toHaveBeenCalledWith('/permissions_list/');
     });
   });
 });
