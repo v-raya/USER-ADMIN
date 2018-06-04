@@ -8,5 +8,6 @@ Rails.application.routes.draw do
     resources :user_detail, only: [:show] do
     end
     get 'account', to: 'account#index'
+    get 'permissions_list', to: 'permissions_list#index'
   end
 end
