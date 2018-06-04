@@ -53,7 +53,9 @@ export default class UserDetail extends Component {
       userListUrl,
       userListClickHandler,
       dashboardClickHandler,
+      permissionsList,
     } = this.props;
+    console.log(permissionsList);
     return (
       <div>
         <GlobalHeader profileName="County CWDS-Admin" profileId="profile.id" />
@@ -82,11 +84,13 @@ export default class UserDetail extends Component {
               onStatusChange={this.onStatusChange('enabled')}
               onRoleChange={this.onRoleChange}
               enableSave={this.state.enableSave}
+              permissions={permissionsList}
             />
           ) : (
             <UserDetailShow
               details={this.state.details}
               onEdit={() => this.setState({ isEdit: true })}
+              permissions={permissionsList}
             />
           )}
         </div>
@@ -101,6 +105,7 @@ UserDetail.propTypes = {
   userListUrl: PropTypes.string,
   userListClickHandler: PropTypes.func,
   dashboardClickHandler: PropTypes.func,
+  permissionsList: PropTypes.array,
 };
 
 UserDetail.defaultProps = {
