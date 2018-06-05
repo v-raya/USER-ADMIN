@@ -41,9 +41,9 @@ export default class UserDetail extends Component {
 
   onSaveDetails = () => {
     const id = getUserId(currentPathname());
-    const response = UserService.saveUserDetails(id, this.state.details);
-    console.log('save response', response);
-    this.setState({ isEdit: false, alert: true });
+    const { details } = this.state;
+    const response = UserService.saveUserDetails(id, details);
+    this.setState({ isEdit: false, alert: true, saveResponse: response });
   };
 
   alert = () => {
@@ -54,6 +54,15 @@ export default class UserDetail extends Component {
         </Alert>
       );
     }
+  };
+
+  formattedPermissions = () => {
+    const { details } = this.state;
+    return details.permissions && !Array.isArray(details.permissions)
+      ? details.permissions.split(',')
+      : !details.permissions
+        ? []
+        : details.permissions;
   };
 
   render() {
@@ -86,6 +95,9 @@ export default class UserDetail extends Component {
           {this.state.isEdit ? (
             <UserDetailEdit
               details={this.state.details}
+              selectedPermissions={this.formattedPermissions(
+                this.state.details.permissions
+              )}
               onCancel={() => this.setState({ isEdit: false })}
               onSave={this.onSaveDetails}
               onStatusChange={this.onStatusChange('enabled')}

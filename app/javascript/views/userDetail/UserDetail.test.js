@@ -58,6 +58,19 @@ describe('UserDetail', () => {
     });
   });
 
+  describe('#formattedPermissions', () => {
+    let myFormattedPermissions;
+
+    beforeEach(() => {
+      const instance = wrapper.instance();
+      myFormattedPermissions = instance.formattedPermissions;
+    });
+
+    it('handles nil', () => {
+      expect(myFormattedPermissions(undefined)).toEqual([]);
+    });
+  });
+
   describe('#onSaveDetails', () => {
     let serviceSpy;
 

@@ -15,8 +15,8 @@ class UserService {
     let params = [];
     params.push('enabled' + '=' + encodeURIComponent(details['enabled']));
 
-    if (details['permissions'] && details['permissions'].length > 0) {
-      details['permissions'].forEach(value => {
+    if (details['permissions']) {
+      details['permissions'].split(',').forEach(value => {
         params.push('permissions' + '=' + encodeURIComponent(value));
       });
     } else {

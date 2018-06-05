@@ -10,6 +10,7 @@ import { STATUS, ROLES } from '../../_constants/userDetailConstants';
 
 const UserDetailEdit = ({
   details,
+  selectedPermissions,
   onCancel,
   onSave,
   saveAlert,
@@ -77,7 +78,7 @@ const UserDetailEdit = ({
             <div className="col-md-3">
               <MultiSelect
                 id="Multiselect1"
-                selectedOption={details.permissions}
+                selectedOption={selectedPermissions}
                 options={ROLES}
                 label="Assigned Roles"
                 onChange={onRoleChange}
@@ -90,8 +91,16 @@ const UserDetailEdit = ({
   </div>
 );
 
+export function formatPermissions(permissions) {
+  return permissions && !Array.isArray(permissions)
+    ? permissions.split(',')
+    : !permissions
+      ? []
+      : permissions;
+}
 UserDetailEdit.propTypes = {
   details: PropTypes.object,
+  selectedPermissions: PropTypes.array,
   onCancel: PropTypes.func,
   onSave: PropTypes.func,
   saveAlert: PropTypes.func,

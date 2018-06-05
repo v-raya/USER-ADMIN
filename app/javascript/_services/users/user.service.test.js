@@ -47,7 +47,7 @@ describe('UserService', () => {
       patchSpy.mockReturnValue(Promise.resolve({}));
       UserService.saveUserDetails(id, {
         enabled: true,
-        permissions: ['drivethebus', 'getapuppy'],
+        permissions: 'drivethebus,getapuppy',
         first_name: 'HackerElite',
       });
       expect(patchSpy).toHaveBeenCalledWith(

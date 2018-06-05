@@ -8,6 +8,7 @@ describe('UserDetailEdit', () => {
     first_name: 'Firstname0',
     last_name: 'Lastname0',
     county_name: 'MyCounty',
+    permissions: ['x', 'y'],
   };
 
   let wrapper;
