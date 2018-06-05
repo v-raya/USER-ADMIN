@@ -4,8 +4,10 @@ export const selectDetailRecords = state => {
 };
 
 export const permissionsList = state => {
-  const permissionsList = state.fetchPermissions
-    ? state.fetchPermissions.permissions
-    : null;
-  return permissionsList ? permissionsList.permissions : [];
+  return state.fetchPermissions.permissions
+    ? state.fetchPermissions.permissions.permissions.map(list => ({
+        label: list,
+        value: list,
+      }))
+    : [];
 };

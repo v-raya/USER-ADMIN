@@ -34,30 +34,20 @@ describe('selectors', () => {
   });
 
   describe('#permissionsList', () => {
-    it('selects the permissions', () => {
+    it('selects the permissions when availble', () => {
+      const expectedValue = [
+        { label: 'Hello', value: 'Hello' },
+        { label: 'Bye', value: 'Bye' },
+      ];
       const state = {
         fetchPermissions: {
           permissions: {
+            XHRStatus: 'ready',
             permissions: ['Hello', 'Bye'],
           },
         },
       };
-      expect(permissionsList(state)).toEqual(['Hello', 'Bye']);
-    });
-
-    it('selects empty permissions', () => {
-      const state = {
-        fetch: {},
-        other_stuff: { bad: 'ignore' },
-      };
-      expect(permissionsList(state)).toEqual([]);
-    });
-
-    it('selects no permissions', () => {
-      const state = {
-        other_stuff: { bad: 'ignore' },
-      };
-      expect(permissionsList(state)).toEqual([]);
+      expect(permissionsList(state)).toEqual(expectedValue);
     });
   });
 });
