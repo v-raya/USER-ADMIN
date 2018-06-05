@@ -19,9 +19,9 @@ module Users
     end
 
     def get_permissions_list(token)
-      response = @http_service.get_permissions("/perry/idm/permissions", token)
+      response = @http_service.get_permissions('/perry/idm/permissions', token)
       return [] if response.status == 404
-      response.body { Permissions.new()  }
+      response.body { Permissions.new }
     end
   end
 end

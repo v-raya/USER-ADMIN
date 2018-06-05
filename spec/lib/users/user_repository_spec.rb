@@ -64,8 +64,9 @@ module Users
         end
       end
     end
-  describe '#get_permissions_list' do
-    let(:response) { instance_double('Faraday::Response') }
+
+    describe '#get_permissions_list' do
+      let(:response) { instance_double('Faraday::Response') }
 
       context 'with no permissions' do
         it 'returns an empty permissions list' do
@@ -93,4 +94,3 @@ module Users
     end
   end
 end
-
