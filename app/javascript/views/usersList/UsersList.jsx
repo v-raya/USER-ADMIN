@@ -19,6 +19,7 @@ const UserList = ({
   dashboardUrl,
   accountCounty,
   dashboardClickHandler,
+  statusFormat,
 }) => (
   <div>
     <GlobalHeader profileName="County CWDS-Admin" profileId="profile.id" />
@@ -70,13 +71,17 @@ const UserList = ({
                 >
                   Full Name
                 </TableHeaderColumn>
-                <TableHeaderColumn dataField="enabled" width="40">
+                <TableHeaderColumn
+                  dataField="enabled"
+                  dataFormat={statusFormat}
+                  width="40"
+                >
                   Status
                 </TableHeaderColumn>
                 <TableHeaderColumn dataField="last_login_date_time" width="100">
                   Last Login
                 </TableHeaderColumn>
-                <TableHeaderColumn dataField="RACFID" isKey width="80">
+                <TableHeaderColumn dataField="RACFID" isKey width="90">
                   CWS Login
                 </TableHeaderColumn>
                 <TableHeaderColumn dataField="end_date" width="60">
@@ -99,6 +104,7 @@ UserList.propTypes = {
   nameFormat: PropTypes.func,
   handleOnClick: PropTypes.func,
   handleTextChange: PropTypes.func,
+  statusFormat: PropTypes.func,
 };
 
 UserList.defaultProps = {

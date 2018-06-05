@@ -26,6 +26,15 @@ class Home extends React.Component {
     </a>
   );
 
+  statusFormat = (cell, row) => {
+    if (row.enabled === true) {
+      row.enabled = 'Active';
+    } else {
+      row.enabled = 'Inactive';
+    }
+    return row.enabled;
+  };
+
   handleOnClick = () =>
     this.props.actions.fetchUsersActions(this.state.searchKey);
 
@@ -38,6 +47,7 @@ class Home extends React.Component {
         nameFormat={this.nameFormat}
         handleTextChange={this.handleTextChange}
         handleOnClick={this.handleOnClick}
+        statusFormat={this.statusFormat}
       />
     );
   }
@@ -58,6 +68,7 @@ export function makeUserDetailPath(userId) {
   }
   return relativeRoot + ['user_details', encodeURIComponent(userId)].join('/');
 }
+
 function mapStateToProps(state) {
   return {
     userList: selectUserRecords(state),
