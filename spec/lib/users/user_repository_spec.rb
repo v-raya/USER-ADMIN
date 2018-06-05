@@ -9,6 +9,7 @@ module Users
     let(:token) { 'sample_token' }
     let(:last_name) { 'manzo' }
 
+
     describe '#get_user' do
       let(:response) { instance_double('Faraday::Response') }
 
@@ -61,6 +62,25 @@ module Users
             expect(user_repository.get_users_details('33', token, last_name))
               .to eq User.new(id: 'El')
           end
+        end
+      end
+    end
+
+    describe '#update_user' do
+      let(:response) { instance_double('Faraday::Response') }
+      params = {
+         enable: 'true',
+         permissions: ['snapshot', 'hotline']
+        }
+      context 'with user' do
+        it 'updates a user' do
+          allow(response).to receive(:body).and_return(id: '55', enabled: 'true' ,permissions: ['snapshot', 'hotline'])
+          allow(http_service)
+            .to receive(:patch)
+            .with('/perry/idm/users/55', params, token)
+            .and_return(response)
+          expect(user_repository.update_user('55', params, token))
+            .to eq User.new(id: '55', enabled: 'true' ,permissions: ['snapshot', 'hotline'])
         end
       end
     end

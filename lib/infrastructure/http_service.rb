@@ -30,6 +30,14 @@ module Infrastructure
       end
     end
 
+    def patch(url, parameters, token)
+      http_connection.patch do |request|
+        request.url "#{url}?token=#{token}"
+        request.headers['Content-Type'] = 'application/json'
+        request.body = JSON.generate(parameters)
+      end
+    end
+
     private
 
     def http_connection
