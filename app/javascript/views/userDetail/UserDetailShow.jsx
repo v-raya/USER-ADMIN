@@ -52,7 +52,7 @@ const UserDetailShow = ({ details, onEdit }) => (
           </div>
           <div className="row">
             <div className="col-md-3">
-              <ShowField label="Status">{String(details.enabled)}</ShowField>
+              <ShowField label="Status">{details.enabled}</ShowField>
             </div>
             <div className="col-md-3">
               <ShowField label="Assigned Roles">
@@ -69,6 +69,7 @@ const UserDetailShow = ({ details, onEdit }) => (
 UserDetailShow.propTypes = {
   details: PropTypes.object,
   onEdit: PropTypes.func,
+  statusFormat: PropTypes.func,
 };
 
 export default UserDetailShow;

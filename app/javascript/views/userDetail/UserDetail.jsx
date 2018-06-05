@@ -37,6 +37,16 @@ export default class UserDetail extends Component {
     });
   };
 
+  // statusFormat = () => {
+  //   let details = this.state.details;
+  //   if (details.enabled === true) {
+  //     details.enabled = 'Active';
+  //   } else {
+  //     details.enabled = 'Inactive';
+  //   }
+  //   return details;
+  // };
+
   alert = () => {
     if (this.state.alert) {
       return (
