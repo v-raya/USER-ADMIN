@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-// import UserService from '../_services/users/user.service';
 import DetailsContainer from '../containers/detailsContainer';
 import { fetchDetailsActions } from '../actions/detailActions';
 import { fetchPermissionsActions } from '../actions/permissionsActions';

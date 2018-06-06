@@ -20,7 +20,6 @@ describe('sagas', () => {
 
     describe('when successful', () => {
       it('executes the happy-path saga', () => {
-        // const action = {};
         const gen = getPermissions();
         expect(gen.next().value).toEqual(
           call(UserService.fetchPermissionsList)
@@ -37,7 +36,6 @@ describe('sagas', () => {
 
     describe('when failures come back from the fetch', () => {
       it('handles the error', () => {
-        // const action = { payload: { id: 'man' } };
         const gen = getPermissions();
         expect(gen.next().value).toEqual(
           call(UserService.fetchPermissionsList)
