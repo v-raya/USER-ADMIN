@@ -5,6 +5,6 @@ export const selectDetailRecords = state => {
     ? (userDetails.enabled = '')
     : userDetails.enabled
       ? (userDetails.enabled = 'Active')
-      : (userDetails.enabled = 'Inavtive');
+      : (userDetails.enabled = 'Inactive');
   return userDetails;
 };
