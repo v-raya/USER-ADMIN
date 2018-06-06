@@ -45,9 +45,9 @@ module Users
           allow(response).to receive(:status).and_return(404)
           allow(http_service)
             .to receive(:get)
-            .with('/perry/idm/users/22', last_name, token)
+            .with('/perry/idm/users/22', '', token)
             .and_return(response)
-          expect(user_repository.get_users_details('22', token, last_name)).to eq({})
+          expect(user_repository.get_users_details('22', token)).to eq({})
         end
       end
 
@@ -57,9 +57,9 @@ module Users
           allow(response).to receive(:body).and_return(id: 'El')
           allow(http_service)
             .to receive(:get)
-            .with('/perry/idm/users/33', last_name, token)
+            .with('/perry/idm/users/33', '', token)
             .and_return(response)
-          expect(user_repository.get_users_details('33', token, last_name))
+          expect(user_repository.get_users_details('33', token))
             .to eq User.new(id: 'El')
         end
       end
@@ -73,9 +73,9 @@ module Users
           allow(response).to receive(:status).and_return(404)
           allow(http_service)
             .to receive(:get)
-            .with('/perry/idm/permissions', last_name, token)
+            .with('/perry/idm/permissions', '', token)
             .and_return(response)
-          expect(user_repository.get_permissions_list(token, last_name)).to eq([])
+          expect(user_repository.get_permissions_list(token)).to eq([])
         end
       end
 
@@ -85,9 +85,9 @@ module Users
           allow(response).to receive(:body).and_return(['el'])
           allow(http_service)
             .to receive(:get)
-            .with('/perry/idm/permissions', last_name, token)
+            .with('/perry/idm/permissions', '', token)
             .and_return(response)
-          expect(user_repository.get_permissions_list(token, last_name))
+          expect(user_repository.get_permissions_list(token))
             .to eq ['el']
         end
       end
