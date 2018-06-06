@@ -22,10 +22,8 @@ class UserService {
       });
     }
 
-    const j = { enabled: details['enabled'], permissions: permissions };
-    const query = params.join('&');
-
-    return ApiService.patch(`/user_detail/${id}/save_user`, j).then(
+    const data = { enabled: details['enabled'], permissions: permissions };
+    return ApiService.patch(`/user_detail/${id}/save_user`, data).then(
       response => response.data
     );
   }

@@ -167,8 +167,8 @@ module Infrastructure
       let(:request) { instance_double('Faraday::Request') }
       let(:patch_parameters) { {} }
       let(:headers) { { 'Content-Type': 'URL-encoded' } }
-      let(:enabled) { 'true'}
-      let(:permissions) { ['snapshot', ['hotline']]}
+      let(:enabled) { 'true' }
+      let(:permissions) { ['snapshot', ['hotline']] }
 
       it 'sets json and uses the default adapter' do
         expect(Faraday)
@@ -193,7 +193,7 @@ module Infrastructure
         allow(request)
           .to receive(:body=)
           .with('{}')
-        Infrastructure::HttpService.new.patch('/resource',  patch_parameters, 'showbiz_pizza_token')
+        Infrastructure::HttpService.new.patch('/resource', patch_parameters, 'showbiz_pizza_token')
       end
 
       it 'makes a put request requiring JSON' do
