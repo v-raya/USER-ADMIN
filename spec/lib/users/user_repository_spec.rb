@@ -76,7 +76,7 @@ module Users
           allow(response).to receive(:body).and_return(
             id: '55',
             enabled: 'true',
-            permissions: %(snapshot hotline)
+            permissions: %w[snapshot hotline]
           )
           allow(http_service)
             .to receive(:patch)
