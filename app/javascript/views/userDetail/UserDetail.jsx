@@ -53,6 +53,7 @@ export default class UserDetail extends Component {
       userListUrl,
       userListClickHandler,
       dashboardClickHandler,
+      permissionsList,
     } = this.props;
     return (
       <div>
@@ -82,6 +83,7 @@ export default class UserDetail extends Component {
               onStatusChange={this.onStatusChange('enabled')}
               onRoleChange={this.onRoleChange}
               enableSave={this.state.enableSave}
+              permissionsList={permissionsList}
             />
           ) : (
             <UserDetailShow
@@ -101,6 +103,7 @@ UserDetail.propTypes = {
   userListUrl: PropTypes.string,
   userListClickHandler: PropTypes.func,
   dashboardClickHandler: PropTypes.func,
+  permissionsList: PropTypes.array,
 };
 
 UserDetail.defaultProps = {

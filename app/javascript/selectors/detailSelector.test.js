@@ -1,4 +1,4 @@
-import { selectDetailRecords } from './detailSelector';
+import { selectDetailRecords, permissionsList } from './detailSelector';
 
 describe('selectors', () => {
   describe('#selectDetailRecords', () => {
@@ -30,6 +30,24 @@ describe('selectors', () => {
         other_stuff: { bad: 'ignore' },
       };
       expect(selectDetailRecords(state)).toEqual({});
+    });
+  });
+
+  describe('#permissionsList', () => {
+    it('selects the permissions when availble', () => {
+      const expectedValue = [
+        { label: 'Hello', value: 'Hello' },
+        { label: 'Bye', value: 'Bye' },
+      ];
+      const state = {
+        fetchPermissions: {
+          permissions: {
+            XHRStatus: 'ready',
+            permissions: ['Hello', 'Bye'],
+          },
+        },
+      };
+      expect(permissionsList(state)).toEqual(expectedValue);
     });
   });
 });
