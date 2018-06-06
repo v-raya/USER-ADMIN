@@ -26,12 +26,8 @@ class Home extends React.Component {
     </a>
   );
 
-  statusFormat = (cell, row) => {
-    if (row.enabled === true) {
-      row.enabled = 'Active';
-    } else {
-      row.enabled = 'Inactive';
-    }
+  userStatusFormat = (cell, row) => {
+    row.enabled ? (row.enabled = 'Active') : (row.enabled = 'Inactive');
     return row.enabled;
   };
 
@@ -47,7 +43,7 @@ class Home extends React.Component {
         nameFormat={this.nameFormat}
         handleTextChange={this.handleTextChange}
         handleOnClick={this.handleOnClick}
-        statusFormat={this.statusFormat}
+        userStatusFormat={this.userStatusFormat}
       />
     );
   }
