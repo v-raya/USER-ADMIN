@@ -36,14 +36,14 @@ describe('UserService', () => {
     });
   });
 
-  describe('#savehUserDetails', () => {
+  describe('#saveUserDetails', () => {
     let patchSpy;
 
     beforeEach(() => {
       patchSpy = jest.spyOn(ApiService, 'patch');
     });
 
-    it('calls #fetchUsersDetails ApiService', () => {
+    it('calls #patch ApiService', () => {
       patchSpy.mockReturnValue(Promise.resolve({}));
       const body = {
         enabled: true,
