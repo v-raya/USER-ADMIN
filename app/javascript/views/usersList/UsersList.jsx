@@ -61,6 +61,7 @@ const UserList = ({
                 data={userList}
                 striped={true}
                 hover={true}
+                trClassName="userRow"
               >
                 <TableHeaderColumn
                   dataField="last_name"
