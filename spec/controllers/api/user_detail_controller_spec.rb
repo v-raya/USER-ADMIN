@@ -49,7 +49,8 @@ module Api
           .with("55", {enabled: 'false', permissions: ['snapshot','hotline']}, token)
           .and_return(user)
         request.session[:token] = 'my_token'
-        patch :save_user,  params: { id: 55, enabled: 'false', permissions: ['snapshot','hotline']}
+        patch :save_user,  body: { enabled: 'false' },
+          params: { id: 55, enabled: 'false', permissions: ['snapshot','hotline']}
         expect(response.body).to eq user.to_json
       end
     end

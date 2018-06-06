@@ -15,17 +15,17 @@ class UserService {
     let params = [];
     params.push('enabled' + '=' + encodeURIComponent(details['enabled']));
 
+    const permissions = [];
     if (details['permissions']) {
       details['permissions'].split(',').forEach(value => {
-        params.push('permissions' + '=' + encodeURIComponent(value));
+        permissions.push(value);
       });
-    } else {
-      params.push('permissions=');
     }
 
+    const j = { enabled: details['enabled'], permissions: permissions };
     const query = params.join('&');
 
-    return ApiService.patch(`/user_detail/${id}&${query}`).then(
+    return ApiService.patch(`/user_detail/${id}/save_user`, j).then(
       response => response.data
     );
   }
