@@ -72,10 +72,10 @@ module Users
         it 'returns an empty permissions list' do
           allow(response).to receive(:status).and_return(404)
           allow(http_service)
-            .to receive(:get_permissions)
-            .with('/perry/idm/permissions', token)
+            .to receive(:get)
+            .with('/perry/idm/permissions', last_name, token)
             .and_return(response)
-          expect(user_repository.get_permissions_list(token)).to eq([])
+          expect(user_repository.get_permissions_list(token, last_name)).to eq([])
         end
       end
 
@@ -84,10 +84,10 @@ module Users
           allow(response).to receive(:status).and_return(200)
           allow(response).to receive(:body).and_return(['el'])
           allow(http_service)
-            .to receive(:get_permissions)
-            .with('/perry/idm/permissions', token)
+            .to receive(:get)
+            .with('/perry/idm/permissions', last_name, token)
             .and_return(response)
-          expect(user_repository.get_permissions_list(token))
+          expect(user_repository.get_permissions_list(token, last_name))
             .to eq ['el']
         end
       end

@@ -18,8 +18,8 @@ module Users
       User.new(response.body)
     end
 
-    def get_permissions_list(token)
-      response = @http_service.get_permissions('/perry/idm/permissions', token)
+    def get_permissions_list(token, last_name = '')
+      response = @http_service.get('/perry/idm/permissions', last_name, token)
       return [] if response.status == 404
       response.body { Permissions.new }
     end
