@@ -8,3 +8,12 @@ export const selectDetailRecords = state => {
       : (userDetails.enabled = 'Inactive');
   return userDetails;
 };
+
+export const permissionsList = state => {
+  return state.fetchPermissions.permissions
+    ? state.fetchPermissions.permissions.permissions.map(list => ({
+        label: list,
+        value: list,
+      }))
+    : [];
+};

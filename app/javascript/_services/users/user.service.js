@@ -10,6 +10,10 @@ class UserService {
   static fetchUserDetails(id) {
     return ApiService.get(`/user_detail/${id}`).then(response => response.data);
   }
+
+  static fetchPermissionsList() {
+    return ApiService.get(`/permissions_list/`).then(response => response.data);
+  }
 }
 
 export default UserService;
