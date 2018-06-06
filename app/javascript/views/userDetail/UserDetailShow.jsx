@@ -69,7 +69,6 @@ const UserDetailShow = ({ details, onEdit }) => (
 UserDetailShow.propTypes = {
   details: PropTypes.object,
   onEdit: PropTypes.func,
-  statusFormat: PropTypes.func,
 };
 
 export default UserDetailShow;
