@@ -19,7 +19,7 @@ const UserList = ({
   dashboardUrl,
   accountCounty,
   dashboardClickHandler,
-  statusFormat,
+  userStatusFormat,
 }) => (
   <div>
     <GlobalHeader profileName="County CWDS-Admin" profileId="profile.id" />
@@ -44,7 +44,7 @@ const UserList = ({
               fieldClassName="form-group"
               type="text"
               onChange={handleTextChange}
-              placeholder="...search by last name"
+              placeholder="search user by Last name"
             />
             <div className="col-md-2" style={buttonAllign}>
               <button
@@ -73,7 +73,7 @@ const UserList = ({
                 </TableHeaderColumn>
                 <TableHeaderColumn
                   dataField="enabled"
-                  dataFormat={statusFormat}
+                  dataFormat={userStatusFormat}
                   width="40"
                 >
                   Status
@@ -104,7 +104,7 @@ UserList.propTypes = {
   nameFormat: PropTypes.func,
   handleOnClick: PropTypes.func,
   handleTextChange: PropTypes.func,
-  statusFormat: PropTypes.func,
+  userStatusFormat: PropTypes.func,
 };
 
 UserList.defaultProps = {
