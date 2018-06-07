@@ -67,7 +67,7 @@ const UserDetailEdit = ({
             <div className="col-md-3">
               <DropDownField
                 id="dropdown1"
-                selectedOption={String(details.enabled)}
+                selectedOption={details.enabled}
                 options={STATUS}
                 label="Status"
                 onChange={onStatusChange}

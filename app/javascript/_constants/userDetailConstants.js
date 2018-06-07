@@ -1,4 +1,4 @@
 export const STATUS = [
-  { value: 'true', label: 'True' },
-  { value: 'false', label: 'False' },
+  { value: 'Active', label: 'Active' },
+  { value: 'Inactive', label: 'Inactive' },
 ];
