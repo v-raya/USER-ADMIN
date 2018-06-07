@@ -68,10 +68,9 @@ Rails.application.configure do
         # Silence the web console from complaining about rendering the console
         # in server logs
         config.web_console.whiny_requests = false
-    
       end
 
   # Use an evented file watcher to asynchronously detect changes in source code,
   # routes, locales, etc. This feature depends on the listen gem.
-  config.file_watcher = ActiveSupport::EventedFileUpdateChecker
+  # config.file_watcher = ActiveSupport::EventedFileUpdateChecker
 end
