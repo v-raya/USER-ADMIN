@@ -1,18 +1,45 @@
-import { selectDetailRecords } from './detailSelector';
+import { selectDetailRecords, permissionsList } from './detailSelector';
 
 describe('selectors', () => {
   describe('#selectDetailRecords', () => {
-    it('selects the user detail records', () => {
+    it('selects the user detail records when enabled is true', () => {
       const state = {
         fetchDetails: {
           details: {
-            records: { county_name: 'first', id: '12', name: 'third' },
+            records: {
+              county_name: 'first',
+              enabled: true,
+              id: '12',
+              name: 'third',
+            },
           },
         },
       };
       expect(selectDetailRecords(state)).toEqual({
         county_name: 'first',
         id: '12',
+        enabled: 'Active',
+        name: 'third',
+      });
+    });
+
+    it('selects the user detail records when enabled is false', () => {
+      const state = {
+        fetchDetails: {
+          details: {
+            records: {
+              county_name: 'first',
+              enabled: false,
+              id: '12',
+              name: 'third',
+            },
+          },
+        },
+      };
+      expect(selectDetailRecords(state)).toEqual({
+        county_name: 'first',
+        id: '12',
+        enabled: 'Inactive',
         name: 'third',
       });
     });
@@ -22,14 +49,32 @@ describe('selectors', () => {
         fetch: {},
         other_stuff: { bad: 'ignore' },
       };
-      expect(selectDetailRecords(state)).toEqual({});
+      expect(selectDetailRecords(state)).toEqual({ enabled: '' });
     });
 
     it('selects no user details', () => {
       const state = {
         other_stuff: { bad: 'ignore' },
       };
-      expect(selectDetailRecords(state)).toEqual({});
+      expect(selectDetailRecords(state)).toEqual({ enabled: '' });
+    });
+  });
+
+  describe('#permissionsList', () => {
+    it('selects the permissions when availble', () => {
+      const expectedValue = [
+        { label: 'Hello', value: 'Hello' },
+        { label: 'Bye', value: 'Bye' },
+      ];
+      const state = {
+        fetchPermissions: {
+          permissions: {
+            XHRStatus: 'ready',
+            permissions: ['Hello', 'Bye'],
+          },
+        },
+      };
+      expect(permissionsList(state)).toEqual(expectedValue);
     });
   });
 });
