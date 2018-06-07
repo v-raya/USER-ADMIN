@@ -11,6 +11,23 @@ class UserService {
     return ApiService.get(`/user_detail/${id}`).then(response => response.data);
   }
 
+  static saveUserDetails(id, details) {
+    let params = [];
+    params.push('enabled' + '=' + encodeURIComponent(details['enabled']));
+
+    const permissions = [];
+    if (details['permissions']) {
+      details['permissions'].split(',').forEach(value => {
+        permissions.push(value);
+      });
+    }
+
+    const data = { enabled: details['enabled'], permissions: permissions };
+    return ApiService.patch(`/user_detail/${id}/save_user`, data).then(
+      response => response.data
+    );
+  }
+
   static fetchPermissionsList() {
     return ApiService.get(`/permissions_list/`).then(response => response.data);
   }

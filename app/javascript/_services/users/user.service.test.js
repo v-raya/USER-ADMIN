@@ -20,6 +20,14 @@ describe('UserService', () => {
       UserService.fetch(lastName);
       expect(getSpy).toHaveBeenCalledWith(`/user_list?last_name=${lastName}`);
     });
+  });
+
+  describe('#fetchUserDetails', () => {
+    let getSpy;
+
+    beforeEach(() => {
+      getSpy = jest.spyOn(ApiService, 'get');
+    });
 
     it('calls #fetchUsersDetails ApiService', () => {
       getSpy.mockReturnValue(Promise.resolve({}));
@@ -31,6 +39,28 @@ describe('UserService', () => {
       getSpy.mockReturnValue(Promise.resolve({}));
       UserService.fetchPermissionsList();
       expect(getSpy).toHaveBeenCalledWith('/permissions_list/');
+    });
+  });
+
+  describe('#saveUserDetails', () => {
+    let patchSpy;
+
+    beforeEach(() => {
+      patchSpy = jest.spyOn(ApiService, 'patch');
+    });
+
+    it('calls #patch ApiService', () => {
+      patchSpy.mockReturnValue(Promise.resolve({}));
+      const body = {
+        enabled: true,
+        permissions: ['drivethebus', 'getapuppy'],
+      };
+      UserService.saveUserDetails(id, {
+        enabled: true,
+        permissions: 'drivethebus,getapuppy',
+        first_name: 'Pidgeon',
+      });
+      expect(patchSpy).toHaveBeenCalledWith('/user_detail/id/save_user', body);
     });
   });
 });

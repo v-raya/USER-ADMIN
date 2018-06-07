@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import { GlobalHeader, PageHeader, Link, Alert } from 'react-wood-duck';
 import UserDetailEdit from '../userDetail/UserDetailEdit';
 import UserDetailShow from '../userDetail/UserDetailShow';
+import UserService from '../../_services/users';
+import { currentPathname, getUserId } from '../../sagas/getDetailsSaga';
 
 /* eslint camelcase: 0 */
 export default class UserDetail extends Component {
@@ -37,6 +39,13 @@ export default class UserDetail extends Component {
     });
   };
 
+  onSaveDetails = () => {
+    const id = getUserId(currentPathname());
+    const { details } = this.state;
+    const response = UserService.saveUserDetails(id, details);
+    this.setState({ isEdit: false, alert: true, saveResponse: response });
+  };
+
   alert = () => {
     if (this.state.alert) {
       return (
@@ -45,6 +54,15 @@ export default class UserDetail extends Component {
         </Alert>
       );
     }
+  };
+
+  formattedPermissions = () => {
+    const { details } = this.state;
+    return details.permissions && !Array.isArray(details.permissions)
+      ? details.permissions.split(',')
+      : !details.permissions
+        ? []
+        : details.permissions;
   };
 
   render() {
@@ -78,8 +96,11 @@ export default class UserDetail extends Component {
           {this.state.isEdit ? (
             <UserDetailEdit
               details={this.state.details}
+              selectedPermissions={this.formattedPermissions(
+                this.state.details.permissions
+              )}
               onCancel={() => this.setState({ isEdit: false })}
-              onSave={() => this.setState({ isEdit: false, alert: true })}
+              onSave={this.onSaveDetails}
               onStatusChange={this.onStatusChange('enabled')}
               onRoleChange={this.onRoleChange}
               enableSave={this.state.enableSave}

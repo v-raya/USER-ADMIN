@@ -18,6 +18,11 @@ module Users
       User.new(response.body)
     end
 
+    def update_user(id, parameters, token)
+      response = @http_service.patch("/perry/idm/users/#{id}", parameters, token)
+      User.new(response.body)
+    end
+
     def get_permissions_list(token)
       response = @http_service.get('/perry/idm/permissions', '', token)
       return [] if response.status == 404

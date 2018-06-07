@@ -10,6 +10,7 @@ import { STATUS } from '../../_constants/userDetailConstants';
 
 const UserDetailEdit = ({
   details,
+  selectedPermissions,
   onCancel,
   onSave,
   enableSave,
@@ -89,8 +90,16 @@ const UserDetailEdit = ({
   </div>
 );
 
+export function formatPermissions(permissions) {
+  return permissions && !Array.isArray(permissions)
+    ? permissions.split(',')
+    : !permissions
+      ? []
+      : permissions;
+}
 UserDetailEdit.propTypes = {
   details: PropTypes.object,
+  selectedPermissions: PropTypes.array,
   onCancel: PropTypes.func,
   onSave: PropTypes.func,
   enableSave: PropTypes.bool,

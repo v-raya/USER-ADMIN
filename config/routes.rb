@@ -6,6 +6,9 @@ Rails.application.routes.draw do
     resources :user_list, only: [:index] do
     end
     resources :user_detail, only: [:show] do
+      member do
+        patch :save_user
+      end
     end
     get 'account', to: 'account#index'
     get 'permissions_list', to: 'permissions_list#index'
