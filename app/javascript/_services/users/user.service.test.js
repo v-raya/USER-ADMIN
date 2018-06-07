@@ -34,6 +34,12 @@ describe('UserService', () => {
       UserService.fetchUserDetails(id);
       expect(getSpy).toHaveBeenCalledWith('/user_detail/id');
     });
+
+    it('calls #fetchPermissionList ApiService', () => {
+      getSpy.mockReturnValue(Promise.resolve({}));
+      UserService.fetchPermissionsList();
+      expect(getSpy).toHaveBeenCalledWith('/permissions_list/');
+    });
   });
 
   describe('#saveUserDetails', () => {

@@ -12,8 +12,8 @@ module Users
       response.body.map { |result| User.new(result) }
     end
 
-    def get_users_details(id, token, last_name = '')
-      response = @http_service.get("/perry/idm/users/#{id}", last_name, token)
+    def get_users_details(id, token)
+      response = @http_service.get("/perry/idm/users/#{id}", '', token)
       return {} if response.status == 404
       User.new(response.body)
     end
@@ -21,6 +21,12 @@ module Users
     def update_user(id, parameters, token)
       response = @http_service.patch("/perry/idm/users/#{id}", parameters, token)
       User.new(response.body)
+    end
+
+    def get_permissions_list(token)
+      response = @http_service.get('/perry/idm/permissions', '', token)
+      return [] if response.status == 404
+      response.body { Permissions.new }
     end
   end
 end

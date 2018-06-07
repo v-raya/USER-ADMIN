@@ -27,6 +27,10 @@ class UserService {
       response => response.data
     );
   }
+
+  static fetchPermissionsList() {
+    return ApiService.get(`/permissions_list/`).then(response => response.data);
+  }
 }
 
 export default UserService;

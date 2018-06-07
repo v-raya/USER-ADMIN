@@ -4,7 +4,7 @@ import Cards from '../../common/Card';
 import ShowField from '../../common/ShowField';
 import DropDownField from 'react-wood-duck/dist/DropDownField';
 import MultiSelect from '../../common/MultiSelect';
-import { STATUS, ROLES } from '../../_constants/userDetailConstants';
+import { STATUS } from '../../_constants/userDetailConstants';
 
 /* eslint camelcase: 0 */
 
@@ -13,11 +13,10 @@ const UserDetailEdit = ({
   selectedPermissions,
   onCancel,
   onSave,
-  saveAlert,
-  onChange,
   enableSave,
   onStatusChange,
   onRoleChange,
+  permissionsList,
 }) => (
   <div className="row">
     <div className="col-md-12">
@@ -69,7 +68,7 @@ const UserDetailEdit = ({
             <div className="col-md-3">
               <DropDownField
                 id="dropdown1"
-                selectedOption={String(details.enabled)}
+                selectedOption={details.enabled}
                 options={STATUS}
                 label="Status"
                 onChange={onStatusChange}
@@ -78,8 +77,8 @@ const UserDetailEdit = ({
             <div className="col-md-3">
               <MultiSelect
                 id="Multiselect1"
-                selectedOption={selectedPermissions}
-                options={ROLES}
+                selectedOption={details.permissions}
+                options={permissionsList}
                 label="Assigned Roles"
                 onChange={onRoleChange}
               />
@@ -103,11 +102,10 @@ UserDetailEdit.propTypes = {
   selectedPermissions: PropTypes.array,
   onCancel: PropTypes.func,
   onSave: PropTypes.func,
-  saveAlert: PropTypes.func,
-  onChange: PropTypes.func,
   enableSave: PropTypes.bool,
   onStatusChange: PropTypes.func,
   onRoleChange: PropTypes.func,
+  permissionsList: PropTypes.array,
 };
 
 export default UserDetailEdit;

@@ -11,5 +11,6 @@ Rails.application.routes.draw do
       end
     end
     get 'account', to: 'account#index'
+    get 'permissions_list', to: 'permissions_list#index'
   end
 end
