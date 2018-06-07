@@ -3,7 +3,7 @@ export const selectDetailRecords = state => {
   const userDetails = usersObject ? usersObject.records : {};
   userDetails.enabled === undefined
     ? (userDetails.enabled = '')
-    : userDetails.enabled
+    : userDetails.enabled === true
       ? (userDetails.enabled = 'Active')
       : (userDetails.enabled = 'Inactive');
   return userDetails;
