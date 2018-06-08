@@ -58,8 +58,8 @@ export default class UserDetail extends Component {
 
   formattedPermissions = permissions => {
     if (Array.isArray(permissions)) return permissions;
-    if (permissions !== undefined && !Array.isArray(permissions))
-      return permissions.split(',');
+    if (permissions === null) return [];
+    if (typeof permissions !== 'undefined') return permissions.split(',');
     return [];
   };
 
