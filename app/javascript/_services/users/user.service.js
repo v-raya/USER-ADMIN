@@ -12,17 +12,18 @@ class UserService {
   }
 
   static saveUserDetails(id, details) {
-    let params = [];
-    params.push('enabled' + '=' + encodeURIComponent(details['enabled']));
-
     const permissions = [];
-    if (details['permissions']) {
+    if (Array.isArray(details.permissions)) {
+      [].push.apply(permissions, details['permissions']);
+    } else if (details['permissions']) {
       details['permissions'].split(',').forEach(value => {
         permissions.push(value);
       });
     }
 
-    const data = { enabled: details['enabled'], permissions: permissions };
+    const isEnabled = details['enabled'] === 'Active';
+    const data = { enabled: isEnabled, permissions: permissions };
+
     return ApiService.patch(`/user_detail/${id}/save_user`, data).then(
       response => response.data
     );
