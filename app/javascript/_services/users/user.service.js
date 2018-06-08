@@ -14,7 +14,7 @@ class UserService {
   static saveUserDetails(id, details) {
     const permissions = [];
     if (Array.isArray(details.permissions)) {
-      [].push.apply(permissions, details[permissions]);
+      [].push.apply(permissions, details['permissions']);
     } else if (details['permissions']) {
       details['permissions'].split(',').forEach(value => {
         permissions.push(value);
