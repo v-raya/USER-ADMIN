@@ -123,12 +123,12 @@ describe('UserDetail', () => {
 
     describe('renders DetailShow and detailEdit', () => {
       it('should display <UserDetailShow/>', () => {
-        wrapper.setState({ isEdit: false });
+        wrapper.setState({ isEdit: false, details: { id: '12345' } });
         expect(wrapper.find('UserDetailShow').length).toBe(1);
       });
 
       it('should display <UserDetailEdit/>', () => {
-        wrapper.setState({ isEdit: true });
+        wrapper.setState({ isEdit: true, details: { id: '12345' } });
         expect(wrapper.find('UserDetailEdit').length).toBe(1);
       });
     });

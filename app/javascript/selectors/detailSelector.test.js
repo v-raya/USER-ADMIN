@@ -59,7 +59,7 @@ describe('selectors', () => {
       };
       expect(selectDetailRecords(state)).toEqual({
         county_name: 'first',
-        enabled: '',
+        enabled: 'Inactive',
         id: '12',
         name: 'third',
       });
@@ -69,7 +69,7 @@ describe('selectors', () => {
       const state = {
         other_stuff: { bad: 'ignore' },
       };
-      expect(selectDetailRecords(state)).toEqual({ enabled: '' });
+      expect(selectDetailRecords(state)).toEqual({ enabled: 'Inactive' });
     });
   });
 
