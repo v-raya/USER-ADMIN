@@ -24,7 +24,7 @@ module Users
     attribute :user_create_date, Types::String.optional
     attribute :user_last_modified_date, Types::String.optional
     attribute :last_login_date_time, Types::String.optional
-    attribute :enabled, Types::String.optional
+    attribute :enabled, Types::Bool.optional
     attribute :status, Types::String.optional
     attribute :permissions, Types::Array.optional
   end

@@ -44,12 +44,25 @@ describe('selectors', () => {
       });
     });
 
-    it('selects empty user details', () => {
+    it('selects the user detail records when enabled is some other value', () => {
       const state = {
-        fetch: {},
-        other_stuff: { bad: 'ignore' },
+        fetchDetails: {
+          details: {
+            records: {
+              county_name: 'first',
+              enabled: 'Not a boolean Value',
+              id: '12',
+              name: 'third',
+            },
+          },
+        },
       };
-      expect(selectDetailRecords(state)).toEqual({ enabled: '' });
+      expect(selectDetailRecords(state)).toEqual({
+        county_name: 'first',
+        enabled: '',
+        id: '12',
+        name: 'third',
+      });
     });
 
     it('selects no user details', () => {
