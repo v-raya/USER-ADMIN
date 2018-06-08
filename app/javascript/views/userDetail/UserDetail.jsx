@@ -56,6 +56,38 @@ export default class UserDetail extends Component {
     }
   };
 
+  renderCards = permissionsList => {
+    return (
+      <div>
+        {this.state.details.id ? (
+          <div>
+            {this.state.isEdit ? (
+              <UserDetailEdit
+                details={this.state.details}
+                selectedPermissions={this.formattedPermissions(
+                  this.state.details.permissions
+                )}
+                onCancel={() => this.setState({ isEdit: false })}
+                onSave={this.onSaveDetails}
+                onStatusChange={this.onStatusChange('enabled')}
+                onRoleChange={this.onRoleChange}
+                enableSave={this.state.enableSave}
+                permissionsList={permissionsList}
+              />
+            ) : (
+              <UserDetailShow
+                details={this.state.details}
+                onEdit={() => this.setState({ isEdit: true })}
+              />
+            )}
+          </div>
+        ) : (
+          ''
+        )}
+      </div>
+    );
+  };
+
   formattedPermissions = permissions => {
     if (Array.isArray(permissions)) return permissions;
     if (permissions === null) return [];
@@ -91,25 +123,7 @@ export default class UserDetail extends Component {
               clickHandler={userListClickHandler}
             />
           </div>
-          {this.state.isEdit ? (
-            <UserDetailEdit
-              details={this.state.details}
-              selectedPermissions={this.formattedPermissions(
-                this.state.details.permissions
-              )}
-              onCancel={() => this.setState({ isEdit: false })}
-              onSave={this.onSaveDetails}
-              onStatusChange={this.onStatusChange('enabled')}
-              onRoleChange={this.onRoleChange}
-              enableSave={this.state.enableSave}
-              permissionsList={permissionsList}
-            />
-          ) : (
-            <UserDetailShow
-              details={this.state.details}
-              onEdit={() => this.setState({ isEdit: true })}
-            />
-          )}
+          {this.renderCards(permissionsList)}
         </div>
       </div>
     );

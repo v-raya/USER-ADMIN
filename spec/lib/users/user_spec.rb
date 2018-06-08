@@ -21,7 +21,7 @@ module Users
       it { is_expected.to have_attribute(:user_create_date, Types::String.optional) }
       it { is_expected.to have_attribute(:user_last_modified_date, Types::String.optional) }
       it { is_expected.to have_attribute(:last_login_date_time, Types::String.optional) }
-      it { is_expected.to have_attribute(:enabled, Types::String.optional) }
+      it { is_expected.to have_attribute(:enabled, Types::Bool.optional) }
       it { is_expected.to have_attribute(:status, Types::String.optional) }
       it { is_expected.to have_attribute(:permissions, Types::Array.optional) }
     end
