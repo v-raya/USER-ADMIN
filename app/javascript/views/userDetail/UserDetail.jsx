@@ -56,13 +56,11 @@ export default class UserDetail extends Component {
     }
   };
 
-  formattedPermissions = () => {
-    const { details } = this.state;
-    return details.permissions && !Array.isArray(details.permissions)
-      ? details.permissions.split(',')
-      : !details.permissions
-        ? []
-        : details.permissions;
+  formattedPermissions = permissions => {
+    if (Array.isArray(permissions)) return permissions;
+    if (permissions !== undefined && !Array.isArray(permissions))
+      return permissions.split(',');
+    return [];
   };
 
   render() {

@@ -77,7 +77,7 @@ const UserDetailEdit = ({
             <div className="col-md-3">
               <MultiSelect
                 id="Multiselect1"
-                selectedOption={details.permissions}
+                selectedOption={selectedPermissions}
                 options={permissionsList}
                 label="Assigned Roles"
                 onChange={onRoleChange}
