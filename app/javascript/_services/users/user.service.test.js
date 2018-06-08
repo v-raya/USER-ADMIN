@@ -56,7 +56,7 @@ describe('UserService', () => {
         permissions: ['drivethebus', 'getapuppy'],
       };
       UserService.saveUserDetails(id, {
-        enabled: true,
+        enabled: 'Active',
         permissions: 'drivethebus,getapuppy',
         first_name: 'Pidgeon',
       });

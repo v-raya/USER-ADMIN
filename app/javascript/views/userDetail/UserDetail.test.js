@@ -69,6 +69,22 @@ describe('UserDetail', () => {
     it('handles nil', () => {
       expect(myFormattedPermissions(undefined)).toEqual([]);
     });
+
+    it('handles a string', () => {
+      expect(myFormattedPermissions('abc,123,xyz')).toEqual([
+        'abc',
+        '123',
+        'xyz',
+      ]);
+    });
+
+    it('handles an array', () => {
+      expect(myFormattedPermissions(['abc', '123', 'xyz'])).toEqual([
+        'abc',
+        '123',
+        'xyz',
+      ]);
+    });
   });
 
   describe('#onSaveDetails', () => {
