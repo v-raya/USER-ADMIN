@@ -62,5 +62,19 @@ describe('UserService', () => {
       });
       expect(patchSpy).toHaveBeenCalledWith('/user_detail/id/save_user', body);
     });
+
+    it('succeeds when the permissins are still an array from loading', () => {
+      patchSpy.mockReturnValue(Promise.resolve({}));
+      const body = {
+        enabled: true,
+        permissions: ['drivethebus', 'getapuppy'],
+      };
+      UserService.saveUserDetails(id, {
+        enabled: 'Active',
+        permissions: ['drivethebus', 'getapuppy'],
+        first_name: 'Pidgeon',
+      });
+      expect(patchSpy).toHaveBeenCalledWith('/user_detail/id/save_user', body);
+    });
   });
 });
