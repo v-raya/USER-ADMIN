@@ -6,13 +6,13 @@ module LoginHelper
     visit ENV['RAILS_RELATIVE_URL_ROOT'] || '/'
     puts "login_config #{login_config}"
     return unless ENV.fetch('COUNTY_AUTHORIZATION_ENABLED', false)
-    check_status
+    check_status login_config
     fill_in 'Authorization JSON', with: login_json
     click_button 'Sign In'
     puts "signed in: #{current_url}"
   end
 
-  def check_status
+  def check_status(login_config)
     puts "landed on  #{current_url}. AUTH: #{ENV.fetch('COUNTY_AUTHORIZATION_ENABLED')}"
     puts "Logging in to county #{login_config[:county_name]}"
     puts "BODY: #{page.body}"
