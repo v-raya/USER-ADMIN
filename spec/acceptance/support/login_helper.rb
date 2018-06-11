@@ -15,7 +15,6 @@ module LoginHelper
   def check_status(login_config)
     puts "landed on  #{current_url}. AUTH: #{ENV.fetch('COUNTY_AUTHORIZATION_ENABLED')}"
     puts "Logging in to county #{login_config[:county_name]}"
-    puts "BODY: #{page.body}"
   end
 
   private
