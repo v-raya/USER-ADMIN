@@ -46,14 +46,6 @@ describe('UserDetail', () => {
         expect(instance.state.enableSave).toBe(false);
       });
     });
-
-    it('toggles the isEdit flag', () => {
-      const instance = wrapper.instance();
-      instance.onClick();
-      expect(instance.state.isEdit).toEqual(true);
-      instance.onClick();
-      expect(instance.state.isEdit).toEqual(false);
-    });
   });
 
   describe('#alert()', () => {
@@ -133,16 +125,26 @@ describe('UserDetail', () => {
       ).toContain('Dashboard');
     });
 
-    describe('renders cards', () => {
+    describe('renders DetailShow and detailEdit', () => {
       it('should display <UserDetailShow/>', () => {
-        wrapper.setState({ isEdit: false, details: { id: '12345' } });
+        wrapper.setState({ details: { id: '12345' } });
+        wrapper
+          .find('UserDetailShow')
+          .props()
+          .onEdit();
         expect(wrapper.find('UserDetailShow').length).toBe(1);
+        wrapper.setState({ isEdit: false, details: { name: '12345' } });
+        expect(wrapper.find('UserDetailShow').length).toBe(0);
       });
 
       it('should display <UserDetailEdit/>', () => {
         wrapper.setState({ isEdit: true, details: { id: '12345' } });
         expect(wrapper.find('UserDetailEdit').length).toBe(1);
-        expect(wrapper.find('UserDetailEdit').props().enableSave).toBe(true);
+        wrapper
+          .find('UserDetailEdit')
+          .props()
+          .onCancel();
+        expect(wrapper.find('UserDetailShow').length).toBe(0);
       });
     });
 
