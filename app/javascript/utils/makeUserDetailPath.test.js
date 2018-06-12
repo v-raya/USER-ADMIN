@@ -1,4 +1,4 @@
-import { makeUserDetailPath } from './home';
+import { makeUserDetailPath } from './makeUserDetailPath';
 
 describe('Home', () => {
   describe('makeUserDetailPath', () => {
