@@ -46,6 +46,14 @@ describe('UserDetail', () => {
         expect(instance.state.enableSave).toBe(false);
       });
     });
+
+    it('toggles the isEdit flag', () => {
+      const instance = wrapper.instance();
+      instance.onClick();
+      expect(instance.state.isEdit).toEqual(true);
+      instance.onClick();
+      expect(instance.state.isEdit).toEqual(false);
+    });
   });
 
   describe('#alert()', () => {
@@ -66,8 +74,12 @@ describe('UserDetail', () => {
       myFormattedPermissions = instance.formattedPermissions;
     });
 
-    it('handles nil', () => {
+    it('handles undefined', () => {
       expect(myFormattedPermissions(undefined)).toEqual([]);
+    });
+
+    it('handles nil', () => {
+      expect(myFormattedPermissions(null)).toEqual([]);
     });
 
     it('handles a string', () => {
@@ -121,7 +133,7 @@ describe('UserDetail', () => {
       ).toContain('Dashboard');
     });
 
-    describe('renders DetailShow and detailEdit', () => {
+    describe('renders cards', () => {
       it('should display <UserDetailShow/>', () => {
         wrapper.setState({ isEdit: false, details: { id: '12345' } });
         expect(wrapper.find('UserDetailShow').length).toBe(1);
@@ -129,7 +141,9 @@ describe('UserDetail', () => {
 
       it('should display <UserDetailEdit/>', () => {
         wrapper.setState({ isEdit: true, details: { id: '12345' } });
+        console.log(wrapper.instance().props);
         expect(wrapper.find('UserDetailEdit').length).toBe(1);
+        expect(wrapper.find('UserDetailEdit').props().enableSave).toBe(true);
       });
     });
 
@@ -151,5 +165,27 @@ describe('UserDetail', () => {
     it('link is pointed at user list', () => {
       expect(wrapper.find('Link').get(1).props['href']).toEqual('myUserList');
     });
+
+    // it('first link is pointed dashboardf', () => {
+    //   process.env.RAILS_RELATIVE_URL_ROOT = '/cap';
+    //   const propao = {
+    //     dashboardUrl: './cap',
+    //     userListUrl: undefined,
+    //   };
+    //   const value = { status: true };
+    //   const wrapper = shallow(<UserDetail {...propao} details={value} />);
+
+    //   expect(wrapper.instance().props.dashboardUrl).toEqual('./cap');
+    //   expect(wrapper.instance().props.userListUrl).toEqual('/');
+
+    //   process.env.RAILS_RELATIVE_URL_ROOT = undefined;
+    //   const propao1 = {
+    //     userListUrl: process.env.RAILS_RELATIVE_URL_ROOT,
+    //   };
+    //   const value1 = { status: true };
+    //   const wrapper1 = shallow(<UserDetail {...propao1} details={value1} />);
+
+    //   expect(wrapper1.instance().props.userListUrl).toEqual('/cap');
+    // });
   });
 });
