@@ -7,6 +7,8 @@ describe('UserDetailEdit', () => {
     id: 'id',
     first_name: 'Firstname0',
     last_name: 'Lastname0',
+    middle_name: 'Middlename0',
+    office: 'officeName',
     county_name: 'MyCounty',
     permissions: ['x', 'y'],
   };
@@ -70,6 +72,22 @@ describe('UserDetailEdit', () => {
       ).toEqual('End Date');
       expect(wrapper.find('[label="Status"]').exists()).toBe(true);
       expect(wrapper.find('[label="Assigned Roles"]').exists()).toBe(true);
+    });
+
+    it('renders the <ShowField/> children at label:fullName', () => {
+      let expectedValue = [
+        `${details.last_name}`,
+        `${', '}`,
+        `${details.first_name}`,
+        `${' '}`,
+        `${details.middle_name}`,
+      ];
+      expect(
+        wrapper
+          .find('ShowField')
+          .at(0)
+          .props().children
+      ).toEqual(expectedValue);
     });
   });
 });
