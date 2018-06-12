@@ -17,9 +17,7 @@ const UserDetailShow = ({ details, onEdit }) => (
           <div className="row">
             <div className="col-md-3">
               <ShowField label="Full Name">
-                {details.last_name},
-                {details.first_name}
-                {details.middle_name}
+                {details.last_name}, {details.first_name} {details.middle_name}
               </ShowField>
             </div>
             <div className="col-md-3">

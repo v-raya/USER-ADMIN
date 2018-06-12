@@ -7,6 +7,7 @@ describe('UserDetailEdit', () => {
     id: 'id',
     first_name: 'Firstname0',
     last_name: 'Lastname0',
+    middle_name: 'Middlename0',
     county_name: 'MyCounty',
   };
 
@@ -79,6 +80,22 @@ describe('UserDetailEdit', () => {
           .at(9)
           .props().label
       ).toEqual('Assigned Roles');
+    });
+
+    it('renders the <ShowField/> props.children at label:fullName', () => {
+      let expectedValue = [
+        `${details.last_name}`,
+        `${', '}`,
+        `${details.first_name}`,
+        `${' '}`,
+        `${details.middle_name}`,
+      ];
+      expect(
+        wrapper
+          .find('ShowField')
+          .at(0)
+          .props().children
+      ).toEqual(expectedValue);
     });
   });
 });
