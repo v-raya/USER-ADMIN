@@ -164,5 +164,14 @@ describe('UserDetail', () => {
     it('link is pointed at user list', () => {
       expect(wrapper.find('Link').get(1).props['href']).toEqual('myUserList');
     });
+
+    it('default props', () => {
+      expect(UserDetail.defaultProps.userListUrl).toEqual(
+        process.env.RAILS_RELATIVE_URL_ROOT
+      );
+      expect(UserDetail.defaultProps.dashboardUrl).toEqual('/');
+      expect(UserDetail.defaultProps.userListClickHandler).not.toThrow();
+      expect(UserDetail.defaultProps.dashboardClickHandler).not.toThrow();
+    });
   });
 });

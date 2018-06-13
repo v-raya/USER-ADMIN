@@ -144,3 +144,10 @@ UserDetail.propTypes = {
   dashboardClickHandler: PropTypes.func,
   permissionsList: PropTypes.array,
 };
+
+UserDetail.defaultProps = {
+  userListUrl: process.env.RAILS_RELATIVE_URL_ROOT,
+  dashboardUrl: '/',
+  userListClickHandler: () => {},
+  dashboardClickHandler: () => {},
+};
