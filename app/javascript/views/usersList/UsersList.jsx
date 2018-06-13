@@ -108,8 +108,4 @@ UserList.propTypes = {
   userStatusFormat: PropTypes.func,
 };
 
-UserList.defaultProps = {
-  dashboardUrl: '/',
-  dashboardClickHandler: () => {},
-};
 export default UserList;
