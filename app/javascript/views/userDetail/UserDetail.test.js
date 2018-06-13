@@ -49,9 +49,9 @@ describe('UserDetail', () => {
 
     it('toggles the isEdit flag', () => {
       const instance = wrapper.instance();
-      instance.onClick();
+      instance.onEditClick();
       expect(instance.state.isEdit).toEqual(true);
-      instance.onClick();
+      instance.onEditClick();
       expect(instance.state.isEdit).toEqual(false);
     });
   });

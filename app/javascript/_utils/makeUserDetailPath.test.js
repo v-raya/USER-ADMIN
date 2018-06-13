@@ -5,7 +5,7 @@ describe('Home', () => {
     let originalUrlRoot;
 
     beforeEach(() => {
-      originalUrlRoot = process.env.RAILS_RELATIVE_URL_ROOTx;
+      originalUrlRoot = process.env.RAILS_RELATIVE_URL_ROOT;
     });
 
     afterEach(() => {
