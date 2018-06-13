@@ -6,7 +6,7 @@ import { fetchAccountActions } from '../actions/accountActions';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { selectUserRecords } from '../selectors/userListSelector';
-import { makeUserDetailPath } from '../utils/makeUserDetailPath';
+import { makeUserDetailPath } from '../_utils/makeUserDetailPath';
 
 class Home extends React.Component {
   constructor(props) {
