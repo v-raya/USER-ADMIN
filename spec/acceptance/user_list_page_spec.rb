@@ -5,7 +5,6 @@ require 'feature'
 
 feature 'User List Page' do
   scenario 'has a list of users' do
-    pending 'broken due to not finding the app server within the test bubble'
     login
     page_has_basic_text
     page_has_user_list_headers
