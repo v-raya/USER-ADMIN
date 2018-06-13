@@ -11,6 +11,8 @@ services:
           - 18080:8080
           - 18081:8090
     environment:
+      DEV_MODE: ${DEV_MODE}
+      COGNITO_MODE: ${COGNITO_MODE}
       SAF_CLIENT_ID: ${SAF_CLIENT_ID}
       SAF_CLIENT_SECRET: ${SAF_CLIENT_SECRET}
       SAF_RETRIEVE_TOKEN_PATH: ${SAF_RETRIEVE_TOKEN_PATH}
