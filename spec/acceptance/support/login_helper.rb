@@ -7,7 +7,7 @@ module LoginHelper
     puts "login_config #{login_config}"
     return unless ENV.fetch('COUNTY_AUTHORIZATION_ENABLED', false)
     check_status login_config
-    field_labeled("Authorization JSON", {disabled: false, wait: 5})
+    field_labeled('Authorization JSON', disabled: false, wait: 5)
     fill_in 'username', with: login_json
     click_button 'Sign In'
     puts "signed in: #{current_url}"
