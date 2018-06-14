@@ -7,8 +7,6 @@ module LoginHelper
     puts "login_config #{login_config}"
     return unless ENV.fetch('COUNTY_AUTHORIZATION_ENABLED', false)
     check_status login_config
-    expect(page).to have_content("Authorization JSON")
-
     field_labeled('Authorization JSON', disabled: false, wait: 5)
     fill_in 'username', with: login_json
     click_button 'Sign In'
@@ -16,6 +14,8 @@ module LoginHelper
   end
 
   def check_status(login_config)
+    expect(page).to have_content('Authorization JSON')
+
     puts "landed on  #{current_url}. AUTH: #{ENV.fetch('COUNTY_AUTHORIZATION_ENABLED')}"
     puts "Logging in to county #{login_config[:county_name]}"
   end
