@@ -59,4 +59,13 @@ describe('reducer', () => {
     const state = { userList: ['item1', 'item2'], fetching: true, error: null };
     expect(fetchUserList(state, unexpectedAction)).toEqual(state);
   });
+
+  it('handles when state is undefined', () => {
+    const randomAction = {
+      type: null,
+      foreignObject: {},
+    };
+    const state = { userList: null, fetching: false };
+    expect(fetchUserList(undefined, randomAction)).toEqual(state);
+  });
 });

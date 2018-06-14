@@ -46,6 +46,12 @@ export default class UserDetail extends Component {
     this.setState({ isEdit: false, alert: true, saveResponse: response });
   };
 
+  onEditClick = () => {
+    this.state.isEdit === false
+      ? this.setState({ isEdit: true })
+      : this.setState({ isEdit: false });
+  };
+
   alert = () => {
     if (this.state.alert) {
       return (
@@ -67,7 +73,7 @@ export default class UserDetail extends Component {
                 selectedPermissions={this.formattedPermissions(
                   this.state.details.permissions
                 )}
-                onCancel={() => this.setState({ isEdit: false })}
+                onCancel={this.onEditClick}
                 onSave={this.onSaveDetails}
                 onStatusChange={this.onStatusChange('enabled')}
                 onRoleChange={this.onRoleChange}
@@ -77,7 +83,7 @@ export default class UserDetail extends Component {
             ) : (
               <UserDetailShow
                 details={this.state.details}
-                onEdit={() => this.setState({ isEdit: true })}
+                onEdit={this.onEditClick}
               />
             )}
           </div>
@@ -140,9 +146,7 @@ UserDetail.propTypes = {
 };
 
 UserDetail.defaultProps = {
-  userListUrl: process.env.RAILS_RELATIVE_URL_ROOT
-    ? process.env.RAILS_RELATIVE_URL_ROOT
-    : '/',
+  userListUrl: '/',
   dashboardUrl: '/',
   userListClickHandler: () => {},
   dashboardClickHandler: () => {},
