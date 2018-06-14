@@ -6,6 +6,7 @@ import { fetchAccountActions } from '../actions/accountActions';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { selectUserRecords } from '../selectors/userListSelector';
+import { makeUserDetailPath } from '../_utils/makeUserDetailPath';
 
 class Home extends React.Component {
   constructor(props) {
@@ -54,16 +55,6 @@ Home.propTypes = {
   userList: PropTypes.array,
   fetchUsersActions: PropTypes.func,
 };
-
-export function makeUserDetailPath(userId) {
-  var relativeRoot = process.env.RAILS_RELATIVE_URL_ROOT
-    ? process.env.RAILS_RELATIVE_URL_ROOT
-    : '/';
-  if (!relativeRoot.endsWith('/')) {
-    relativeRoot = relativeRoot + '/';
-  }
-  return relativeRoot + ['user_details', encodeURIComponent(userId)].join('/');
-}
 
 function mapStateToProps(state) {
   return {
