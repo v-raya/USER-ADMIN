@@ -8,7 +8,7 @@ feature 'User List Page' do
     login
     page_has_basic_text
     page_has_user_list_headers
-    puts "Found headers.  sleeping 4 minutes"
+    puts 'Found headers.  sleeping 4 minutes'
     sleep(4.minutes)
     page_has_users
 
