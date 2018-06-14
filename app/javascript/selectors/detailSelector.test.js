@@ -89,5 +89,12 @@ describe('selectors', () => {
       };
       expect(permissionsList(state)).toEqual(expectedValue);
     });
+
+    it('returns empty array when permissions are not available', () => {
+      const state = {
+        fetchPermissions: {},
+      };
+      expect(permissionsList(state)).toEqual([]);
+    });
   });
 });

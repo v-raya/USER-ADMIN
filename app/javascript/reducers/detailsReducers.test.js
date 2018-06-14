@@ -53,4 +53,13 @@ describe('reducer', () => {
     const state = { details: null, fetching: true, error: null };
     expect(fetchDetails(state, unexpectedAction)).toEqual(state);
   });
+
+  it('handles when state is undefined', () => {
+    const randomAction = {
+      type: null,
+      foreignObject: {},
+    };
+    const state = { details: null, fetching: false };
+    expect(fetchDetails(undefined, randomAction)).toEqual(state);
+  });
 });

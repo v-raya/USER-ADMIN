@@ -88,13 +88,6 @@ const UserDetailEdit = ({
   </div>
 );
 
-export function formatPermissions(permissions) {
-  return permissions && !Array.isArray(permissions)
-    ? permissions.split(',')
-    : !permissions
-      ? []
-      : permissions;
-}
 UserDetailEdit.propTypes = {
   details: PropTypes.object,
   selectedPermissions: PropTypes.array,

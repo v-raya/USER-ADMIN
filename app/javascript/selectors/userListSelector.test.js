@@ -73,5 +73,17 @@ describe('selectors', () => {
       };
       expect(selectCounty(state)).toEqual('Sacramento');
     });
+
+    it('display msg when county is not known', () => {
+      const state = {
+        fetchAccount: {
+          XHRStatus: 'ready',
+          user: 'RACFID',
+          staff_id: '0X5',
+          county_code: '20',
+        },
+      };
+      expect(selectCounty(state)).toEqual('county not known');
+    });
   });
 });

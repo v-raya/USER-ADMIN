@@ -1,11 +1,11 @@
-import { makeUserDetailPath } from './home';
+import { makeUserDetailPath } from './makeUserDetailPath';
 
 describe('Home', () => {
   describe('makeUserDetailPath', () => {
     let originalUrlRoot;
 
     beforeEach(() => {
-      originalUrlRoot = process.env.RAILS_RELATIVE_URL_ROOTx;
+      originalUrlRoot = process.env.RAILS_RELATIVE_URL_ROOT;
     });
 
     afterEach(() => {

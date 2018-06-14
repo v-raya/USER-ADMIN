@@ -40,5 +40,10 @@ describe('UsersList', () => {
     it('first link is pointed at dashboard', () => {
       expect(wrapper.find('Link').get(0).props['href']).toEqual('dburl');
     });
+
+    it('default props', () => {
+      expect(UsersList.defaultProps.dashboardUrl).toEqual('/');
+      expect(UsersList.defaultProps.dashboardClickHandler).not.toThrow();
+    });
   });
 });
