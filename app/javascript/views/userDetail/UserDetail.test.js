@@ -166,9 +166,7 @@ describe('UserDetail', () => {
     });
 
     it('default props', () => {
-      expect(UserDetail.defaultProps.userListUrl).toEqual(
-        process.env.RAILS_RELATIVE_URL_ROOT
-      );
+      expect(UserDetail.defaultProps.userListUrl).toEqual('/');
       expect(UserDetail.defaultProps.dashboardUrl).toEqual('/');
       expect(UserDetail.defaultProps.userListClickHandler).not.toThrow();
       expect(UserDetail.defaultProps.dashboardClickHandler).not.toThrow();

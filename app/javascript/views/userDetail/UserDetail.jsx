@@ -146,7 +146,7 @@ UserDetail.propTypes = {
 };
 
 UserDetail.defaultProps = {
-  userListUrl: process.env.RAILS_RELATIVE_URL_ROOT,
+  userListUrl: '/',
   dashboardUrl: '/',
   userListClickHandler: () => {},
   dashboardClickHandler: () => {},
