@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { GlobalHeader, PageHeader, Link, Alert } from 'react-wood-duck';
+import { Link, Alert, PageHeader } from 'react-wood-duck';
 import UserDetailEdit from '../userDetail/UserDetailEdit';
 import UserDetailShow from '../userDetail/UserDetailShow';
 import UserService from '../../_services/users';
@@ -16,6 +16,11 @@ export default class UserDetail extends Component {
       enableSave: true,
       details: props.details,
     };
+  }
+
+  componentDidMount() {
+    this.props.actions.fetchDetailsActions();
+    this.props.actions.fetchPermissionsActions();
   }
 
   componentWillReceiveProps(nextProps) {
@@ -111,7 +116,6 @@ export default class UserDetail extends Component {
     } = this.props;
     return (
       <div>
-        <GlobalHeader profileName="County CWDS-Admin" profileId="profile.id" />
         <PageHeader pageTitle="User Profile" button="" />
         <div className="container">
           <div className="col-md-12">
@@ -143,6 +147,9 @@ UserDetail.propTypes = {
   userListClickHandler: PropTypes.func,
   dashboardClickHandler: PropTypes.func,
   permissionsList: PropTypes.array,
+  actions: PropTypes.object.isRequired,
+  fetchDetailsActions: PropTypes.func,
+  fetchPermissionsActions: PropTypes.func,
 };
 
 UserDetail.defaultProps = {

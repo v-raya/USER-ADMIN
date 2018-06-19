@@ -1,6 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import UserDetail from './UserDetail.jsx';
+import UserDetail from './UserDetail';
 import UserService from '../../_services/users';
 
 describe('UserDetail', () => {
@@ -11,17 +11,9 @@ describe('UserDetail', () => {
         details={{}}
         dashboardUrl={'dburl'}
         userListUrl={'myUserList'}
-      />
+      />,
+      { disableLifecycleMethods: true }
     );
-  });
-
-  describe('#componentWillReceiveProps()', () => {
-    it('should change the details state', () => {
-      const value = { status: true };
-      const wrapper = shallow(<UserDetail details={value} />);
-      wrapper.setProps({ details: value });
-      expect(wrapper.state('details')).toEqual(value);
-    });
   });
 
   describe('Setting state', () => {
@@ -116,10 +108,6 @@ describe('UserDetail', () => {
   });
 
   describe('renders components', () => {
-    it('renders component "GlobalHeader"', () => {
-      expect(wrapper.find('GlobalHeader').length).toBe(1);
-    });
-
     it('renders component "PageHeader"', () => {
       expect(wrapper.find('PageHeader').length).toBe(1);
     });
