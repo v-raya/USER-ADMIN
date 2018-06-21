@@ -1,15 +1,24 @@
 import { connect } from 'react-redux';
-import Details from '../views/userDetail/UserDetail.jsx';
+import UserDetails from '../views/userDetail/UserDetail';
 import {
   selectDetailRecords,
   permissionsList,
 } from '../selectors/detailSelector';
+import { fetchDetailsActions } from '../actions/detailActions';
+import { fetchPermissionsActions } from '../actions/permissionsActions';
+import { bindActionCreators } from 'redux';
 
-const mapStateToProps = state => {
+function mapStateToProps(state) {
   return {
-    userList: selectDetailRecords(state),
+    details: selectDetailRecords(state),
     permissionsList: permissionsList(state),
   };
-};
+}
 
-export default connect(mapStateToProps)(Details);
+function mapDispatchToProps(dispatch) {
+  const actions = { fetchDetailsActions, fetchPermissionsActions };
+  return {
+    actions: bindActionCreators(actions, dispatch),
+  };
+}
+export default connect(mapStateToProps, mapDispatchToProps)(UserDetails);

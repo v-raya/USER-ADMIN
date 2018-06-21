@@ -5,16 +5,14 @@ import UsersList from './UsersList.jsx';
 describe('UsersList', () => {
   let wrapper;
   beforeEach(() => {
-    wrapper = shallow(<UsersList dashboardUrl={'dburl'} />);
+    wrapper = shallow(<UsersList dashboardUrl={'dburl'} />, {
+      disableLifecycleMethods: true,
+    });
   });
 
   describe('renders components', () => {
     it('renders card component', () => {
       expect(wrapper.find('Cards').length).toBeGreaterThan(0);
-    });
-
-    it('renders GlobalHeader component', () => {
-      expect(wrapper.find('GlobalHeader').length).toBe(1);
     });
 
     it('renders PageHeader component', () => {

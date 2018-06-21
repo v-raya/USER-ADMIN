@@ -6,3 +6,11 @@
 //
 // To reference this file, add <%= javascript_pack_tag 'application' %> to the appropriate
 // layout file, like app/views/layouts/application.html.erb
+
+import 'babel-polyfill';
+import ReactDOM from 'react-dom';
+import routes from '../home/routes';
+
+if (document.getElementById('app')) {
+  ReactDOM.render(routes, document.getElementById('app'));
+}
