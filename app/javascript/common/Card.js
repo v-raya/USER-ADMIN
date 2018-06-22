@@ -14,12 +14,18 @@ function renderCancelSaveButtons(
     props.cardActionButtons &&
     !props.cardHeaderButton && (
       <div className="pull-right">
-        <Button btnClassName="default" btnName="cancel" onClick={onCancel} />
+        <Button
+          btnClassName="default cancel"
+          btnName="cancel"
+          type="button"
+          onClick={onCancel}
+        />
         <Button
           btnClassName="primary"
           disabled={disableActionBtn}
           btnName={actionBtnName}
           onClick={onSave}
+          type="button"
         />
       </div>
     )
@@ -59,9 +65,10 @@ const Cards = props => {
           {props.cardHeaderButton &&
             !props.cardActionButtons && (
               <Button
-                btnClassName="default pull-right"
+                btnClassName="default pull-right edit"
                 btnName={headerBtnName}
                 onClick={onEdit}
+                type="button"
               />
             )}
         </div>

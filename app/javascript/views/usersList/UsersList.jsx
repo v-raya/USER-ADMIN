@@ -110,9 +110,7 @@ class UserList extends React.Component {
                     type="button"
                     className="btn btn-primary btn-sm"
                     onClick={this.handleOnClick}
-                  >
-                    Search
-                  </button>
+                  />
                 </div>
                 {this.tableComponent()}
               </Cards>

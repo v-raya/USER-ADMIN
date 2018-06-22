@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 require 'simplecov'
+require 'support/capybara'
+
 SimpleCov.start do
   coverage_dir 'coverage/ruby'
 end

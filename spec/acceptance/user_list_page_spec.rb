@@ -2,10 +2,11 @@
 
 require 'acceptance_helper'
 require 'feature'
+require 'pry'
 
 feature 'User List Page' do
-  scenario 'has a list of users' do
-    pending 'broken due to not finding the app server within the test bubble'
+  scenario 'We can list users, navigate to an induvidual details, and edit an in' do
+    # pending 'broken due to not finding the app server within the test bubble'
     login
     page_has_basic_text
     page_has_user_list_headers
@@ -15,6 +16,15 @@ feature 'User List Page' do
     puts "user link: #{user.text}"
     user.click
     page_is_user_details
+   
+    click_on('Edit')
+    find('.cancel').click
+    page_is_user_details
+
+    binding.pry
+    click_link('User List')
+    page_has_user_list_headers
+    page_has_users
   end
 
   def page_has_basic_text
