@@ -13,7 +13,7 @@ export default class UserDetail extends Component {
     this.state = {
       isEdit: false,
       alert: false,
-      enableSave: true,
+      disableActionBtn: true,
       details: props.details,
     };
   }
@@ -32,14 +32,14 @@ export default class UserDetail extends Component {
     const { details } = this.state;
     this.setState({
       details: { ...details, [name]: value },
-      enableSave: false,
+      disableActionBtn: false,
     });
   };
 
   onRoleChange = value => {
     const { details } = this.state;
     this.setState({
-      enableSave: false,
+      disableActionBtn: false,
       details: { ...details, permissions: value },
     });
   };
@@ -82,7 +82,7 @@ export default class UserDetail extends Component {
                 onSave={this.onSaveDetails}
                 onStatusChange={this.onStatusChange('enabled')}
                 onRoleChange={this.onRoleChange}
-                enableSave={this.state.enableSave}
+                disableActionBtn={this.state.disableActionBtn}
                 permissionsList={permissionsList}
               />
             ) : (

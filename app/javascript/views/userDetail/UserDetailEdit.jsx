@@ -13,7 +13,7 @@ const UserDetailEdit = ({
   selectedPermissions,
   onCancel,
   onSave,
-  enableSave,
+  disableActionBtn,
   onStatusChange,
   onRoleChange,
   permissionsList,
@@ -25,7 +25,7 @@ const UserDetailEdit = ({
         cardActionButtons={true}
         onCancel={onCancel}
         onSave={onSave}
-        enableSave={enableSave}
+        disableActionBtn={disableActionBtn}
       >
         <div className="col-md-12">
           <div className="row">
@@ -93,7 +93,7 @@ UserDetailEdit.propTypes = {
   selectedPermissions: PropTypes.array,
   onCancel: PropTypes.func,
   onSave: PropTypes.func,
-  enableSave: PropTypes.bool,
+  disableActionBtn: PropTypes.bool,
   onStatusChange: PropTypes.func,
   onRoleChange: PropTypes.func,
   permissionsList: PropTypes.array,

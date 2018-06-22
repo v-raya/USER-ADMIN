@@ -15,6 +15,11 @@ describe('UsersList', () => {
       expect(wrapper.find('Cards').length).toBeGreaterThan(0);
     });
 
+    it('checks card component props', () => {
+      expect(wrapper.find('Cards').props().cardHeaderButton).toBe(true);
+      expect(wrapper.find('Cards').props().headerBtnName).toBe('+ Add a user');
+    });
+
     it('renders PageHeader component', () => {
       expect(wrapper.find('PageHeader').length).toBe(1);
     });
