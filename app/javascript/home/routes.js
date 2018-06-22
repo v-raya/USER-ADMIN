@@ -9,7 +9,7 @@ import { Provider } from 'react-redux';
 export default (
   <Provider store={store}>
     <Router history={browserHistory}>
-      <Route path="/" component={App}>
+      <Route path={process.env.RAILS_RELATIVE_URL_ROOT} component={App}>
         <IndexRoute component={UsersList} />
         <Route path="user_details/:id" component={DetailsPage} />
       </Route>
