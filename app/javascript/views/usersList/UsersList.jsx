@@ -80,7 +80,7 @@ class UserList extends React.Component {
   render() {
     const { dashboardUrl, accountCounty, dashboardClickHandler } = this.props;
     return (
-      <div>
+      <div role="main">
         <PageHeader pageTitle="Manage Users" button="" />
         <div className="container">
           <div className="row">
@@ -110,7 +110,9 @@ class UserList extends React.Component {
                     type="button"
                     className="btn btn-primary btn-sm"
                     onClick={this.handleOnClick}
-                  />
+                  >
+                    Search
+                  </button>
                 </div>
                 {this.tableComponent()}
               </Cards>

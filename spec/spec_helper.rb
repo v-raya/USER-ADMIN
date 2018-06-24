@@ -2,6 +2,7 @@
 
 require 'simplecov'
 require 'support/capybara'
+require 'axe/rspec'
 
 SimpleCov.start do
   coverage_dir 'coverage/ruby'
