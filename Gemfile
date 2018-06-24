@@ -71,7 +71,6 @@ end
 
 group :test do
   # Adds support for Capybara system testing and selenium driver
-  gem 'capybara-accessible'
   gem 'rails-controller-testing'
   gem 'rspec'
   gem 'rspec-dry-struct'

@@ -16,7 +16,6 @@ Capybara.configure do |config|
 
   config.default_max_wait_time = 10
   config.default_driver = :selenium
-  Capybara.javascript_driver = Capybara.default_driver
   config.app_host = ENV.fetch('COUNTY_ADMIN_WEB_BASE_URL', 'http://localhost:3000')
   config.include LoginHelper
 end

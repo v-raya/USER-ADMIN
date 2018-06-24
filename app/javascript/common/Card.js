@@ -17,7 +17,6 @@ function renderCancelSaveButtons(
         <Button
           btnClassName="default cancel"
           btnName="cancel"
-          type="button"
           onClick={onCancel}
         />
         <Button
@@ -25,7 +24,6 @@ function renderCancelSaveButtons(
           disabled={disableActionBtn}
           btnName={actionBtnName}
           onClick={onSave}
-          type="button"
         />
       </div>
     )
@@ -65,10 +63,9 @@ const Cards = props => {
           {props.cardHeaderButton &&
             !props.cardActionButtons && (
               <Button
-                btnClassName="default pull-right edit"
+                btnClassName="default pull-right"
                 btnName={headerBtnName}
                 onClick={onEdit}
-                type="button"
               />
             )}
         </div>

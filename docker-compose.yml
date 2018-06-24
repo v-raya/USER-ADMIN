@@ -10,7 +10,6 @@ services:
     ports:
           - 18080:8080
           - 18081:8090
-    env_file: .env
   cals_db2_data:
     image: cwds/db2data
     hostname: cals_db2_data
@@ -21,7 +20,6 @@ services:
     hostname: postgresql_data
     ports:
       - ${DB_POSTGRES_PORT}:${DB_POSTGRES_PORT}
-    env_file: .env
   county-admin-web:
     build:
       context: .
