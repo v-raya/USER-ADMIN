@@ -24,7 +24,7 @@ describe('UserDetail', () => {
         const myFunction = instance.onStatusChange('enabled');
         expect(() => myFunction({ value: true })).not.toThrow();
         expect(instance.state.details).toEqual(expectedvalue);
-        expect(instance.state.enableSave).toBe(false);
+        expect(instance.state.disableActionBtn).toBe(false);
       });
     });
 
@@ -35,7 +35,7 @@ describe('UserDetail', () => {
         const myFunction = instance.onRoleChange;
         expect(() => myFunction({ 0: 'Hotline-rollout' })).not.toThrow();
         expect(instance.state.details).toEqual(expectedValue);
-        expect(instance.state.enableSave).toBe(false);
+        expect(instance.state.disableActionBtn).toBe(false);
       });
     });
 
@@ -130,7 +130,9 @@ describe('UserDetail', () => {
       it('should display <UserDetailEdit/>', () => {
         wrapper.setState({ isEdit: true, details: { id: '12345' } });
         expect(wrapper.find('UserDetailEdit').length).toBe(1);
-        expect(wrapper.find('UserDetailEdit').props().enableSave).toBe(true);
+        expect(wrapper.find('UserDetailEdit').props().disableActionBtn).toBe(
+          true
+        );
       });
     });
 

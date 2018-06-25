@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Cards, Link, InputComponent, PageHeader } from 'react-wood-duck';
+import { Link, InputComponent, PageHeader } from 'react-wood-duck';
+import Cards from '../../common/Card';
 import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table';
 import { makeUserDetailPath } from '../../_utils/makeUserDetailPath';
 
@@ -94,7 +95,8 @@ class UserList extends React.Component {
               </div>
               <Cards
                 cardHeaderText={'Manage Users: ' + accountCounty}
-                cardActionButtons={false}
+                cardHeaderButton={true}
+                headerBtnName="+ Add a user"
               >
                 <InputComponent
                   gridClassName="col-md-10 col-sm-6 col-xs-12"

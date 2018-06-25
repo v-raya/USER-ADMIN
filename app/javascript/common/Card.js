@@ -3,7 +3,13 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { Button } from 'react-wood-duck';
 
-function renderCancelSaveButtons(props, onCancel, enableSave, onSave) {
+function renderCancelSaveButtons(
+  props,
+  onCancel,
+  disableActionBtn,
+  onSave,
+  actionBtnName
+) {
   return (
     props.cardActionButtons &&
     !props.cardHeaderButton && (
@@ -11,8 +17,8 @@ function renderCancelSaveButtons(props, onCancel, enableSave, onSave) {
         <Button btnClassName="default" btnName="cancel" onClick={onCancel} />
         <Button
           btnClassName="primary"
-          disabled={enableSave}
-          btnName="save"
+          disabled={disableActionBtn}
+          btnName={actionBtnName}
           onClick={onSave}
         />
       </div>
@@ -32,7 +38,9 @@ const Cards = props => {
     onCancel,
     onEdit,
     onSave,
-    enableSave,
+    disableActionBtn,
+    headerBtnName,
+    actionBtnName,
   } = props;
   const classField = classNames(
     cardbgcolor,
@@ -52,14 +60,20 @@ const Cards = props => {
             !props.cardActionButtons && (
               <Button
                 btnClassName="default pull-right"
-                btnName="Edit"
+                btnName={headerBtnName}
                 onClick={onEdit}
               />
             )}
         </div>
         <div className="card-body">
           {children}
-          {renderCancelSaveButtons(props, onCancel, enableSave, onSave)}
+          {renderCancelSaveButtons(
+            props,
+            onCancel,
+            disableActionBtn,
+            onSave,
+            actionBtnName
+          )}
           <div className="clearfix" />
         </div>
       </div>
@@ -83,7 +97,9 @@ Cards.propTypes = {
   onSave: PropTypes.func,
   onCancel: PropTypes.func,
   onEdit: PropTypes.func,
-  enableSave: PropTypes.bool,
+  disableActionBtn: PropTypes.bool,
+  actionBtnName: PropTypes.string,
+  headerBtnName: PropTypes.string,
 };
 
 Cards.defaultProps = {
@@ -95,6 +111,8 @@ Cards.defaultProps = {
   wrapContainer: 'container-fluid',
   cardActionButtons: false,
   cardHeaderButton: false,
+  actionBtnName: 'save',
+  headerBtnName: 'Edit',
 };
 
 export default Cards;
