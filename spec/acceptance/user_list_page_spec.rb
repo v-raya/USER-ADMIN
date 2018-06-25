@@ -24,7 +24,6 @@ feature 'User List Page' do
     find('.cancel').click
     page_is_user_details
 
-    # binding.pry
     click_link('User List')
     page_has_user_list_headers
     page_has_users

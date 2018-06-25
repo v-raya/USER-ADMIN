@@ -1,8 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Link, PageHeader } from 'react-wood-duck';
+import { Link, PageHeader, InputComponent } from 'react-wood-duck';
 import Cards from '../../common/Card';
-import InputComponent from '../../common/InputComponent';
 import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table';
 import { makeUserDetailPath } from '../../_utils/makeUserDetailPath';
 
