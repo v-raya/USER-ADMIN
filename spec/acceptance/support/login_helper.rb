@@ -22,7 +22,7 @@ module LoginHelper
       'roles': ['CWS-admin', 'Supervisor'],
       'county_code': '56',
       'county_cws_code': '1123',
-      'county_name': 'Madera',
+      'county_name': 'Yolo',
       'privileges': [
         'CWS Case Management System',
         'Resource Management',
