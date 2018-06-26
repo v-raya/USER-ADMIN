@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Link, PageHeader, InputComponent } from 'react-wood-duck';
+import { Link, InputComponent, PageHeader } from 'react-wood-duck';
 import Cards from '../../common/Card';
 import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table';
 import { makeUserDetailPath } from '../../_utils/makeUserDetailPath';
@@ -105,7 +105,6 @@ class UserList extends React.Component {
                   type="text"
                   onChange={this.handleTextChange}
                   placeholder="search user by Last name"
-                  ariaLabel="Search user by Last name"
                 />
                 <div className="col-md-2" style={buttonAlign}>
                   <button
