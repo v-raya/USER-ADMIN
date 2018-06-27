@@ -6,7 +6,7 @@ module LoginHelper
     visit ENV['RAILS_RELATIVE_URL_ROOT'] || '/'
     puts "visited: landed on  #{current_url}.  "
     puts "ENV for county auth: #{ENV.fetch('COUNTY_AUTHORIZATION_ENABLED')}"
-    puts "Logging in to county #{login_json['county_code']}"
+    puts "Logging in to county #{login_config[:county_name]}"
     return unless ENV.fetch('COUNTY_AUTHORIZATION_ENABLED', false)
     fill_in 'Authorization JSON', with: login_json
     click_button 'Sign In'
