@@ -15,7 +15,10 @@ function mapStateToProps(state) {
 }
 
 function mapDispatchToProps(dispatch) {
-  const actions = { fetchUsersActions, fetchAccountActions };
+  const actions = {
+    fetchUsersActions,
+    fetchAccountActions,
+  };
   return {
     actions: bindActionCreators(actions, dispatch),
   };

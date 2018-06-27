@@ -45,7 +45,7 @@ module Users
           allow(response).to receive(:status).and_return(404)
           allow(http_service)
             .to receive(:get)
-            .with('/perry/idm/users/22', '', token)
+            .with('/perry/idm/users/22', token)
             .and_return(response)
           expect(user_repository.get_users_details('22', token)).to eq({})
         end
@@ -57,7 +57,7 @@ module Users
           allow(response).to receive(:body).and_return(id: 'El')
           allow(http_service)
             .to receive(:get)
-            .with('/perry/idm/users/33', '', token)
+            .with('/perry/idm/users/33', token)
             .and_return(response)
           expect(user_repository.get_users_details('33', token))
             .to eq User.new(id: 'El')
@@ -73,7 +73,7 @@ module Users
           allow(response).to receive(:status).and_return(404)
           allow(http_service)
             .to receive(:get)
-            .with('/perry/idm/permissions', '', token)
+            .with('/perry/idm/permissions', token)
             .and_return(response)
           expect(user_repository.get_permissions_list(token)).to eq([])
         end
@@ -85,7 +85,7 @@ module Users
           allow(response).to receive(:body).and_return(['el'])
           allow(http_service)
             .to receive(:get)
-            .with('/perry/idm/permissions', '', token)
+            .with('/perry/idm/permissions', token)
             .and_return(response)
           expect(user_repository.get_permissions_list(token))
             .to eq ['el']
@@ -99,6 +99,7 @@ module Users
         enable: 'true',
         permissions: %w[snapshot hotline]
       }
+
       context 'with user' do
         it 'updates a user' do
           allow(response).to receive(:body).and_return(
@@ -112,6 +113,39 @@ module Users
             .and_return(response)
           expect(user_repository.update_user('55', params, token))
             .to eq User.new(id: '55', enabled: 'true', permissions: %w[snapshot hotline])
+        end
+      end
+    end
+
+    describe '#verify_user' do
+      let(:response) { instance_double('Faraday::Response') }
+      params = {
+        RACFID: 'true',
+        email: 'verifyme@gmail.com'
+      }
+
+      context 'with no data' do
+        it 'returns an empty response' do
+          allow(response).to receive(:status).and_return(404)
+          allow(http_service)
+            .to receive(:get)
+            .with('/perry/idm/users/verify', params, token)
+            .and_return(response)
+          expect(user_repository.verify_user(params, token)).to eq({})
+        end
+      end
+
+      context 'verify a user' do
+        it 'returns a response' do
+          allow(response).to receive(:status).and_return(200)
+          allow(response).to receive(:body)
+            .and_return(verification_passed: 'True', verification_message: 'No user')
+          allow(http_service)
+            .to receive(:get)
+            .with('/perry/idm/users/verify', params, token)
+            .and_return(response)
+          expect(user_repository.verify_user(params, token))
+            .to eq VerifyUser.new(verification_passed: 'True', verification_message: 'No user')
         end
       end
     end

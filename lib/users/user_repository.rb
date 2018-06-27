@@ -6,14 +6,14 @@ module Users
       @http_service = http_service
     end
 
-    def get_users(last_name, token)
-      response = @http_service.get('/perry/idm/users', last_name, token)
+    def get_users(parameters, token)
+      response = @http_service.get('/perry/idm/users', parameters, token)
       return [] if response.status == 404
       response.body.map { |result| User.new(result) }
     end
 
     def get_users_details(id, token)
-      response = @http_service.get("/perry/idm/users/#{id}", '', token)
+      response = @http_service.get("/perry/idm/users/#{id}", token)
       return {} if response.status == 404
       User.new(response.body)
     end
@@ -23,8 +23,14 @@ module Users
       User.new(response.body)
     end
 
+    def verify_user(parameters, token)
+      response = @http_service.get('/perry/idm/users/verify', parameters, token)
+      return {} if response.status == 404
+      VerifyUser.new(response.body)
+    end
+
     def get_permissions_list(token)
-      response = @http_service.get('/perry/idm/permissions', '', token)
+      response = @http_service.get('/perry/idm/permissions', token)
       return [] if response.status == 404
       response.body { Permissions.new }
     end

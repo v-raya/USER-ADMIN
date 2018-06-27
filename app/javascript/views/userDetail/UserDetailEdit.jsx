@@ -26,6 +26,7 @@ const UserDetailEdit = ({
         onCancel={onCancel}
         onSave={onSave}
         disableActionBtn={disableActionBtn}
+        leftActionBtnName="Cancel"
       >
         <div className="col-md-12">
           <div className="row">

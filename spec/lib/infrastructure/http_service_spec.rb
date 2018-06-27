@@ -6,16 +6,19 @@ module Infrastructure
   describe HttpService do
     let(:connection) { instance_double('Faraday::Connection') }
     let(:last_name) { 'my_name' }
-
     describe '#get' do
       context 'returns a valid API response' do
+        parameters = {
+          enable: 'true',
+          permissions: %w[snapshot hotline]
+        }
         it 'makes a get request' do
           allow(Faraday).to receive(:new)
             .with(url: 'https://perry.test')
             .and_return(connection)
           expect(connection).to receive(:get)
-            .with("/resource?lastName=#{last_name}&token=showbiz_pizza_token")
-          Infrastructure::HttpService.new.get('/resource', last_name, 'showbiz_pizza_token')
+            .with("/resource?#{parameters.to_query}&token=showbiz_pizza_token")
+          Infrastructure::HttpService.new.get('/resource', parameters, 'showbiz_pizza_token')
         end
 
         it 'sets json and uses the default adapter' do

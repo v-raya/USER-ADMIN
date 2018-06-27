@@ -24,7 +24,7 @@ const UserDetailShow = ({ details, onEdit }) => (
               <ShowField label="Office Name">{details.office}</ShowField>
             </div>
             <div className="col-md-3">
-              <ShowField label="CWS Login">{details.RACFID}</ShowField>
+              <ShowField label="CWS Login">{details.racfid}</ShowField>
             </div>
             <div className="col-md-3">
               <ShowField label="Last Login">

@@ -11,6 +11,12 @@ class UserService {
     return ApiService.get(`/user_detail/${id}`).then(response => response.data);
   }
 
+  static validateUser(email, racfid) {
+    return ApiService.get(`/verify_user?email=${email}&racfid=${racfid}`).then(
+      response => response.data
+    );
+  }
+
   static saveUserDetails(id, details) {
     const permissions = [];
     if (Array.isArray(details.permissions)) {

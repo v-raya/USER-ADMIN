@@ -1,16 +1,18 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { mount, shallow } from 'enzyme';
 import UserDetail from './UserDetail';
 import UserService from '../../_services/users';
 
 describe('UserDetail', () => {
   let wrapper;
+
   beforeEach(() => {
     wrapper = shallow(
       <UserDetail
         details={{}}
         dashboardUrl={'dburl'}
         userListUrl={'myUserList'}
+        actions={{}}
       />,
       { disableLifecycleMethods: true }
     );
@@ -28,7 +30,7 @@ describe('UserDetail', () => {
       });
     });
 
-    describe('#onRoleChange()  function', () => {
+    describe('#onRoleChange', () => {
       it('should set the Permissions state when event is triggered', () => {
         const expectedValue = { permissions: { 0: 'Hotline-rollout' } };
         const instance = wrapper.instance();
@@ -39,12 +41,14 @@ describe('UserDetail', () => {
       });
     });
 
-    it('toggles the isEdit flag', () => {
-      const instance = wrapper.instance();
-      instance.onEditClick();
-      expect(instance.state.isEdit).toEqual(true);
-      instance.onEditClick();
-      expect(instance.state.isEdit).toEqual(false);
+    describe('#onEditClick', () => {
+      it('toggles the isEdit flag', () => {
+        const instance = wrapper.instance();
+        instance.onEditClick();
+        expect(instance.state.isEdit).toEqual(true);
+        instance.onEditClick();
+        expect(instance.state.isEdit).toEqual(false);
+      });
     });
   });
 
@@ -55,6 +59,46 @@ describe('UserDetail', () => {
       expect(wrapper.find('Alert').props().children).toBe(
         'Your changes have been made successfuly'
       );
+    });
+  });
+
+  describe('#componentDidMount', () => {
+    let mockFetchDetailsActions;
+    let mockFetchPermissionsActions;
+
+    beforeEach(() => {
+      mockFetchDetailsActions = jest.fn();
+      mockFetchPermissionsActions = jest.fn();
+      mount(
+        <UserDetail
+          details={{}}
+          dashboardUrl={'dburl'}
+          userListUrl={'myUserList'}
+          actions={{
+            fetchDetailsActions: mockFetchDetailsActions,
+            fetchPermissionsActions: mockFetchPermissionsActions,
+          }}
+        />
+      );
+    });
+
+    it('fetches details', () => {
+      expect(mockFetchDetailsActions).toHaveBeenCalledWith();
+    });
+
+    it('fetches the permissions', () => {
+      expect(mockFetchPermissionsActions).toHaveBeenCalledWith();
+    });
+  });
+
+  describe('#componentWillReceiveProps', () => {
+    it('passes along the props', () => {
+      const instance = wrapper.instance();
+      instance.componentWillReceiveProps({
+        id: 'some_id',
+        details: { test_prop: 'prop_value' },
+      });
+      expect(instance.state.details.test_prop).toEqual('prop_value');
     });
   });
 
@@ -138,6 +182,7 @@ describe('UserDetail', () => {
 
     describe('Link to user list', () => {
       let link;
+
       beforeEach(() => {
         link = wrapper.find('Link').at(1);
       });

@@ -8,21 +8,22 @@ function renderCancelSaveButtons(
   onCancel,
   disableActionBtn,
   onSave,
-  actionBtnName
+  rightActionBtnName,
+  leftActionBtnName
 ) {
   return (
     props.cardActionButtons &&
     !props.cardHeaderButton && (
       <div className="pull-right">
         <Button
+          btnName={leftActionBtnName}
           btnClassName="default cancel"
-          btnName="cancel"
           onClick={onCancel}
         />
         <Button
           btnClassName="primary"
           disabled={disableActionBtn}
-          btnName={actionBtnName}
+          btnName={rightActionBtnName}
           onClick={onSave}
         />
       </div>
@@ -44,7 +45,8 @@ const Cards = props => {
     onSave,
     disableActionBtn,
     headerBtnName,
-    actionBtnName,
+    rightActionBtnName,
+    leftActionBtnName,
   } = props;
   const classField = classNames(
     cardbgcolor,
@@ -76,7 +78,8 @@ const Cards = props => {
             onCancel,
             disableActionBtn,
             onSave,
-            actionBtnName
+            rightActionBtnName,
+            leftActionBtnName
           )}
           <div className="clearfix" />
         </div>
@@ -102,8 +105,9 @@ Cards.propTypes = {
   onCancel: PropTypes.func,
   onEdit: PropTypes.func,
   disableActionBtn: PropTypes.bool,
-  actionBtnName: PropTypes.string,
   headerBtnName: PropTypes.string,
+  rightActionBtnName: PropTypes.string,
+  leftActionBtnName: PropTypes.string,
 };
 
 Cards.defaultProps = {
@@ -115,7 +119,7 @@ Cards.defaultProps = {
   wrapContainer: 'container-fluid',
   cardActionButtons: false,
   cardHeaderButton: false,
-  actionBtnName: 'save',
+  rightActionBtnName: 'save',
   headerBtnName: 'Edit',
 };
 

@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 # rubocop:disable Style/RedundantReturn
+# rubocop:disable Style/OptionalArguments
 
 module Infrastructure
   class HttpService
@@ -8,8 +9,8 @@ module Infrastructure
       @base_url = base_url
     end
 
-    def get(url, last_name, token)
-      http_connection.get("#{url}?lastName=#{last_name}&token=#{token}")
+    def get(url, parameters = {}, token)
+      http_connection.get("#{url}?#{parameters.to_query}&token=#{token}")
     rescue StandardError
       return Faraday::Response.new(status: 404)
     end
@@ -49,3 +50,4 @@ module Infrastructure
   end
 end
 # rubocop:enable Style/RedundantReturn
+# rubocop:enable Style/OptionalArguments

@@ -3,7 +3,7 @@ import UserService from './user.service';
 jest.mock('../api');
 const ApiService = require('../api').default;
 
-const id = 'id';
+const id = 'someid';
 
 describe('UserService', () => {
   describe('#fetch', () => {
@@ -32,7 +32,7 @@ describe('UserService', () => {
     it('calls #fetchUsersDetails ApiService', () => {
       getSpy.mockReturnValue(Promise.resolve({}));
       UserService.fetchUserDetails(id);
-      expect(getSpy).toHaveBeenCalledWith('/user_detail/id');
+      expect(getSpy).toHaveBeenCalledWith('/user_detail/someid');
     });
 
     it('calls #fetchPermissionList ApiService', () => {
@@ -60,7 +60,10 @@ describe('UserService', () => {
         permissions: 'drivethebus,getapuppy',
         first_name: 'Pidgeon',
       });
-      expect(patchSpy).toHaveBeenCalledWith('/user_detail/id/save_user', body);
+      expect(patchSpy).toHaveBeenCalledWith(
+        '/user_detail/someid/save_user',
+        body
+      );
     });
 
     it('succeeds when the permissins are still an array from loading', () => {
@@ -74,7 +77,28 @@ describe('UserService', () => {
         permissions: ['drivethebus', 'getapuppy'],
         first_name: 'Pidgeon',
       });
-      expect(patchSpy).toHaveBeenCalledWith('/user_detail/id/save_user', body);
+      expect(patchSpy).toHaveBeenCalledWith(
+        '/user_detail/someid/save_user',
+        body
+      );
+    });
+  });
+
+  describe('#validateUser', () => {
+    let getSpy2;
+
+    beforeEach(() => {
+      getSpy2 = jest.spyOn(ApiService, 'get');
+    });
+
+    it('calls #validateUser ApiService', () => {
+      const email = 'email@example.com';
+      const racfid = 'some-racfid';
+      getSpy2.mockReturnValue(Promise.resolve({}));
+      UserService.validateUser(email, racfid);
+      expect(getSpy2).toHaveBeenCalledWith(
+        `/verify_user?email=${email}&racfid=${racfid}`
+      );
     });
   });
 });

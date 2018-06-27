@@ -7,6 +7,7 @@ module Api
     describe '#index' do
       let(:user_repository) { instance_double('User::UserRepository') }
       let(:user) { Users::User.new(username: 'el') }
+      let(:search_key) { 'My name' }
 
       it 'has a route' do
         expect(get: 'api/user_list').to route_to(
@@ -19,9 +20,9 @@ module Api
       it 'returns a userlist' do
         allow(Users::UserRepository).to receive(:new)
           .with(no_args).and_return(user_repository)
-        allow(user_repository).to receive(:get_users).with('my_name', 'token').and_return(user)
+        allow(user_repository).to receive(:get_users).with({}, 'token').and_return(user)
         request.session[:token] = 'token'
-        get :index, params: { last_name: 'my_name' }
+        get :index
         expect(response.body).to eq user.to_json
       end
     end

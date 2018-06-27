@@ -148,8 +148,6 @@ UserDetail.propTypes = {
   dashboardClickHandler: PropTypes.func,
   permissionsList: PropTypes.array,
   actions: PropTypes.object.isRequired,
-  fetchDetailsActions: PropTypes.func,
-  fetchPermissionsActions: PropTypes.func,
 };
 
 UserDetail.defaultProps = {

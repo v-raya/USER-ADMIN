@@ -3,8 +3,15 @@
 module Api
   class UserListController < ActionController::API
     def index
-      users = Users::UserRepository.new.get_users(params[:last_name], session[:token])
+      params = Users::User.new(allowed_params_to_search).to_h.compact
+      users = Users::UserRepository.new.get_users(params, session[:token])
       render json: users
+    end
+
+    private
+
+    def allowed_params_to_search
+      params.permit(:last_name).to_h
     end
   end
 end

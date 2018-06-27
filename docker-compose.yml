@@ -1,7 +1,7 @@
 version: '3.2'
 services:
   perry:
-    image: cwds/perry
+    image: cwds/perry:3.0.3_786-RC
     hostname: perry
     depends_on:
           - cals_db2_data
@@ -10,9 +10,6 @@ services:
     ports:
           - 18080:8080
           - 18081:8090
-    environment:
-      DEV_MODE: ${DEV_MODE}
-      LOG_LEVEL: "INFO"
   cals_db2_data:
     image: cwds/db2data
     hostname: cals_db2_data

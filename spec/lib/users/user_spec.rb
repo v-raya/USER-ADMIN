@@ -12,7 +12,7 @@ module Users
       it { is_expected.to have_attribute(:first_name, Types::String.optional) }
       it { is_expected.to have_attribute(:last_name, Types::String.optional) }
       it { is_expected.to have_attribute(:county_name, Types::String.optional) }
-      it { is_expected.to have_attribute(:RACFID, Types::String.optional) }
+      it { is_expected.to have_attribute(:racfid, Types::String.optional) }
       it { is_expected.to have_attribute(:start_date, Types::String.optional) }
       it { is_expected.to have_attribute(:end_date, Types::String.optional) }
       it { is_expected.to have_attribute(:office, Types::String.optional) }
@@ -24,6 +24,8 @@ module Users
       it { is_expected.to have_attribute(:enabled, Types::Bool.optional) }
       it { is_expected.to have_attribute(:status, Types::String.optional) }
       it { is_expected.to have_attribute(:permissions, Types::Array.optional) }
+      it { is_expected.to have_attribute(:verification_passed, Types::Bool.optional) }
+      it { is_expected.to have_attribute(:verification_message, Types::String.optional) }
     end
   end
 end

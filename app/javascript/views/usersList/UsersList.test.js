@@ -1,11 +1,12 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { mount, shallow } from 'enzyme';
 import UsersList from './UsersList.jsx';
 
 describe('UsersList', () => {
   let wrapper;
+
   beforeEach(() => {
-    wrapper = shallow(<UsersList dashboardUrl={'dburl'} />, {
+    wrapper = shallow(<UsersList dashboardUrl={'dburl'} actions={{}} />, {
       disableLifecycleMethods: true,
     });
   });
@@ -22,6 +23,92 @@ describe('UsersList', () => {
 
     it('renders PageHeader component', () => {
       expect(wrapper.find('PageHeader').length).toBe(1);
+    });
+  });
+
+  describe('#nameFormat', () => {
+    it('shows nameFormat', () => {
+      const anchor = wrapper
+        .instance()
+        .nameFormat('any', { last_name: 'Surname', first_name: 'Given' });
+      expect(anchor.props.children.join('')).toEqual('Surname, Given');
+    });
+  });
+
+  describe('#userStatusFormat', () => {
+    it('returns "Enabled" for true', () => {
+      expect(
+        wrapper.instance().userStatusFormat('any', { enabled: true })
+      ).toBe('Active');
+    });
+
+    it('returns "Inactive" for false', () => {
+      expect(
+        wrapper.instance().userStatusFormat('any', { enabled: false })
+      ).toBe('Inactive');
+    });
+  });
+
+  describe('#handleOnClick', () => {
+    const mockFetchUsersActions = jest.fn();
+
+    beforeEach(() => {
+      wrapper.setProps({
+        actions: { fetchUsersActions: mockFetchUsersActions },
+      });
+      wrapper.setState({ searchKey: 'SomeSearchKey' });
+    });
+
+    afterEach(() => {
+      mockFetchUsersActions.mockRestore();
+    });
+
+    it('calls the appropriate function', () => {
+      wrapper.instance().handleOnClick();
+      expect(mockFetchUsersActions).toHaveBeenCalledWith('SomeSearchKey');
+    });
+  });
+
+  describe('#handleTextChange', () => {
+    it('sets state based on the text changing', () => {
+      wrapper
+        .instance()
+        .handleTextChange({ target: { value: 'search value' } });
+      expect(wrapper.instance().state.searchKey).toEqual('search value');
+    });
+  });
+
+  describe('#handleOnAdd', () => {
+    it('sets state based on the user action', () => {
+      wrapper.instance().handleOnAdd();
+      expect(wrapper.instance().state.addUser).toEqual(true);
+    });
+  });
+
+  describe('#componentDidMount', () => {
+    let mockFetchUsersActions;
+    let mockFetchAccountActions;
+
+    beforeEach(() => {
+      mockFetchUsersActions = jest.fn();
+      mockFetchAccountActions = jest.fn();
+      mount(
+        <UsersList
+          dashboardUrl={'dburl'}
+          actions={{
+            fetchUsersActions: mockFetchUsersActions,
+            fetchAccountActions: mockFetchAccountActions,
+          }}
+        />
+      );
+    });
+
+    it('fetches users', () => {
+      expect(mockFetchUsersActions).toHaveBeenCalledWith('');
+    });
+
+    it('fetches the account', () => {
+      expect(mockFetchAccountActions).toHaveBeenCalledWith();
     });
   });
 
