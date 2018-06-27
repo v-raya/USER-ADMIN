@@ -9,8 +9,15 @@ describe DashboardController do
     end
 
     it 'renders a template' do
+      allow_any_instance_of(DashboardController).to receive(:check_for_roles?).and_return(true)
       get :index
       expect(response).to render_template 'index'
+    end
+
+    it 'renders a error page' do
+      allow_any_instance_of(DashboardController).to receive(:check_for_roles?).and_return(false)
+      get :index
+      expect(response).to render_template 'errors/forbidden_page'
     end
   end
 end

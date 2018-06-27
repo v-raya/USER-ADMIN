@@ -1,0 +1,44 @@
+.page-error {
+  background: #b73609;
+  color: #f5f5f5;
+  left: 0;
+  width: 100%;
+  z-index: 1;
+
+  &.collapsed {
+    max-height: 10rem;
+    overflow: hidden;
+  }
+
+  &.expanded {
+    height: 100%;
+    overflow: scroll;
+    padding-bottom: 3rem;
+  }
+
+  button {
+    background: rgba(0, 0, 0, 0.7);
+    bottom: 1rem;
+    font-size: 1.5rem;
+    left: 50%;
+    position: absolute;
+  }
+}
+
+.something-else {
+  padding: 10px;
+}
+
+.error-panel {
+  align-items: center;
+  -webkit-box-align: center;
+  -webkit-box-pack: center;
+  display: -ms-flexbox;
+  display: -webkit-box;
+  display: flex;
+  -ms-flex-align: center;
+  flex-direction: column;
+  -ms-flex-pack: center;
+  height: 100vh;
+  justify-content: center;
+}
