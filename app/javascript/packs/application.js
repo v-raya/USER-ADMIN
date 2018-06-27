@@ -13,7 +13,4 @@ import routes from '../home/routes';
 
 if (document.getElementById('app')) {
   ReactDOM.render(routes, document.getElementById('app'));
-  console.log('Application renders');
-} else {
-  console.log(' Not rendering');
 }
