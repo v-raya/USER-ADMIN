@@ -12,6 +12,9 @@ function mapStateToProps(state) {
   return {
     details: selectDetailRecords(state),
     permissionsList: permissionsList(state),
+    userListUrl: process.env.RAILS_RELATIVE_URL_ROOT
+      ? process.env.RAILS_RELATIVE_URL_ROOT
+      : '/',
   };
 }
 
