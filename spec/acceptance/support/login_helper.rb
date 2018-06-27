@@ -1,5 +1,5 @@
 # frozen_string_literal: true
-'
+
 module LoginHelper
   def login(login_config = default_json)
     login_json = JSON.generate(login_config)
