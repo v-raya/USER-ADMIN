@@ -47,6 +47,7 @@ class UserList extends React.Component {
           striped={true}
           hover={true}
           trClassName="userRow"
+          withoutTabIndex
         >
           <TableHeaderColumn
             dataField="last_name"
@@ -80,7 +81,7 @@ class UserList extends React.Component {
   render() {
     const { dashboardUrl, accountCounty, dashboardClickHandler } = this.props;
     return (
-      <div>
+      <div role="main">
         <PageHeader pageTitle="Manage Users" button="" />
         <div className="container">
           <div className="row">

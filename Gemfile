@@ -70,6 +70,7 @@ group :development do
 end
 
 group :test do
+  gem 'axe-matchers'
   # Adds support for Capybara system testing and selenium driver
   gem 'rails-controller-testing'
   gem 'rspec'

@@ -14,7 +14,11 @@ function renderCancelSaveButtons(
     props.cardActionButtons &&
     !props.cardHeaderButton && (
       <div className="pull-right">
-        <Button btnClassName="default" btnName="cancel" onClick={onCancel} />
+        <Button
+          btnClassName="default cancel"
+          btnName="cancel"
+          onClick={onCancel}
+        />
         <Button
           btnClassName="primary"
           disabled={disableActionBtn}

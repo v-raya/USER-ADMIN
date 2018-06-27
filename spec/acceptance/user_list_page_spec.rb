@@ -2,6 +2,7 @@
 
 require 'acceptance_helper'
 require 'feature'
+require 'axe/rspec'
 
 feature 'User List Page' do
   scenario 'has a list of users' do
@@ -9,12 +10,23 @@ feature 'User List Page' do
     login
     page_has_basic_text
     page_has_user_list_headers
+    expect(page).to be_accessible
     page_has_users
 
     user = first_user_link
     puts "user link: #{user.text}"
     user.click
     page_is_user_details
+    # expect(page).to be_accessible
+
+    click_on('Edit')
+    # expect(page).to be_accessible
+    find('.cancel').click
+    page_is_user_details
+
+    click_link('User List')
+    page_has_user_list_headers
+    page_has_users
   end
 
   def page_has_basic_text
