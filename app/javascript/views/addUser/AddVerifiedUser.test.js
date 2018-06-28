@@ -27,7 +27,7 @@ describe('AddVerifiedUser', () => {
         <AddVerifiedUser verifyNewUserDetails={verifyNewUserDetails} />
       );
       expect(wrapper.find('label').text()).toBe(
-        'Please Verify the details of the user before you add'
+        'Please Verify the details of the CWS-CMS user you want to add to CWS-CARES'
       );
       expect(wrapper.find('ShowField').length).toBe(5);
       expect(
@@ -65,9 +65,9 @@ describe('AddVerifiedUser', () => {
     it('renders the <ShowField/> props.children at label:fullName', () => {
       let expectedValue = [
         `${verifyNewUserDetails.user.last_name}`,
-        `${','}`,
+        `${', '}`,
         `${verifyNewUserDetails.user.first_name}`,
-        `${','}`,
+        `${' '}`,
         `${verifyNewUserDetails.user.middle_name}`,
       ];
       expect(
@@ -88,8 +88,8 @@ describe('AddVerifiedUser', () => {
       wrapper = shallow(
         <AddVerifiedUser verifyNewUserDetails={newUserDetails} />
       );
-      expect(wrapper.find('ShowField').length).toBe(0);
-      expect(wrapper.find('label').text()).toBe(
+      expect(wrapper.find('Alert').length).toBe(1);
+      expect(wrapper.find('Alert').props().children).toBe(
         newUserDetails.verification_message
       );
     });

@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Cards from '../../common/Card';
+import { Alert } from 'react-wood-duck';
 import ShowField from '../../common/ShowField';
 
 /* eslint camelcase: 0 */
@@ -19,13 +20,15 @@ const AddNewUser = ({ onCancel, onSave, verifyNewUserDetails }) => {
               rightActionBtnName="Add User"
             >
               <label>
-                Please Verify the details of the user before you add
+                Please Verify the details of the CWS-CMS user you want to add to
+                CWS-CARES
               </label>
               <div className="row">
                 <div className="col-md-3">
                   <ShowField label="Full Name">
-                    {verifyNewUserDetails.user.last_name},
-                    {verifyNewUserDetails.user.first_name},
+                    {verifyNewUserDetails.user.last_name}
+                    {', '}
+                    {verifyNewUserDetails.user.first_name}{' '}
                     {verifyNewUserDetails.user.middle_name}
                   </ShowField>
                 </div>
@@ -58,9 +61,15 @@ const AddNewUser = ({ onCancel, onSave, verifyNewUserDetails }) => {
       ) : (
         <div className="row">
           <div className="col-md-12">
-            <Cards cardHeaderText="Add User" cardActionButtons={false}>
-              <label>{verifyNewUserDetails.verification_message}</label>
-            </Cards>
+            <div className="alert">
+              <Alert
+                alertClassName="error"
+                faIcon="fa-exclamation-triangle"
+                alertCross={false}
+              >
+                {verifyNewUserDetails.verification_message}
+              </Alert>
+            </div>
           </div>
         </div>
       )}

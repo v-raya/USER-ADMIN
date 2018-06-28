@@ -15,8 +15,7 @@ describe('VerifyUser', () => {
   });
 
   it('checks the Labels inside the grid ', () => {
-    console.log(wrapper);
-    expect(wrapper.find('[label="RACFID"]').exists()).toBe(true);
-    expect(wrapper.find('[label="Email Id"]').exists()).toBe(true);
+    expect(wrapper.find('[label="RACF ID"]').exists()).toBe(true);
+    expect(wrapper.find('[label="Email Address"]').exists()).toBe(true);
   });
 });

@@ -23,11 +23,23 @@ export default class AddUser extends Component {
     this.setState({ verifyNewUserDetails });
   }
 
-  handleEmail = event =>
-    this.setState({ email: event.target.value, disableActionBtn: false });
+  handleEmail = event => {
+    this.setState({ email: event.target.value });
+    if (event.target.value !== '' && this.state.racfid !== '') {
+      this.setState({ disableActionBtn: false });
+    } else {
+      this.setState({ disableActionBtn: true });
+    }
+  };
 
-  handleRacfid = event =>
-    this.setState({ racfid: event.target.value, disableActionBtn: false });
+  handleRacfid = event => {
+    this.setState({ racfid: event.target.value });
+    if (event.target.value !== '' && this.state.email !== '') {
+      this.setState({ disableActionBtn: false });
+    } else {
+      this.setState({ disableActionBtn: true });
+    }
+  };
 
   onVerify = () => {
     const { email, racfid } = this.state;

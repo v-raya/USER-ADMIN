@@ -24,23 +24,23 @@ export default class VerifyUser extends React.Component {
           >
             <div className="col-md-12">
               <label>
-                Enter the RACFID and email address of the user you are adding in
-                order to verify that this is new CWS-CARES user
+                Enter the RACF ID and email address of the user you are adding
+                in order to verify that this is a new CWS-CARES user
               </label>
               <div className="row">
                 <div className="col-md-3">
                   <InputComponent
-                    label="RACFID"
+                    label="RACF ID"
                     gridClassName="col-md-10 col-sm-6 col-xs-12"
                     fieldClassName="form-group"
                     type="text"
-                    placeholder="Enter RACFID"
+                    placeholder="Enter RACF ID"
                     onChange={handleRacfChange}
                   />
                 </div>
                 <div className="col-md-3">
                   <InputComponent
-                    label="Email Id"
+                    label="Email Address"
                     gridClassName="col-md-10 col-sm-6 col-xs-12"
                     fieldClassName="form-group"
                     type="text"

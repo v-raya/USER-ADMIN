@@ -16,12 +16,26 @@ describe('VerifyUser', () => {
       wrapper.instance().handleEmail({ target: { value: 'abcd@gmail.com' } });
       expect(wrapper.instance().state.email).toEqual('abcd@gmail.com');
     });
+
+    it('sets disableActionBtn state ', () => {
+      expect(wrapper.instance().state.disableActionBtn).toEqual(true);
+      wrapper.instance().setState({ racfid: 'ABCD' });
+      wrapper.instance().handleEmail({ target: { value: 'abcd@gmail.com' } });
+      expect(wrapper.instance().state.disableActionBtn).toEqual(false);
+    });
   });
 
   describe('#handleRacfid', () => {
     it('sets state based on the text changing', () => {
       wrapper.instance().handleRacfid({ target: { value: 'ABCD1234POP' } });
       expect(wrapper.instance().state.racfid).toEqual('ABCD1234POP');
+    });
+
+    it('sets disableActionBtn state', () => {
+      expect(wrapper.instance().state.disableActionBtn).toEqual(true);
+      wrapper.instance().setState({ email: 'abcd@gmail.com' });
+      wrapper.instance().handleRacfid({ target: { value: 'ABCD1234POP' } });
+      expect(wrapper.instance().state.disableActionBtn).toEqual(false);
     });
   });
 
