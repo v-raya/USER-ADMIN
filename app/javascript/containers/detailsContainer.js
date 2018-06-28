@@ -9,16 +9,6 @@ import { fetchPermissionsActions } from '../actions/permissionsActions';
 import { bindActionCreators } from 'redux';
 
 function mapStateToProps(state) {
-  console.log(
-    'map state to props details container',
-    process.env.RAILS_RELATIVE_URL_ROOT
-  );
-  console.log(
-    'Expression for userListUrl',
-    process.env.RAILS_RELATIVE_URL_ROOT
-      ? process.env.RAILS_RELATIVE_URL_ROOT
-      : '/'
-  );
   return {
     details: selectDetailRecords(state),
     permissionsList: permissionsList(state),
