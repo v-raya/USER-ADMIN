@@ -7,7 +7,8 @@ module Users
     end
 
     def get_users(parameters, token)
-      response = @http_service.get('/perry/idm/users', parameters, token)
+      params = sanitize_keys(parameters)
+      response = @http_service.get('/perry/idm/users', params, token)
       return [] if response.status == 404
       response.body.map { |result| User.new(result) }
     end
@@ -33,6 +34,14 @@ module Users
       response = @http_service.get('/perry/idm/permissions', token)
       return [] if response.status == 404
       response.body { Permissions.new }
+    end
+
+    private
+
+    def sanitize_keys(value)
+      Hash[value.map do |k, v|
+        [k.to_s.camelize(:lower), v]
+      end].delete_if { |_k, v| v == '' }
     end
   end
 end

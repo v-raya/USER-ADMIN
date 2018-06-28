@@ -11,7 +11,7 @@ module Api
     private
 
     def allowed_params_to_search
-      params.permit(:last_name).to_h
+      params.permit(:last_name, :format).to_h
     end
   end
 end
