@@ -20,13 +20,15 @@ const AddNewUser = ({ onCancel, onSave, verifyNewUserDetails }) => {
               rightActionBtnName="Add User"
             >
               <label>
-                Please Verify the details of the user before you add
+                Please Verify the details of the CWS-CMS user you want to Add to
+                CWS-CARES
               </label>
               <div className="row">
                 <div className="col-md-3">
                   <ShowField label="Full Name">
-                    {verifyNewUserDetails.user.last_name},
-                    {verifyNewUserDetails.user.first_name},
+                    {verifyNewUserDetails.user.last_name}
+                    {', '}
+                    {verifyNewUserDetails.user.first_name}{' '}
                     {verifyNewUserDetails.user.middle_name}
                   </ShowField>
                 </div>
