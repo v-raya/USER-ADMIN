@@ -88,8 +88,8 @@ describe('AddVerifiedUser', () => {
       wrapper = shallow(
         <AddVerifiedUser verifyNewUserDetails={newUserDetails} />
       );
-      expect(wrapper.find('ShowField').length).toBe(0);
-      expect(wrapper.find('label').text()).toBe(
+      expect(wrapper.find('Alert').length).toBe(1);
+      expect(wrapper.find('Alert').props().children).toBe(
         newUserDetails.verification_message
       );
     });
