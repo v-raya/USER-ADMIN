@@ -8,58 +8,62 @@ import ShowField from '../../common/ShowField';
 const AddNewUser = ({ onCancel, onSave, verifyNewUserDetails }) => {
   console.log(verifyNewUserDetails);
   return (
-    <div className="row">
-      <div className="col-md-12">
-        <Cards
-          cardHeaderText="Add User"
-          cardActionButtons={true}
-          onSave={onSave}
-          rightActionBtnName="Add User"
-        >
-          <div>
-            {verifyNewUserDetails.verification_passed ? (
-              <div className="col-md-12">
-                <label>
-                  Please Verify the details of the user before you add
-                </label>
-                <div className="row">
-                  <div className="col-md-3">
-                    <ShowField label="Full Name">
-                      {verifyNewUserDetails.user.last_name},
-                      {verifyNewUserDetails.user.first_name},
-                      {verifyNewUserDetails.user.middle_name}
-                    </ShowField>
-                  </div>
-                  <div className="col-md-3">
-                    <ShowField label="Office Name">
-                      {verifyNewUserDetails.user.office}
-                    </ShowField>
-                  </div>
-                  <div className="col-md-3">
-                    <ShowField label="CWS Login">
-                      {verifyNewUserDetails.user.racfid}
-                    </ShowField>
-                  </div>
+    <div>
+      {verifyNewUserDetails.verification_passed ? (
+        <div className="row">
+          <div className="col-md-12">
+            <Cards
+              cardHeaderText="Add User"
+              cardActionButtons={true}
+              onSave={onSave}
+              rightActionBtnName="Add User"
+            >
+              <label>
+                Please Verify the details of the user before you add
+              </label>
+              <div className="row">
+                <div className="col-md-3">
+                  <ShowField label="Full Name">
+                    {verifyNewUserDetails.user.last_name},
+                    {verifyNewUserDetails.user.first_name},
+                    {verifyNewUserDetails.user.middle_name}
+                  </ShowField>
                 </div>
-                <div className="row">
-                  <div className="col-md-3">
-                    <ShowField label="Email">
-                      {verifyNewUserDetails.user.email}
-                    </ShowField>
-                  </div>
-                  <div className="col-md-3">
-                    <ShowField label="Office Phone Number">
-                      <span>{verifyNewUserDetails.user.phone_number}</span>
-                    </ShowField>
-                  </div>
+                <div className="col-md-3">
+                  <ShowField label="Office Name">
+                    {verifyNewUserDetails.user.office}
+                  </ShowField>
+                </div>
+                <div className="col-md-3">
+                  <ShowField label="CWS Login">
+                    {verifyNewUserDetails.user.racfid}
+                  </ShowField>
                 </div>
               </div>
-            ) : (
-              <label>{verifyNewUserDetails.verification_message}</label>
-            )}
+              <div className="row">
+                <div className="col-md-3">
+                  <ShowField label="Email">
+                    {verifyNewUserDetails.user.email}
+                  </ShowField>
+                </div>
+                <div className="col-md-3">
+                  <ShowField label="Office Phone Number">
+                    <span>{verifyNewUserDetails.user.phone_number}</span>
+                  </ShowField>
+                </div>
+              </div>
+            </Cards>
           </div>
-        </Cards>
-      </div>
+        </div>
+      ) : (
+        <div className="row">
+          <div className="col-md-12">
+            <Cards cardHeaderText="Add User" cardActionButtons={false}>
+              <label>{verifyNewUserDetails.verification_message}</label>
+            </Cards>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
