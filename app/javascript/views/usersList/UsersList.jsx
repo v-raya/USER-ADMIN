@@ -57,7 +57,7 @@ class UserList extends React.Component {
           <TableHeaderColumn
             dataField="last_name"
             dataSort
-            width="200"
+            width="0"
             dataFormat={this.nameFormat}
           >
             Full Name

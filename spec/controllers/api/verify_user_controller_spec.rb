@@ -21,7 +21,7 @@ module Api
         )
       end
 
-      it 'updates a user' do
+      it 'verifies user' do
         allow(Users::UserRepository).to receive(:new).and_return(user_repository)
         allow(user_repository).to receive(:verify_user)
           .with({ racfid: 'AA123PP',
