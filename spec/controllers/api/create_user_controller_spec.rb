@@ -13,15 +13,6 @@ module Api
         permissions: %w[snapshot hotline]
      } 
 
-                                #  params: {
-                                #     first_name: 'First Name',
-                                #     last_name: 'Last Name',
-                                #     enabled: 'false',
-                                #     county_name: 'Madera',
-                                #     office: 'My_office',
-                                #     phone_number: '4567898764',
-                                #     permissions: %w[snapshot hotline] }
-
       it 'has a route' do
         expect(post: 'api/create_user').to route_to(
           controller: 'api/create_user',
