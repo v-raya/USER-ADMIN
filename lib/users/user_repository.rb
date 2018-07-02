@@ -36,6 +36,12 @@ module Users
       response.body { Permissions.new }
     end
 
+    def create_user(parameters, token)
+      response = @http_service.post("/perry/idm/users", parameters, token)
+      puts response.body
+      VerifyUser.new(response.body)
+    end
+
     private
 
     def sanitize_keys(value)
@@ -45,3 +51,22 @@ module Users
     end
   end
 end
+
+
+
+#ADD USER OBJECT
+
+# {
+#     "email": "captester10@gmail.com",
+#     "first_name": "User1",
+#     "last_name": "Two1",
+#     "county_name": "Madera",
+#     "user_create_date": "2018-06-07",
+#     "user_last_modified_date": "2018-06-07",
+#     "enabled": true,
+#     "status": "FORCE_CHANGE_PASSWORD",
+#     "permissions": [
+#       "Snapshot-rollout",
+#       "Hotline-rollout"
+#     ]
+#   }
