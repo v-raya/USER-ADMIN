@@ -101,4 +101,20 @@ describe('UserService', () => {
       );
     });
   });
+
+  describe('#createUser', () => {
+    let getSpy2;
+
+    beforeEach(() => {
+      getSpy2 = jest.spyOn(ApiService, 'post');
+    });
+
+    it('calls #createUser ApiService', () => {
+      const email = 'email@example.com';
+      const racfid = 'some-racfid';
+      getSpy2.mockReturnValue(Promise.resolve({}));
+      UserService.createUser(email, racfid);
+      expect(getSpy2).toHaveBeenCalledWith(`/create_user/`);
+    });
+  });
 });
