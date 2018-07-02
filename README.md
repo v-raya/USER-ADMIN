@@ -3,9 +3,13 @@
 This README would normally document whatever steps are necessary to get the
 application up and running.
 
-Things you may want to cover:
+BRANCH FOR VERSION 1.1
 
-* Ruby version
+Release Information
+
+* Ruby Version 2.5.1
+
+Things you may want to cover:
 
 * System dependencies
 
