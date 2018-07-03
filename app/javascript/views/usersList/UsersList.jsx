@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link, InputComponent, PageHeader } from 'react-wood-duck';
 import Cards from '../../common/Card';
-import AddUser from '../../containers/addUserContainer';
 import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table';
 import { makeUserDetailPath } from '../../_utils/makeUserDetailPath';
 
@@ -13,7 +12,6 @@ class UserList extends React.Component {
     super(props);
     this.state = {
       searchKey: '',
-      addUser: false,
     };
   }
 
@@ -37,10 +35,6 @@ class UserList extends React.Component {
     this.props.actions.fetchUsersActions(this.state.searchKey);
 
   handleTextChange = event => this.setState({ searchKey: event.target.value });
-
-  handleOnAdd = () => {
-    this.setState({ addUser: true });
-  };
 
   tableComponent = () => {
     const { userList } = this.props;
@@ -87,52 +81,44 @@ class UserList extends React.Component {
     const { dashboardUrl, accountCounty, dashboardClickHandler } = this.props;
     return (
       <div role="main">
-        {this.state.addUser ? (
-          <AddUser addUser={this.state.addUser} />
-        ) : (
-          <div>
-            <PageHeader pageTitle="Manage Users" button="" />
-            <div className="container">
-              <div className="row">
-                <div className="col-md-12">
-                  <div className="col-md-12">
-                    Back to:{' '}
-                    <Link
-                      text="Dashboard"
-                      href={dashboardUrl}
-                      clickHandler={dashboardClickHandler}
-                    />
-                  </div>
-
-                  <Cards
-                    cardHeaderText={'Manage Users: ' + accountCounty}
-                    cardHeaderButton={true}
-                    headerBtnName="+ Add a user"
-                    onEdit={this.handleOnAdd}
-                  >
-                    <InputComponent
-                      gridClassName="col-md-10 col-sm-6 col-xs-12"
-                      fieldClassName="form-group"
-                      type="text"
-                      onChange={this.handleTextChange}
-                      placeholder="search user by Last name"
-                    />
-                    <div className="col-md-2" style={buttonAlign}>
-                      <button
-                        type="button"
-                        className="btn btn-primary btn-sm"
-                        onClick={this.handleOnClick}
-                      >
-                        Search
-                      </button>
-                    </div>
-                    {this.tableComponent()}
-                  </Cards>
-                </div>
+        <PageHeader pageTitle="Manage Users" button="" />
+        <div className="container">
+          <div className="row">
+            <div className="col-md-12">
+              <div className="col-md-12">
+                Back to:{' '}
+                <Link
+                  text="Dashboard"
+                  href={dashboardUrl}
+                  clickHandler={dashboardClickHandler}
+                />
               </div>
+
+              <Cards
+                cardHeaderText={'Manage Users: ' + accountCounty}
+                cardHeaderButton={false}
+              >
+                <InputComponent
+                  gridClassName="col-md-10 col-sm-6 col-xs-12"
+                  fieldClassName="form-group"
+                  type="text"
+                  onChange={this.handleTextChange}
+                  placeholder="search user by Last name"
+                />
+                <div className="col-md-2" style={buttonAlign}>
+                  <button
+                    type="button"
+                    className="btn btn-primary btn-sm"
+                    onClick={this.handleOnClick}
+                  >
+                    Search
+                  </button>
+                </div>
+                {this.tableComponent()}
+              </Cards>
             </div>
           </div>
-        )}
+        </div>
       </div>
     );
   }
