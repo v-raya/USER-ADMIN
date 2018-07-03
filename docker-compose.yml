@@ -20,6 +20,30 @@ services:
     hostname: postgresql_data
     ports:
       - ${DB_POSTGRES_PORT}:${DB_POSTGRES_PORT}
+  dora:
+    image: cwds/dora:latest
+    command: bash -c "./entrypoint.sh 2>&1 | tee 'log.file'"
+    depends_on:
+          - perry
+          - elasticsearch
+    ports:
+          - ${DORA_PORT}:8080
+    restart: on-failure
+    expose:
+      - 8080
+    env_file: .env
+    healthcheck:
+      test: head -n 500 log.file | grep "Started @"
+      interval: 5s
+      timeout: 10s
+      retries: 80
+  elasticsearch:
+    image: cwds/elasticsearch_xpack_data:${ELASTICSEARCH_XPACK_DATA_VERSION}
+    depends_on:
+      - perry
+    expose:
+      - 9200
+      - 9300
   county-admin-web:
     build:
       context: .
