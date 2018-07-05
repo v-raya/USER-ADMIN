@@ -52,9 +52,12 @@ export default class UserDetail extends Component {
   };
 
   onEditClick = () => {
-    this.state.isEdit === false
-      ? this.setState({ isEdit: true })
-      : this.setState({ isEdit: false });
+    this.setState({ isEdit: true });
+  };
+
+  onCancel = () => {
+    this.setState({ isEdit: false });
+    this.props.actions.fetchDetailsActions();
   };
 
   alert = () => {
@@ -78,7 +81,7 @@ export default class UserDetail extends Component {
                 selectedPermissions={this.formattedPermissions(
                   this.state.details.permissions
                 )}
-                onCancel={this.onEditClick}
+                onCancel={this.onCancel}
                 onSave={this.onSaveDetails}
                 onStatusChange={this.onStatusChange('enabled')}
                 onRoleChange={this.onRoleChange}
