@@ -110,11 +110,16 @@ describe('UserService', () => {
     });
 
     it('calls #createUser ApiService', () => {
-      const email = 'email@example.com';
-      const racfid = 'some-racfid';
+      const newUser = {
+        email: 'ramu@gmail.com',
+        first_name: 'ramu',
+        last_name: 'kammagani',
+        county_name: 'Yolo',
+        racfid: 'RACFID1',
+      };
       getSpy2.mockReturnValue(Promise.resolve({}));
-      UserService.createUser(email, racfid);
-      expect(getSpy2).toHaveBeenCalledWith(`/create_user/`);
+      UserService.createUser(newUser);
+      expect(getSpy2).toHaveBeenCalledWith(`/create_user/${newUser}`);
     });
   });
 });

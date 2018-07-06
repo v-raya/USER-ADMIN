@@ -39,8 +39,10 @@ class UserService {
     return ApiService.get(`/permissions_list/`).then(response => response.data);
   }
 
-  static createUser() {
-    return ApiService.post(`/create_user/`).then(response => response.data);
+  static createUser(newUser) {
+    return ApiService.post(`/create_user`, newUser).then(
+      response => response.data
+    );
   }
 }
 

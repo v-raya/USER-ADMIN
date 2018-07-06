@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Link, Alert, PageHeader } from 'react-wood-duck';
-import UserDetailEdit from './UserDetailEdit';
-import UserDetailShow from './UserDetailShow';
+import UserDetailEdit from '../userDetail/UserDetailEdit';
+import UserDetailShow from '../userDetail/UserDetailShow';
 import UserService from '../../_services/users';
 
 /* eslint camelcase: 0 */
@@ -15,23 +15,6 @@ export default class UserDetail extends Component {
       disableActionBtn: true,
       details: props.details,
     };
-  }
-
-  componentDidMount() {
-    this.props.actions.fetchDetailsActions(
-      this.getUserId(this.currentPathname())
-    );
-    this.props.actions.fetchPermissionsActions();
-  }
-
-  currentPathname() {
-    return window.location.pathname;
-  }
-
-  getUserId(pathname) {
-    const pathArray = pathname.split('/');
-    const id = pathArray[pathArray.length - 1];
-    return id;
   }
 
   componentWillReceiveProps(nextProps) {

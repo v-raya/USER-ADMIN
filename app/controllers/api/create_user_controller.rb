@@ -11,7 +11,7 @@ module Api
     private
   
     def allowed_params_to_create
-      params.permit(:email, :racfid, :format).to_h
+      params.permit(:email, :first_name, :last_name, :county_name, :user_create_date, :user_last_modified_date, :racfid, :enabled, :status, :format).to_h
     end
   end
 end

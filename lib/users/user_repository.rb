@@ -19,9 +19,15 @@ module Users
       User.new(response.body)
     end
 
+    def get_users_details_by_url(url, token)
+      response = @http_service.get("/perry/idm/users/#{id}", token)
+      return {} if response.status == 404
+      User.new(response.body)
+    end
+
     def update_user(id, parameters, token)
       response = @http_service.patch("/perry/idm/users/#{id}", parameters, token)
-      User.new(response.body)
+      User.new(response.headers)
     end
 
     def verify_user(parameters, token)
@@ -38,8 +44,8 @@ module Users
 
     def create_user(parameters, token)
       response = @http_service.post("/perry/idm/users", parameters, token)
-      puts response.body
-      VerifyUser.new(response.body)
+      puts "RESPONSE IN REPO, #{response.headers}" 
+      return response.headers['location']
     end
 
     private

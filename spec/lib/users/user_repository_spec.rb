@@ -169,7 +169,7 @@ module Users
         permissions: %w[snapshot hotline]
       }
 
-      context 'with user' do
+      context 'with user' do 
         it 'creates user' do
           allow(response).to receive(:body).and_return(
             id: '55',
