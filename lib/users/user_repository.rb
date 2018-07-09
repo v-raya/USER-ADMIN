@@ -27,7 +27,7 @@ module Users
 
     def update_user(id, parameters, token)
       response = @http_service.patch("/perry/idm/users/#{id}", parameters, token)
-      User.new(response.headers)
+      User.new(response.body)
     end
 
     def verify_user(parameters, token)
@@ -42,9 +42,8 @@ module Users
       response.body { Permissions.new }
     end
 
-    def create_user(parameters, token)
+    def add_user(parameters, token)
       response = @http_service.post("/perry/idm/users", parameters, token)
-      puts "RESPONSE IN REPO, #{response.headers}" 
       return response.headers['location']
     end
 

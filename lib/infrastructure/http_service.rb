@@ -20,7 +20,6 @@ module Infrastructure
         request.url "#{url}?token=#{token}"
         request.headers['Content-Type'] = 'application/json'
         request.body = JSON.generate(parameters)
-        puts "REQUEST BODY ====> #{request.body}"
       end
     end
 

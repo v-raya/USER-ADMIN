@@ -1,29 +1,29 @@
 import * as actionTypes from '../actions/actionTypes';
 
-function createUser(state = { createNewUser: null, fetching: false }, action) {
+function addUser(state = { addNewUser: null, fetching: false }, action) {
   switch (action.type) {
-    case actionTypes.CREATE_USER_API_CALL_REQUEST:
+    case actionTypes.ADD_USER_API_CALL_REQUEST:
       return { ...state, fetching: true, error: null };
 
-    case actionTypes.CREATE_USER_API_CALL_SUCCESS:
+    case actionTypes.ADD_USER_API_CALL_SUCCESS:
       const newUserDetails = {
         XHRStatus: 'ready',
-        records: `${action.createNewUser}`,
+        records: `${action.addNewUser}`,
       };
       const splitRecords = newUserDetails.records;
       const getID = splitRecords.split('/')[6].split('?')[0];
       return {
         ...state,
         fetching: false,
-        createNewUser: getID,
+        addNewUser: getID,
         error: null,
       };
 
-    case actionTypes.CREATE_USER_API_CALL_FAILURE:
+    case actionTypes.ADD_USER_API_CALL_FAILURE:
       return {
         ...state,
         fetching: false,
-        createNewUser: null,
+        addNewUser: null,
         error: action.error,
       };
     default:
@@ -31,4 +31,4 @@ function createUser(state = { createNewUser: null, fetching: false }, action) {
   }
 }
 
-export default createUser;
+export default addUser;

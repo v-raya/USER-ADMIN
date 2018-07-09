@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 module Api
-  describe CreateUserController do
+  describe AddUserController do
     describe '#index' do
       let(:user_repository) { instance_double('User::UserRepository') }
       let(:user) { Users::VerifyUser.new(username: 'el') }
@@ -14,16 +14,16 @@ module Api
      } 
 
       it 'has a route' do
-        expect(post: 'api/create_user').to route_to(
-          controller: 'api/create_user',
+        expect(post: 'api/add_user').to route_to(
+          controller: 'api/add_user',
           action: 'index',
           format: 'json'
         )
       end
 
-      it 'create user' do
+      it 'adds a user' do
         allow(Users::UserRepository).to receive(:new).and_return(user_repository)
-        allow(user_repository).to receive(:create_user)
+        allow(user_repository).to receive(:add_user)
           .with({ racfid: 'AA123PP',
                   email: 'verifyme@gmail.com' }, token)
           .and_return(user)

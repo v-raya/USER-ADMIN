@@ -55,13 +55,5 @@ describe('sagas', () => {
         expect(gen.next().done).toBe(true);
       });
     });
-
-    describe('#getUserID', () => {
-      it('gets the userId ', () => {
-        let pathname = '/user_list/9099';
-        const gen = getUserId(pathname);
-        expect(gen).toEqual('9099');
-      });
-    });
   });
 });

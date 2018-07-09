@@ -102,14 +102,14 @@ describe('UserService', () => {
     });
   });
 
-  describe('#createUser', () => {
+  describe('#addUser', () => {
     let getSpy2;
 
     beforeEach(() => {
       getSpy2 = jest.spyOn(ApiService, 'post');
     });
 
-    it('calls #createUser ApiService', () => {
+    it('calls #addUser ApiService', () => {
       const newUser = {
         email: 'ramu@gmail.com',
         first_name: 'ramu',
@@ -118,8 +118,8 @@ describe('UserService', () => {
         racfid: 'RACFID1',
       };
       getSpy2.mockReturnValue(Promise.resolve({}));
-      UserService.createUser(newUser);
-      expect(getSpy2).toHaveBeenCalledWith(`/create_user/${newUser}`);
+      UserService.addUser(newUser);
+      expect(getSpy2).toHaveBeenCalledWith(`/add_user/${newUser}`);
     });
   });
 });

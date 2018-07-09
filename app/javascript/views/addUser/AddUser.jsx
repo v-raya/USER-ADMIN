@@ -11,7 +11,6 @@ export default class AddUser extends Component {
     super(props);
     this.state = {
       verify: false,
-      confirm: false,
       racfid: '',
       email: '',
       disableActionBtn: true,
@@ -79,7 +78,7 @@ export default class AddUser extends Component {
   };
 
   onAddUser = () => {
-    this.props.actions.createUserActions(this.state.verifyNewUserDetails.user);
+    this.props.actions.addUserActions(this.state.verifyNewUserDetails.user);
     this.setState({ addUser: false, verify: false });
   };
 

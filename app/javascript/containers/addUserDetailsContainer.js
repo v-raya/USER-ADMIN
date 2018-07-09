@@ -1,18 +1,18 @@
 import { connect } from 'react-redux';
-import AddUserDetail from '../views/addUser/addUserDetails';
+import AddUserDetail from '../views/addUser/AddUserDetails';
 import {
   selectDetailRecords,
   permissionsList,
 } from '../selectors/detailSelector';
-import { createUserActions } from '../actions/createUserActions';
+import { addUserActions } from '../actions/addUserActions';
 import { fetchDetailsActions } from '../actions/detailActions';
 import { fetchPermissionsActions } from '../actions/permissionsActions';
-import { selectCreateUserRecords } from '../selectors/createUserSelector';
+import { addUserRecords } from '../selectors/addUserSelector';
 import { bindActionCreators } from 'redux';
 
 function mapStateToProps(state) {
   return {
-    id: selectCreateUserRecords(state),
+    id: addUserRecords(state),
     permissionRoles: permissionsList(state),
     details: selectDetailRecords(state),
     userListUrl: process.env.RAILS_RELATIVE_URL_ROOT
@@ -23,7 +23,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   const actions = {
-    createUserActions,
+    addUserActions,
     fetchPermissionsActions,
     fetchDetailsActions,
   };

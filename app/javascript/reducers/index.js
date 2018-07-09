@@ -4,14 +4,14 @@ import fetchDetails from './detailsReducers';
 import fetchAccount from './accountReducers';
 import fetchPermissions from './permissionsReducers';
 import validateNewUser from './validateNewUserReducer';
-import createUser from './createUserReducer';
+import addUser from './addUserReducers';
 const reducer = combineReducers({
   fetchUserList,
   fetchDetails,
   fetchAccount,
   fetchPermissions,
   validateNewUser,
-  createUser,
+  addUser,
 });
 
 export default reducer;
