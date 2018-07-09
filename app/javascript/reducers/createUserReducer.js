@@ -10,11 +10,8 @@ function createUser(state = { createNewUser: null, fetching: false }, action) {
         XHRStatus: 'ready',
         records: `${action.createNewUser}`,
       };
-
       const splitRecords = newUserDetails.records;
       const getID = splitRecords.split('/')[6].split('?')[0];
-      console.log('response in reducer', getID);
-
       return {
         ...state,
         fetching: false,

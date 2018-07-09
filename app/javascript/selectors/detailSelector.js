@@ -4,7 +4,6 @@ export const selectDetailRecords = state => {
   userDetails.enabled === true || userDetails.enabled === 'Active'
     ? (userDetails.enabled = 'Active')
     : (userDetails.enabled = 'Inactive');
-  console.log('detailselector', userDetails);
   return userDetails;
 };
 

@@ -7,10 +7,6 @@ export function* createUser(action) {
   try {
     let create = action.payload;
     const createNewUser = yield call(UserService.createUser, create.newUser);
-    // const splitUrl = createNewUser.split('/');
-    // const splitToken = splitUrl[6].split('?');
-    // const userId = splitToken[0];
-    // console.log('RESPONSE in SAGA: ', userId);
     // dispatch a success action to the store with the new account details
     yield put({
       type: actionTypes.CREATE_USER_API_CALL_SUCCESS,
