@@ -81,27 +81,31 @@ export default class UserDetail extends Component {
   renderCards = permissionsList => {
     return (
       <div>
-        <div>
-          {this.state.isEdit ? (
-            <UserDetailEdit
-              details={this.state.details}
-              selectedPermissions={this.formattedPermissions(
-                this.state.details.permissions
-              )}
-              onCancel={this.onEditClick}
-              onSave={this.onSaveDetails}
-              onStatusChange={this.onStatusChange('enabled')}
-              onRoleChange={this.onRoleChange}
-              disableActionBtn={this.state.disableActionBtn}
-              permissionsList={permissionsList}
-            />
-          ) : (
-            <UserDetailShow
-              details={this.state.details}
-              onEdit={this.onEditClick}
-            />
-          )}
-        </div>
+        {this.state.details.id ? (
+          <div>
+            {this.state.isEdit ? (
+              <UserDetailEdit
+                details={this.state.details}
+                selectedPermissions={this.formattedPermissions(
+                  this.state.details.permissions
+                )}
+                onCancel={this.onEditClick}
+                onSave={this.onSaveDetails}
+                onStatusChange={this.onStatusChange('enabled')}
+                onRoleChange={this.onRoleChange}
+                disableActionBtn={this.state.disableActionBtn}
+                permissionsList={permissionsList}
+              />
+            ) : (
+              <UserDetailShow
+                details={this.state.details}
+                onEdit={this.onEditClick}
+              />
+            )}
+          </div>
+        ) : (
+          ''
+        )}
       </div>
     );
   };
