@@ -6,7 +6,7 @@ import UserDetailShow from '../userDetail/UserDetailShow';
 import UserService from '../../_services/users';
 
 /* eslint camelcase: 0 */
-export default class UserDetail extends Component {
+export default class AddUserDetail extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -14,12 +14,21 @@ export default class UserDetail extends Component {
       alert: false,
       disableActionBtn: true,
       details: props.details,
+      id: props.id,
     };
   }
 
   componentWillReceiveProps(nextProps) {
+    let id = nextProps.id;
+    let permissionRoles = nextProps.permissionRoles;
     let details = nextProps.details;
-    this.setState({ details });
+    this.setState({ details, id, permissionRoles });
+  }
+
+  componentDidUpdate(prevProps) {
+    if (this.state.id !== prevProps.id) {
+      this.props.actions.fetchDetailsActions(this.state.id);
+    }
   }
 
   onStatusChange = name => ({ value }) => {
@@ -39,8 +48,7 @@ export default class UserDetail extends Component {
   };
 
   onSaveDetails = () => {
-    const id = this.getUserId(this.currentPathname());
-    const { details } = this.state;
+    const { details, id } = this.state;
     const response = UserService.saveUserDetails(id, details);
     this.setState({ isEdit: false, alert: true, saveResponse: response });
   };
@@ -61,30 +69,34 @@ export default class UserDetail extends Component {
     }
   };
 
-  renderCards = permissionsList => {
+  renderCards = permissionRoles => {
     return (
       <div>
-        <div>
-          {this.state.isEdit ? (
-            <UserDetailEdit
-              details={this.state.details}
-              selectedPermissions={this.formattedPermissions(
-                this.state.details.permissions
-              )}
-              onCancel={this.onEditClick}
-              onSave={this.onSaveDetails}
-              onStatusChange={this.onStatusChange('enabled')}
-              onRoleChange={this.onRoleChange}
-              disableActionBtn={this.state.disableActionBtn}
-              permissionsList={permissionsList}
-            />
-          ) : (
-            <UserDetailShow
-              details={this.state.details}
-              onEdit={this.onEditClick}
-            />
-          )}
-        </div>
+        {this.state.details.id ? (
+          <div>
+            {this.state.isEdit ? (
+              <UserDetailEdit
+                details={this.state.details}
+                selectedPermissions={this.formattedPermissions(
+                  this.state.details.permissions
+                )}
+                onCancel={this.onEditClick}
+                onSave={this.onSaveDetails}
+                onStatusChange={this.onStatusChange('enabled')}
+                onRoleChange={this.onRoleChange}
+                disableActionBtn={this.state.disableActionBtn}
+                permissionsList={permissionRoles}
+              />
+            ) : (
+              <UserDetailShow
+                details={this.state.details}
+                onEdit={this.onEditClick}
+              />
+            )}
+          </div>
+        ) : (
+          ''
+        )}
       </div>
     );
   };
@@ -102,9 +114,8 @@ export default class UserDetail extends Component {
       userListUrl,
       userListClickHandler,
       dashboardClickHandler,
-      permissionsList,
+      permissionRoles,
     } = this.props;
-
     return (
       <div>
         <PageHeader pageTitle="User Profile" button="" />
@@ -124,24 +135,25 @@ export default class UserDetail extends Component {
               clickHandler={userListClickHandler}
             />
           </div>
-          {this.renderCards(permissionsList)}
+          {this.renderCards(permissionRoles)}
         </div>
       </div>
     );
   }
 }
 
-UserDetail.propTypes = {
+AddUserDetail.propTypes = {
   details: PropTypes.object,
   dashboardUrl: PropTypes.string,
   userListUrl: PropTypes.string,
   userListClickHandler: PropTypes.func,
   dashboardClickHandler: PropTypes.func,
-  permissionsList: PropTypes.array,
-  actions: PropTypes.object.isRequired,
+  permissionRoles: PropTypes.array,
+  actions: PropTypes.object,
+  id: PropTypes.any,
 };
 
-UserDetail.defaultProps = {
+AddUserDetail.defaultProps = {
   userListUrl: '/',
   dashboardUrl: '/',
   userListClickHandler: () => {},
