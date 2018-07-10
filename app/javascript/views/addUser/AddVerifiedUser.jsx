@@ -7,6 +7,7 @@ import ShowField from '../../common/ShowField';
 /* eslint camelcase: 0 */
 
 const AddNewUser = ({ onCancel, onSave, verifyNewUserDetails }) => {
+  console.log('props', verifyNewUserDetails);
   return (
     <div>
       {verifyNewUserDetails.verification_passed ? (

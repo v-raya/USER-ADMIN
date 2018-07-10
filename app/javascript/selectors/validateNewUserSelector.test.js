@@ -9,6 +9,7 @@ describe('selectors', () => {
             records: {
               county_name: 'first',
               last_name: 'third',
+              roles: [],
             },
           },
         },
@@ -16,6 +17,7 @@ describe('selectors', () => {
       expect(selectNewUserRecords(state)).toEqual({
         county_name: 'first',
         last_name: 'third',
+        roles: ['CWS-worker'],
       });
     });
 
@@ -23,14 +25,18 @@ describe('selectors', () => {
       const state = {
         validateNewUser: {},
       };
-      expect(selectNewUserRecords(state)).toEqual({});
+      expect(selectNewUserRecords(state)).toEqual({
+        roles: ['CWS-worker'],
+      });
     });
 
     it('selects no permissions', () => {
       const state = {
         other_stuff: { bad: 'ignore' },
       };
-      expect(selectNewUserRecords(state)).toEqual({});
+      expect(selectNewUserRecords(state)).toEqual({
+        roles: ['CWS-worker'],
+      });
     });
   });
 });

@@ -43,6 +43,7 @@ module Users
     end
 
     def add_user(parameters, token)
+      puts "PARAMETER GOT BEFORE ADD #{parameters}"
       response = @http_service.post("/perry/idm/users", parameters, token)
       return response.headers['location']
     end
