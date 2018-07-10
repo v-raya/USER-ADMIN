@@ -57,7 +57,7 @@ describe('AddUserDetail', () => {
       wrapper.setState({ alert: true });
       expect(wrapper.find('Alert').length).toBe(1);
       expect(wrapper.find('Alert').props().children).toBe(
-        'Your changes have been made successfuly'
+        'Your changes have been made successfully'
       );
     });
   });
