@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Link, Alert, PageHeader } from 'react-wood-duck';
+import { Link, Alert, PageHeader, Cards } from 'react-wood-duck';
 import UserDetailEdit from '../userDetail/UserDetailEdit';
 import UserDetailShow from '../userDetail/UserDetailShow';
 import UserService from '../../_services/users';
@@ -15,6 +15,7 @@ export default class AddUserDetail extends Component {
       disableActionBtn: true,
       details: props.details,
       id: props.id,
+      add: true,
     };
   }
 
@@ -55,7 +56,7 @@ export default class AddUserDetail extends Component {
 
   onEditClick = () => {
     this.state.isEdit === false
-      ? this.setState({ isEdit: true })
+      ? this.setState({ isEdit: true, alert: false, add: false })
       : this.setState({ isEdit: false });
   };
 
@@ -63,7 +64,13 @@ export default class AddUserDetail extends Component {
     if (this.state.alert) {
       return (
         <Alert alertClassName="success" faIcon="fa-check-circle">
-          {'Your changes have been made successfuly'}
+          {'Your changes have been made successfully'}
+        </Alert>
+      );
+    } else if (this.state.add && this.state.details.id) {
+      return (
+        <Alert alertClassName="success" faIcon="fa-check-circle">
+          {'Successfully added new user'}
         </Alert>
       );
     }
@@ -88,14 +95,20 @@ export default class AddUserDetail extends Component {
                 permissionsList={permissionRoles}
               />
             ) : (
-              <UserDetailShow
-                details={this.state.details}
-                onEdit={this.onEditClick}
-              />
+              <div>
+                <div>
+                  <UserDetailShow
+                    details={this.state.details}
+                    onEdit={this.onEditClick}
+                  />
+                </div>
+              </div>
             )}
           </div>
         ) : (
-          ''
+          <Cards>
+            <span>{'Loading.....'}</span>
+          </Cards>
         )}
       </div>
     );
