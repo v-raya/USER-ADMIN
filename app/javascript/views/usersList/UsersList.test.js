@@ -17,7 +17,8 @@ describe('UsersList', () => {
     });
 
     it('checks card component props', () => {
-      expect(wrapper.find('Cards').props().cardHeaderButton).toBe(false);
+      expect(wrapper.find('Cards').props().cardHeaderButton).toBe(true);
+      expect(wrapper.find('Cards').props().headerBtnName).toBe('+ Add a user');
     });
 
     it('renders PageHeader component', () => {
@@ -74,6 +75,13 @@ describe('UsersList', () => {
         .instance()
         .handleTextChange({ target: { value: 'search value' } });
       expect(wrapper.instance().state.searchKey).toEqual('search value');
+    });
+  });
+
+  describe('#handleOnAdd', () => {
+    it('sets state based on the user action', () => {
+      wrapper.instance().handleOnAdd();
+      expect(wrapper.instance().state.addUser).toEqual(true);
     });
   });
 
