@@ -119,7 +119,7 @@ describe('UserService', () => {
       };
       getSpy2.mockReturnValue(Promise.resolve({}));
       UserService.addUser(newUser);
-      expect(getSpy2).toHaveBeenCalledWith(`/add_user/${newUser}`);
+      expect(getSpy2).toHaveBeenCalledWith(`/add_user`, newUser);
     });
   });
 });

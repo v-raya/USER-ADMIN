@@ -1,11 +1,5 @@
 import UserService from '../_services/users';
-
-import {
-  detailsSaga,
-  getDetails,
-  getUserId,
-  currentPathname,
-} from './getDetailsSaga';
+import { detailsSaga, getDetails } from './getDetailsSaga';
 import * as actionTypes from '../actions/actionTypes';
 import { takeLatest, call, put } from 'redux-saga/effects';
 
@@ -19,20 +13,20 @@ describe('sagas', () => {
 
   describe('#getDetails', () => {
     beforeEach(() => {
-      UserService.fetch = jest.fn();
+      UserService.fetchUserDetails = jest.fn();
     });
 
     describe('when successful', () => {
       it('executes the happy-path saga', () => {
-        const gen = getDetails();
-        const userID = getUserId(currentPathname());
+        const action = { payload: { id: 'man1232' } };
+        const gen = getDetails(action);
         expect(gen.next().value).toEqual(
-          call(UserService.fetchUserDetails, userID)
+          call(UserService.fetchUserDetails, action.payload.id)
         );
-        expect(gen.next({ id: 12, name: 'username' }).value).toEqual(
+        expect(gen.next([1234, 5678]).value).toEqual(
           put({
             type: actionTypes.FETCH_DETAILS_API_CALL_SUCCESS,
-            details: { id: 12, name: 'username' },
+            details: [1234, 5678],
           })
         );
         expect(gen.next().done).toBe(true);
@@ -41,10 +35,10 @@ describe('sagas', () => {
 
     describe('when failures come back from the fetch', () => {
       it('handles the error', () => {
-        const gen = getDetails();
-        const userID = getUserId(currentPathname());
+        const action = { payload: { id: 'man' } };
+        const gen = getDetails(action);
         expect(gen.next().value).toEqual(
-          call(UserService.fetchUserDetails, userID)
+          call(UserService.fetchUserDetails, action.payload.id)
         );
         expect(gen.throw('I have made a huge mistake').value).toEqual(
           put({

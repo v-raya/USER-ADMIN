@@ -28,6 +28,7 @@ module Users
     attribute :status, Types::String.optional
     attribute :user_create_date, Types::String.optional
     attribute :user_last_modified_date, Types::String.optional
+    attribute :roles, Types::Array.optional
   end
 
   class VerifyUser < Dry::Struct
