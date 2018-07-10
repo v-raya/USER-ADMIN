@@ -1,14 +1,14 @@
 import React from 'react';
 import { mount, shallow } from 'enzyme';
-import UserDetail from './UserDetail';
+import AddUserDetail from './AddUserDetails';
 import UserService from '../../_services/users';
 
-describe('UserDetail', () => {
+describe('AddUserDetail', () => {
   let wrapper;
 
   beforeEach(() => {
     wrapper = shallow(
-      <UserDetail
+      <AddUserDetail
         details={{}}
         dashboardUrl={'dburl'}
         userListUrl={'myUserList'}
@@ -62,36 +62,6 @@ describe('UserDetail', () => {
     });
   });
 
-  describe('#componentDidMount', () => {
-    let mockFetchDetailsActions;
-    let mockFetchPermissionsActions;
-
-    beforeEach(() => {
-      mockFetchDetailsActions = jest.fn();
-      mockFetchPermissionsActions = jest.fn();
-
-      mount(
-        <UserDetail
-          details={{}}
-          dashboardUrl={'dburl'}
-          userListUrl={'myUserList'}
-          actions={{
-            fetchDetailsActions: mockFetchDetailsActions,
-            fetchPermissionsActions: mockFetchPermissionsActions,
-          }}
-        />
-      );
-    });
-
-    it('fetches details', () => {
-      expect(mockFetchDetailsActions).toHaveBeenCalledWith('blank');
-    });
-
-    it('fetches the permissions', () => {
-      expect(mockFetchPermissionsActions).toHaveBeenCalledWith();
-    });
-  });
-
   describe('#componentWillReceiveProps', () => {
     it('passes along the props', () => {
       const instance = wrapper.instance();
@@ -100,6 +70,31 @@ describe('UserDetail', () => {
         details: { test_prop: 'prop_value' },
       });
       expect(instance.state.details.test_prop).toEqual('prop_value');
+    });
+  });
+
+  describe('#componentDidUpdate', () => {
+    let mockFetchDetailsActions;
+
+    beforeEach(() => {
+      mockFetchDetailsActions = jest.fn();
+    });
+
+    it('passes along the props', () => {
+      const wrapper = mount(
+        <AddUserDetail
+          details={{}}
+          dashboardUrl={'dburl'}
+          userListUrl={'myUserList'}
+          actions={{
+            fetchDetailsActions: mockFetchDetailsActions,
+          }}
+        />
+      );
+      const instance = wrapper.instance();
+      instance.componentDidUpdate({});
+      instance.setState({ id: 'some_id' });
+      expect(mockFetchDetailsActions).toHaveBeenCalledWith('some_id');
     });
   });
 
@@ -138,8 +133,20 @@ describe('UserDetail', () => {
 
   describe('#onSaveDetails', () => {
     let serviceSpy;
+    let wrapper;
+    let id = '12345';
 
     beforeEach(() => {
+      wrapper = shallow(
+        <AddUserDetail
+          details={{}}
+          id={id}
+          dashboardUrl={'dburl'}
+          userListUrl={'myUserList'}
+          actions={{}}
+        />,
+        { disableLifecycleMethods: true }
+      );
       serviceSpy = jest.spyOn(UserService, 'saveUserDetails');
     });
 
@@ -148,7 +155,7 @@ describe('UserDetail', () => {
       const mySaveFunction = instance.onSaveDetails;
       expect(() => mySaveFunction()).not.toThrow();
       mySaveFunction();
-      expect(serviceSpy).toHaveBeenCalledWith('blank', {});
+      expect(serviceSpy).toHaveBeenCalledWith('12345', {});
     });
   });
 
@@ -202,10 +209,19 @@ describe('UserDetail', () => {
     });
 
     it('default props', () => {
-      expect(UserDetail.defaultProps.userListUrl).toEqual('/');
-      expect(UserDetail.defaultProps.dashboardUrl).toEqual('/');
-      expect(UserDetail.defaultProps.userListClickHandler).not.toThrow();
-      expect(UserDetail.defaultProps.dashboardClickHandler).not.toThrow();
+      expect(AddUserDetail.defaultProps.userListUrl).toEqual('/');
+      expect(AddUserDetail.defaultProps.dashboardUrl).toEqual('/');
+      expect(AddUserDetail.defaultProps.userListClickHandler).not.toThrow();
+      expect(AddUserDetail.defaultProps.dashboardClickHandler).not.toThrow();
     });
   });
+
+  // describe('#getUserID', () => {
+  //   it('gets the userId ', () => {
+  //     let pathname = '/user_list/9099';
+  //     console.log(wrapper.instance());
+  //     // const gen = wrapper.instance.getUserId(pathname);
+  //     //   expect(gen).toEqual('9099');
+  //   });
+  // });
 });
