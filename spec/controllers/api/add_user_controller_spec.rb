@@ -8,10 +8,6 @@ module Api
       let(:user_repository) { instance_double('User::UserRepository') }
       let(:user) { Users::VerifyUser.new(username: 'el') }
       let(:token) { 'my_token' }
-      user_params = {
-        enable: 'true',
-        permissions: %w[snapshot hotline]
-     } 
 
       it 'has a route' do
         expect(post: 'api/add_user').to route_to(
@@ -29,7 +25,7 @@ module Api
           .and_return(user)
         request.session[:token] = 'my_token'
         post :index, params: { racfid: 'AA123PP',
-                              email: 'verifyme@gmail.com' }
+                               email: 'verifyme@gmail.com' }
         expect(response.body).to eq user.to_json
       end
     end
