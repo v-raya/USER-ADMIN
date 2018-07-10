@@ -18,46 +18,48 @@ const AddNewUser = ({ onCancel, onSave, verifyNewUserDetails }) => {
               onSave={onSave}
               rightActionBtnName="Add User"
             >
-              <label>
-                Please Verify the details of the CWS-CMS user you want to add to
-                CWS-CARES
-              </label>
-              <div className="row">
-                <div className="col-md-3">
-                  <ShowField label="Full Name">
-                    {verifyNewUserDetails.user.last_name}
-                    {', '}
-                    {verifyNewUserDetails.user.first_name}{' '}
-                    {verifyNewUserDetails.user.middle_name}
-                  </ShowField>
+              <div className="col-md-12">
+                <div className="row">
+                  <label>
+                    Please Verify the details of the CWS-CMS user you want to
+                    add to CWS-CARES
+                  </label>
+                  <div className="col-md-3">
+                    <ShowField label="Full Name">
+                      {verifyNewUserDetails.user.last_name}
+                      {', '}
+                      {verifyNewUserDetails.user.first_name}{' '}
+                      {verifyNewUserDetails.user.middle_name}
+                    </ShowField>
+                  </div>
+                  <div className="col-md-3">
+                    <ShowField label="Office Name">
+                      {verifyNewUserDetails.user.office}
+                    </ShowField>
+                  </div>
+                  <div className="col-md-3">
+                    <ShowField label="CWS Login">
+                      {verifyNewUserDetails.user.racfid}
+                    </ShowField>
+                  </div>
                 </div>
-                <div className="col-md-3">
-                  <ShowField label="Office Name">
-                    {verifyNewUserDetails.user.office}
-                  </ShowField>
-                </div>
-                <div className="col-md-3">
-                  <ShowField label="CWS Login">
-                    {verifyNewUserDetails.user.racfid}
-                  </ShowField>
-                </div>
-              </div>
-              <div className="row">
-                <div className="col-md-3">
-                  <ShowField label="Email">
-                    {verifyNewUserDetails.user.email}
-                  </ShowField>
-                </div>
-                <div className="col-md-3">
-                  <ShowField label="Office Phone Number">
-                    <span>{verifyNewUserDetails.user.phone_number}</span>
-                  </ShowField>
+                <div className="row">
+                  <div className="col-md-3">
+                    <ShowField label="Email">
+                      {verifyNewUserDetails.user.email}
+                    </ShowField>
+                  </div>
+                  <div className="col-md-3">
+                    <ShowField label="Office Phone Number">
+                      <span>{verifyNewUserDetails.user.phone_number}</span>
+                    </ShowField>
+                  </div>
                 </div>
               </div>
             </Cards>
           </div>
         </div>
-      ) : (
+      ) : verifyNewUserDetails.verification_passed === false ? (
         <div className="row">
           <div className="col-md-12">
             <div className="alert">
@@ -71,6 +73,10 @@ const AddNewUser = ({ onCancel, onSave, verifyNewUserDetails }) => {
             </div>
           </div>
         </div>
+      ) : (
+        <Cards>
+          <span>{'Loading.....'}</span>
+        </Cards>
       )}
     </div>
   );
