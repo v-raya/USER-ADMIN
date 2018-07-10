@@ -40,9 +40,8 @@ class UserService {
   }
 
   static addUser(newUser) {
-    console.log('with roles', newUser);
     return ApiService.post(`/add_user`, newUser).then(
-      response => response.data
+      response => response.data.location
     );
   }
 }

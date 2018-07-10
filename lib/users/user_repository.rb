@@ -38,7 +38,7 @@ module Users
 
     def add_user(parameters, token)
       response = @http_service.post('/perry/idm/users', parameters, token)
-      return response.headers['location']
+      response.headers
     end
 
     private

@@ -163,7 +163,7 @@ module Users
       end
     end
 
-    describe '#create_user' do
+    describe '#add_user' do
       let(:response) { instance_double('Faraday::Response') }
       let(:location) { 'http://www.google.com/assnlk123-afdb1324-we132' }
       params = {
@@ -172,14 +172,14 @@ module Users
       }
 
       context 'with user' do
-        it 'creates user' do
-          allow(response).to receive(:headers).and_return(:location)
+        it 'add user' do
+          allow(response).to receive(:headers).and_return(location)
           allow(http_service)
             .to receive(:post)
             .with('/perry/idm/users', params, token)
             .and_return(response)
           expect(user_repository.add_user(params, token))
-            .to eq 'location'
+            .to eq 'http://www.google.com/assnlk123-afdb1324-we132'
         end
       end
     end
