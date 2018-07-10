@@ -1,6 +1,6 @@
 import React from 'react';
 import { mount, shallow } from 'enzyme';
-import AddUserDetail from './AddUserDetails';
+import AddUserDetail from './AddUserDetail';
 import UserService from '../../_services/users';
 
 describe('AddUserDetail', () => {
@@ -215,13 +215,4 @@ describe('AddUserDetail', () => {
       expect(AddUserDetail.defaultProps.dashboardClickHandler).not.toThrow();
     });
   });
-
-  // describe('#getUserID', () => {
-  //   it('gets the userId ', () => {
-  //     let pathname = '/user_list/9099';
-  //     console.log(wrapper.instance());
-  //     // const gen = wrapper.instance.getUserId(pathname);
-  //     //   expect(gen).toEqual('9099');
-  //   });
-  // });
 });

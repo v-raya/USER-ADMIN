@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import AddUserDetail from '../views/addUser/addUserDetails';
+import AddUserDetail from '../views/addUser/AddUserDetail';
 import {
   selectDetailRecords,
   permissionsList,
