@@ -5,7 +5,8 @@ CC_TEST_REPORTER_ID = 'e90a72f974bf96ece9ade12a041c8559fef59fd7413cfb08f1db5adc0
 DOCKER_CONTAINER_NAME = 'cap-latest'
 SLACK_CHANNEL = '#casemanagement-stream'
 SLACK_CREDENTIALS_ID = 'slackmessagetpt2'
-SEMANTIC_VERSION_NUMBER = "0.74.${env.BUILD_ID}"
+
+SEMANTIC_VERSION_NUMBER = versionString == "DEFAULT" ? "0.81.${env.BUILD_ID}" : versionString
 def notify(String status) {
   status = status ?: 'SUCCESS'
     def colorCode = status == 'SUCCESS' ? '#00FF00' : '#FF0000'
