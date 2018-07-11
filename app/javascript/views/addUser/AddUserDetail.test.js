@@ -24,7 +24,7 @@ describe('AddUserDetail', () => {
         const expectedvalue = { enabled: true };
         const instance = wrapper.instance();
         const myFunction = instance.onStatusChange('enabled');
-        expect(() => myFunction({ value: true })).not.toThrow();
+        myFunction({ value: true });
         expect(instance.state.details).toEqual(expectedvalue);
         expect(instance.state.disableActionBtn).toBe(false);
       });
