@@ -43,3 +43,6 @@ package-lock.json
 /node_modules
 yarn-debug.log*
 .yarn-integrity
+docker-compose.override.yml
+vendor/bundle
+public/cap
