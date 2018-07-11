@@ -19,7 +19,7 @@ export default class AddUserDetail extends Component {
     };
   }
 
-  UNSAFE_componentWillReceiveProps(nextProps) {
+  componentWillReceiveProps(nextProps) {
     let id = nextProps.id;
     let permissionRoles = nextProps.permissionRoles;
     let details = nextProps.details;

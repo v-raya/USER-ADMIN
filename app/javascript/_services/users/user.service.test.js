@@ -111,10 +111,10 @@ describe('UserService', () => {
 
     it('calls #addUser ApiService', () => {
       const newUser = {
-        email: 'ramu@gmail.com',
-        first_name: 'ramu',
-        last_name: 'kammagani',
-        county_name: 'Yolo',
+        email: 'example@example.com',
+        first_name: 'ExampleName',
+        last_name: 'ExampleLastName',
+        county_name: 'Madera',
         racfid: 'RACFID1',
       };
       getSpy2.mockReturnValue(Promise.resolve({}));

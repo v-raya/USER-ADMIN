@@ -18,7 +18,7 @@ describe('AddUserDetail', () => {
     );
   });
 
-  describe('Setting state', () => {
+  describe('Setting the state', () => {
     describe('#onStatusChange() function', () => {
       it('should set the Status state when event is triggered', () => {
         const expectedvalue = { enabled: true };
@@ -62,10 +62,10 @@ describe('AddUserDetail', () => {
     });
   });
 
-  describe('#UNSAFE_componentWillReceiveProps', () => {
+  describe('#componentWillReceiveProps', () => {
     it('passes along the props', () => {
       const instance = wrapper.instance();
-      instance.UNSAFE_componentWillReceiveProps({
+      instance.componentWillReceiveProps({
         id: 'some_id',
         details: { test_prop: 'prop_value' },
       });
@@ -200,7 +200,7 @@ describe('AddUserDetail', () => {
       });
     });
 
-    it('first link is pointed at dashboardf', () => {
+    it('first link is pointed at dashboard', () => {
       expect(wrapper.find('Link').get(0).props['href']).toEqual('dburl');
     });
 
