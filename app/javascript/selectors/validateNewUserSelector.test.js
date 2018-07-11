@@ -21,7 +21,7 @@ describe('selectors', () => {
       });
     });
 
-    it('returns empty array when permissions are not available', () => {
+    it('roles set to default value  when verifyNewUserDetails are not available', () => {
       const state = {
         validateNewUser: {},
       };
@@ -30,7 +30,24 @@ describe('selectors', () => {
       });
     });
 
-    it('selects no permissions', () => {
+    it('roles set to default value  when user object not available', () => {
+      const state = {
+        validateNewUser: {
+          verifyUserDetails: {
+            records: {
+              user: {},
+            },
+          },
+        },
+      };
+      expect(selectNewUserRecords(state)).toEqual({
+        user: {
+          roles: ['CWS-worker'],
+        },
+      });
+    });
+
+    it('selects no details', () => {
       const state = {
         other_stuff: { bad: 'ignore' },
       };

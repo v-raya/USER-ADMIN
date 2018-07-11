@@ -40,7 +40,7 @@ class UserService {
   }
 
   static addUser(newUser) {
-    return ApiService.post(`/add_user`, newUser).then(
+    return ApiService.post('/add_user', newUser).then(
       response => response.data.location
     );
   }

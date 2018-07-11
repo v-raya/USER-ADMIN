@@ -22,16 +22,6 @@ export function* getDetails(action) {
   }
 }
 
-// export function currentPathname() {
-//   return window.location.pathname;
-// }
-
-// export function getUserId(pathname) {
-//   const pathArray = pathname.split('/');
-//   const id = pathArray[pathArray.length - 1];
-//   return id;
-// }
-
 // watcher saga: watches for actions dispatched to the store, starts worker saga
 export function* detailsSaga() {
   yield takeLatest(actionTypes.FETCH_DETAILS_API_CALL_REQUEST, getDetails);
