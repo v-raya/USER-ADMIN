@@ -20,8 +20,6 @@ describe('reducer', () => {
       addNewUser:
         'http://localhost:18080/perry/idm/users/0c398fa0-c634-4125-a4c6-a0b20446b7be?token=1681f2e4-dfc9-4002-8a6d-8fccc9563c94',
     };
-    // const responseURL = responseAction.addNewUser;
-    // const splitURL = responseURL.split('/')[6].split('?')[0];
 
     const state = { addNewUser: null, fetching: true, error: null };
 

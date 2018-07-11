@@ -62,10 +62,10 @@ describe('AddUserDetail', () => {
     });
   });
 
-  describe('#componentWillReceiveProps', () => {
+  describe('#UNSAFE_componentWillReceiveProps', () => {
     it('passes along the props', () => {
       const instance = wrapper.instance();
-      instance.componentWillReceiveProps({
+      instance.UNSAFE_componentWillReceiveProps({
         id: 'some_id',
         details: { test_prop: 'prop_value' },
       });
