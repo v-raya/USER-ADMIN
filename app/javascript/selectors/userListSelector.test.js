@@ -74,7 +74,7 @@ describe('selectors', () => {
       expect(selectCounty(state)).toEqual('Sacramento');
     });
 
-    it('display msg when county is not known', () => {
+    it('display empty string when county is not known', () => {
       const state = {
         fetchAccount: {
           XHRStatus: 'ready',
@@ -83,7 +83,7 @@ describe('selectors', () => {
           county_code: '20',
         },
       };
-      expect(selectCounty(state)).toEqual('county not known');
+      expect(selectCounty(state)).toEqual('');
     });
   });
 });
