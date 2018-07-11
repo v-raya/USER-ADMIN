@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import AddVerifiedUser from './AddVerifiedUser';
 import VerifyUser from './VerifyUser';
 import { Link, PageHeader } from 'react-wood-duck';
+import AddUserDetail from '../../containers/addUserDetailsContainer';
 
 /* eslint camelcase: 0 */
 export default class AddUser extends Component {
@@ -10,17 +11,21 @@ export default class AddUser extends Component {
     super(props);
     this.state = {
       verify: false,
-      confirm: false,
       racfid: '',
       email: '',
       disableActionBtn: true,
+      addUser: props.addUser,
       verifyNewUserDetails: props.verifyNewUserDetails,
+      details: props.details,
     };
   }
 
   componentWillReceiveProps(nextProps) {
     let verifyNewUserDetails = nextProps.verifyNewUserDetails;
-    this.setState({ verifyNewUserDetails });
+    let id = nextProps.id;
+    let permissionRoles = nextProps.permissionRoles;
+    let details = nextProps.details;
+    this.setState({ verifyNewUserDetails, id, details, permissionRoles });
   }
 
   handleEmail = event => {
@@ -43,19 +48,22 @@ export default class AddUser extends Component {
 
   onVerify = () => {
     const { email, racfid } = this.state;
+    this.props.actions.fetchPermissionsActions();
     this.props.actions.validateNewUserActions(email, racfid);
     this.setState({ verify: true });
   };
 
   verifyUser = () => {
-    return (
-      <VerifyUser
-        onVerify={this.onVerify}
-        handleEmailChange={this.handleEmail}
-        handleRacfChange={this.handleRacfid}
-        disableActionBtn={this.state.disableActionBtn}
-      />
-    );
+    if (this.state.addUser) {
+      return (
+        <VerifyUser
+          onVerify={this.onVerify}
+          handleEmailChange={this.handleEmail}
+          handleRacfChange={this.handleRacfid}
+          disableActionBtn={this.state.disableActionBtn}
+        />
+      );
+    }
   };
 
   addUser = () => {
@@ -63,9 +71,15 @@ export default class AddUser extends Component {
       return (
         <AddVerifiedUser
           verifyNewUserDetails={this.state.verifyNewUserDetails}
+          onSave={this.onAddUser}
         />
       );
     }
+  };
+
+  onAddUser = () => {
+    this.props.actions.addUserActions(this.state.verifyNewUserDetails.user);
+    this.setState({ addUser: false, verify: false });
   };
 
   render() {
@@ -75,7 +89,7 @@ export default class AddUser extends Component {
       userListClickHandler,
       dashboardClickHandler,
     } = this.props;
-    return (
+    return this.state.addUser ? (
       <div>
         <PageHeader pageTitle="Add User" button="" />
         <div className="container">
@@ -97,6 +111,10 @@ export default class AddUser extends Component {
           {this.addUser()}
         </div>
       </div>
+    ) : (
+      <div>
+        <AddUserDetail />
+      </div>
     );
   }
 }
@@ -108,6 +126,10 @@ AddUser.propTypes = {
   dashboardClickHandler: PropTypes.func,
   actions: PropTypes.object,
   verifyNewUserDetails: PropTypes.object,
+  addUser: PropTypes.bool,
+  id: PropTypes.string,
+  permissionRoles: PropTypes.any,
+  details: PropTypes.any,
 };
 
 AddUser.defaultProps = {

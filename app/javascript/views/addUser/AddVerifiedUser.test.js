@@ -94,4 +94,22 @@ describe('AddVerifiedUser', () => {
       );
     });
   });
+
+  describe('when verification is still in progress', () => {
+    it('renders the card with message', () => {
+      const newUserDetails = {
+        verification_message: 'No ID',
+      };
+      wrapper = shallow(
+        <AddVerifiedUser verifyNewUserDetails={newUserDetails} />
+      );
+      expect(wrapper.find('Cards').length).toBe(1);
+      expect(
+        wrapper
+          .find('span')
+          .at(0)
+          .text()
+      ).toBe('Loading.....');
+    });
+  });
 });

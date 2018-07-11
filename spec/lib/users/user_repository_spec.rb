@@ -162,5 +162,26 @@ module Users
         end
       end
     end
+
+    describe '#add_user' do
+      let(:response) { instance_double('Faraday::Response') }
+      let(:location) { 'http://www.google.com/assnlk123-afdb1324-we132' }
+      params = {
+        enable: 'true',
+        permissions: %w[snapshot hotline]
+      }
+
+      context 'with user' do
+        it 'add user' do
+          allow(response).to receive(:headers).and_return(location)
+          allow(http_service)
+            .to receive(:post)
+            .with('/perry/idm/users', params, token)
+            .and_return(response)
+          expect(user_repository.add_user(params, token))
+            .to eq 'http://www.google.com/assnlk123-afdb1324-we132'
+        end
+      end
+    end
   end
 end

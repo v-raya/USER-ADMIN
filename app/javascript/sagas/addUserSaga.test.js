@@ -1,32 +1,32 @@
 import UserService from '../_services/users';
-import { detailsSaga, getDetails } from './getDetailsSaga';
+import { addUserSaga, addUser } from './addUserSaga';
 import * as actionTypes from '../actions/actionTypes';
 import { takeLatest, call, put } from 'redux-saga/effects';
 
 describe('sagas', () => {
   it('starts the worker fetch saga', () => {
-    const gen = detailsSaga();
+    const gen = addUserSaga();
     expect(gen.next().value).toEqual(
-      takeLatest(actionTypes.FETCH_DETAILS_API_CALL_REQUEST, getDetails)
+      takeLatest(actionTypes.ADD_USER_API_CALL_REQUEST, addUser)
     );
   });
 
-  describe('#getDetails', () => {
+  describe('#addUser', () => {
     beforeEach(() => {
-      UserService.fetchUserDetails = jest.fn();
+      UserService.addUser = jest.fn();
     });
 
     describe('when successful', () => {
       it('executes the happy-path saga', () => {
-        const action = { payload: { id: 'man1232' } };
-        const gen = getDetails(action);
+        const action = { payload: { newUser: 'man1324' } };
+        const gen = addUser(action);
         expect(gen.next().value).toEqual(
-          call(UserService.fetchUserDetails, action.payload.id)
+          call(UserService.addUser, action.payload.newUser)
         );
         expect(gen.next([1234, 5678]).value).toEqual(
           put({
-            type: actionTypes.FETCH_DETAILS_API_CALL_SUCCESS,
-            details: [1234, 5678],
+            type: actionTypes.ADD_USER_API_CALL_SUCCESS,
+            addNewUser: [1234, 5678],
           })
         );
         expect(gen.next().done).toBe(true);
@@ -35,14 +35,14 @@ describe('sagas', () => {
 
     describe('when failures come back from the fetch', () => {
       it('handles the error', () => {
-        const action = { payload: { id: 'man' } };
-        const gen = getDetails(action);
+        const action = { payload: { newUser: 'man1234' } };
+        const gen = addUser(action);
         expect(gen.next().value).toEqual(
-          call(UserService.fetchUserDetails, action.payload.id)
+          call(UserService.addUser, action.payload.newUser)
         );
         expect(gen.throw('I have made a huge mistake').value).toEqual(
           put({
-            type: actionTypes.FETCH_DETAILS_API_CALL_FAILURE,
+            type: actionTypes.ADD_USER_API_CALL_FAILURE,
             error: 'I have made a huge mistake',
           })
         );
