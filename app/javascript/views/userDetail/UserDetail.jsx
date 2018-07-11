@@ -63,12 +63,14 @@ export default class UserDetail extends Component {
   };
 
   onEditClick = () => {
-    this.setState({ isEdit: true });
+    this.setState({ isEdit: true, alert: false });
   };
 
   onCancel = () => {
-    this.setState({ isEdit: false });
-    this.props.actions.fetchDetailsActions();
+    this.setState({ isEdit: false, alert: false });
+    this.props.actions.fetchDetailsActions(
+      this.getUserId(this.currentPathname())
+    );
   };
 
   alert = () => {
