@@ -29,6 +29,7 @@ module Users
     attribute :verification_message, Types::String.optional
     attribute :verification_passed, Types::Bool.optional
     attribute :racfid, Types::String.optional
+    attribute :roles, Types::Array.optional
     attribute :auth_header, Types::String.optional
 
     def self.search(query, auth_header)

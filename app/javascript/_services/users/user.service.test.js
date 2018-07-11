@@ -101,4 +101,25 @@ describe('UserService', () => {
       );
     });
   });
+
+  describe('#addUser', () => {
+    let getSpy2;
+
+    beforeEach(() => {
+      getSpy2 = jest.spyOn(ApiService, 'post');
+    });
+
+    it('calls #addUser ApiService', () => {
+      const newUser = {
+        email: 'example@example.com',
+        first_name: 'ExampleName',
+        last_name: 'ExampleLastName',
+        county_name: 'Madera',
+        racfid: 'RACFID1',
+      };
+      getSpy2.mockReturnValue(Promise.resolve({}));
+      UserService.addUser(newUser);
+      expect(getSpy2).toHaveBeenCalledWith(`/add_user`, newUser);
+    });
+  });
 });

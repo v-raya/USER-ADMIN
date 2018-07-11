@@ -38,6 +38,12 @@ class UserService {
   static fetchPermissionsList() {
     return ApiService.get(`/permissions_list/`).then(response => response.data);
   }
+
+  static addUser(newUser) {
+    return ApiService.post('/add_user', newUser).then(
+      response => response.data.location
+    );
+  }
 }
 
 export default UserService;

@@ -54,6 +54,7 @@ describe('VerifyUser', () => {
 
   describe('#verifyUser()', () => {
     it('renders VerifyUser Component', () => {
+      wrapper.setState({ addUser: true });
       expect(wrapper.find('VerifyUser').length).toBe(1);
     });
   });
@@ -73,6 +74,7 @@ describe('VerifyUser', () => {
         <AddUser
           actions={{
             validateNewUserActions: () => {},
+            fetchPermissionsActions: () => {},
           }}
         />
       );
@@ -81,12 +83,39 @@ describe('VerifyUser', () => {
     });
   });
 
+  describe('#onAddUser', () => {
+    it('sets state', () => {
+      const component = shallow(
+        <AddUser
+          actions={{
+            addUserActions: () => {},
+          }}
+        />
+      );
+      component.setState({
+        verifyNewUserDetails: {
+          user: {
+            first_name: 'username1',
+            id: '2',
+            county_name: 'mycounty',
+          },
+        },
+      });
+
+      component.instance().onAddUser();
+      expect(component.instance().state.addUser).toBe(false);
+      expect(component.instance().state.verify).toBe(false);
+    });
+  });
+
   describe('renders components', () => {
     it('renders PageHeader component', () => {
+      wrapper.setState({ verify: true, addUser: true });
       expect(wrapper.find('PageHeader').length).toBe(1);
     });
 
     it('renders navigation link to Dashboard', () => {
+      wrapper.setState({ verify: true, addUser: true });
       expect(
         wrapper
           .find('Link')
@@ -96,6 +125,7 @@ describe('VerifyUser', () => {
     });
 
     it('first link is pointed at dashboard', () => {
+      wrapper.setState({ verify: true, addUser: true });
       expect(wrapper.find('Link').get(0).props['href']).toEqual('/');
     });
 

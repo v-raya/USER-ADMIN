@@ -36,6 +36,11 @@ module Users
       response.body { Permissions.new }
     end
 
+    def add_user(parameters, token)
+      response = @http_service.post('/perry/idm/users', parameters, token)
+      response.headers
+    end
+
     private
 
     def sanitize_keys(value)

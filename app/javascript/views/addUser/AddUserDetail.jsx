@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Link, Alert, PageHeader } from 'react-wood-duck';
-import UserDetailEdit from './UserDetailEdit';
-import UserDetailShow from './UserDetailShow';
+import { Link, Alert, PageHeader, Cards } from 'react-wood-duck';
+import UserDetailEdit from '../userDetail/UserDetailEdit';
+import UserDetailShow from '../userDetail/UserDetailShow';
 import UserService from '../../_services/users';
 
 /* eslint camelcase: 0 */
-export default class UserDetail extends Component {
+export default class AddUserDetail extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -14,29 +14,22 @@ export default class UserDetail extends Component {
       alert: false,
       disableActionBtn: true,
       details: props.details,
+      id: props.id,
+      add: true,
     };
   }
 
-  componentDidMount() {
-    this.props.actions.fetchDetailsActions(
-      this.getUserId(this.currentPathname())
-    );
-    this.props.actions.fetchPermissionsActions();
-  }
-
-  currentPathname() {
-    return window.location.pathname;
-  }
-
-  getUserId(pathname) {
-    const pathArray = pathname.split('/');
-    const id = pathArray[pathArray.length - 1];
-    return id;
-  }
-
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
+    let id = nextProps.id;
+    let permissionRoles = nextProps.permissionRoles;
     let details = nextProps.details;
-    this.setState({ details });
+    this.setState({ details, id, permissionRoles });
+  }
+
+  componentDidUpdate(prevProps) {
+    if (this.state.id !== prevProps.id) {
+      this.props.actions.fetchDetailsActions(this.state.id);
+    }
   }
 
   onStatusChange = name => ({ value }) => {
@@ -56,32 +49,34 @@ export default class UserDetail extends Component {
   };
 
   onSaveDetails = () => {
-    const id = this.getUserId(this.currentPathname());
-    const { details } = this.state;
+    const { details, id } = this.state;
     const response = UserService.saveUserDetails(id, details);
     this.setState({ isEdit: false, alert: true, saveResponse: response });
   };
 
   onEditClick = () => {
-    this.setState({ isEdit: true });
-  };
-
-  onCancel = () => {
-    this.setState({ isEdit: false });
-    this.props.actions.fetchDetailsActions();
+    this.state.isEdit === false
+      ? this.setState({ isEdit: true, alert: false, add: false })
+      : this.setState({ isEdit: false });
   };
 
   alert = () => {
     if (this.state.alert) {
       return (
         <Alert alertClassName="success" faIcon="fa-check-circle">
-          {'Your changes have been made successfuly'}
+          {'Your changes have been made successfully'}
+        </Alert>
+      );
+    } else if (this.state.add && this.state.details.id) {
+      return (
+        <Alert alertClassName="success" faIcon="fa-check-circle">
+          {'Successfully added new user'}
         </Alert>
       );
     }
   };
 
-  renderCards = permissionsList => {
+  renderCards = permissionRoles => {
     return (
       <div>
         {this.state.details.id ? (
@@ -92,22 +87,28 @@ export default class UserDetail extends Component {
                 selectedPermissions={this.formattedPermissions(
                   this.state.details.permissions
                 )}
-                onCancel={this.onCancel}
+                onCancel={this.onEditClick}
                 onSave={this.onSaveDetails}
                 onStatusChange={this.onStatusChange('enabled')}
                 onRoleChange={this.onRoleChange}
                 disableActionBtn={this.state.disableActionBtn}
-                permissionsList={permissionsList}
+                permissionsList={permissionRoles}
               />
             ) : (
-              <UserDetailShow
-                details={this.state.details}
-                onEdit={this.onEditClick}
-              />
+              <div>
+                <div>
+                  <UserDetailShow
+                    details={this.state.details}
+                    onEdit={this.onEditClick}
+                  />
+                </div>
+              </div>
             )}
           </div>
         ) : (
-          ''
+          <Cards>
+            <span>{'Loading.....'}</span>
+          </Cards>
         )}
       </div>
     );
@@ -126,9 +127,8 @@ export default class UserDetail extends Component {
       userListUrl,
       userListClickHandler,
       dashboardClickHandler,
-      permissionsList,
+      permissionRoles,
     } = this.props;
-
     return (
       <div>
         <PageHeader pageTitle="User Profile" button="" />
@@ -148,24 +148,25 @@ export default class UserDetail extends Component {
               clickHandler={userListClickHandler}
             />
           </div>
-          {this.renderCards(permissionsList)}
+          {this.renderCards(permissionRoles)}
         </div>
       </div>
     );
   }
 }
 
-UserDetail.propTypes = {
+AddUserDetail.propTypes = {
   details: PropTypes.object,
   dashboardUrl: PropTypes.string,
   userListUrl: PropTypes.string,
   userListClickHandler: PropTypes.func,
   dashboardClickHandler: PropTypes.func,
-  permissionsList: PropTypes.array,
-  actions: PropTypes.object.isRequired,
+  permissionRoles: PropTypes.array,
+  actions: PropTypes.object,
+  id: PropTypes.any,
 };
 
-UserDetail.defaultProps = {
+AddUserDetail.defaultProps = {
   userListUrl: '/',
   dashboardUrl: '/',
   userListClickHandler: () => {},
