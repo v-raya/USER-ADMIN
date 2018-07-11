@@ -1,8 +1,10 @@
 defaults: &defaults
   perry_api_base_url: <%= ENV.fetch('PERRY_API_BASE_URL', 'http://perry:8080') %>
+  base_search_api_url: <%= ENV.fetch('BASE_SEARCH_API_URL', 'http://dora:8080') %>
 development:
   <<: *defaults
 test:
   perry_api_base_url: 'https://perry.test'
+  base_search_api_url: 'https://dora.test'
 production:
   <<: *defaults

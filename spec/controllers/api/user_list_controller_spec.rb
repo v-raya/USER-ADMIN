@@ -4,6 +4,21 @@ require 'rails_helper'
 
 module Api
   describe UserListController do
+    describe '#index_legacy' do
+      let(:user_repository) { instance_double('User::UserRepository') }
+      let(:user) { Users::User.new(username: 'el') }
+
+      it 'returns a userlist' do
+        allow(Elastic::QueryBuilder).to receive(:elastic_search?).and_return(false)
+        allow(Users::UserRepository).to receive(:new)
+          .with(no_args).and_return(user_repository)
+        allow(user_repository).to receive(:get_users).with({}, 'token').and_return(user)
+        request.session[:token] = 'token'
+        get :index
+        expect(response.body).to eq user.to_json
+      end
+    end
+
     describe '#index' do
       let(:user_repository) { instance_double('User::UserRepository') }
       let(:user) { Users::User.new(username: 'el') }
@@ -17,13 +32,38 @@ module Api
         )
       end
 
-      it 'returns a userlist' do
-        allow(Users::UserRepository).to receive(:new)
-          .with(no_args).and_return(user_repository)
-        allow(user_repository).to receive(:get_users).with({}, 'token').and_return(user)
-        request.session[:token] = 'token'
-        get :index
-        expect(response.body).to eq user.to_json
+      describe 'when no params are passed' do
+        it 'returns a userlist' do
+          allow(Users::UserRepository).to receive(:new)
+            .with(no_args).and_return(user_repository)
+
+          api_response = { hits: { hits: [_source: user] } }
+          allow(Users::User).to receive(:search).with({ query: { match_all: {} } }, 'token')
+                                                .and_return(api_response)
+          request.session[:token] = 'token'
+          get :index
+          expect(response.body).to eq [user].to_json
+        end
+      end
+
+      describe 'when search params are passed' do
+        it 'returns a userlist / search limited by last_name' do
+          api_response = {
+            hits: {
+              hits:
+                [_source: user]
+            }
+          }
+
+          allow(Users::UserRepository).to receive(:new)
+            .with(no_args).and_return(user_repository)
+          allow(Users::User).to receive(:search).with({ query: { match: { last_name: 'El' } },
+                                                        from: nil, size: nil, sort: [] }, 'token')
+                                                .and_return(api_response)
+          request.session[:token] = 'token'
+          get :index, params: { last_name: 'El' }
+          expect(response.body).to eq [user].to_json
+        end
       end
     end
   end
