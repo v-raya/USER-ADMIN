@@ -20,7 +20,6 @@ module Api
                     :user_create_date,
                     :user_last_modified_date,
                     :racfid, :enabled,
-                    :status, :format,
                     roles: []).to_h
     end
   end
