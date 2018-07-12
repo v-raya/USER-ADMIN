@@ -47,21 +47,26 @@ module Api
       end
 
       describe 'when search params are passed' do
-        it 'returns a userlist / search limited by last_name' do
-          api_response = {
-            hits: {
-              hits:
-                [_source: user]
-            }
-          }
+        let(:api_response) { { hits: { hits: [_source: user] } } }
 
+        before do
           allow(Users::UserRepository).to receive(:new)
             .with(no_args).and_return(user_repository)
-          allow(Users::User).to receive(:search).with({ query: { match: { last_name: 'El' } },
-                                                        from: nil, size: nil, sort: [] }, 'token')
-                                                .and_return(api_response)
           request.session[:token] = 'token'
+        end
+        it 'returns a userlist / search limited by last_name' do
+          allow(Users::User).to receive(:search).with(
+            { query: { match_phrase_prefix: { last_name: 'El' } },
+              from: 0, size: 50, sort: [] }, 'token'
+          ).and_return(api_response)
           get :index, params: { last_name: 'El' }
+          expect(response.body).to eq [user].to_json
+        end
+        it 'empty search params are ignored' do
+          allow(Users::User).to receive(:search).with({ query: { match_all: {} } }, 'token')
+                                                .and_return(api_response)
+
+          get :index, params: { last_name: '' }
           expect(response.body).to eq [user].to_json
         end
       end

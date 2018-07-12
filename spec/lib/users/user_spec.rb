@@ -27,5 +27,20 @@ module Users
       it { is_expected.to have_attribute(:verification_passed, Types::Bool.optional) }
       it { is_expected.to have_attribute(:verification_message, Types::String.optional) }
     end
+
+    describe 'search' do
+      let(:search_server) { Infrastructure::HttpService.new('http://stub.example.com') }
+      let(:good_response) { double(body: 'content') }
+      let(:token) { 'token' }
+      before do
+        allow(search_server).to receive(:post).with('/dora/users/user/_search', 'my query', token)
+                                              .and_return(good_response)
+        allow(Infrastructure::HttpService).to receive(:new).with('https://dora.test')
+                                                           .and_return(search_server)
+      end
+      it 'posts the given token to a search service' do
+        expect(User.search('my query', 'token')).to eq('content')
+      end
+    end
   end
 end

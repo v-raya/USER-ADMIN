@@ -9,20 +9,20 @@ describe QueryPreprocessor do
       input = {
         'county.id': { query_type: 'term', value: '4' },
         'type.id': { query_type: 'term', value: [90, 99] },
-        id: { query_type: 'match_phrase', value: '234' },
-        name: { query_type: 'match', value: '' }
+        id: { query_type: 'match_phrase_prefix', value: '234' },
+        name: { query_type: 'match_phrase_prefix', value: '' }
       }
 
       expected_output = [
         {
           'county.id': { query_type: 'term', value: '4' },
           'type.id': { query_type: 'term', value: 90 },
-          id: { query_type: 'match_phrase', value: '234' }
+          id: { query_type: 'match_phrase_prefix', value: '234' }
         },
         {
           'county.id': { query_type: 'term', value: '4' },
           'type.id': { query_type: 'term', value: 99 },
-          id: { query_type: 'match_phrase', value: '234' }
+          id: { query_type: 'match_phrase_prefix', value: '234' }
         }
       ]
 
@@ -34,8 +34,8 @@ describe QueryPreprocessor do
   describe 'form_params_to_query_params' do
     it 'converts name-value into named-query-by-value format' do
       input = { last_name:  'Smith', first_name: 'John' }
-      expected_output = { last_name: { query_type: 'match', value: 'Smith' },
-                          first_name: { query_type: 'match', value: 'John' } }
+      expected_output = { last_name: { query_type: 'match_phrase_prefix', value: 'Smith' },
+                          first_name: { query_type: 'match_phrase_prefix', value: 'John' } }
       output = QueryPreprocessor.form_params_to_query_params(input)
       expect(output).to eq(expected_output)
     end
@@ -46,14 +46,14 @@ describe QueryPreprocessor do
       input = {
         'county.id': { query_type: 'term', value: '4' },
         'type.id': { query_type: 'term', value: [90, 99] },
-        id: { query_type: 'match_phrase', value: '234' },
-        name: { query_type: 'match', value: '' }
+        id: { query_type: 'match_phrase_prefix', value: '234' },
+        name: { query_type: 'match_phrase_prefix', value: '' }
       }
 
       expected_output = {
         'county.id': { query_type: 'term', value: ['4'] },
         'type.id': { query_type: 'term', value: [90, 99] },
-        id: { query_type: 'match_phrase', value: ['234'] }
+        id: { query_type: 'match_phrase_prefix', value: ['234'] }
       }
 
       output = QueryPreprocessor.params_remove_blank_values(input)
@@ -66,21 +66,21 @@ describe QueryPreprocessor do
       input_params = {
         'county.id': { query_type: 'term', value: ['4'] },
         'type.id': { query_type: 'term', value: [90, 99] },
-        id: { query_type: 'match_phrase', value: ['234'] }
+        id: { query_type: 'match_phrase_prefix', value: ['234'] }
       }
       input_values = [['4'], [90, 99], ['234']]
-      input_query_types = %w[term term match_phrase]
+      input_query_types = %w[term term match_phrase_prefix]
 
       expected_output = [
         {
           'county.id': { query_type: 'term', value: '4' },
           'type.id': { query_type: 'term', value: 90 },
-          id: { query_type: 'match_phrase', value: '234' }
+          id: { query_type: 'match_phrase_prefix', value: '234' }
         },
         {
           'county.id': { query_type: 'term', value: '4' },
           'type.id': { query_type: 'term', value: 99 },
-          id: { query_type: 'match_phrase', value: '234' }
+          id: { query_type: 'match_phrase_prefix', value: '234' }
         }
       ]
 

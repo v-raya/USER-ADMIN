@@ -12,10 +12,9 @@ module Api
 
     def index
       return index_legacy unless Elastic::QueryBuilder.elastic_search?
-      user_hash = Users::User.new(allowed_params_to_search).to_h.compact
 
-      es_query_json = get_query_hash(user_hash)
-      logger.debug "elastic_search query: #{es_query_json}"
+      es_query_json = build_query_hash
+      logger.debug "should be posted as #{JSON.generate(es_query_json)}"
       users = Users::User.search(es_query_json, session[:token])
       @users_response = collect_users(users)
       render json: @users_response, status: :ok
@@ -29,23 +28,22 @@ module Api
 
     def assign_page_params
       page_params = {}
-      page_params['size_params'] = params[:size]
-      page_params['from_params'] = params[:from]
-      page_params['sort_params'] = params[:sort]
-      page_params['order_params'] = params[:order]
+      page_params['size_params'] = params[:size] || 50
+      page_params['from_params'] = params[:from] || 0
       page_params
     end
 
-    def get_query_hash(user_hash)
+    def allowed_params_to_search
+      params.permit(:last_name, :format).to_h
+    end
+
+    def build_query_hash
+      user_hash = Users::User.new(allowed_params_to_search).to_h.compact
       query = QueryPreprocessor.form_params_to_query_params(user_hash)
       page_params = assign_page_params
       query_hash = {}
       query_hash = QueryPreprocessor.params_to_query_with_types(query) unless query.empty?
       Elastic::QueryBuilder.user_search_v1(query_hash, page_params)
-    end
-
-    def allowed_params_to_search
-      params.permit(:last_name, :format).to_h
     end
   end
 end

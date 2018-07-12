@@ -9,13 +9,14 @@ describe Elastic::QueryBuilder do
       expected_output = {
         bool: {
           must: [
-            { match: { 'last_name': 'Smith' } },
-            { match: { 'first_name': 'John' } }
+            { match_phrase_prefix: { 'last_name': 'Smith' } },
+            { match_phrase_prefix: { 'first_name': 'John' } }
           ]
         }
       }
 
-      input = [{ match: { 'last_name': 'Smith' } }, { match: { 'first_name': 'John' } }]
+      input = [{ match_phrase_prefix: { 'last_name': 'Smith' } },
+               { match_phrase_prefix: { 'first_name': 'John' } }]
       output = Elastic::QueryBuilder.bool_and(input)
 
       expect(output).to eq(expected_output)
@@ -29,8 +30,8 @@ describe Elastic::QueryBuilder do
               {
                 bool: {
                   must: [
-                    { match: { 'first_name': 'John' } },
-                    { match: { 'last_name': 'Smith' } }
+                    { match_phrase_prefix: { 'first_name': 'John' } },
+                    { match_phrase_prefix: { 'last_name': 'Smith' } }
                   ]
                 }
               }
@@ -39,8 +40,8 @@ describe Elastic::QueryBuilder do
         }
       }
 
-      input = [{ first_name: { query_type: 'match', value: 'John' },
-                 last_name: { query_type: 'match', value: 'Smith' } }]
+      input = [{ first_name: { query_type: 'match_phrase_prefix', value: 'John' },
+                 last_name: { query_type: 'match_phrase_prefix', value: 'Smith' } }]
       output = Elastic::QueryBuilder.match_boolean(input)
       expect(output).to eq(expected_output)
     end
@@ -75,7 +76,7 @@ describe Elastic::QueryBuilder do
     it 'build query merging pagination and sort' do
       expected_output = {
         query: {
-          match: { 'last_name': 'Smith' }
+          match_phrase_prefix: { 'last_name': 'Smith' }
         },
         from: '0',
         size: '5',
@@ -83,8 +84,8 @@ describe Elastic::QueryBuilder do
       }
 
       query_array = [
-        { 'first_name': { query_type: 'match', value: 'John' },
-          'last_name': { query_type: 'match', value: 'Smith' } }
+        { 'first_name': { query_type: 'match_phrase_prefix', value: 'John' },
+          'last_name': { query_type: 'match_phrase_prefix', value: 'Smith' } }
       ]
       page_params = { 'order_params' => 'asc', 'size_params' => '5', 'from_params' => '0' }
       output = Elastic::QueryBuilder.user_search_v1(query_array, page_params)

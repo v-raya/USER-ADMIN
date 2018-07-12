@@ -18,7 +18,7 @@ class QueryPreprocessor
   def self.form_params_to_query_params(params)
     par = {}
     params.each do |key, value|
-      par[key] = { query_type: 'match', value: value }
+      par[key] = { query_type: 'match_phrase_prefix', value: value } unless value.blank?
     end
     par
   end

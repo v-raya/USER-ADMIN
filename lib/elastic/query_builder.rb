@@ -94,7 +94,7 @@ module Elastic
     end
 
     def self.search_query(search_params)
-      { query: { match: { "last_name": search_params } } }
+      { query: { match_phrase_prefix: { "last_name": search_params } } }
     end
   end
 end
