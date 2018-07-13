@@ -4,7 +4,7 @@ module LoginHelper
   def login(login_config = default_json)
     login_json = JSON.generate(login_config)
     visit ENV['RAILS_RELATIVE_URL_ROOT'] || '/'
-    puts "visited: landed on  #{current_url}.  "
+    puts "visited: landed on #{current_url}"
     if current_url.include?('accessCode=')
       puts 'Already logged in'
       return
@@ -29,7 +29,7 @@ module LoginHelper
       'roles': ['CWS-admin', 'Supervisor'],
       'county_code': '56',
       'county_cws_code': '1123',
-      'county_name': 'Yolo',
+      'county_name': 'Madera',
       'privileges': [
         'CWS Case Management System',
         'Resource Management',

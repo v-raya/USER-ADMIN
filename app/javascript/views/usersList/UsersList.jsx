@@ -111,6 +111,7 @@ class UserList extends React.Component {
                     onEdit={this.handleOnAdd}
                   >
                     <InputComponent
+                      id="searchtext"
                       gridClassName="col-md-10 col-sm-6 col-xs-12"
                       fieldClassName="form-group"
                       type="text"
