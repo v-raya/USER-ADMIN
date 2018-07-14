@@ -75,7 +75,9 @@ export default class AddUserDetail extends Component {
     } else if (this.state.add && this.state.details.id) {
       return (
         <Alert alertClassName="success" faIcon="fa-check-circle">
-          {'Successfully added new user'}
+          {`Successfully added new user. Registration email has been sent to ${
+            this.state.details.email
+          } `}
         </Alert>
       );
     }
