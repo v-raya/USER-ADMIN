@@ -8,3 +8,7 @@ export const selectCounty = state => {
     ? state.fetchAccount.account.account.county_name
     : '';
 };
+
+export const isLoading = state => {
+  return state.fetchUserList.fetching || false;
+};

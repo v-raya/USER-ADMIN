@@ -1,4 +1,4 @@
-import { selectUserRecords, selectCounty } from './userListSelector';
+import { selectUserRecords, selectCounty, isLoading } from './userListSelector';
 
 describe('selectors', () => {
   describe('#selectUserRecords', () => {
@@ -53,6 +53,15 @@ describe('selectors', () => {
         other_stuff: { bad: 'ignore' },
       };
       expect(selectUserRecords(state)).toEqual([]);
+    });
+  });
+
+  describe('#isLoading', () => {
+    it('returns true if fetching', () => {
+      const state = {
+        fetchUserList: {},
+      };
+      expect(isLoading(state)).toEqual(false);
     });
   });
 

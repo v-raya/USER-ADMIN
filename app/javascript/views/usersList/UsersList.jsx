@@ -37,7 +37,9 @@ class UserList extends React.Component {
   handleOnClick = () =>
     this.props.actions.fetchUsersActions(this.state.searchKey);
 
-  handleTextChange = event => this.setState({ searchKey: event.target.value });
+  handleTextChange = event => {
+    this.setState({ searchKey: event.target.value });
+  };
 
   handleOnAdd = () => {
     this.setState({ addUser: true });
@@ -85,7 +87,7 @@ class UserList extends React.Component {
   };
 
   search = (state, instance) => {
-    console.log(state, instance);
+    // console.log(state, instance);
   };
 
   handleSortChange = (state, instance) => {
@@ -109,49 +111,55 @@ class UserList extends React.Component {
   };
 
   renderUsersTable = ({ data }) => {
-    console.log(data);
+    // console.log(data);
     return (
-      data && (
-        <ReactTable
-          data={data}
-          columns={[
-            {
-              Header: 'Full Name',
-              id: 'last_name',
-              accessor: ({first_name, last_name}) => `${last_name}, ${first_name}`,
-              Cell: ({ value, original }) => <Link href={`user_details/${original.id}`} text={value} />,
-              minWidth: 400,
-            },
-            {
-              // Was this an accident? (Not using the `status` field?)
-              Header: 'Status',
-              accessor: 'enabled',
-            },
-            {
-              Header: 'Last Login',
-              accessor: 'last_login_date_time',
-            },
-            {
-              Header: 'CWS Login',
-              accessor: 'racfid',
-            },
-            {
-              Header: 'End date',
-              accessor: 'end_date',
-            },
-          ]}
-          manual
-          page={0}
-          pageSize={2}
-          loading={false}
-          onFetchData={this.search}
-          defaultPageSize={10}
-          className="-striped -highlight"
-          onPageChange={(pageIndex) => {this.handlePageChange()}} // Called when the page index is changed by the user
-          onPageSizeChange={(pageSize, pageIndex) => {this.handlePageSizeChange()}} // Called when the pageSize is changed by the user. The resolve page is also sent to maintain approximate position in the data
-          onSortedChange={(newSorted, column, shiftKey) => {this.handleSortChange()}} // Called when a sortable column header is clicked with the column itself and if the shiftkey was held. If the column is a pivoted column, `column` will be an array of columns
-        />
-      )
+      <ReactTable
+        data={data}
+        columns={[
+          {
+            Header: 'Full Name',
+            id: 'last_name',
+            accessor: ({ first_name, last_name }) =>
+              `${last_name}, ${first_name}`,
+            Cell: ({ value, original }) => (
+              <Link href={`user_details/${original.id}`} text={value} />
+            ),
+            minWidth: 400,
+          },
+          {
+            Header: 'Status',
+            accessor: 'enabled',
+          },
+          {
+            Header: 'Last Login',
+            accessor: 'last_login_date_time',
+          },
+          {
+            Header: 'CWS Login',
+            accessor: 'racfid',
+          },
+          {
+            Header: 'End date',
+            accessor: 'end_date',
+          },
+        ]}
+        manual
+        page={0}
+        pageSize={2}
+        loading={this.props.isLoading}
+        onFetchData={this.search}
+        defaultPageSize={10}
+        className="-striped -highlight"
+        onPageChange={pageIndex => {
+          this.handlePageChange();
+        }} // Called when the page index is changed by the user
+        onPageSizeChange={(pageSize, pageIndex) => {
+          this.handlePageSizeChange();
+        }} // Called when the pageSize is changed by the user. The resolve page is also sent to maintain approximate position in the data
+        onSortedChange={(newSorted, column, shiftKey) => {
+          this.handleSortChange();
+        }} // Called when a sortable column header is clicked with the column itself and if the shiftkey was held. If the column is a pivoted column, `column` will be an array of columns
+      />
     );
   };
 
@@ -203,7 +211,6 @@ class UserList extends React.Component {
                         <h3>alksdjfasldkfj</h3>
                       </div>
                     </div>
-                    <div>{this.tableComponent()}</div>
                     <div>
                       {this.renderUsersTable({
                         data: this.props.userList,
@@ -221,6 +228,7 @@ class UserList extends React.Component {
 }
 
 UserList.propTypes = {
+  isLoading: PropTypes.bool,
   userList: PropTypes.array,
   dashboardUrl: PropTypes.string,
   accountCounty: PropTypes.string,

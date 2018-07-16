@@ -114,8 +114,8 @@ describe('UsersList', () => {
 
   describe('#UserList output', () => {
     it('contains Table and headers', () => {
-      expect(wrapper.find('BootstrapTable').length).toBe(1);
-      expect(wrapper.find('TableHeaderColumn').length).toBe(5);
+      expect(wrapper.find('ReactTable').length).toBe(1);
+      expect(wrapper.find('ReactTable').prop('columns').length).toBe(5);
     });
 
     it('renders navigation link to Dashboard', () => {
