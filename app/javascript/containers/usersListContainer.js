@@ -1,10 +1,7 @@
 import { connect } from 'react-redux';
 import UsersList from '../views/usersList/UsersList';
-import {
-  selectUserRecords,
-  selectCounty,
-  isLoading,
-} from '../selectors/userListSelector';
+import { selectUserRecords, isLoading } from '../selectors/userListSelector';
+import { selectCounty } from '../selectors/accountSelectors';
 import { fetchUsersActions } from '../actions/usersActions';
 import { fetchAccountActions } from '../actions/accountActions';
 import { bindActionCreators } from 'redux';
