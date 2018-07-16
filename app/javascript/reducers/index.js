@@ -1,12 +1,12 @@
 import { combineReducers } from 'redux';
-import fetchUserList from './userListReducers';
+import userList from './userListReducers';
 import fetchDetails from './detailsReducers';
 import fetchAccount from './accountReducers';
 import fetchPermissions from './permissionsReducers';
 import validateNewUser from './validateNewUserReducer';
 import addUser from './addUserReducers';
 const reducer = combineReducers({
-  fetchUserList,
+  userList,
   fetchDetails,
   fetchAccount,
   fetchPermissions,

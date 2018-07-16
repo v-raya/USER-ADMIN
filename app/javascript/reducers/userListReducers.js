@@ -1,6 +1,11 @@
 import * as actionTypes from '../actions/actionTypes';
 
-function fetchUserList(state = { userList: null, fetching: false }, action) {
+const initialValue = {
+  userList: null,
+  fetching: false,
+};
+
+function userListReducer(state = initialValue, action) {
   switch (action.type) {
     case actionTypes.FETCH_USERS_API_CALL_REQUEST:
       return { ...state, fetching: true, error: null };
@@ -29,4 +34,4 @@ function fetchUserList(state = { userList: null, fetching: false }, action) {
   }
 }
 
-export default fetchUserList;
+export default userListReducer;

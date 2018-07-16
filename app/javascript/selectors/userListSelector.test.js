@@ -1,10 +1,10 @@
-import { selectUserRecords, selectCounty, isLoading } from './userListSelector';
+import { selectUserRecords, isLoading } from './userListSelector';
 
 describe('selectors', () => {
   describe('#selectUserRecords', () => {
     it('selects the user records', () => {
       const state = {
-        fetchUserList: {
+        userList: {
           userList: {
             records: [
               {
@@ -59,7 +59,7 @@ describe('selectors', () => {
   describe('#isLoading', () => {
     it('returns true if fetching', () => {
       const state = {
-        fetchUserList: {},
+        userList: {},
       };
       expect(isLoading(state)).toEqual(false);
     });

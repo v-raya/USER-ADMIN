@@ -1,8 +1,8 @@
 export const selectUserRecords = state => {
-  const usersObject = state.fetchUserList ? state.fetchUserList.userList : null;
+  const usersObject = state.userList ? state.userList.userList : null;
   return usersObject ? usersObject.records : [];
 };
 
 export const isLoading = state => {
-  return state.fetchUserList.fetching || false;
+  return state.userList.fetching || false;
 };
