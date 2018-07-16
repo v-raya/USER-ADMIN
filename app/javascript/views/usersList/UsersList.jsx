@@ -5,6 +5,7 @@ import Cards from '../../common/Card';
 import AddUser from '../../containers/addUserContainer';
 import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table';
 import { makeUserDetailPath } from '../../_utils/makeUserDetailPath';
+import ReactTable from 'react-table';
 
 const buttonAlign = { marginTop: '-9px' };
 
@@ -83,6 +84,77 @@ class UserList extends React.Component {
     );
   };
 
+  search = (state, instance) => {
+    console.log(state, instance);
+  };
+
+  handleSortChange = (state, instance) => {
+    console.log('Sort Changed...');
+  };
+
+  handlePageChange = () => {
+    console.log('Page change...');
+  };
+
+  handlePageSizeChange = () => {
+    console.log('Page size changed...');
+  };
+
+  handlePaginationChange = () => {
+    console.log('Pagination changed...');
+  };
+
+  handleQueryChange = () => {
+    console.log('Query changed...');
+  };
+
+  renderUsersTable = ({ data }) => {
+    console.log(data);
+    return (
+      data && (
+        <ReactTable
+          data={data}
+          columns={[
+            {
+              Header: 'Full Name',
+              id: 'last_name',
+              accessor: ({first_name, last_name}) => `${last_name}, ${first_name}`,
+              Cell: ({ value, original }) => <Link href={`user_details/${original.id}`} text={value} />,
+              minWidth: 400,
+            },
+            {
+              // Was this an accident? (Not using the `status` field?)
+              Header: 'Status',
+              accessor: 'enabled',
+            },
+            {
+              Header: 'Last Login',
+              accessor: 'last_login_date_time',
+            },
+            {
+              Header: 'CWS Login',
+              accessor: 'racfid',
+            },
+            {
+              Header: 'End date',
+              accessor: 'end_date',
+            },
+          ]}
+          manual
+          page={0}
+          pageSize={2}
+          loading={false}
+          onFetchData={this.search}
+          defaultPageSize={10}
+          className="-striped -highlight"
+          onPageChange={(pageIndex) => {this.handlePageChange()}} // Called when the page index is changed by the user
+          onPageSizeChange={(pageSize, pageIndex) => {this.handlePageSizeChange()}} // Called when the pageSize is changed by the user. The resolve page is also sent to maintain approximate position in the data
+          onSortedChange={(newSorted, column, shiftKey) => {this.handleSortChange()}} // Called when a sortable column header is clicked with the column itself and if the shiftkey was held. If the column is a pivoted column, `column` will be an array of columns
+        />
+      )
+    );
+  };
+
   render() {
     const { dashboardUrl, accountCounty, dashboardClickHandler } = this.props;
     return (
@@ -126,8 +198,17 @@ class UserList extends React.Component {
                       >
                         Search
                       </button>
+                      <br />
+                      <div>
+                        <h3>alksdjfasldkfj</h3>
+                      </div>
                     </div>
-                    {this.tableComponent()}
+                    <div>{this.tableComponent()}</div>
+                    <div>
+                      {this.renderUsersTable({
+                        data: this.props.userList,
+                      })}
+                    </div>
                   </Cards>
                 </div>
               </div>
