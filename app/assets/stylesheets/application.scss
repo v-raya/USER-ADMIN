@@ -22,6 +22,12 @@
   padding-left: 0;
 }
 
+.react-bs-container-body {
+  .userRow {
+    word-break: break-all;
+  }
+}
+
 .btn {
   display: inline;
   font-size: 1.5rem;

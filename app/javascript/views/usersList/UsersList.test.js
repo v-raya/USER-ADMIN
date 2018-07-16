@@ -116,6 +116,38 @@ describe('UsersList', () => {
     it('contains Table and headers', () => {
       expect(wrapper.find('BootstrapTable').length).toBe(1);
       expect(wrapper.find('TableHeaderColumn').length).toBe(5);
+      expect(
+        wrapper
+          .find('TableHeaderColumn')
+          .at(0)
+          .props().dataField
+      ).toBe('last_name');
+
+      expect(
+        wrapper
+          .find('TableHeaderColumn')
+          .at(1)
+          .props().dataField
+      ).toBe('enabled');
+
+      expect(
+        wrapper
+          .find('TableHeaderColumn')
+          .at(2)
+          .props().dataField
+      ).toBe('last_login_date_time');
+      expect(
+        wrapper
+          .find('TableHeaderColumn')
+          .at(3)
+          .props().dataField
+      ).toBe('racfid');
+      expect(
+        wrapper
+          .find('TableHeaderColumn')
+          .at(4)
+          .props().dataField
+      ).toBe('office');
     });
 
     it('renders navigation link to Dashboard', () => {

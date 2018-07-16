@@ -57,7 +57,7 @@ class UserList extends React.Component {
           <TableHeaderColumn
             dataField="last_name"
             dataSort
-            width="0"
+            width="350"
             dataFormat={this.nameFormat}
           >
             Full Name
@@ -65,18 +65,18 @@ class UserList extends React.Component {
           <TableHeaderColumn
             dataField="enabled"
             dataFormat={this.userStatusFormat}
-            width="40"
+            width="100"
           >
             Status
           </TableHeaderColumn>
           <TableHeaderColumn dataField="last_login_date_time" width="100">
             Last Login
           </TableHeaderColumn>
-          <TableHeaderColumn dataField="racfid" isKey width="90">
+          <TableHeaderColumn dataField="racfid" isKey width="100">
             CWS Login
           </TableHeaderColumn>
-          <TableHeaderColumn dataField="end_date" width="60">
-            End date
+          <TableHeaderColumn dataField="office" width="100">
+            Office Name
           </TableHeaderColumn>
         </BootstrapTable>
       </div>
