@@ -4,12 +4,12 @@ services:
     image: cwds/perry:3.0.4_828-RC
     hostname: perry
     depends_on:
-          - cals_db2_data
-          - postgresql_data
+      - cals_db2_data
+      - postgresql_data
     restart: on-failure
     ports:
-          - ${PERRY_PORT}:8080
-          - 18081:8090
+      - ${PERRY_PORT}:8080
+      - 18081:8090
     environment:
       DEV_MODE: ${DEV_MODE}
       LOG_LEVEL: "INFO"
@@ -17,7 +17,7 @@ services:
     image: cwds/db2data
     hostname: cals_db2_data
     ports:
-      - ${DB_CMS_DB2_PORT}:50000
+    - ${DB_CMS_DB2_PORT}:50000
   postgresql_data:
     image: cwds/postgresql_data
     hostname: postgresql_data
@@ -82,17 +82,17 @@ services:
     command: ['bundle', 'exec', 'rails', 'server']
     depends_on:
       - perry
-  county-admin-test:
-    build:
-      context: .
-      dockerfile: docker/test/Dockerfile
-    volumes:
-      - type: bind
-        source: ./spec
-        target: /app/spec
-    environment:
-      - SECRET_KEY_BASE
-      - PERRY_API_BASE_URL
-      - COUNTY_ADMIN_WEB_BASE_URL
-      - DASHBOARD_URL
-      - RAILS_RELATIVE_URL_ROOT
+  # county-admin-test:
+  #   build:
+  #     context: .
+  #     dockerfile: docker/test/Dockerfile
+  #   volumes:
+  #     - type: bind
+  #       source: ./spec
+  #       target: /app/spec
+  #   environment:
+  #     - SECRET_KEY_BASE
+  #     - PERRY_API_BASE_URL
+  #     - COUNTY_ADMIN_WEB_BASE_URL
+  #     - DASHBOARD_URL
+  #     - RAILS_RELATIVE_URL_ROOT
