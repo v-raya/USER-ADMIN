@@ -23,6 +23,7 @@ module Api
       let(:user_repository) { instance_double('User::UserRepository') }
       let(:user) { Users::User.new(username: 'el') }
       let(:search_key) { 'My name' }
+      let(:match_all_query) { { query: { match_all: {} } } }
 
       it 'has a route' do
         expect(get: 'api/user_list').to route_to(
@@ -38,8 +39,8 @@ module Api
             .with(no_args).and_return(user_repository)
 
           api_response = { hits: { hits: [_source: user] } }
-          allow(Users::UserRepository).to receive(:search).with({ query: { match_all: {} } }, 'token')
-                                                .and_return(api_response)
+          allow(Users::UserRepository).to receive(:search).with(match_all_query, 'token')
+                                                          .and_return(api_response)
           request.session[:token] = 'token'
           get :index
           expect(response.body).to eq [user].to_json
@@ -63,8 +64,8 @@ module Api
           expect(response.body).to eq [user].to_json
         end
         it 'empty search params are ignored' do
-          allow(Users::UserRepository).to receive(:search).with({ query: { match_all: {} } }, 'token')
-                                                .and_return(api_response)
+          allow(Users::UserRepository).to receive(:search).with(match_all_query, 'token')
+                                                          .and_return(api_response)
 
           get :index, params: { last_name: '' }
           expect(response.body).to eq [user].to_json

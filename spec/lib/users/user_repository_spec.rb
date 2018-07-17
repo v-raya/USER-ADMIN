@@ -185,7 +185,6 @@ module Users
     end
   end
 
-
   describe '.search' do
     let(:search_server) { Infrastructure::HttpService.new('http://stub.example.com') }
     let(:good_response) { double(body: 'content') }
