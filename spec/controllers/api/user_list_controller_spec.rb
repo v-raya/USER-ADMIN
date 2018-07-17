@@ -38,7 +38,7 @@ module Api
             .with(no_args).and_return(user_repository)
 
           api_response = { hits: { hits: [_source: user] } }
-          allow(Users::User).to receive(:search).with({ query: { match_all: {} } }, 'token')
+          allow(Users::UserRepository).to receive(:search).with({ query: { match_all: {} } }, 'token')
                                                 .and_return(api_response)
           request.session[:token] = 'token'
           get :index
@@ -55,7 +55,7 @@ module Api
           request.session[:token] = 'token'
         end
         it 'returns a userlist / search limited by last_name' do
-          allow(Users::User).to receive(:search).with(
+          allow(Users::UserRepository).to receive(:search).with(
             { query: { match_phrase_prefix: { last_name: 'El' } },
               from: 0, size: 50, sort: [] }, 'token'
           ).and_return(api_response)
@@ -63,7 +63,7 @@ module Api
           expect(response.body).to eq [user].to_json
         end
         it 'empty search params are ignored' do
-          allow(Users::User).to receive(:search).with({ query: { match_all: {} } }, 'token')
+          allow(Users::UserRepository).to receive(:search).with({ query: { match_all: {} } }, 'token')
                                                 .and_return(api_response)
 
           get :index, params: { last_name: '' }
