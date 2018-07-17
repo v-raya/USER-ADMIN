@@ -10,12 +10,12 @@ export const isLoading = state => {
 export const getSearchParams = ({ userList }) => {
   if (!userList) return {};
   const { from, size, sort, query } = userList;
-  return {
-    from,
-    size,
-    sort,
-    query,
-  };
+  const out = {};
+  out.from = from;
+  out.size = size;
+  out.sort = (Array.isArray(sort) && sort.length && sort) || undefined;
+  out.query = (Array.isArray(query) && query.length && query) || undefined;
+  return out;
 };
 
 export const getSerializedSearchParams = ({ userList }) => {

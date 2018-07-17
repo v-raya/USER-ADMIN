@@ -64,7 +64,8 @@ function userListReducer(state = initialValue, { type, payload }) {
     }
 
     case actionTypes.USER_LIST_SET_SEARCH: {
-      const { query } = payload;
+      const { query: _query } = payload;
+      const query = _query.filter(({ value }) => value !== '');
       return {
         ...state,
         query,
