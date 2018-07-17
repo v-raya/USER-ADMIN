@@ -31,10 +31,10 @@ export const setPage = payload => ({
   type: USER_LIST_SET_PAGE,
 });
 
-export const setSearch = nextSearch => {
+export const setSearch = (field, value) => {
   return {
     type: USER_LIST_SET_SEARCH,
-    payload: { search: nextSearch },
+    payload: { query: [{ field, value }] },
   };
 };
 

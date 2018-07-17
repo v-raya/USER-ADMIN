@@ -11,7 +11,8 @@ const hackBtnStyles = {
   textAlign: 'center',
 };
 
-export const toFullName = ({ first_name, last_name }) => `${last_name}, ${first_name}`;
+export const toFullName = ({ first_name, last_name }) =>
+  `${last_name}, ${first_name}`;
 
 class UserList extends PureComponent {
   constructor(props) {
@@ -55,7 +56,17 @@ class UserList extends PureComponent {
 
   submitSearch = e => {
     e.preventDefault();
-    this.props.actions.setSearch(this.props.nextSearch);
+    this.props.actions.setSearch('last_name', this.props.nextSearch);
+  };
+
+  isDisabledSearchBtn = () => {
+    const { query, nextSearch } = this.props;
+    if (!query) return false;
+    const lastNameSearch = query.find(
+      ({ field, value }) => field === 'last_name'
+    );
+    if (!lastNameSearch) return false;
+    return lastNameSearch.value === nextSearch;
   };
 
   renderUsersTable = ({ data }) => {
@@ -158,7 +169,7 @@ class UserList extends PureComponent {
                         type="submit"
                         style={hackBtnStyles}
                         className="btn btn-primary btn-block btn-sm"
-                        disabled={this.props.search === this.props.nextSearch}
+                        disabled={this.isDisabledSearchBtn()}
                       >
                         Search
                       </button>
@@ -172,8 +183,7 @@ class UserList extends PureComponent {
                       fetching: this.props.fetching,
                       page: this.props.page,
                       pageSize: this.props.pageSize,
-                      search: this.props.search,
-                      nextSearch: this.props.nextSearch,
+                      query: this.props.query,
                     },
                     null,
                     2
@@ -203,7 +213,6 @@ UserList.propTypes = {
   accountCounty: PropTypes.string,
   dashboardClickHandler: PropTypes.func,
   actions: PropTypes.object.isRequired,
-  search: PropTypes.string,
   nextSearch: PropTypes.string,
   location: PropTypes.shape({
     pathname: PropTypes.string,
@@ -212,6 +221,16 @@ UserList.propTypes = {
     PropTypes.shape({
       id: PropTypes.string.isRequired,
       desc: PropTypes.bool,
+    })
+  ),
+  query: PropTypes.arrayOf(
+    PropTypes.shape({
+      field: PropTypes.string,
+      value: PropTypes.oneOfType([
+        PropTypes.string,
+        PropTypes.number,
+        PropTypes.bool,
+      ]),
     })
   ),
 };

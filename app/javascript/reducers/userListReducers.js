@@ -1,10 +1,5 @@
 import * as actionTypes from '../actions/actionTypes';
 
-// const initialValue = {
-//   userList: null,
-//   fetching: false,
-// };
-
 const initialValue = {
   sort: [
     {
@@ -15,11 +10,15 @@ const initialValue = {
   page: 0,
   pageSize: 10,
   nextSearch: '',
-  search: '',
+  query: [
+    {
+      field: 'last_name',
+      value: '',
+    },
+  ],
   users: [],
   fetching: false,
   error: null,
-  aggregate: {},
 };
 
 function userListReducer(state = initialValue, { type, payload }) {
@@ -65,10 +64,10 @@ function userListReducer(state = initialValue, { type, payload }) {
     }
 
     case actionTypes.USER_LIST_SET_SEARCH: {
-      const { search } = payload;
+      const { query } = payload;
       return {
         ...state,
-        search,
+        query,
       };
     }
 

@@ -23,10 +23,10 @@ function mapStateToProps(state) {
     fetching: userList.fetching,
     userListUrl: '/#',
     dashboardUrl: '/',
-    sort: userList.sort,
     page: userList.page,
     pageSize: userList.pageSize,
-    search: userList.search,
+    sort: userList.sort,
+    query: userList.query,
     nextSearch: userList.nextSearch,
     aggregate: userList.aggregate,
   };
