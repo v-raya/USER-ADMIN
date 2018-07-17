@@ -8,8 +8,11 @@ services:
           - postgresql_data
     restart: on-failure
     ports:
-          - 18080:8080
+          - ${PERRY_PORT}:8080
           - 18081:8090
+    environment:
+      DEV_MODE: ${DEV_MODE}
+      LOG_LEVEL: "INFO"
   cals_db2_data:
     image: cwds/db2data
     hostname: cals_db2_data
@@ -20,6 +23,42 @@ services:
     hostname: postgresql_data
     ports:
       - ${DB_POSTGRES_PORT}:${DB_POSTGRES_PORT}
+  dora:
+    image: cwds/dora:latest
+    command: bash -c "./entrypoint.sh 2>&1 | tee 'log.file'"
+    depends_on:
+          - perry
+          - elasticsearch
+    ports:
+          - ${DORA_PORT}:8080
+    environment:
+      PERRY_URL: ${PERRY_URL}
+      ES_NODES: ${ES_NODES}
+      ES_HOST: ${ES_HOST}
+      ES_POST: ${ES_PORT}
+      XPACK_ENABLED: ${XPACK_ENABLED}
+      SHOW_SWAGGER: ${SHOW_SWAGGER}
+      PERRY_VALIDATION_URL: ${PERRY_VALIDATION_URL}
+      LOGIN_URL: ${LOGIN_URL}
+      LOGIN_URL: ${LOGOUT_URL}
+      SWAGGER_TOKEN_URL: ${SWAGGER_TOKEN_URL}
+      SWAGGER_JSON_URL: ${SWAGGER_CALLBACK_URL}
+    restart: on-failure
+    healthcheck:
+      test: head -n 500 log.file | grep "Started @"
+      interval: 5s
+      timeout: 10s
+      retries: 80
+  elasticsearch:
+    image: cwds/elasticsearch_xpack_data:${ELASTICSEARCH_XPACK_DATA_VERSION}
+    depends_on:
+      - perry
+    expose:
+      - 9200
+      - 9300
+    environment:
+      TOKEN_VALIDATION_URL: ${TOKEN_VALIDATION_URL}
+      ELASTICSEARCH_XPACK_DATA_VERSION: ${ELASTICSEARCH_XPACK_DATA_VERSION}
   county-admin-web:
     build:
       context: .
@@ -32,6 +71,7 @@ services:
       - ${COUNTY_ADMIN_APP_PORT}:3000
       - ${COUNTY_ADMIN_APP_WEBPACK_PORT}:3035
     environment:
+      BASE_SEARCH_API_URL: ${BASE_SEARCH_API_URL}
       SECRET_KEY_BASE: ${SECRET_KEY_BASE}
       COUNTY_ADMIN_APP_JS_API_URL: ${COUNTY_ADMIN_APP_JS_API_URL}
       PERRY_API_BASE_URL: "http://${DEV_IP}:${PERRY_PORT}/perry"

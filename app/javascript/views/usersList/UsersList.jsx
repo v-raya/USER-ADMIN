@@ -42,6 +42,36 @@ class UserList extends React.Component {
     this.setState({ addUser: true });
   };
 
+  cards = () => {
+    const { accountCounty } = this.props;
+    return (
+      <Cards
+        cardHeaderText={'Manage Users: ' + accountCounty}
+        cardHeaderButton={true}
+        headerBtnName="+ Add a user"
+        onEdit={this.handleOnAdd}
+      >
+        <InputComponent
+          id="searchtext"
+          gridClassName="col-md-10 col-sm-6 col-xs-12"
+          fieldClassName="form-group"
+          type="text"
+          onChange={this.handleTextChange}
+          placeholder="search user by Last name"
+        />
+        <div className="col-md-2" style={buttonAlign}>
+          <button
+            type="button"
+            className="btn btn-primary btn-sm"
+            onClick={this.handleOnClick}
+          >
+            Search
+          </button>
+        </div>
+        {this.tableComponent()}
+      </Cards>
+    );
+  };
   tableComponent = () => {
     const { userList } = this.props;
     return (
@@ -84,7 +114,7 @@ class UserList extends React.Component {
   };
 
   render() {
-    const { dashboardUrl, accountCounty, dashboardClickHandler } = this.props;
+    const { dashboardUrl, dashboardClickHandler } = this.props;
     return (
       <div role="main">
         {this.state.addUser ? (
@@ -103,31 +133,7 @@ class UserList extends React.Component {
                       clickHandler={dashboardClickHandler}
                     />
                   </div>
-
-                  <Cards
-                    cardHeaderText={'Manage Users: ' + accountCounty}
-                    cardHeaderButton={true}
-                    headerBtnName="+ Add a user"
-                    onEdit={this.handleOnAdd}
-                  >
-                    <InputComponent
-                      gridClassName="col-md-10 col-sm-6 col-xs-12"
-                      fieldClassName="form-group"
-                      type="text"
-                      onChange={this.handleTextChange}
-                      placeholder="search user by Last name"
-                    />
-                    <div className="col-md-2" style={buttonAlign}>
-                      <button
-                        type="button"
-                        className="btn btn-primary btn-sm"
-                        onClick={this.handleOnClick}
-                      >
-                        Search
-                      </button>
-                    </div>
-                    {this.tableComponent()}
-                  </Cards>
+                  {this.cards()}
                 </div>
               </div>
             </div>

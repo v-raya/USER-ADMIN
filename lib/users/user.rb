@@ -30,5 +30,6 @@ module Users
     attribute :verification_passed, Types::Bool.optional
     attribute :racfid, Types::String.optional
     attribute :roles, Types::Array.optional
+    attribute :auth_header, Types::String.optional
   end
 end
