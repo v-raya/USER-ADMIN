@@ -1,4 +1,9 @@
-import { selectUserRecords, isLoading } from './userListSelector';
+import {
+  selectUserRecords,
+  isLoading,
+  getSearchParams,
+  getSerializedSearchParams,
+} from './userListSelector';
 
 describe('selectors', () => {
   describe('#selectUserRecords', () => {
@@ -25,6 +30,60 @@ describe('selectors', () => {
         userList: {},
       };
       expect(isLoading(state)).toEqual(false);
+    });
+  });
+
+  describe('getSearchParams', () => {
+    it('returns the search params', () => {
+      const state = {
+        userList: {
+          from: 0,
+          size: 10,
+          sort: [
+            { field: 'haystack' },
+            { field: 'other_haystack', desc: true },
+          ],
+          query: [
+            {
+              field: 'haystack',
+              value: 'needle',
+            },
+          ],
+        },
+      };
+      let searchParams;
+      expect(() => (searchParams = getSearchParams(state))).not.toThrow();
+      expect(searchParams.from).toEqual(0);
+      expect(searchParams.size).toEqual(10);
+      expect(searchParams.query).toEqual([
+        { field: 'haystack', value: 'needle' },
+      ]);
+      expect(searchParams.sort).toEqual([
+        { field: 'haystack' },
+        { field: 'other_haystack', desc: true },
+      ]);
+    });
+  });
+
+  describe('getSerializedSearchParams', () => {
+    it('returns the serialized json repr of search params', () => {
+      const state = {
+        userList: {
+          size: 20,
+          from: 40,
+        },
+      };
+      let serialized;
+      expect(
+        () => (serialized = getSerializedSearchParams(state))
+      ).not.toThrow();
+      expect(serialized).toEqual(jasmine.any(String));
+      // Serialization order not gauranteed so parse and test for equality
+      let parsed;
+      expect(
+        () => (parsed = JSON.parse(decodeURIComponent(serialized)))
+      ).not.toThrow();
+      expect(parsed).toEqual({ size: 20, from: 40 });
     });
   });
 });
