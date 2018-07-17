@@ -2,57 +2,20 @@ import { selectUserRecords, isLoading } from './userListSelector';
 
 describe('selectors', () => {
   describe('#selectUserRecords', () => {
-    it('selects the user records', () => {
+    it('returns array of users', () => {
+      const users = [];
       const state = {
         userList: {
-          userList: {
-            records: [
-              {
-                0: {
-                  first_name: 'username1',
-                  id: '2',
-                  county_name: 'mycounty',
-                },
-                1: {
-                  first_name: 'username',
-                  id: '1',
-                  county_name: 'my county1',
-                },
-              },
-            ],
-          },
+          users,
         },
-        other_stuff: { bad: 'ignore' },
       };
-      expect(selectUserRecords(state)).toEqual([
-        {
-          0: {
-            first_name: 'username1',
-            id: '2',
-            county_name: 'mycounty',
-          },
-          1: {
-            first_name: 'username',
-            id: '1',
-            county_name: 'my county1',
-          },
-        },
-      ]);
+      expect(selectUserRecords(state)).toBe(users);
     });
 
-    it('selects empty users', () => {
-      const state = {
-        fetch: {},
-        other_stuff: { bad: 'ignore' },
-      };
+    it('returns empty array if no users defined', () => {
+      const state = { userList: {} };
       expect(selectUserRecords(state)).toEqual([]);
-    });
-
-    it('selects no users', () => {
-      const state = {
-        other_stuff: { bad: 'ignore' },
-      };
-      expect(selectUserRecords(state)).toEqual([]);
+      expect(selectUserRecords({})).toEqual([]);
     });
   });
 

@@ -4,6 +4,7 @@ import {
   USER_LIST_SET_PAGE,
   USER_LIST_SET_SEARCH,
   USER_LIST_SET_SORT,
+  USER_LIST_SET_NEXT_SEARCH,
 } from './actionTypes';
 
 // TODO: combine search and sort ? (they are one hash of params afterall)
@@ -15,9 +16,12 @@ export function fetchUsersActions(lastName = '') {
   };
 }
 
-/** Accepts an integer of recods/page */
-export const setPageSize = payload => ({
-  payload,
+/**
+ * Set number of records per page
+ * @param {Number} pageSize
+ */
+export const setPageSize = pageSize => ({
+  payload: { pageSize },
   type: USER_LIST_SET_PAGE_SIZE,
 });
 
@@ -27,17 +31,21 @@ export const setPage = payload => ({
   type: USER_LIST_SET_PAGE,
 });
 
-/** Accepts a string search value */
-export const setSearch = payload => ({
-  payload,
-  type: USER_LIST_SET_SEARCH,
+export const setSearch = nextSearch => {
+  return {
+    type: USER_LIST_SET_SEARCH,
+    payload: { search: nextSearch },
+  };
+};
+
+// FIXME: Should be SEARCH and NEXTSEARCH
+export const setNextSearch = nextSearch => ({
+  type: USER_LIST_SET_NEXT_SEARCH,
+  payload: { nextSearch },
 });
 
 /** Set ASC/DESC */
-export const setSort = ({ field, direction }) => ({
+export const setSort = sort => ({
+  payload: sort,
   type: USER_LIST_SET_SORT,
-  payload: {
-    field,
-    direction,
-  },
 });

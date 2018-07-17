@@ -6,12 +6,12 @@ import { takeLatest, call, put } from 'redux-saga/effects';
 export function* countyUsersList(action) {
   try {
     let searchKey = action.payload;
-    const userList = yield call(UserService.fetch, searchKey.lastName);
+    const users = yield call(UserService.fetch, searchKey.lastName);
 
     // dispatch a success action to the store with the new users
     yield put({
       type: actionTypes.FETCH_USERS_API_CALL_SUCCESS,
-      userList,
+      payload: { users },
     });
     // console.log("userList:"+ userList.message);
   } catch (error) {

@@ -1,19 +1,22 @@
-import React from 'react';
+import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { Link, InputComponent, PageHeader } from 'react-wood-duck';
 import Cards from '../../common/Card';
 import AddUser from '../../containers/addUserContainer';
-import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table';
-import { makeUserDetailPath } from '../../_utils/makeUserDetailPath';
 import ReactTable from 'react-table';
 
-const buttonAlign = { marginTop: '-9px' };
+const hackBtnStyles = {
+  marginTop: '22px',
+  padding: '14px 0',
+  textAlign: 'center',
+};
 
-class UserList extends React.Component {
+export const toFullName = ({ first_name, last_name }) => `${last_name}, ${first_name}`;
+
+class UserList extends PureComponent {
   constructor(props) {
     super(props);
     this.state = {
-      searchKey: '',
       addUser: false,
     };
   }
@@ -23,95 +26,39 @@ class UserList extends React.Component {
     this.props.actions.fetchAccountActions();
   }
 
-  nameFormat = (cell, row) => (
-    <a href={`${makeUserDetailPath(row.id)}`}>
-      {row.last_name}, {row.first_name}
-    </a>
-  );
-
-  userStatusFormat = (cell, row) => {
-    row.enabled ? (row.enabled = 'Active') : (row.enabled = 'Inactive');
-    return row.enabled;
-  };
-
   handleOnClick = () =>
     this.props.actions.fetchUsersActions(this.state.searchKey);
 
-  handleTextChange = event => {
-    this.setState({ searchKey: event.target.value });
-  };
-
   handleOnAdd = () => {
     this.setState({ addUser: true });
-  };
-
-  tableComponent = () => {
-    const { userList } = this.props;
-    return (
-      <div className="col-md-12">
-        <BootstrapTable
-          bordered={false}
-          data={userList}
-          striped={true}
-          hover={true}
-          trClassName="userRow"
-          withoutTabIndex
-        >
-          <TableHeaderColumn
-            dataField="last_name"
-            dataSort
-            width="0"
-            dataFormat={this.nameFormat}
-          >
-            Full Name
-          </TableHeaderColumn>
-          <TableHeaderColumn
-            dataField="enabled"
-            dataFormat={this.userStatusFormat}
-            width="40"
-          >
-            Status
-          </TableHeaderColumn>
-          <TableHeaderColumn dataField="last_login_date_time" width="100">
-            Last Login
-          </TableHeaderColumn>
-          <TableHeaderColumn dataField="racfid" isKey width="90">
-            CWS Login
-          </TableHeaderColumn>
-          <TableHeaderColumn dataField="end_date" width="60">
-            End date
-          </TableHeaderColumn>
-        </BootstrapTable>
-      </div>
-    );
   };
 
   search = (state, instance) => {
     // console.log(state, instance);
   };
 
-  handleSortChange = (state, instance) => {
-    console.log('Sort Changed...');
+  handlePageChange = pageIndex => {
+    this.props.actions.setPage(pageIndex);
   };
 
-  handlePageChange = () => {
-    console.log('Page change...');
+  handlePageSizeChange = (pageSize, pageIndex) => {
+    this.props.actions.setPageSize(pageSize);
   };
 
-  handlePageSizeChange = () => {
-    console.log('Page size changed...');
+  handleSortChange = (newSorted, column, shiftKey) => {
+    this.props.actions.setSort(newSorted);
   };
 
-  handlePaginationChange = () => {
-    console.log('Pagination changed...');
+  handleSearchChange = e => {
+    this.props.actions.setNextSearch(e.target.value);
   };
 
-  handleQueryChange = () => {
-    console.log('Query changed...');
+  submitSearch = e => {
+    e.preventDefault();
+    this.props.actions.setSearch(this.props.nextSearch);
   };
 
   renderUsersTable = ({ data }) => {
-    // console.log(data);
     return (
       <ReactTable
         data={data}
@@ -119,10 +66,14 @@ class UserList extends React.Component {
           {
             Header: 'Full Name',
             id: 'last_name',
-            accessor: ({ first_name, last_name }) =>
-              `${last_name}, ${first_name}`,
+            accessor: toFullName,
             Cell: ({ value, original }) => (
-              <Link href={`user_details/${original.id}`} text={value} />
+              <Link
+                href={`${this.props.location.pathname}/user_details/${
+                  original.id
+                }`}
+                text={value}
+              />
             ),
             minWidth: 400,
           },
@@ -144,27 +95,36 @@ class UserList extends React.Component {
           },
         ]}
         manual
-        page={0}
-        pageSize={2}
-        loading={this.props.isLoading}
+        sorted={this.props.sort}
+        page={this.props.page}
+        pageSize={this.props.pageSize}
+        loading={this.props.fetching}
         onFetchData={this.search}
         defaultPageSize={10}
         className="-striped -highlight"
-        onPageChange={pageIndex => {
-          this.handlePageChange();
-        }} // Called when the page index is changed by the user
-        onPageSizeChange={(pageSize, pageIndex) => {
-          this.handlePageSizeChange();
-        }} // Called when the pageSize is changed by the user. The resolve page is also sent to maintain approximate position in the data
-        onSortedChange={(newSorted, column, shiftKey) => {
-          this.handleSortChange();
-        }} // Called when a sortable column header is clicked with the column itself and if the shiftkey was held. If the column is a pivoted column, `column` will be an array of columns
+        onPageChange={this.handlePageChange}
+        onPageSizeChange={this.handlePageSizeChange}
+        onSortedChange={this.handleSortChange}
       />
     );
   };
 
+  renderBreadcrumb = () => {
+    const { dashboardUrl, dashboardClickHandler } = this.props;
+    return (
+      <div>
+        Back to:{' '}
+        <Link
+          text="Dashboard"
+          href={dashboardUrl}
+          clickHandler={dashboardClickHandler}
+        />
+      </div>
+    );
+  };
+
   render() {
-    const { dashboardUrl, accountCounty, dashboardClickHandler } = this.props;
+    const { accountCounty } = this.props;
     return (
       <div role="main">
         {this.state.addUser ? (
@@ -173,52 +133,59 @@ class UserList extends React.Component {
           <div>
             <PageHeader pageTitle="Manage Users" button="" />
             <div className="container">
-              <div className="row">
-                <div className="col-md-12">
-                  <div className="col-md-12">
-                    Back to:{' '}
-                    <Link
-                      text="Dashboard"
-                      href={dashboardUrl}
-                      clickHandler={dashboardClickHandler}
-                    />
-                  </div>
-
-                  <Cards
-                    cardHeaderText={'Manage Users: ' + accountCounty}
-                    cardHeaderButton={true}
-                    headerBtnName="+ Add a user"
-                    onEdit={this.handleOnAdd}
-                  >
-                    <InputComponent
-                      id="searchtext"
-                      gridClassName="col-md-10 col-sm-6 col-xs-12"
-                      fieldClassName="form-group"
-                      type="text"
-                      onChange={this.handleTextChange}
-                      placeholder="search user by Last name"
-                    />
-                    <div className="col-md-2" style={buttonAlign}>
+              {this.renderBreadcrumb()}
+              <Cards
+                cardHeaderText={'Manage Users: ' + accountCounty}
+                cardHeaderButton={true}
+                headerBtnName="+ Add a user"
+                onEdit={this.handleOnAdd}
+              >
+                <form onSubmit={this.submitSearch}>
+                  <div className="row">
+                    <div className="col-md-10 col-sm-6">
+                      <InputComponent
+                        id="searchtext"
+                        fieldClassName="form-group"
+                        type="text"
+                        value={this.props.nextSearch}
+                        onChange={this.handleSearchChange}
+                        placeholder="search user by Last name"
+                        autocomplete="off"
+                      />
+                    </div>
+                    <div className="col-md-2 col-sm-6">
                       <button
-                        type="button"
-                        className="btn btn-primary btn-sm"
-                        onClick={this.handleOnClick}
+                        type="submit"
+                        style={hackBtnStyles}
+                        className="btn btn-primary btn-block btn-sm"
+                        disabled={this.props.search === this.props.nextSearch}
                       >
                         Search
                       </button>
-                      <br />
-                      <div>
-                        <h3>alksdjfasldkfj</h3>
-                      </div>
                     </div>
-                    <div>
-                      {this.renderUsersTable({
-                        data: this.props.userList,
-                      })}
-                    </div>
-                  </Cards>
+                  </div>
+                </form>
+                <pre style={{ color: 'white' }}>
+                  {JSON.stringify(
+                    {
+                      sort: this.props.sort,
+                      fetching: this.props.fetching,
+                      page: this.props.page,
+                      pageSize: this.props.pageSize,
+                      search: this.props.search,
+                      nextSearch: this.props.nextSearch,
+                    },
+                    null,
+                    2
+                  )}
+                </pre>
+                <br />
+                <div>
+                  {this.renderUsersTable({
+                    data: this.props.userList,
+                  })}
                 </div>
-              </div>
+              </Cards>
             </div>
           </div>
         )}
@@ -228,12 +195,25 @@ class UserList extends React.Component {
 }
 
 UserList.propTypes = {
-  isLoading: PropTypes.bool,
+  page: PropTypes.number,
+  pageSize: PropTypes.number,
+  fetching: PropTypes.bool,
   userList: PropTypes.array,
   dashboardUrl: PropTypes.string,
   accountCounty: PropTypes.string,
   dashboardClickHandler: PropTypes.func,
   actions: PropTypes.object.isRequired,
+  search: PropTypes.string,
+  nextSearch: PropTypes.string,
+  location: PropTypes.shape({
+    pathname: PropTypes.string,
+  }),
+  sort: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.string.isRequired,
+      desc: PropTypes.bool,
+    })
+  ),
 };
 
 UserList.defaultProps = {

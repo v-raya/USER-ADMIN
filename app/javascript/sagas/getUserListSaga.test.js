@@ -28,7 +28,9 @@ describe('sagas', () => {
         expect(gen.next([1234, 5678]).value).toEqual(
           put({
             type: actionTypes.FETCH_USERS_API_CALL_SUCCESS,
-            userList: [1234, 5678],
+            payload: {
+              users: [1234, 5678],
+            },
           })
         );
         expect(gen.next().done).toBe(true);

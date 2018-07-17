@@ -1,6 +1,6 @@
 import React from 'react';
 import { mount, shallow } from 'enzyme';
-import UsersList from './UsersList.jsx';
+import UsersList, { toFullName } from './UsersList.jsx';
 
 describe('UsersList', () => {
   let wrapper;
@@ -26,29 +26,6 @@ describe('UsersList', () => {
     });
   });
 
-  describe('#nameFormat', () => {
-    it('shows nameFormat', () => {
-      const anchor = wrapper
-        .instance()
-        .nameFormat('any', { last_name: 'Surname', first_name: 'Given' });
-      expect(anchor.props.children.join('')).toEqual('Surname, Given');
-    });
-  });
-
-  describe('#userStatusFormat', () => {
-    it('returns "Enabled" for true', () => {
-      expect(
-        wrapper.instance().userStatusFormat('any', { enabled: true })
-      ).toBe('Active');
-    });
-
-    it('returns "Inactive" for false', () => {
-      expect(
-        wrapper.instance().userStatusFormat('any', { enabled: false })
-      ).toBe('Inactive');
-    });
-  });
-
   describe('#handleOnClick', () => {
     const mockFetchUsersActions = jest.fn();
 
@@ -66,15 +43,6 @@ describe('UsersList', () => {
     it('calls the appropriate function', () => {
       wrapper.instance().handleOnClick();
       expect(mockFetchUsersActions).toHaveBeenCalledWith('SomeSearchKey');
-    });
-  });
-
-  describe('#handleTextChange', () => {
-    it('sets state based on the text changing', () => {
-      wrapper
-        .instance()
-        .handleTextChange({ target: { value: 'search value' } });
-      expect(wrapper.instance().state.searchKey).toEqual('search value');
     });
   });
 
@@ -104,11 +72,22 @@ describe('UsersList', () => {
     });
 
     it('fetches users', () => {
-      expect(mockFetchUsersActions).toHaveBeenCalledWith('');
+      // TODO: make a stronger expectation of args based on API query DSL (when it emerges)
+      expect(mockFetchUsersActions).toHaveBeenCalled();
     });
 
     it('fetches the account', () => {
       expect(mockFetchAccountActions).toHaveBeenCalledWith();
+    });
+
+    describe('helpers', () => {
+      describe('toFullName', () => {
+        it('renders a full name', () => {
+          expect(
+            toFullName({ first_name: 'First', last_name: 'Last' })
+          ).toEqual('Last, First');
+        });
+      });
     });
   });
 

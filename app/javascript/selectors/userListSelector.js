@@ -1,6 +1,6 @@
 export const selectUserRecords = state => {
-  const usersObject = state.userList ? state.userList.userList : null;
-  return usersObject ? usersObject.records : [];
+  if (!state.userList) return [];
+  return Array.isArray(state.userList.users) ? state.userList.users : [];
 };
 
 export const isLoading = state => {

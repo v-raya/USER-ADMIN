@@ -15,40 +15,37 @@ describe('reducer', () => {
   });
 
   it('handles FETCH_USERS_API_CALL_SUCCESS', () => {
-    const responseAction = {
+    const action = {
       type: actionTypes.FETCH_USERS_API_CALL_SUCCESS,
-      userList: [
-        { id: 'key1', username: 'user1' },
-        { id: 'key2', username: 'user2' },
-      ],
-    };
-    const state = { userList: null, fetching: true, error: null };
-
-    expect(fetchUserList(state, responseAction)).toEqual({
-      fetching: false,
-      userList: {
-        XHRStatus: 'ready',
-        records: [
+      payload: {
+        users: [
           { id: 'key1', username: 'user1' },
           { id: 'key2', username: 'user2' },
         ],
       },
-      error: null,
-    });
+    };
+    const before = {};
+    let after;
+    expect(() => (after = fetchUserList(before, action))).not.toThrow();
+    expect(after.fetching).toEqual(false);
+    expect(after.users.length).toBe(2);
+    expect(after.error).toBe(null);
   });
 
   it('handles FETCH_USERS_API_CALL_FAILURE', () => {
     const failureAction = {
       type: actionTypes.FETCH_USERS_API_CALL_FAILURE,
-      userList: null,
-      error: 'error happened',
+      payload: {
+        users: null,
+        error: 'error happened',
+      },
     };
-    const state = { userList: null, fetching: true, error: null };
-    expect(fetchUserList(state, failureAction)).toEqual({
-      fetching: false,
-      userList: null,
-      error: 'error happened',
-    });
+    const before = {};
+    let after;
+    expect(() => (after = fetchUserList(before, failureAction))).not.toThrow();
+    expect(after.fetching).toBe(false);
+    expect(after.users).toBeFalsy();
+    expect(after.error).toEqual('error happened');
   });
 
   it('handles unexpected actiontypes gracefully', () => {
@@ -60,12 +57,15 @@ describe('reducer', () => {
     expect(fetchUserList(state, unexpectedAction)).toEqual(state);
   });
 
-  it('handles when state is undefined', () => {
+  it('has an initial state', () => {
+    expect(fetchUserList(undefined, {})).toBeTruthy();
+  });
+
+  it('returns the state tree when no action types match', () => {
     const randomAction = {
-      type: null,
-      foreignObject: {},
+      type: 'DOES_NOT_EXIST',
+      payload: {},
     };
-    const state = { userList: null, fetching: false };
-    expect(fetchUserList(undefined, randomAction)).toEqual(state);
+    expect(fetchUserList({}, randomAction)).toBeTruthy();
   });
 });
