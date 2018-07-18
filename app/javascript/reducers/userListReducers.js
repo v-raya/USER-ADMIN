@@ -1,4 +1,12 @@
-import * as actionTypes from '../actions/actionTypes';
+import {
+  FETCH_USERS_API_CALL_FAILURE,
+  FETCH_USERS_API_CALL_REQUEST,
+  FETCH_USERS_API_CALL_SUCCESS,
+  USER_LIST_SET_NEXT_SEARCH,
+  USER_LIST_SET_PAGE_SIZE,
+  USER_LIST_SET_SEARCH,
+  USER_LIST_SET_SORT,
+} from '../actions/actionTypes';
 
 const initialValue = {
   sort: [
@@ -7,8 +15,8 @@ const initialValue = {
       desc: false,
     },
   ],
-  page: 0,
-  pageSize: 10,
+  from: 0,
+  size: 10,
   nextSearch: '',
   query: [
     {
@@ -23,10 +31,10 @@ const initialValue = {
 
 function userListReducer(state = initialValue, { type, payload }) {
   switch (type) {
-    case actionTypes.FETCH_USERS_API_CALL_REQUEST:
+    case FETCH_USERS_API_CALL_REQUEST:
       return { ...state, fetching: true, error: null };
 
-    case actionTypes.FETCH_USERS_API_CALL_SUCCESS: {
+    case FETCH_USERS_API_CALL_SUCCESS: {
       const { users } = payload;
       return {
         ...state,
@@ -36,7 +44,7 @@ function userListReducer(state = initialValue, { type, payload }) {
       };
     }
 
-    case actionTypes.FETCH_USERS_API_CALL_FAILURE: {
+    case FETCH_USERS_API_CALL_FAILURE: {
       const { error } = payload;
       return {
         ...state,
@@ -47,7 +55,7 @@ function userListReducer(state = initialValue, { type, payload }) {
     }
 
     // TODO: fix FSA
-    case actionTypes.USER_LIST_SET_SORT: {
+    case USER_LIST_SET_SORT: {
       const sort = payload;
       return {
         ...state,
@@ -55,16 +63,16 @@ function userListReducer(state = initialValue, { type, payload }) {
       };
     }
 
-    case actionTypes.USER_LIST_SET_NEXT_SEARCH: {
-      const { nextSearch } = payload;
+    case USER_LIST_SET_NEXT_SEARCH: {
+      const nextSearch = payload;
       return {
         ...state,
         nextSearch,
       };
     }
 
-    case actionTypes.USER_LIST_SET_SEARCH: {
-      const { query: _query } = payload;
+    case USER_LIST_SET_SEARCH: {
+      const _query = payload;
       const query = _query.filter(({ value }) => value !== '');
       return {
         ...state,
@@ -73,9 +81,9 @@ function userListReducer(state = initialValue, { type, payload }) {
     }
 
     // TODO: fix FSA
-    case actionTypes.USER_LIST_SET_PAGE_SIZE: {
-      const { pageSize } = payload;
-      return { ...state, pageSize: pageSize };
+    case USER_LIST_SET_PAGE_SIZE: {
+      const size = payload;
+      return { ...state, size };
     }
 
     default:

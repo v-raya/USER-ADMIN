@@ -7,8 +7,10 @@ import {
   USER_LIST_SET_NEXT_SEARCH,
 } from './actionTypes';
 
-// TODO: combine search and sort ? (they are one hash of params afterall)
-
+/**
+ * Set search query for people search
+ * @param {lastName} [lastName=''] last name search
+ */
 export function fetchUsersActions(lastName = '') {
   return {
     type: FETCH_USERS_API_CALL_REQUEST,
@@ -18,33 +20,46 @@ export function fetchUsersActions(lastName = '') {
 
 /**
  * Set number of records per page
- * @param {Number} pageSize
+ * @param {number} size Integer number of records per page
  */
-export const setPageSize = pageSize => ({
-  payload: { pageSize },
+export const setPageSize = size => ({
   type: USER_LIST_SET_PAGE_SIZE,
+  payload: { size },
 });
 
-/** Accepts an integer page number */
-export const setPage = payload => ({
-  payload,
+/**
+ * Set the current page of paged results
+ * @param {number} pageNumber Integer page number of paged results
+ */
+export const setPage = pageNumber => ({
   type: USER_LIST_SET_PAGE,
+  payload: { pageNumber },
 });
 
-export const setSearch = (field, value) => {
-  return {
-    type: USER_LIST_SET_SEARCH,
-    payload: { query: [{ field, value }] },
-  };
-};
+/**
+ * Set search
+ * @param {Object[]} query
+ * @param {string} query[].field Identifier for the field on which to search
+ * @param {string|number|boolean} query[].value Value on which to search
+ */
+export const setSearch = query => ({
+  type: USER_LIST_SET_SEARCH,
+  payload: query,
+});
 
-// FIXME: Should be SEARCH and NEXTSEARCH
+/**
+ * Updates the "preflight" search string for `last_name`)
+ * @param {string} nextSearch search string
+ */
 export const setNextSearch = nextSearch => ({
   type: USER_LIST_SET_NEXT_SEARCH,
-  payload: { nextSearch },
+  payload: nextSearch,
 });
 
-/** Set ASC/DESC */
+/**
+ * Sets the sort criteria for the table
+ * @param {Array<{ field: string, desc?: boolean }>} sort Array of applied sorts
+ */
 export const setSort = sort => ({
   payload: sort,
   type: USER_LIST_SET_SORT,

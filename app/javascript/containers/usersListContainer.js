@@ -1,7 +1,6 @@
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import UsersList from '../views/usersList/UsersList';
-// Actions
 import {
   fetchUsersActions,
   setPage,
@@ -11,8 +10,6 @@ import {
   setNextSearch,
 } from '../actions/userListActions';
 import { fetchAccountActions } from '../actions/accountActions';
-// Selectors
-// import { selectUserRecords } from '../selectors/userListSelector';
 import { selectCounty } from '../selectors/accountSelectors';
 
 function mapStateToProps(state) {
@@ -23,8 +20,8 @@ function mapStateToProps(state) {
     fetching: userList.fetching,
     userListUrl: '/#',
     dashboardUrl: '/',
-    page: userList.page,
-    pageSize: userList.pageSize,
+    size: userList.size,
+    from: userList.from,
     sort: userList.sort,
     query: userList.query,
     nextSearch: userList.nextSearch,

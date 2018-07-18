@@ -26,26 +26,6 @@ describe('UsersList', () => {
     });
   });
 
-  describe('#handleOnClick', () => {
-    const mockFetchUsersActions = jest.fn();
-
-    beforeEach(() => {
-      wrapper.setProps({
-        actions: { fetchUsersActions: mockFetchUsersActions },
-      });
-      wrapper.setState({ searchKey: 'SomeSearchKey' });
-    });
-
-    afterEach(() => {
-      mockFetchUsersActions.mockRestore();
-    });
-
-    it('calls the appropriate function', () => {
-      wrapper.instance().handleOnClick();
-      expect(mockFetchUsersActions).toHaveBeenCalledWith('SomeSearchKey');
-    });
-  });
-
   describe('#handleOnAdd', () => {
     it('sets state based on the user action', () => {
       wrapper.instance().handleOnAdd();

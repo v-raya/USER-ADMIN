@@ -23,19 +23,12 @@ class UserList extends PureComponent {
   }
 
   componentDidMount() {
-    this.props.actions.fetchUsersActions(this.state.searchKey);
+    this.props.actions.fetchUsersActions();
     this.props.actions.fetchAccountActions();
   }
 
-  handleOnClick = () =>
-    this.props.actions.fetchUsersActions(this.state.searchKey);
-
   handleOnAdd = () => {
     this.setState({ addUser: true });
-  };
-
-  search = (state, instance) => {
-    // console.log(state, instance);
   };
 
   handlePageChange = pageIndex => {
@@ -56,7 +49,9 @@ class UserList extends PureComponent {
 
   submitSearch = e => {
     e.preventDefault();
-    this.props.actions.setSearch('last_name', this.props.nextSearch);
+    this.props.actions.setSearch([
+      { field: 'last_name', value: this.props.nextSearch },
+    ]);
   };
 
   isDisabledSearchBtn = () => {
@@ -108,7 +103,7 @@ class UserList extends PureComponent {
         manual
         sorted={this.props.sort}
         page={this.props.page}
-        pageSize={this.props.pageSize}
+        size={this.props.size}
         loading={this.props.fetching}
         onFetchData={this.search}
         defaultPageSize={10}
@@ -182,7 +177,8 @@ class UserList extends PureComponent {
                       sort: this.props.sort,
                       fetching: this.props.fetching,
                       page: this.props.page,
-                      pageSize: this.props.pageSize,
+                      size: this.props.size,
+                      from: this.props.from,
                       query: this.props.query,
                     },
                     null,
@@ -206,7 +202,8 @@ class UserList extends PureComponent {
 
 UserList.propTypes = {
   page: PropTypes.number,
-  pageSize: PropTypes.number,
+  from: PropTypes.number,
+  size: PropTypes.number,
   fetching: PropTypes.bool,
   userList: PropTypes.array,
   dashboardUrl: PropTypes.string,
