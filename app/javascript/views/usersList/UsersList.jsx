@@ -23,7 +23,12 @@ class UserList extends PureComponent {
   }
 
   componentDidMount() {
-    this.props.actions.fetchUsersActions();
+    this.props.actions.searchUsers({
+      query: this.props.query,
+      sort: this.props.sort,
+      size: this.props.size,
+      from: this.props.from,
+    });
     this.props.actions.fetchAccountActions();
   }
 

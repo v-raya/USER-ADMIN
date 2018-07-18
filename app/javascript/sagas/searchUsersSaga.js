@@ -1,6 +1,6 @@
 import { takeLatest, select, put } from 'redux-saga/effects';
 import { getSearchParams } from '../selectors/userListSelector';
-import { fetchUsersActions } from '../actions/userListActions';
+import { searchUsers } from '../actions/userListActions';
 import {
   USER_LIST_SET_PAGE,
   USER_LIST_SET_PAGE_SIZE,
@@ -12,7 +12,7 @@ export function* doSomething(action) {
   try {
     let params = yield select(getSearchParams);
     console.log(params);
-    yield put(fetchUsersActions());
+    yield put(searchUsers(params));
   } catch (err) {
     console.log(err);
   }

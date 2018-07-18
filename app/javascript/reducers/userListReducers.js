@@ -45,10 +45,9 @@ function userListReducer(state = initialValue, { type, payload }) {
     }
 
     case FETCH_USERS_API_CALL_FAILURE: {
-      const { error } = payload;
       return {
         ...state,
-        error,
+        error: 'yup',
         fetching: false,
         users: null,
       };

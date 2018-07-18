@@ -2,6 +2,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import UsersList from '../views/usersList/UsersList';
 import {
+  searchUsers,
   fetchUsersActions,
   setPage,
   setPageSize,
@@ -33,6 +34,7 @@ function mapDispatchToProps(dispatch) {
   return {
     actions: bindActionCreators(
       {
+        searchUsers,
         fetchUsersActions,
         fetchAccountActions,
         setPage,

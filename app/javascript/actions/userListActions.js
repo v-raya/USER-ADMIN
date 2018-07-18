@@ -7,16 +7,21 @@ import {
   USER_LIST_SET_NEXT_SEARCH,
 } from './actionTypes';
 
-/**
- * Set search query for people search
- * @param {lastName} [lastName=''] last name search
- */
-export function fetchUsersActions(lastName = '') {
-  return {
-    type: FETCH_USERS_API_CALL_REQUEST,
-    payload: { lastName },
-  };
-}
+// /**
+//  * Set search query for people search
+//  * @param {lastName} [lastName=''] last name search
+//  */
+// export function fetchUsersActions(lastName = '') {
+//   return {
+//     type: FETCH_USERS_API_CALL_REQUEST,
+//     payload: { lastName },
+//   };
+// }
+
+export const searchUsers = params => ({
+  type: FETCH_USERS_API_CALL_REQUEST,
+  payload: params,
+});
 
 /**
  * Set number of records per page
@@ -24,7 +29,7 @@ export function fetchUsersActions(lastName = '') {
  */
 export const setPageSize = size => ({
   type: USER_LIST_SET_PAGE_SIZE,
-  payload: { size },
+  payload: size,
 });
 
 /**
