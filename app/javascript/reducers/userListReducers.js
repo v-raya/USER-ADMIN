@@ -11,7 +11,7 @@ import {
 const initialValue = {
   sort: [
     {
-      id: 'last_name',
+      field: 'last_name',
       desc: false,
     },
   ],

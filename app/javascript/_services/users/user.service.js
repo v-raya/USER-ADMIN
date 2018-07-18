@@ -32,7 +32,7 @@ class UserService {
             total: 1000,
             request: {
               from: 50,
-              size: 10,
+              size: 50,
               query: [{ field: 'last_name', value: 'Eck' }],
               sort: [{ field: 'last_name', desc: false }],
             },

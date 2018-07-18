@@ -45,7 +45,9 @@ class UserList extends PureComponent {
   };
 
   handleSortChange = (newSorted, column, shiftKey) => {
-    this.props.actions.setSort(newSorted);
+    this.props.actions.setSort(
+      newSorted.map(s => ({ field: s.id, desc: s.desc }))
+    );
   };
 
   handleSearchChange = e => {
@@ -59,12 +61,10 @@ class UserList extends PureComponent {
     ]);
   };
 
-  getTotalPages = () => {
-    if (!this.props.total) return 1;
-    const numPages = Math.ceil(this.props.total / this.props.size);
-    console.log(numPages);
-    return numPages;
-  };
+  getTotalPages = () =>
+    this.props.total ? Math.ceil(this.props.total / this.props.size) : -1;
+
+  getCurrentPageNumber = () => Math.floor(this.props.from / this.props.size);
 
   isDisabledSearchBtn = () => {
     const { query, nextSearch } = this.props;
@@ -113,10 +113,10 @@ class UserList extends PureComponent {
           },
         ]}
         manual
-        sorted={this.props.sort}
-        page={this.props.page}
+        sorted={this.props.sort.map(d => ({ id: d.field, desc: d.desc }))}
+        page={this.getCurrentPageNumber()}
         pages={this.getTotalPages()}
-        size={this.props.size}
+        pageSize={this.props.size}
         loading={this.props.fetching}
         onFetchData={this.search}
         defaultPageSize={10}
@@ -231,7 +231,7 @@ UserList.propTypes = {
   }),
   sort: PropTypes.arrayOf(
     PropTypes.shape({
-      id: PropTypes.string.isRequired,
+      field: PropTypes.string.isRequired,
       desc: PropTypes.bool,
     })
   ),
@@ -250,5 +250,6 @@ UserList.propTypes = {
 UserList.defaultProps = {
   dashboardUrl: '/',
   dashboardClickHandler: () => {},
+  sort: [],
 };
 export default UserList;
