@@ -31,15 +31,5 @@ module Users
     attribute :racfid, Types::String.optional
     attribute :roles, Types::Array.optional
     attribute :auth_header, Types::String.optional
-
-    def self.search(query, auth_header)
-      http_search_service = Infrastructure::HttpService.new(base_url)
-      response = http_search_service.post('/dora/users/user/_search', query, auth_header)
-      response.body
-    end
-
-    def self.base_url
-      Rails.configuration.micro_services['base_search_api_url']
-    end
   end
 end

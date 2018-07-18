@@ -15,7 +15,7 @@ module Api
 
       es_query_json = build_query_hash
       logger.debug "should be posted as #{JSON.generate(es_query_json)}"
-      users = Users::User.search(es_query_json, session[:token])
+      users = Users::UserRepository.search(es_query_json, session[:token])
       @users_response = collect_users(users)
       render json: @users_response, status: :ok
     end
