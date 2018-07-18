@@ -11,12 +11,12 @@ export function* countyUsersList(action) {
   try {
     // let searchKey = action.payload;
     // const users = yield call(UserService.fetch, searchKey.lastName);
-    const users = yield call(UserService.search, action.payload);
+    const response = yield call(UserService.search, action.payload);
 
     // dispatch a success action to the store with the new users
     yield put({
       type: FETCH_USERS_API_CALL_SUCCESS,
-      payload: { users },
+      payload: response,
     });
     // console.log("userList:"+ userList.message);
   } catch (error) {

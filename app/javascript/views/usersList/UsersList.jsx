@@ -59,6 +59,13 @@ class UserList extends PureComponent {
     ]);
   };
 
+  getTotalPages = () => {
+    if (!this.props.total) return 1;
+    const numPages = Math.ceil(this.props.total / this.props.size);
+    console.log(numPages);
+    return numPages;
+  };
+
   isDisabledSearchBtn = () => {
     const { query, nextSearch } = this.props;
     if (!query) return false;
@@ -108,6 +115,7 @@ class UserList extends PureComponent {
         manual
         sorted={this.props.sort}
         page={this.props.page}
+        pages={this.getTotalPages()}
         size={this.props.size}
         loading={this.props.fetching}
         onFetchData={this.search}
@@ -185,6 +193,7 @@ class UserList extends PureComponent {
                       size: this.props.size,
                       from: this.props.from,
                       query: this.props.query,
+                      total: this.props.total,
                     },
                     null,
                     2
@@ -216,6 +225,7 @@ UserList.propTypes = {
   dashboardClickHandler: PropTypes.func,
   actions: PropTypes.object.isRequired,
   nextSearch: PropTypes.string,
+  total: PropTypes.number,
   location: PropTypes.shape({
     pathname: PropTypes.string,
   }),

@@ -35,10 +35,15 @@ function userListReducer(state = initialValue, { type, payload }) {
       return { ...state, fetching: true, error: null };
 
     case FETCH_USERS_API_CALL_SUCCESS: {
-      const { users } = payload;
+      const {
+        records: users,
+        meta: { total, request },
+      } = payload;
       return {
         ...state,
         users,
+        ...request,
+        total,
         fetching: false,
         error: null,
       };
