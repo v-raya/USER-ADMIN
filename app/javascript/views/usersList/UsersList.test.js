@@ -36,16 +36,19 @@ describe('UsersList', () => {
   describe('#componentDidMount', () => {
     let mockFetchUsersActions;
     let mockFetchAccountActions;
+    let mockSearchUsers;
 
     beforeEach(() => {
       mockFetchUsersActions = jest.fn();
       mockFetchAccountActions = jest.fn();
+      mockSearchUsers = jest.fn();
       mount(
         <UsersList
           dashboardUrl={'dburl'}
           actions={{
             fetchUsersActions: mockFetchUsersActions,
             fetchAccountActions: mockFetchAccountActions,
+            searchUsers: mockSearchUsers,
           }}
         />
       );
@@ -53,7 +56,7 @@ describe('UsersList', () => {
 
     it('fetches users', () => {
       // TODO: make a stronger expectation of args based on API query DSL (when it emerges)
-      expect(mockFetchUsersActions).toHaveBeenCalled();
+      expect(mockSearchUsers).toHaveBeenCalled();
     });
 
     it('fetches the account', () => {

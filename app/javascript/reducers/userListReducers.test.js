@@ -18,10 +18,19 @@ describe('reducer', () => {
     const action = {
       type: actionTypes.FETCH_USERS_API_CALL_SUCCESS,
       payload: {
-        users: [
+        records: [
           { id: 'key1', username: 'user1' },
           { id: 'key2', username: 'user2' },
         ],
+        meta: {
+          total: 42,
+          request: {
+            from: 0,
+            size: 10,
+            sort: [],
+            query: [],
+          },
+        },
       },
     };
     const before = {};
