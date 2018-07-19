@@ -53,6 +53,8 @@ services:
     image: cwds/elasticsearch_xpack_data:${ELASTICSEARCH_XPACK_DATA_VERSION}
     depends_on:
       - perry
+    ports:
+      - "${ES_PORT}:9200"
     expose:
       - 9200
       - 9300
