@@ -1,0 +1,52 @@
+#!/usr/bin/env node
+const elasticsearch = require('elasticsearch');
+const faker = require('faker');
+
+const makeFakeUser = () => {
+  return {
+    id: faker.random.uuid(),
+    first_name: faker.name.firstName(),
+    last_name: faker.name.lastName(),
+    county_name: 'Madera',
+    start_date: '2017-07-13',
+    office: 'CWDS Testing',
+    phone_number: '5599994321',
+    phone_extension_number: '0',
+    email: 'donzano123+user1@gmail.com',
+    enabled: true,
+    status: 'CONFIRMED',
+    RACFID: 'CWDS8',
+  };
+};
+
+const client = new elasticsearch.Client({
+  host: [
+    {
+      host: `${process.env.ES_HOST || 'localhost'}`,
+      auth: [
+        process.env.ES_USERNAME || 'elastic',
+        process.env.ES_PASSWORD || 'changeme',
+      ].join(':'),
+      protocol: `${process.env.ES_PROTOCOL || 'http'}`,
+      port: process.env.ES_PORT || 9200,
+    },
+  ],
+});
+
+const createUser = () => {
+  const fake = makeFakeUser();
+  return client.create({
+    index: 'users',
+    type: 'user',
+    id: fake.id,
+    body: fake,
+  });
+};
+
+async function main() {
+  for (let i = 0; i < 300; i++) {
+    await createUser();
+  }
+}
+
+main();
