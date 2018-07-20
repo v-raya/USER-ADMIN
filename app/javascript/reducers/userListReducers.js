@@ -81,6 +81,7 @@ function userListReducer(state = initialValue, { type, payload }) {
       const query = _query.filter(({ value }) => value !== '');
       return {
         ...state,
+        from: 0,
         query,
       };
     }

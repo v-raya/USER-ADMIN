@@ -185,7 +185,7 @@ class UserList extends PureComponent {
                     </div>
                   </div>
                 </form>
-                <pre style={{ color: 'white' }}>
+                {/* <pre style={{ color: 'white' }}>
                   {JSON.stringify(
                     {
                       sort: this.props.sort,
@@ -199,7 +199,7 @@ class UserList extends PureComponent {
                     null,
                     2
                   )}
-                </pre>
+                </pre> */}
                 <br />
                 <div>
                   {this.renderUsersTable({
