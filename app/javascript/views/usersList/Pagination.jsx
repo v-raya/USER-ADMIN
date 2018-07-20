@@ -3,15 +3,8 @@ import classnames from 'classnames';
 import PaginationRT from 'react-table/es/pagination';
 import { Button as ButtonRWD } from 'react-wood-duck';
 
-const Button = props => (
-  <ButtonRWD {...props} btnClassName="primary" btnName={props.children} />
-);
-
 const defaultButton = props => (
-  <ButtonRWD
-    btnClassName="primary"
-    btnName={props.children}
-  />
+  <ButtonRWD {...props} btnClassName="primary" btnName={props.children} />
 );
 
 class Pagination extends PaginationRT {
