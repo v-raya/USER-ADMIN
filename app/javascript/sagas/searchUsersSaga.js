@@ -11,7 +11,7 @@ import {
 export function* doSomething(action) {
   try {
     let params = yield select(getSearchParams);
-    console.log(params);
+    // console.log(params);
     yield put(searchUsers(params));
   } catch (err) {
     console.log(err);

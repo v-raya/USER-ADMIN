@@ -4,6 +4,7 @@ import { Link, InputComponent, PageHeader } from 'react-wood-duck';
 import Cards from '../../common/Card';
 import AddUser from '../../containers/addUserContainer';
 import ReactTable from 'react-table';
+import Pagination from './Pagination';
 
 const hackBtnStyles = {
   marginTop: '22px',
@@ -127,6 +128,7 @@ class UserList extends PureComponent {
         onPageChange={this.handlePageChange}
         onPageSizeChange={this.handlePageSizeChange}
         onSortedChange={this.handleSortChange}
+        PaginationComponent={Pagination}
       />
     );
   };
