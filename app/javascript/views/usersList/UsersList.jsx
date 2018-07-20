@@ -118,9 +118,10 @@ class UserList extends PureComponent {
         page={this.getCurrentPageNumber()}
         pages={this.getTotalPages()}
         pageSize={this.props.size}
+        pageSizeOptions={this.props.pageSizeOptions}
+        defaultPageSize={10}
         loading={this.props.fetching}
         onFetchData={this.search}
-        defaultPageSize={10}
         className="-striped -highlight"
         onPageChange={this.handlePageChange}
         onPageSizeChange={this.handlePageSizeChange}
@@ -246,11 +247,13 @@ UserList.propTypes = {
       ]),
     })
   ),
+  pageSizeOptions: PropTypes.arrayOf(PropTypes.number),
 };
 
 UserList.defaultProps = {
   dashboardUrl: '/',
   dashboardClickHandler: () => {},
   sort: [],
+  pageSizeOptions: [5, 10, 25, 50, 100],
 };
 export default UserList;
