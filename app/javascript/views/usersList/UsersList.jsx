@@ -115,6 +115,7 @@ class UserList extends PureComponent {
         ]}
         manual
         sorted={this.props.sort.map(d => ({ id: d.field, desc: d.desc }))}
+        sortable={false}
         page={this.getCurrentPageNumber()}
         pages={this.getTotalPages()}
         pageSize={this.props.size}

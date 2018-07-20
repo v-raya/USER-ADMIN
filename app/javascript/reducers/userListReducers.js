@@ -11,10 +11,10 @@ import {
 
 const initialValue = {
   sort: [
-    {
-      field: 'last_name',
-      desc: false,
-    },
+    // {
+    //   field: 'last_name',
+    //   desc: false,
+    // },
   ],
   from: 0,
   size: 10,
