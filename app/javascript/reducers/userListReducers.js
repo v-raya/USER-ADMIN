@@ -4,6 +4,7 @@ import {
   FETCH_USERS_API_CALL_SUCCESS,
   USER_LIST_SET_NEXT_SEARCH,
   USER_LIST_SET_PAGE_SIZE,
+  USER_LIST_SET_PAGE,
   USER_LIST_SET_SEARCH,
   USER_LIST_SET_SORT,
 } from '../actions/actionTypes';
@@ -88,6 +89,14 @@ function userListReducer(state = initialValue, { type, payload }) {
     case USER_LIST_SET_PAGE_SIZE: {
       const size = payload;
       return { ...state, size };
+    }
+
+    case USER_LIST_SET_PAGE: {
+      const pageIndex = payload;
+      return {
+        ...state,
+        from: pageIndex * state.size,
+      };
     }
 
     default:

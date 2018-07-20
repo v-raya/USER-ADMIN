@@ -38,7 +38,7 @@ export const setPageSize = size => ({
  */
 export const setPage = pageNumber => ({
   type: USER_LIST_SET_PAGE,
-  payload: { pageNumber },
+  payload: pageNumber,
 });
 
 /**
