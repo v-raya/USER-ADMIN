@@ -7,6 +7,7 @@ const previousButton = props => (
   <ButtonRWD
     btnClassName="default"
     btnName={<span className="glyphicon glyphicon-chevron-left" />}
+    {...props}
   />
 );
 
@@ -14,6 +15,7 @@ const nextButton = props => (
   <ButtonRWD
     btnClassName="default"
     btnName={<span className="glyphicon glyphicon-chevron-right" />}
+    {...props}
   />
 );
 
