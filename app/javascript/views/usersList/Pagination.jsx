@@ -3,14 +3,17 @@ import classnames from 'classnames';
 import PaginationRT from 'react-table/es/pagination';
 import { Button as ButtonRWD } from 'react-wood-duck';
 
-const Button = props => (
-  <ButtonRWD {...props} btnClassName="primary" btnName={props.children} />
+const previousButton = props => (
+  <ButtonRWD
+    btnClassName="default"
+    btnName={<span className="glyphicon glyphicon-chevron-left" />}
+  />
 );
 
-const defaultButton = props => (
+const nextButton = props => (
   <ButtonRWD
-    btnClassName="primary"
-    btnName={props.children}
+    btnClassName="default"
+    btnName={<span className="glyphicon glyphicon-chevron-right" />}
   />
 );
 
@@ -29,8 +32,8 @@ class Pagination extends PaginationRT {
       canNext,
       onPageSizeChange,
       className,
-      PreviousComponent = defaultButton,
-      NextComponent = defaultButton,
+      PreviousComponent = previousButton,
+      NextComponent = nextButton,
     } = this.props;
 
     return (
@@ -38,6 +41,21 @@ class Pagination extends PaginationRT {
         className={classnames(className, '-pagination')}
         style={this.props.style}
       >
+        {showPageSizeOptions && (
+          <span className="select-wrap -pageSizeOptions">
+            <select
+              onChange={e => onPageSizeChange(Number(e.target.value))}
+              value={pageSize}
+            >
+              {pageSizeOptions.map((option, i) => (
+                // eslint-disable-next-line react/no-array-index-key
+                <option key={i} value={option}>
+                  {`${option} ${this.props.rowsText}`}
+                </option>
+              ))}
+            </select>
+          </span>
+        )}
         <div className="-previous">
           <PreviousComponent
             onClick={() => {
@@ -79,21 +97,6 @@ class Pagination extends PaginationRT {
             {this.props.ofText}{' '}
             <span className="-totalPages">{pages || 1}</span>
           </span>
-          {showPageSizeOptions && (
-            <span className="select-wrap -pageSizeOptions">
-              <select
-                onChange={e => onPageSizeChange(Number(e.target.value))}
-                value={pageSize}
-              >
-                {pageSizeOptions.map((option, i) => (
-                  // eslint-disable-next-line react/no-array-index-key
-                  <option key={i} value={option}>
-                    {`${option} ${this.props.rowsText}`}
-                  </option>
-                ))}
-              </select>
-            </span>
-          )}
         </div>
         <div className="-next">
           <NextComponent
