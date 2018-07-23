@@ -34,7 +34,7 @@ export default class UserDetail extends Component {
     return id;
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     let details = nextProps.details;
     this.setState({ details });
   }

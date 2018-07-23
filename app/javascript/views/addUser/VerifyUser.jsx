@@ -24,10 +24,10 @@ export default class VerifyUser extends React.Component {
           >
             <div className="col-md-12">
               <div className="row">
-                <label>
+                <div>
                   Enter the CWS Login and email address of the user you are
                   adding in order to verify that this is a new CWS-CARES user
-                </label>
+                </div>
                 <div className="col-md-3">
                   <InputComponent
                     label="CWS Login"
