@@ -16,7 +16,7 @@
     "license-dump": "license-checker --csv --out legal/licenses.csv",
     "clean": "rimraf public/packs*",
     "build:webpacker": "./bin/webpack",
-    "start": "scripts/start.sh",
+    "start": "./bin/webpack-dev-server",
     "build": "npm-run-all --serial clean lint test build:webpacker",
     "dc:up": "docker-compose up",
     "env:get": "scripts/fetch-env.sh",
