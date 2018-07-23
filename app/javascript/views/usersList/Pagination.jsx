@@ -3,7 +3,6 @@ import classnames from 'classnames';
 import PaginationRT from 'react-table/es/pagination';
 import { Button as ButtonRWD } from 'react-wood-duck';
 
-<<<<<<< HEAD
 const previousButton = props => (
   <ButtonRWD
     btnClassName="default"
@@ -16,10 +15,6 @@ const nextButton = props => (
     btnClassName="default"
     btnName={<span className="glyphicon glyphicon-chevron-right" />}
   />
-=======
-const defaultButton = props => (
-  <ButtonRWD {...props} btnClassName="primary" btnName={props.children} />
->>>>>>> 73bce5c944b4f03f0f9353df24f3f5984f34f6cc
 );
 
 class Pagination extends PaginationRT {
