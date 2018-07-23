@@ -17,7 +17,7 @@ export default class UserDetail extends Component {
     };
   }
 
-  componentDidMount() {
+  UNSAFE_componentDidMount() {
     this.props.actions.fetchDetailsActions(
       this.getUserId(this.currentPathname())
     );
