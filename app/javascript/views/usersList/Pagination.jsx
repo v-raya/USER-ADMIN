@@ -69,7 +69,6 @@ class Pagination extends PaginationRT {
         </div>
         <div className="-center">
           <span className="-pageInfo">
-            {this.props.pageText}{' '}
             {showPageJump ? (
               <div className="-pageJump">
                 <input
