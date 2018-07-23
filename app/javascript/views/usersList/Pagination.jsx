@@ -1,6 +1,6 @@
 import React from 'react';
 import classnames from 'classnames';
-import PaginationRT from 'react-table/es/pagination';
+import PaginationRT from 'react-table/lib/pagination';
 import { Button as ButtonRWD } from 'react-wood-duck';
 
 const previousButton = props => (
