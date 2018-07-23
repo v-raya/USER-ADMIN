@@ -46,7 +46,7 @@ class Pagination extends PaginationRT {
         {showPageSizeOptions && (
           <span className="select-wrap -pageSizeOptions">
             <select
-              onChange={e => onPageSizeChange(Number(e.target.value))}
+              onBlur={e => onPageSizeChange(Number(e.target.value))}
               value={pageSize}
             >
               {pageSizeOptions.map((option, i) => (

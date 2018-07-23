@@ -56,7 +56,7 @@ describe('UsersList', () => {
 
     it('fetches users', () => {
       // TODO: make a stronger expectation of args based on API query DSL (when it emerges)
-      expect(mockSearchUsers).toHaveBeenCalled();
+      expect(mockSearchUsers).toHaveBeenCalledWith(jasmine.any(Object));
     });
 
     it('fetches the account', () => {

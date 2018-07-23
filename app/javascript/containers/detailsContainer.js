@@ -27,4 +27,7 @@ function mapDispatchToProps(dispatch) {
     actions: bindActionCreators(actions, dispatch),
   };
 }
-export default connect(mapStateToProps, mapDispatchToProps)(UserDetail);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(UserDetail);
