@@ -60,7 +60,8 @@ describe('UserDetail', () => {
     });
   });
 
-  describe('#componentDidMount', () => {
+  describe('#UNSAFE_componentDidMount', () => {
+    let wrapper;
     let mockFetchDetailsActions;
     let mockFetchPermissionsActions;
 
@@ -68,7 +69,7 @@ describe('UserDetail', () => {
       mockFetchDetailsActions = jest.fn();
       mockFetchPermissionsActions = jest.fn();
 
-      mount(
+      wrapper = mount(
         <UserDetail
           details={{}}
           dashboardUrl={'dburl'}
@@ -82,10 +83,12 @@ describe('UserDetail', () => {
     });
 
     it('fetches details', () => {
+      wrapper.instance().UNSAFE_componentDidMount({});
       expect(mockFetchDetailsActions).toHaveBeenCalledWith('blank');
     });
 
     it('fetches the permissions', () => {
+      wrapper.instance().UNSAFE_componentDidMount({ details: { id: 1 } });
       expect(mockFetchPermissionsActions).toHaveBeenCalledWith();
     });
   });
