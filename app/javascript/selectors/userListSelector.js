@@ -1,10 +1,23 @@
 export const selectUserRecords = state => {
-  const usersObject = state.fetchUserList ? state.fetchUserList.userList : null;
-  return usersObject ? usersObject.records : [];
+  if (!state.userList) return [];
+  return Array.isArray(state.userList.users) ? state.userList.users : [];
 };
 
-export const selectCounty = state => {
-  return state.fetchAccount.account
-    ? state.fetchAccount.account.account.county_name
-    : '';
+export const isLoading = state => {
+  return state.userList.fetching || false;
+};
+
+export const getSearchParams = ({ userList }) => {
+  if (!userList) return {};
+  const { from, size, sort, query } = userList;
+  const out = {};
+  out.from = from;
+  out.size = size;
+  out.sort = (Array.isArray(sort) && sort.length && sort) || undefined;
+  out.query = (Array.isArray(query) && query.length && query) || undefined;
+  return out;
+};
+
+export const getSerializedSearchParams = ({ userList }) => {
+  return encodeURIComponent(JSON.stringify(getSearchParams({ userList })));
 };

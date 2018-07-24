@@ -3,8 +3,6 @@ import { countyUsersListSaga, countyUsersList } from './getUserListSaga';
 import * as actionTypes from '../actions/actionTypes';
 import { takeLatest, call, put } from 'redux-saga/effects';
 
-UserService.fetch();
-
 describe('sagas', () => {
   it('starts the worker fetch saga', () => {
     const gen = countyUsersListSaga();
@@ -16,19 +14,21 @@ describe('sagas', () => {
   describe('#countyUsersList', () => {
     beforeEach(() => {
       UserService.fetch = jest.fn();
+      UserService.search = jest.fn();
     });
 
     describe('when successful', () => {
       it('executes the happy-path saga', () => {
-        const action = { payload: { lastName: 'man' } };
-        const gen = countyUsersList(action);
+        const searchParams = {};
+        const gen = countyUsersList({ payload: searchParams });
         expect(gen.next().value).toEqual(
-          call(UserService.fetch, action.payload.lastName)
+          call(UserService.search, searchParams)
         );
-        expect(gen.next([1234, 5678]).value).toEqual(
+        const resObj = {};
+        expect(gen.next(resObj).value).toEqual(
           put({
             type: actionTypes.FETCH_USERS_API_CALL_SUCCESS,
-            userList: [1234, 5678],
+            payload: resObj,
           })
         );
         expect(gen.next().done).toBe(true);
@@ -37,10 +37,11 @@ describe('sagas', () => {
 
     describe('when failures come back from the fetch', () => {
       it('handles the error', () => {
-        const action = { payload: { id: 'man' } };
+        const searchParams = {};
+        const action = { payload: searchParams };
         const gen = countyUsersList(action);
         expect(gen.next().value).toEqual(
-          call(UserService.fetch, action.payload.lastName)
+          call(UserService.search, searchParams)
         );
         expect(gen.throw('I have made a huge mistake').value).toEqual(
           put({

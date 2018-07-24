@@ -1,89 +1,89 @@
-import { selectUserRecords, selectCounty } from './userListSelector';
+import {
+  selectUserRecords,
+  isLoading,
+  getSearchParams,
+  getSerializedSearchParams,
+} from './userListSelector';
 
 describe('selectors', () => {
   describe('#selectUserRecords', () => {
-    it('selects the user records', () => {
+    it('returns array of users', () => {
+      const users = [];
       const state = {
-        fetchUserList: {
-          userList: {
-            records: [
-              {
-                0: {
-                  first_name: 'username1',
-                  id: '2',
-                  county_name: 'mycounty',
-                },
-                1: {
-                  first_name: 'username',
-                  id: '1',
-                  county_name: 'my county1',
-                },
-              },
-            ],
-          },
+        userList: {
+          users,
         },
-        other_stuff: { bad: 'ignore' },
       };
-      expect(selectUserRecords(state)).toEqual([
-        {
-          0: {
-            first_name: 'username1',
-            id: '2',
-            county_name: 'mycounty',
-          },
-          1: {
-            first_name: 'username',
-            id: '1',
-            county_name: 'my county1',
-          },
-        },
-      ]);
+      expect(selectUserRecords(state)).toBe(users);
     });
 
-    it('selects empty users', () => {
-      const state = {
-        fetch: {},
-        other_stuff: { bad: 'ignore' },
-      };
+    it('returns empty array if no users defined', () => {
+      const state = { userList: {} };
       expect(selectUserRecords(state)).toEqual([]);
-    });
-
-    it('selects no users', () => {
-      const state = {
-        other_stuff: { bad: 'ignore' },
-      };
-      expect(selectUserRecords(state)).toEqual([]);
+      expect(selectUserRecords({})).toEqual([]);
     });
   });
 
-  describe('#selectCounty', () => {
-    it('selects the county when availble', () => {
+  describe('#isLoading', () => {
+    it('returns true if fetching', () => {
       const state = {
-        fetchAccount: {
-          account: {
-            XHRStatus: 'ready',
-            account: {
-              user: 'RACFID',
-              staff_id: '0X5',
-              county_code: '20',
-              county_name: 'Sacramento',
-            },
-          },
-        },
+        userList: {},
       };
-      expect(selectCounty(state)).toEqual('Sacramento');
+      expect(isLoading(state)).toEqual(false);
     });
+  });
 
-    it('display empty string when county is not known', () => {
+  describe('getSearchParams', () => {
+    it('returns the search params', () => {
       const state = {
-        fetchAccount: {
-          XHRStatus: 'ready',
-          user: 'RACFID',
-          staff_id: '0X5',
-          county_code: '20',
+        userList: {
+          from: 0,
+          size: 10,
+          sort: [
+            { field: 'haystack' },
+            { field: 'other_haystack', desc: true },
+          ],
+          query: [
+            {
+              field: 'haystack',
+              value: 'needle',
+            },
+          ],
         },
       };
-      expect(selectCounty(state)).toEqual('');
+      let searchParams;
+      expect(() => (searchParams = getSearchParams(state))).not.toThrow();
+      expect(searchParams.from).toEqual(0);
+      expect(searchParams.size).toEqual(10);
+      expect(searchParams.query).toEqual([
+        { field: 'haystack', value: 'needle' },
+      ]);
+      expect(searchParams.sort).toEqual([
+        { field: 'haystack' },
+        { field: 'other_haystack', desc: true },
+      ]);
+    });
+  });
+
+  describe('getSerializedSearchParams', () => {
+    it('returns the serialized json repr of search params', () => {
+      const state = {
+        userList: {
+          size: 20,
+          from: 40,
+        },
+      };
+      let serialized;
+      expect(
+        () => (serialized = getSerializedSearchParams(state))
+      ).not.toThrow();
+      expect(serialized).toEqual(jasmine.any(String));
+      // Serialization order not gauranteed so parse and test for equality
+      let parsed;
+      expect(
+        () => (parsed = JSON.parse(decodeURIComponent(serialized)))
+      ).not.toThrow();
+      expect(parsed).toEqual({ size: 20, from: 40 });
     });
   });
 });

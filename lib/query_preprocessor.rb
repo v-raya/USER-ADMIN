@@ -3,7 +3,6 @@
 class QueryPreprocessor
   def self.params_to_query_with_types(params)
     params_remove_blank_values(params)
-
     values = []
     query_types = []
 
@@ -15,21 +14,40 @@ class QueryPreprocessor
     values_array_to_query_with_type(params, values, query_types)
   end
 
-  def self.form_params_to_query_params(params)
-    par = {}
-    params.each do |key, value|
-      par[key] = { query_type: 'match_phrase_prefix', value: value } unless value.blank?
+  def self.prepare_params_from_cap_submit(query)
+    params = {}
+    query.each do |subquery|
+      value = subquery[:value]
+      key = subquery[:field].to_sym
+      params[key] = { query_type: 'match_phrase_prefix', value: value } unless value.blank?
     end
-    par
+    params
+  end
+
+  def self.build_query_hash(search)
+    page_params = assign_page_params(search[:size], search[:from])
+    query_prepared = prepare_params_from_cap_submit(search[:query])
+
+    search_hash = query_prepared.empty? ? {} : params_to_query_with_types(query_prepared)
+
+    Elastic::QueryBuilder.user_search_v1(search_hash, page_params)
+  end
+
+  def self.assign_page_params(size, from)
+    page_params = {}
+
+    page_params['size_params'] = size || 50
+    page_params['from_params'] = from || 0
+    page_params
   end
 
   def self.params_remove_blank_values(params)
-    # remove blank values from each array
-    params.each do |k, v|
-      params[k][:value] = [v[:value]] if v[:value].class != Array
-      params[k][:value] = params[k][:value].reject(&:blank?)
+    # remove blank values from the array
+    params.each do |key, value|
+      params[key][:value] = [value[:value]] if value[:value].class != Array
+      params[key][:value] = params[key][:value].reject(&:blank?)
     end
-    params.delete_if { |_k, v| v[:value].empty? }
+    params.delete_if { |_key, value| value[:value].empty? }
   end
 
   def self.values_array_to_query_with_type(query_params, values, query_types)

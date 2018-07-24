@@ -66,15 +66,15 @@ feature 'User List Page' do
   end
 
   def page_count_users
-    page.all('.userRow').count
+    page.all('.rt-tr-group .link').count
   end
 
   def first_user_link
-    page.find('.table-striped').first('.userRow').first('td > a')
+    page.find('.rt-table').first('.rt-tr-group').first('.rt-td > a')
   end
 
   def second_user_link
-    page.find('.table-striped').all('.userRow')[1].first('td > a')
+    page.find('.rt-table').all('.rt-tr-group')[1].first('.rt-td > a')
   end
 
   def search_users(user_name)

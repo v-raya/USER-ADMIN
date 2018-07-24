@@ -20,7 +20,7 @@ export default class AddUser extends Component {
     };
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     let verifyNewUserDetails = nextProps.verifyNewUserDetails;
     let id = nextProps.id;
     let permissionRoles = nextProps.permissionRoles;

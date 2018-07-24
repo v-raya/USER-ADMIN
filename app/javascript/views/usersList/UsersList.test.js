@@ -1,6 +1,6 @@
 import React from 'react';
 import { mount, shallow } from 'enzyme';
-import UsersList from './UsersList.jsx';
+import UsersList, { toFullName } from './UsersList.jsx';
 
 describe('UsersList', () => {
   let wrapper;
@@ -26,58 +26,6 @@ describe('UsersList', () => {
     });
   });
 
-  describe('#nameFormat', () => {
-    it('shows nameFormat', () => {
-      const anchor = wrapper
-        .instance()
-        .nameFormat('any', { last_name: 'Surname', first_name: 'Given' });
-      expect(anchor.props.children.join('')).toEqual('Surname, Given');
-    });
-  });
-
-  describe('#userStatusFormat', () => {
-    it('returns "Enabled" for true', () => {
-      expect(
-        wrapper.instance().userStatusFormat('any', { enabled: true })
-      ).toBe('Active');
-    });
-
-    it('returns "Inactive" for false', () => {
-      expect(
-        wrapper.instance().userStatusFormat('any', { enabled: false })
-      ).toBe('Inactive');
-    });
-  });
-
-  describe('#handleOnClick', () => {
-    const mockFetchUsersActions = jest.fn();
-
-    beforeEach(() => {
-      wrapper.setProps({
-        actions: { fetchUsersActions: mockFetchUsersActions },
-      });
-      wrapper.setState({ searchKey: 'SomeSearchKey' });
-    });
-
-    afterEach(() => {
-      mockFetchUsersActions.mockRestore();
-    });
-
-    it('calls the appropriate function', () => {
-      wrapper.instance().handleOnClick();
-      expect(mockFetchUsersActions).toHaveBeenCalledWith('SomeSearchKey');
-    });
-  });
-
-  describe('#handleTextChange', () => {
-    it('sets state based on the text changing', () => {
-      wrapper
-        .instance()
-        .handleTextChange({ target: { value: 'search value' } });
-      expect(wrapper.instance().state.searchKey).toEqual('search value');
-    });
-  });
-
   describe('#handleOnAdd', () => {
     it('sets state based on the user action', () => {
       wrapper.instance().handleOnAdd();
@@ -85,69 +33,53 @@ describe('UsersList', () => {
     });
   });
 
-  describe('#componentDidMount', () => {
-    let mockFetchUsersActions;
+  describe('#UNSAFE_componentDidMount', () => {
     let mockFetchAccountActions;
+    let mockSearchUsers;
 
     beforeEach(() => {
-      mockFetchUsersActions = jest.fn();
       mockFetchAccountActions = jest.fn();
+      mockSearchUsers = jest.fn();
       mount(
         <UsersList
           dashboardUrl={'dburl'}
           actions={{
-            fetchUsersActions: mockFetchUsersActions,
             fetchAccountActions: mockFetchAccountActions,
+            searchUsers: mockSearchUsers,
           }}
         />
       );
     });
 
     it('fetches users', () => {
-      expect(mockFetchUsersActions).toHaveBeenCalledWith('');
+      // TODO: make a stronger expectation of args based on API query DSL (when it emerges)
+      expect(mockSearchUsers).toHaveBeenCalledWith({
+        from: undefined,
+        query: undefined,
+        size: undefined,
+        sort: [],
+      });
     });
 
     it('fetches the account', () => {
       expect(mockFetchAccountActions).toHaveBeenCalledWith();
     });
+
+    describe('helpers', () => {
+      describe('toFullName', () => {
+        it('renders a full name', () => {
+          expect(
+            toFullName({ first_name: 'First', last_name: 'Last' })
+          ).toEqual('Last, First');
+        });
+      });
+    });
   });
 
   describe('#UserList output', () => {
     it('contains Table and headers', () => {
-      expect(wrapper.find('BootstrapTable').length).toBe(1);
-      expect(wrapper.find('TableHeaderColumn').length).toBe(5);
-      expect(
-        wrapper
-          .find('TableHeaderColumn')
-          .at(0)
-          .props().dataField
-      ).toBe('last_name');
-
-      expect(
-        wrapper
-          .find('TableHeaderColumn')
-          .at(1)
-          .props().dataField
-      ).toBe('enabled');
-
-      expect(
-        wrapper
-          .find('TableHeaderColumn')
-          .at(2)
-          .props().dataField
-      ).toBe('last_login_date_time');
-      expect(
-        wrapper
-          .find('TableHeaderColumn')
-          .at(3)
-          .props().dataField
-      ).toBe('racfid');
-      expect(
-        wrapper
-          .find('TableHeaderColumn')
-          .at(4)
-          .props().dataField
-      ).toBe('office');
+      expect(wrapper.find('ReactTable').length).toBe(1);
+      expect(wrapper.find('ReactTable').prop('columns').length).toBe(5);
     });
 
     it('renders navigation link to Dashboard', () => {

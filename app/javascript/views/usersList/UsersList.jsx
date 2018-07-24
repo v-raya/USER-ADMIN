@@ -1,120 +1,156 @@
-import React from 'react';
+/* eslint camelcase: ["off"] */
+
+import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { Link, InputComponent, PageHeader } from 'react-wood-duck';
 import Cards from '../../common/Card';
 import AddUser from '../../containers/addUserContainer';
-import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table';
-import { makeUserDetailPath } from '../../_utils/makeUserDetailPath';
+import ReactTable from 'react-table';
+import Pagination from './Pagination';
 
-const buttonAlign = { marginTop: '-9px' };
+const hackBtnStyles = {
+  marginTop: '22px',
+  padding: '14px 0',
+  textAlign: 'center',
+};
 
-class UserList extends React.Component {
+export const toFullName = ({ first_name, last_name }) =>
+  `${last_name}, ${first_name}`;
+
+class UserList extends PureComponent {
   constructor(props) {
     super(props);
     this.state = {
-      searchKey: '',
       addUser: false,
     };
   }
 
   componentDidMount() {
-    this.props.actions.fetchUsersActions(this.state.searchKey);
+    this.props.actions.searchUsers({
+      query: this.props.query,
+      sort: this.props.sort,
+      size: this.props.size,
+      from: this.props.from,
+    });
     this.props.actions.fetchAccountActions();
   }
-
-  nameFormat = (cell, row) => (
-    <a href={`${makeUserDetailPath(row.id)}`}>
-      {row.last_name}, {row.first_name}
-    </a>
-  );
-
-  userStatusFormat = (cell, row) => {
-    row.enabled ? (row.enabled = 'Active') : (row.enabled = 'Inactive');
-    return row.enabled;
-  };
-
-  handleOnClick = () =>
-    this.props.actions.fetchUsersActions(this.state.searchKey);
-
-  handleTextChange = event => this.setState({ searchKey: event.target.value });
 
   handleOnAdd = () => {
     this.setState({ addUser: true });
   };
 
-  cards = () => {
-    const { accountCounty } = this.props;
-    return (
-      <Cards
-        cardHeaderText={'Manage Users: ' + accountCounty}
-        cardHeaderButton={true}
-        headerBtnName="+ Add a user"
-        onEdit={this.handleOnAdd}
-      >
-        <InputComponent
-          id="searchtext"
-          gridClassName="col-md-10 col-sm-6 col-xs-12"
-          fieldClassName="form-group"
-          type="text"
-          onChange={this.handleTextChange}
-          placeholder="search user by Last name"
-        />
-        <div className="col-md-2" style={buttonAlign}>
-          <button
-            type="button"
-            className="btn btn-primary btn-sm"
-            onClick={this.handleOnClick}
-          >
-            Search
-          </button>
-        </div>
-        {this.tableComponent()}
-      </Cards>
+  handlePageChange = pageIndex => {
+    this.props.actions.setPage(pageIndex);
+  };
+
+  handlePageSizeChange = (pageSize, pageIndex) => {
+    this.props.actions.setPageSize(pageSize);
+  };
+
+  handleSortChange = (newSorted, column, shiftKey) => {
+    this.props.actions.setSort(
+      newSorted.map(s => ({ field: s.id, desc: s.desc }))
     );
   };
-  tableComponent = () => {
-    const { userList } = this.props;
+
+  handleSearchChange = e => {
+    this.props.actions.setNextSearch(e.target.value);
+  };
+
+  submitSearch = e => {
+    e.preventDefault();
+    this.props.actions.setSearch([
+      { field: 'last_name', value: this.props.nextSearch },
+    ]);
+  };
+
+  getTotalPages = () =>
+    this.props.total ? Math.ceil(this.props.total / this.props.size) : -1;
+
+  getCurrentPageNumber = () => Math.floor(this.props.from / this.props.size);
+
+  isDisabledSearchBtn = () => {
+    const { query, nextSearch } = this.props;
+    if (!query) return false;
+    const lastNameSearch = query.find(
+      ({ field, value }) => field === 'last_name'
+    );
+    if (!lastNameSearch) return false;
+    return lastNameSearch.value === nextSearch;
+  };
+
+  renderUsersTable = ({ data }) => {
     return (
-      <div className="col-md-12">
-        <BootstrapTable
-          bordered={false}
-          data={userList}
-          striped={true}
-          hover={true}
-          trClassName="userRow"
-          withoutTabIndex
-        >
-          <TableHeaderColumn
-            dataField="last_name"
-            dataSort
-            width="350"
-            dataFormat={this.nameFormat}
-          >
-            Full Name
-          </TableHeaderColumn>
-          <TableHeaderColumn
-            dataField="enabled"
-            dataFormat={this.userStatusFormat}
-            width="100"
-          >
-            Status
-          </TableHeaderColumn>
-          <TableHeaderColumn dataField="last_login_date_time" width="100">
-            Last Login
-          </TableHeaderColumn>
-          <TableHeaderColumn dataField="racfid" isKey width="100">
-            CWS Login
-          </TableHeaderColumn>
-          <TableHeaderColumn dataField="office" width="100">
-            Office Name
-          </TableHeaderColumn>
-        </BootstrapTable>
+      <ReactTable
+        data={data}
+        showPaginationTop={this.props.size >= 20}
+        columns={[
+          {
+            Header: 'Full Name',
+            id: 'last_name',
+            accessor: toFullName,
+            Cell: ({ value, original }) => (
+              <Link
+                href={`${this.props.location.pathname}/user_details/${
+                  original.id
+                }`}
+                text={value}
+              />
+            ),
+            minWidth: 400,
+          },
+          {
+            Header: 'Status',
+            accessor: 'enabled',
+          },
+          {
+            Header: 'Last Login',
+            accessor: 'last_login_date_time',
+          },
+          {
+            Header: 'CWS Login',
+            accessor: 'racfid',
+          },
+          {
+            Header: 'End date',
+            accessor: 'end_date',
+          },
+        ]}
+        manual
+        sorted={this.props.sort.map(d => ({ id: d.field, desc: d.desc }))}
+        sortable={false}
+        page={this.getCurrentPageNumber()}
+        pages={this.getTotalPages()}
+        pageSize={this.props.size}
+        pageSizeOptions={this.props.pageSizeOptions}
+        defaultPageSize={10}
+        loading={this.props.fetching}
+        onFetchData={this.search}
+        className="-striped -highlight"
+        onPageChange={this.handlePageChange}
+        onPageSizeChange={this.handlePageSizeChange}
+        onSortedChange={this.handleSortChange}
+        PaginationComponent={Pagination}
+      />
+    );
+  };
+
+  renderBreadcrumb = () => {
+    const { dashboardUrl, dashboardClickHandler } = this.props;
+    return (
+      <div>
+        Back to:{' '}
+        <Link
+          text="Dashboard"
+          href={dashboardUrl}
+          clickHandler={dashboardClickHandler}
+        />
       </div>
     );
   };
 
   render() {
-    const { dashboardUrl, dashboardClickHandler } = this.props;
+    const { accountCounty } = this.props;
     return (
       <div role="main">
         {this.state.addUser ? (
@@ -123,19 +159,45 @@ class UserList extends React.Component {
           <div>
             <PageHeader pageTitle="Manage Users" button="" />
             <div className="container">
-              <div className="row">
-                <div className="col-md-12">
-                  <div className="col-md-12">
-                    Back to:{' '}
-                    <Link
-                      text="Dashboard"
-                      href={dashboardUrl}
-                      clickHandler={dashboardClickHandler}
-                    />
+              {this.renderBreadcrumb()}
+              <Cards
+                cardHeaderText={'Manage Users: ' + accountCounty}
+                cardHeaderButton={true}
+                headerBtnName="+ Add a user"
+                onEdit={this.handleOnAdd}
+              >
+                <form onSubmit={this.submitSearch}>
+                  <div className="row">
+                    <div className="col-md-10 col-sm-6">
+                      <InputComponent
+                        id="searchtext"
+                        fieldClassName="form-group"
+                        type="text"
+                        value={this.props.nextSearch}
+                        onChange={this.handleSearchChange}
+                        placeholder="search user by Last name"
+                        autocomplete="off"
+                      />
+                    </div>
+                    <div className="col-md-2 col-sm-6">
+                      <button
+                        type="submit"
+                        style={hackBtnStyles}
+                        className="btn btn-primary btn-block btn-sm"
+                        disabled={this.isDisabledSearchBtn()}
+                      >
+                        Search
+                      </button>
+                    </div>
                   </div>
-                  {this.cards()}
+                </form>
+                <br />
+                <div>
+                  {this.renderUsersTable({
+                    data: this.props.userList,
+                  })}
                 </div>
-              </div>
+              </Cards>
             </div>
           </div>
         )}
@@ -145,15 +207,43 @@ class UserList extends React.Component {
 }
 
 UserList.propTypes = {
+  page: PropTypes.number,
+  from: PropTypes.number,
+  size: PropTypes.number,
+  fetching: PropTypes.bool,
   userList: PropTypes.array,
   dashboardUrl: PropTypes.string,
   accountCounty: PropTypes.string,
   dashboardClickHandler: PropTypes.func,
   actions: PropTypes.object.isRequired,
+  nextSearch: PropTypes.string,
+  total: PropTypes.number,
+  location: PropTypes.shape({
+    pathname: PropTypes.string,
+  }),
+  sort: PropTypes.arrayOf(
+    PropTypes.shape({
+      field: PropTypes.string.isRequired,
+      desc: PropTypes.bool,
+    })
+  ),
+  query: PropTypes.arrayOf(
+    PropTypes.shape({
+      field: PropTypes.string,
+      value: PropTypes.oneOfType([
+        PropTypes.string,
+        PropTypes.number,
+        PropTypes.bool,
+      ]),
+    })
+  ),
+  pageSizeOptions: PropTypes.arrayOf(PropTypes.number),
 };
 
 UserList.defaultProps = {
   dashboardUrl: '/',
   dashboardClickHandler: () => {},
+  sort: [],
+  pageSizeOptions: [5, 10, 25, 50, 100],
 };
 export default UserList;

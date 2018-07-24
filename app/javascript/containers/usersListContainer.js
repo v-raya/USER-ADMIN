@@ -1,27 +1,53 @@
 import { connect } from 'react-redux';
-import UsersList from '../views/usersList/UsersList';
-import { selectUserRecords, selectCounty } from '../selectors/userListSelector';
-import { fetchUsersActions } from '../actions/usersActions';
-import { fetchAccountActions } from '../actions/accountActions';
 import { bindActionCreators } from 'redux';
+import UsersList from '../views/usersList/UsersList';
+import {
+  searchUsers,
+  setPage,
+  setPageSize,
+  setSort,
+  setSearch,
+  setNextSearch,
+} from '../actions/userListActions';
+import { fetchAccountActions } from '../actions/accountActions';
+import { selectCounty } from '../selectors/accountSelectors';
 
 function mapStateToProps(state) {
+  const { userList } = state;
   return {
-    userList: selectUserRecords(state),
+    userList: userList.users || [],
     accountCounty: selectCounty(state),
+    fetching: userList.fetching,
     userListUrl: '/#',
     dashboardUrl: '/',
+    size: userList.size,
+    from: userList.from,
+    sort: userList.sort,
+    query: userList.query,
+    nextSearch: userList.nextSearch,
+    aggregate: userList.aggregate,
+    total: userList.total,
   };
 }
 
 function mapDispatchToProps(dispatch) {
-  const actions = {
-    fetchUsersActions,
-    fetchAccountActions,
-  };
   return {
-    actions: bindActionCreators(actions, dispatch),
+    actions: bindActionCreators(
+      {
+        searchUsers,
+        fetchAccountActions,
+        setPage,
+        setPageSize,
+        setSort,
+        setSearch,
+        setNextSearch,
+      },
+      dispatch
+    ),
   };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(UsersList);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(UsersList);
