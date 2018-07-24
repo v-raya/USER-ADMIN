@@ -60,7 +60,7 @@ describe('UserDetail', () => {
     });
   });
 
-  describe('#UNSAFE_componentDidMount', () => {
+  describe('#componentDidMount', () => {
     let wrapper;
     let mockFetchDetailsActions;
     let mockFetchPermissionsActions;
@@ -83,12 +83,10 @@ describe('UserDetail', () => {
     });
 
     it('fetches details', () => {
-      wrapper.instance().UNSAFE_componentDidMount({});
       expect(mockFetchDetailsActions).toHaveBeenCalledWith('blank');
     });
 
     it('fetches the permissions', () => {
-      wrapper.instance().UNSAFE_componentDidMount({ details: { id: 1 } });
       expect(mockFetchPermissionsActions).toHaveBeenCalledWith();
     });
   });
