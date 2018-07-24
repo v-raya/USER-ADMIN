@@ -35,8 +35,8 @@ module Elastic
     # input [ {fac_co_nbr: '23', fac_name: 'home'}, {fac_co_nbr: '45'} ]
     # translates to  (fac_co_nbr: 23 AND fac_name: home) OR (fac_co_nbr: 45)
     # returns:
-    # {"query":{"bool":{"must":[{"bool":{"must":[{"match":{"fac_co_nbr":"28"}},
-    #   {"match":{"fac_name":"home"}}]}},{"bool":{"must":[{"match":{"fac_co_nbr":"18"}}]}}]}}}
+    # {"query":{"bool":{"should":[{"bool":{"must":[{"match":{"fac_co_nbr":"28"}},
+    #  {"match":{"fac_name":"home"}}]}},{"bool":{"must":[{"match":{"fac_co_nbr":"18"}}]}}]}}}
     #
     def self.match_boolean(query_array)
       # prepare array of match queries.
@@ -47,30 +47,20 @@ module Elastic
         combined_query_array << bool_and(leaf_queries(itm))
       end
       # wrap array in a bool OR query
-      {
-        query: { bool: { must: combined_query_array } }
-      }
-    end
-
-    def self.match_all
-      {
-        query: {
-          match_all: {}
-        }
-      }
+      { query: { bool: { should: combined_query_array } } }
     end
 
     def self.sort_query(page_params)
-      sort = { sort: [] }
       if page_params['sort_params'].present? && page_params['order_params'].present?
-        sort = {
+        {
           sort: [
             '_score',
             { page_params['sort_params'] => { order: page_params['order_params'] } }
           ]
         }
+      else
+        { sort: [] }
       end
-      sort
     end
 
     def self.paginate_query(page_params)
@@ -83,18 +73,20 @@ module Elastic
     def self.user_search_v1(query_array, page_params)
       search_params = query_array.map { |param| param[:last_name] }.first
 
-      if search_params
-        search_query = search_query(search_params[:value])
-                       .merge(paginate_query(page_params))
-                       .merge(sort_query(page_params))
-        return search_query
-      else
-        match_all
-      end
+      search_query = search_params ? search_query(search_params[:value]) : match_all
+      search_query.merge(paginate_query(page_params)).merge(sort_query(page_params))
     end
 
     def self.search_query(search_params)
       { query: { match_phrase_prefix: { "last_name": search_params } } }
+    end
+
+    def self.match_all
+      {
+        query: {
+          match_all: {}
+        }
+      }
     end
   end
 end

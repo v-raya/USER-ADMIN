@@ -24,7 +24,7 @@ export default class VerifyUser extends React.Component {
           >
             <div className="col-md-12">
               <div className="row">
-                <div className="label">
+                <div className="instructions label">
                   Enter the CWS Login and email address of the user you are
                   adding in order to verify that this is a new CWS-CARES user
                 </div>

@@ -4,73 +4,81 @@ require 'rails_helper'
 
 module Api
   describe UserListController do
-    # describe '#index_legacy' do
-    #   let(:user_repository) { instance_double('User::UserRepository') }
-    #   let(:user) { Users::User.new(username: 'el') }
+    describe '#index' do
+      let(:user_repository) { instance_double('User::UserRepository') }
+      let(:user) { Users::User.new(username: 'el') }
+      let(:partial_user_response) do
+        { records: [user.to_hash], meta: { total: 1, req: {} } }
+      end
+      let(:match_all_query) { { query: { match_all: {} }, from: 51, size: 25, sort: [] } }
+      it 'has a route' do
+        expect(get: 'api/user_list').to route_to(
+          controller: 'api/user_list',
+          action: 'index',
+          format: 'json'
+        )
+      end
 
-    #   it 'returns a userlist' do
-    #     allow(Elastic::QueryBuilder).to receive(:elastic_search?).and_return(false)
-    #     allow(Users::UserRepository).to receive(:new)
-    #       .with(no_args).and_return(user_repository)
-    #     allow(user_repository).to receive(:get_users).with({}, 'token').and_return(user)
-    #     request.session[:token] = 'token'
-    #     get :index
-    #     expect(response.body).to eq user.to_json
-    #   end
-    # end
+      describe 'when no params are passed' do
+        let(:match_search_with_paging) do
+          { query: [],
+            from: 51, size: 25,
+            sort: [{ field: 'last_name', desc: true }] }
+        end
+        let(:api_response) { { hits: { hits: [_source: user], total: 1 } } }
 
-    # describe '#index' do
-    #   let(:user_repository) { instance_double('User::UserRepository') }
-    #   let(:user) { Users::User.new(username: 'el') }
-    #   let(:search_key) { 'My name' }
-    #   let(:match_all_query) { { query: { match_all: {} } } }
+        it 'returns a userlist' do
+          allow(Users::UserRepository).to receive(:new)
+            .with(no_args).and_return(user_repository)
 
-    #   it 'has a route' do
-    #     expect(get: 'api/user_list').to route_to(
-    #       controller: 'api/user_list',
-    #       action: 'index',
-    #       format: 'json'
-    #     )
-    #   end
+          allow(Users::UserRepository).to receive(:search).with(match_all_query, 'token')
+                                                          .and_return(api_response)
+          request.session[:token] = 'token'
 
-    #   describe 'when no params are passed' do
-    #     it 'returns a userlist' do
-    #       allow(Users::UserRepository).to receive(:new)
-    #         .with(no_args).and_return(user_repository)
+          partial_user_response[:meta] = { req: match_search_with_paging, total: 1 }
+          get :index, params: { q: match_search_with_paging.to_json }
+          expect(JSON.parse(response.body, symbolize_names: true)).to eq partial_user_response
+        end
+      end
 
-    #       api_response = { hits: { hits: [_source: user] } }
-    #       allow(Users::UserRepository).to receive(:search).with(match_all_query, 'token')
-    #                                                       .and_return(api_response)
-    #       request.session[:token] = 'token'
-    #       get :index
-    #       expect(response.body).to eq [user].to_json
-    #     end
-    #   end
+      describe 'when search params are passed' do
+        let(:api_response) { { hits: { hits: [_source: user], total: 1 } } }
+        let(:match_last_name_with_paging) do
+          { query: [{ field: 'last_name', value: 'Smith' }],
+            from: 51, size: 25,
+            sort: [{ field: 'last_name', desc: true }] }
+        end
+        let(:match_empty_last_name_with_paging) do
+          { query: [{ field: 'last_name', value: '' }],
+            from: 51, size: 25,
+            sort: [{ field: 'last_name', desc: true }] }
+        end
 
-    #   describe 'when search params are passed' do
-    #     let(:api_response) { { hits: { hits: [_source: user] } } }
+        before do
+          allow(Users::UserRepository).to receive(:new)
+            .with(no_args).and_return(user_repository)
+          request.session[:token] = 'token'
+        end
 
-    #     before do
-    #       allow(Users::UserRepository).to receive(:new)
-    #         .with(no_args).and_return(user_repository)
-    #       request.session[:token] = 'token'
-    #     end
-    #     it 'returns a userlist / search limited by last_name' do
-    #       allow(Users::UserRepository).to receive(:search).with(
-    #         { query: { match_phrase_prefix: { last_name: 'El' } },
-    #           from: 0, size: 50, sort: [] }, 'token'
-    #       ).and_return(api_response)
-    #       get :index, params: { last_name: 'El' }
-    #       expect(response.body).to eq [user].to_json
-    #     end
-    #     it 'empty search params are ignored' do
-    #       allow(Users::UserRepository).to receive(:search).with(match_all_query, 'token')
-    #                                                       .and_return(api_response)
+        it 'returns a userlist / search limited by last_name' do
+          allow(Users::UserRepository).to receive(:search).with(
+            { query: { match_phrase_prefix: { last_name: 'Smith' } },
+              from: 51, size: 25, sort: [] }, 'token'
+          ).and_return(api_response)
 
-    #       get :index, params: { last_name: '' }
-    #       expect(response.body).to eq [user].to_json
-    #     end
-    #   end
-    # end
+          partial_user_response[:meta] = { req: match_last_name_with_paging, total: 1 }
+          get :index, params: { q: match_last_name_with_paging.to_json }
+          expect(JSON.parse(response.body, symbolize_names: true)).to eq partial_user_response
+        end
+        it 'empty search params are ignored' do
+          allow(Users::UserRepository).to receive(:search).with(match_all_query, 'token')
+                                                          .and_return(api_response)
+
+          get :index, params: { q: match_empty_last_name_with_paging.to_json }
+          partial_user_response[:meta] = { req: match_empty_last_name_with_paging, total: 1 }
+          expect(JSON.parse(response.body, symbolize_names: true)).to eq partial_user_response
+        end
+      end
+    end
   end
 end

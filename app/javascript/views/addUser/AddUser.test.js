@@ -39,7 +39,7 @@ describe('VerifyUser', () => {
     });
   });
 
-  describe('#componentWillReceiveProps', () => {
+  describe('#UNSAFE_componentWillReceiveProps', () => {
     it('passes along the props', () => {
       const instance = wrapper.instance();
       instance.UNSAFE_componentWillReceiveProps({

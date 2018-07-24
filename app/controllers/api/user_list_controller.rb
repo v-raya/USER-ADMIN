@@ -16,10 +16,10 @@ module Api
       es_req[:size] = req['size'] || 100
 
       # FIXME: es complains: `Fielddata is disabled on text fields by default ...`
-      #        if non-empty array/object is provided
-      # es_req[:sort] = req["sort"].collect {|x|
-      #   field = x["field"]
-      #   order = x["desc"] ? "desc" : "asc"
+      #   if non-empty array/object is provided
+      # es_req[:sort] = req['sort'].collect {|x|
+      #   field = x['field']
+      #   order = x['desc'] ? 'desc' : 'asc'
       #   out = {}
       #   out[field] = order
       #   out
@@ -44,38 +44,28 @@ module Api
 
     def index
       return index_legacy unless Elastic::QueryBuilder.elastic_search?
-      index_cog12
-      # es_query_json = build_query_hash
-      # logger.debug "should be posted as #{JSON.generate(es_query_json)}"
-      # users = Users::UserRepository.search(es_query_json, session[:token])
-      # @users_response = collect_users(users)
-      # render json: @users_response, status: :ok
+      q = allowed_params_to_search[:q]
+      query = q ? JSON.parse(q, symbolize_names: true) : {}
+
+      es_query_json = QueryPreprocessor.build_query_hash(query)
+      logger.debug "should be posted as #{JSON.generate(es_query_json)}"
+
+      es_response = Users::UserRepository.search(es_query_json, session[:token])
+      @users_response = user_response(es_response, query)
+      render json: @users_response, status: :ok
     end
 
     private
 
-    def collect_users(users)
-      users[:hits][:hits].collect { |user| user[:_source] }
-    end
+    def user_response(es_response, request_query)
+      users = es_response[:hits][:hits].collect { |user| user[:_source] }
+      total = es_response[:hits][:total]
 
-    def assign_page_params
-      page_params = {}
-      page_params['size_params'] = params[:size] || 50
-      page_params['from_params'] = params[:from] || 0
-      page_params
+      { records: users, meta: { total: total, req: request_query } }
     end
 
     def allowed_params_to_search
-      params.permit(:last_name, :format).to_h
-    end
-
-    def build_query_hash
-      user_hash = Users::User.new(allowed_params_to_search).to_h.compact
-      query = QueryPreprocessor.form_params_to_query_params(user_hash)
-      page_params = assign_page_params
-      query_hash = {}
-      query_hash = QueryPreprocessor.params_to_query_with_types(query) unless query.empty?
-      Elastic::QueryBuilder.user_search_v1(query_hash, page_params)
+      params.permit(:q)
     end
   end
 end

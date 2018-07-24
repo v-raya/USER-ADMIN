@@ -20,7 +20,7 @@ const AddNewUser = ({ onCancel, onSave, verifyNewUserDetails }) => {
             >
               <div className="col-md-12">
                 <div className="row">
-                  <div className="label">
+                  <div className="instructions label">
                     Please Verify the details of the CWS-CMS user you want to
                     add to CWS-CARES
                   </div>

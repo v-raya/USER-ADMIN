@@ -26,12 +26,12 @@ describe Elastic::QueryBuilder do
       expected_output = {
         query: {
           bool: {
-            must: [
+            should: [
               {
                 bool: {
                   must: [
-                    { match_phrase_prefix: { 'first_name': 'John' } },
-                    { match_phrase_prefix: { 'last_name': 'Smith' } }
+                    { match_phrase_prefix: { 'last_name': 'Smith' } },
+                    { match_phrase_prefix: { 'first_name': 'John' } }
                   ]
                 }
               }
@@ -40,10 +40,10 @@ describe Elastic::QueryBuilder do
         }
       }
 
-      input = [{ first_name: { query_type: 'match_phrase_prefix', value: 'John' },
-                 last_name: { query_type: 'match_phrase_prefix', value: 'Smith' } }]
+      input = [{ last_name: { query_type: 'match_phrase_prefix', value: 'Smith' },
+                 first_name: { query_type: 'match_phrase_prefix', value: 'John' } }]
       output = Elastic::QueryBuilder.match_boolean(input)
-      expect(output).to eq(expected_output)
+      expect(output.to_s).to eq(expected_output.to_s)
     end
 
     it 'builds sort query' do
@@ -70,25 +70,6 @@ describe Elastic::QueryBuilder do
       }
       input = { 'size_params' => '5', 'from_params' => '0' }
       output = Elastic::QueryBuilder.paginate_query(input)
-      expect(output).to eq(expected_output)
-    end
-
-    it 'build query merging pagination and sort' do
-      expected_output = {
-        query: {
-          match_phrase_prefix: { 'last_name': 'Smith' }
-        },
-        from: '0',
-        size: '5',
-        sort: []
-      }
-
-      query_array = [
-        { 'first_name': { query_type: 'match_phrase_prefix', value: 'John' },
-          'last_name': { query_type: 'match_phrase_prefix', value: 'Smith' } }
-      ]
-      page_params = { 'order_params' => 'asc', 'size_params' => '5', 'from_params' => '0' }
-      output = Elastic::QueryBuilder.user_search_v1(query_array, page_params)
       expect(output).to eq(expected_output)
     end
   end

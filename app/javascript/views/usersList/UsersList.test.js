@@ -34,19 +34,16 @@ describe('UsersList', () => {
   });
 
   describe('#UNSAFE_componentDidMount', () => {
-    let mockFetchUsersActions;
     let mockFetchAccountActions;
     let mockSearchUsers;
 
     beforeEach(() => {
-      mockFetchUsersActions = jest.fn();
       mockFetchAccountActions = jest.fn();
       mockSearchUsers = jest.fn();
       mount(
         <UsersList
           dashboardUrl={'dburl'}
           actions={{
-            fetchUsersActions: mockFetchUsersActions,
             fetchAccountActions: mockFetchAccountActions,
             searchUsers: mockSearchUsers,
           }}
@@ -56,7 +53,12 @@ describe('UsersList', () => {
 
     it('fetches users', () => {
       // TODO: make a stronger expectation of args based on API query DSL (when it emerges)
-      expect(mockSearchUsers).toHaveBeenCalledWith(jasmine.any(Object));
+      expect(mockSearchUsers).toHaveBeenCalledWith({
+        from: undefined,
+        query: undefined,
+        size: undefined,
+        sort: [],
+      });
     });
 
     it('fetches the account', () => {
