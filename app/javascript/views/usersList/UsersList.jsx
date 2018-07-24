@@ -191,21 +191,6 @@ class UserList extends PureComponent {
                     </div>
                   </div>
                 </form>
-                {/* <pre style={{ color: 'white' }}>
-                  {JSON.stringify(
-                    {
-                      sort: this.props.sort,
-                      fetching: this.props.fetching,
-                      page: this.props.page,
-                      size: this.props.size,
-                      from: this.props.from,
-                      query: this.props.query,
-                      total: this.props.total,
-                    },
-                    null,
-                    2
-                  )}
-                </pre> */}
                 <br />
                 <div>
                   {this.renderUsersTable({

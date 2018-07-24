@@ -10,38 +10,6 @@ module Api
       render json: users
     end
 
-    def transorm_request_cog12(req)
-      es_req = {}
-      es_req[:from] = req['from'] || 0
-      es_req[:size] = req['size'] || 100
-
-      # FIXME: es complains: `Fielddata is disabled on text fields by default ...`
-      #   if non-empty array/object is provided
-      # es_req[:sort] = req['sort'].collect {|x|
-      #   field = x['field']
-      #   order = x['desc'] ? 'desc' : 'asc'
-      #   out = {}
-      #   out[field] = order
-      #   out
-      # }
-
-      # FIXME: using match_phrase_prefix b/c es index doesn't use analyzable field for last_name
-      last_name_query = req['query'].detect { |w| w['field'] == 'last_name' }
-      if !last_name_query.nil? && !last_name_query['value'].empty?
-        es_req[:query] = { match_phrase_prefix: { last_name: last_name_query['value'] } }
-      end
-      es_req
-    end
-
-    def index_cog12
-      search_spec = JSON.parse(CGI.unescape(params[:q]))
-      req = transorm_request_cog12(search_spec)
-      res = Users::UserRepository.search(req, session[:token])
-      records = collect_users(res)
-      out = { records: records, meta: { total: res[:hits][:total], request: search_spec } }
-      render json: out, status: :ok
-    end
-
     def index
       return index_legacy unless Elastic::QueryBuilder.elastic_search?
       q = allowed_params_to_search[:q]

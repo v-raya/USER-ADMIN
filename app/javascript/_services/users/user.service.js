@@ -17,30 +17,6 @@ class UserService {
       })
     );
     return ApiService.get(`/user_list?q=${q}`).then(({ data }) => data);
-    // let timeout = new Promise((resolve, reject) => {
-    //   let id = setTimeout(() => {
-    //     clearTimeout(id);
-    //     resolve({
-    //       records: [
-    //         { first_name: 'Danny', last_name: 'Eck' },
-    //         { first_name: 'Danny', last_name: 'Eck' },
-    //         { first_name: 'Danny', last_name: 'Eck' },
-    //         { first_name: 'Danny', last_name: 'Eck' },
-    //         { first_name: 'Danny', last_name: 'Eck' },
-    //       ],
-    //       meta: {
-    //         total: 1000,
-    //         request: {
-    //           from: 50,
-    //           size: 50,
-    //           query: [{ field: 'last_name', value: 'Eck' }],
-    //           sort: [{ field: 'last_name', desc: false }],
-    //         },
-    //       },
-    //     });
-    //   }, 1000);
-    // });
-    // return timeout;
   }
 
   static fetchUserDetails(id) {
