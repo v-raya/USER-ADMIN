@@ -2,7 +2,8 @@
 
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import { Link, InputComponent, PageHeader } from 'react-wood-duck';
+import { Link } from 'react-router-dom';
+import { Link as LinkRWD, InputComponent, PageHeader } from 'react-wood-duck';
 import Cards from '../../common/Card';
 import AddUser from '../../containers/addUserContainer';
 import ReactTable from 'react-table';
@@ -91,12 +92,7 @@ class UserList extends PureComponent {
             id: 'last_name',
             accessor: toFullName,
             Cell: ({ value, original }) => (
-              <Link
-                href={`${this.props.location.pathname}/user_details/${
-                  original.id
-                }`}
-                text={value}
-              />
+              <Link to={`/user_details/${original.id}`}>{value}</Link>
             ),
             minWidth: 400,
           },
@@ -141,7 +137,7 @@ class UserList extends PureComponent {
     return (
       <div>
         Back to:{' '}
-        <Link
+        <LinkRWD
           text="Dashboard"
           href={dashboardUrl}
           clickHandler={dashboardClickHandler}

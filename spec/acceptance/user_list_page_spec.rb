@@ -66,7 +66,7 @@ feature 'User List Page' do
   end
 
   def page_count_users
-    page.all('.rt-tr-group .link').count
+    page.all('.rt-tr-group a').count
   end
 
   def first_user_link
