@@ -8,6 +8,7 @@ import Cards from '../../common/Card';
 import AddUser from '../../containers/addUserContainer';
 import ReactTable from 'react-table';
 import Pagination from './Pagination';
+import './UsersList.scss';
 
 const hackBtnStyles = {
   marginTop: '22px',
