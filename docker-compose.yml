@@ -84,17 +84,17 @@ services:
     command: ['bundle', 'exec', 'rails', 'server']
     depends_on:
       - perry
-  # county-admin-test:
-  #   build:
-  #     context: .
-  #     dockerfile: docker/test/Dockerfile
-  #   volumes:
-  #     - type: bind
-  #       source: ./spec
-  #       target: /app/spec
-  #   environment:
-  #     - SECRET_KEY_BASE
-  #     - PERRY_API_BASE_URL
-  #     - COUNTY_ADMIN_WEB_BASE_URL
-  #     - DASHBOARD_URL
-  #     - RAILS_RELATIVE_URL_ROOT
+  county-admin-test:
+    build:
+      context: .
+      dockerfile: docker/test/Dockerfile
+    volumes:
+      - type: bind
+        source: ./spec
+        target: /app/spec
+    environment:
+      - SECRET_KEY_BASE
+      - PERRY_API_BASE_URL
+      - COUNTY_ADMIN_WEB_BASE_URL
+      - DASHBOARD_URL
+      - RAILS_RELATIVE_URL_ROOT

@@ -33,7 +33,7 @@ describe('UsersList', () => {
     });
   });
 
-  describe('#componentDidMount', () => {
+  describe('#UNSAFE_componentDidMount', () => {
     let mockFetchUsersActions;
     let mockFetchAccountActions;
     let mockSearchUsers;

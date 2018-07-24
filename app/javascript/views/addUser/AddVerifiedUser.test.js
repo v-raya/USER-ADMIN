@@ -26,7 +26,16 @@ describe('AddVerifiedUser', () => {
       wrapper = shallow(
         <AddVerifiedUser verifyNewUserDetails={verifyNewUserDetails} />
       );
+<<<<<<< Updated upstream
       expect(wrapper.find('div.label').text()).toBe(
+=======
+      expect(
+        wrapper
+          .find('div')
+          .at(5)
+          .text()
+      ).toBe(
+>>>>>>> Stashed changes
         'Please Verify the details of the CWS-CMS user you want to add to CWS-CARES'
       );
       expect(wrapper.find('ShowField').length).toBe(5);

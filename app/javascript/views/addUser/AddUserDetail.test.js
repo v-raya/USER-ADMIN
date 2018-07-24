@@ -73,7 +73,7 @@ describe('AddUserDetail', () => {
     });
   });
 
-  describe('#componentDidUpdate', () => {
+  describe('#UNSAFE_componentDidUpdate', () => {
     let mockFetchDetailsActions;
 
     beforeEach(() => {
