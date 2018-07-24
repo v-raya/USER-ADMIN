@@ -24,9 +24,9 @@ class UserService {
   }
 
   static validateUser(email, racfid) {
-    return ApiService.get(`/verify_user?email=${email}&racfid=${racfid}`).then(
-      response => response.data
-    );
+    return ApiService.get(
+      `/verify_user?email=${encodeURIComponent(email)}&racfid=${racfid}`
+    ).then(response => response.data);
   }
 
   static saveUserDetails(id, details) {

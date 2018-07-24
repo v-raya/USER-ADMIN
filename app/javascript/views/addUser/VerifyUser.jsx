@@ -11,6 +11,8 @@ export default class VerifyUser extends React.Component {
       handleEmailChange,
       handleRacfChange,
       disableActionBtn,
+      errorMessage,
+      valid,
     } = this.props;
     return (
       <div className="row">
@@ -24,10 +26,10 @@ export default class VerifyUser extends React.Component {
           >
             <div className="col-md-12">
               <div className="row">
-                <div className="instructions label">
+                <label htmlFor="text">
                   Enter the CWS Login and email address of the user you are
                   adding in order to verify that this is a new CWS-CARES user
-                </div>
+                </label>
                 <div className="col-md-3">
                   <InputComponent
                     label="CWS Login"
@@ -41,9 +43,11 @@ export default class VerifyUser extends React.Component {
                   <InputComponent
                     label="Email Address"
                     fieldClassName="form-group"
-                    type="text"
+                    type="email"
                     placeholder="Add Email Address"
                     onChange={handleEmailChange}
+                    validationErrorMessage={errorMessage.emailError}
+                    validationError={valid.emailValueValid}
                   />
                 </div>
               </div>
@@ -61,4 +65,6 @@ VerifyUser.propTypes = {
   handleRacfChange: PropTypes.func,
   handleEmailChange: PropTypes.func,
   disableActionBtn: PropTypes.bool,
+  errorMessage: PropTypes.any,
+  valid: PropTypes.any,
 };

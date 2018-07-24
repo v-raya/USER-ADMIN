@@ -60,6 +60,7 @@ services:
       - 9300
     environment:
       TOKEN_VALIDATION_URL: ${TOKEN_VALIDATION_URL}
+      ELASTIC_SEARCH_MODE: ${ELASTIC_SEARCH_MODE}
       ELASTICSEARCH_XPACK_DATA_VERSION: ${ELASTICSEARCH_XPACK_DATA_VERSION}
   county-admin-web:
     build:
@@ -80,6 +81,7 @@ services:
       AUTHENTICATION: ${AUTHENTICATION}
       COUNTY_ADMIN_WEB_BASE_URL: ${COUNTY_ADMIN_WEB_BASE_URL}
       DASHBOARD_URL: ${DASHBOARD_URL}
+      ELASTIC_SEARCH_MODE: ${ELASTIC_SEARCH_MODE}
       RAILS_RELATIVE_URL_ROOT: ${RAILS_RELATIVE_URL_ROOT}
     command: ['bundle', 'exec', 'rails', 'server']
     depends_on:

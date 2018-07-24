@@ -17,6 +17,12 @@ export default class AddUser extends Component {
       addUser: props.addUser,
       verifyNewUserDetails: props.verifyNewUserDetails,
       details: props.details,
+      valid: {
+        emailValueValid: true,
+      },
+      errorMessage: {
+        emailError: '',
+      },
     };
   }
 
@@ -30,11 +36,26 @@ export default class AddUser extends Component {
 
   handleEmail = event => {
     this.setState({ email: event.target.value });
-    if (event.target.value !== '' && this.state.racfid !== '') {
+    this.validateField(event.target.value);
+    if (
+      event.target.value !== '' &&
+      this.state.racfid !== '' &&
+      this.state.errorMessage.emailError === ''
+    ) {
       this.setState({ disableActionBtn: false });
     } else {
       this.setState({ disableActionBtn: true });
     }
+  };
+
+  validateField = value => {
+    let errorMessage = this.state.errorMessage;
+    const emailValueValid = /^[a-zA-Z0-9_!#$%&’*+/=?`'{^.-]*@(?:[A-Z0-9-]+\.)+[A-Z]{2,6}$/i.test(
+      value
+    );
+    emailValueValid
+      ? (errorMessage.emailError = '')
+      : (errorMessage.emailError = 'Please enter a valid email.');
   };
 
   handleRacfid = event => {
@@ -61,6 +82,8 @@ export default class AddUser extends Component {
           handleEmailChange={this.handleEmail}
           handleRacfChange={this.handleRacfid}
           disableActionBtn={this.state.disableActionBtn}
+          valid={this.state.valid}
+          errorMessage={this.state.errorMessage}
         />
       );
     }

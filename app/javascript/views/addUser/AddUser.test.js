@@ -11,17 +11,52 @@ describe('VerifyUser', () => {
     });
   });
 
-  describe('#handleEmail', () => {
-    it('sets state based on the text changing', () => {
-      wrapper.instance().handleEmail({ target: { value: 'abcd@gmail.com' } });
-      expect(wrapper.instance().state.email).toEqual('abcd@gmail.com');
+  describe('#handleEmail()  function', () => {
+    it('it handle that sets state', () => {
+      const instance = wrapper.instance();
+      instance.handleEmail({
+        target: { value: 'abcd@gmail.com' },
+      });
+      expect(instance.state.email).toEqual('abcd@gmail.com');
     });
 
     it('sets disableActionBtn state ', () => {
       expect(wrapper.instance().state.disableActionBtn).toEqual(true);
-      wrapper.instance().setState({ racfid: 'ABCD' });
-      wrapper.instance().handleEmail({ target: { value: 'abcd@gmail.com' } });
+      const instance = wrapper.instance();
+      instance.setState({
+        racfid: 'ABCD',
+        errorMessage: { emailError: '' },
+      });
+      instance.handleEmail({
+        target: { value: 'foo@gmail.com' },
+      });
       expect(wrapper.instance().state.disableActionBtn).toEqual(false);
+    });
+  });
+
+  describe('#validateField', () => {
+    it('validates email when correct format and special characters are given as input', () => {
+      const instance = wrapper.instance();
+      instance.validateField('foo@gmail.com');
+      expect(wrapper.instance().state.errorMessage.emailError).toEqual('');
+      instance.validateField(`foo!#$%^....&*-_+={'?/@gmail.com`);
+      expect(wrapper.instance().state.errorMessage.emailError).toEqual('');
+    });
+
+    it('validates email when not allowed characters are given as input', () => {
+      const instance = wrapper.instance();
+      instance.validateField('foo@<|}][()>@gmail.com');
+      expect(wrapper.instance().state.errorMessage.emailError).toEqual(
+        'Please enter a valid email.'
+      );
+      instance.validateField('fo@o@gmail.com');
+      expect(wrapper.instance().state.errorMessage.emailError).toEqual(
+        'Please enter a valid email.'
+      );
+      instance.validateField('someValue');
+      expect(wrapper.instance().state.errorMessage.emailError).toEqual(
+        'Please enter a valid email.'
+      );
     });
   });
 
@@ -63,7 +98,6 @@ describe('VerifyUser', () => {
     it('renders AddVerifyUser Component', () => {
       wrapper.instance().addUser();
       wrapper.setState({ verify: true });
-
       expect(wrapper.find('AddVerifiedUser').length).toBe(0);
     });
   });

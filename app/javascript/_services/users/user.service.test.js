@@ -92,12 +92,12 @@ describe('UserService', () => {
     });
 
     it('calls #validateUser ApiService', () => {
-      const email = 'email@example.com';
+      const email = 'email+Special@example.com';
       const racfid = 'some-racfid';
       getSpy2.mockReturnValue(Promise.resolve({}));
       UserService.validateUser(email, racfid);
       expect(getSpy2).toHaveBeenCalledWith(
-        `/verify_user?email=${email}&racfid=${racfid}`
+        `/verify_user?email=${encodeURIComponent(email)}&racfid=${racfid}`
       );
     });
   });
