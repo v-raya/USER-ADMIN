@@ -61,7 +61,6 @@ describe('UserDetail', () => {
   });
 
   describe('#componentDidMount', () => {
-    let wrapper;
     let mockFetchDetailsActions;
     let mockFetchPermissionsActions;
 
