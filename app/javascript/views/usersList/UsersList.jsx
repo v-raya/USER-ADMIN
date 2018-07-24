@@ -25,7 +25,7 @@ class UserList extends PureComponent {
     };
   }
 
-  UNSAFE_componentDidMount() {
+  componentDidMount() {
     this.props.actions.searchUsers({
       query: this.props.query,
       sort: this.props.sort,
