@@ -99,11 +99,11 @@ describe('UsersList', () => {
 
       describe('userStatusFormat', () => {
         it('renders Active  for enabled', () => {
-          expect(userStatusFormat(true)).toEqual('Active');
+          expect(userStatusFormat({ enabled: true })).toEqual('Active');
         });
 
         it('renders Activefor disabled', () => {
-          expect(userStatusFormat(false)).toEqual('Inactive');
+          expect(userStatusFormat({ enabled: false })).toEqual('Inactive');
         });
       });
     });
