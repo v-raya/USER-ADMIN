@@ -26,7 +26,7 @@ export default class AddUserDetail extends Component {
     this.setState({ details, id, permissionRoles });
   }
 
-  UNSAFE_componentDidUpdate(prevProps) {
+  componentDidUpdate(prevProps) {
     if (this.state.id !== prevProps.id) {
       this.props.actions.fetchDetailsActions(this.state.id);
     }
