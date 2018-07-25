@@ -33,6 +33,31 @@ describe('UsersList', () => {
     });
   });
 
+  describe('getTotalPages', () => {
+    it('calculates total pages of 1 when the records are not actually loaded', () => {
+      wrapper.setProps({ size: 10, userList: [], total: 419 });
+      expect(wrapper.instance().getTotalPages()).toEqual(1);
+    });
+
+    it('calculates correct page count (total / size) + 1 if there is a remainder.', () => {
+      wrapper.setProps({
+        size: 10,
+        usersList: [{}, {}, {}],
+        total: 419,
+      });
+      expect(wrapper.instance().getTotalPages()).toEqual(42);
+    });
+
+    it('gives up and returns -1 when we have results but the total is 0', () => {
+      wrapper.setProps({
+        size: 10,
+        usersList: [{}, {}, {}],
+        total: 0,
+      });
+      expect(wrapper.instance().getTotalPages()).toEqual(-1);
+    });
+  });
+
   describe('#UNSAFE_componentDidMount', () => {
     let mockFetchAccountActions;
     let mockSearchUsers;
