@@ -34,26 +34,24 @@ describe('UsersList', () => {
   });
 
   describe('getTotalPages', () => {
-    it('calculates total pages of 1 when the records are not actually loaded', () => {
+    it('retuns 1 when resultset is empty', () => {
       wrapper.setProps({ size: 10, userList: [], total: 419 });
       expect(wrapper.instance().getTotalPages()).toEqual(1);
     });
 
     it('calculates correct page count (total / size) + 1 if there is a remainder.', () => {
-      wrapper.setProps({
-        size: 10,
-        usersList: [{}, {}, {}],
-        total: 419,
-      });
+      wrapper.setProps({ size: 10, userList: [{}], total: 419 });
       expect(wrapper.instance().getTotalPages()).toEqual(42);
+      wrapper.setProps({ size: 10, total: 420, userList: [{}] });
+      expect(wrapper.instance().getTotalPages()).toEqual(42);
+      wrapper.setProps({ size: 10, total: 421, userList: [{}] });
+      expect(wrapper.instance().getTotalPages()).toEqual(43);
     });
 
-    it('gives up and returns -1 when we have results but the total is 0', () => {
-      wrapper.setProps({
-        size: 10,
-        usersList: [{}, {}, {}],
-        total: 0,
-      });
+    it('returns -1 (indeterminate) when total numPages can not be calculated', () => {
+      wrapper.setProps({ size: undefined, userList: [{}], total: undefined });
+      expect(wrapper.instance().getTotalPages()).toEqual(-1);
+      wrapper.setProps({ size: 0, userList: [{}], total: 0 });
       expect(wrapper.instance().getTotalPages()).toEqual(-1);
     });
   });

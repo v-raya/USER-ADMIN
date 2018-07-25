@@ -68,8 +68,10 @@ class UserList extends PureComponent {
 
   getTotalPages = () => {
     const { userList: records, total, size } = this.props;
+    if (!records) return -1;
     if (records && Array.isArray(records) && !records.length) return 1;
-    return total ? Math.ceil(total / size) : -1;
+    if (total && size) return Math.ceil(total / size);
+    return -1;
   };
 
   getCurrentPageNumber = () => Math.floor(this.props.from / this.props.size);
