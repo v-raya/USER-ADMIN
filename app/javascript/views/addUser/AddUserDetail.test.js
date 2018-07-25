@@ -73,7 +73,7 @@ describe('AddUserDetail', () => {
     });
   });
 
-  describe('#UNSAFE_componentDidUpdate', () => {
+  describe('#componentDidUpdate', () => {
     let mockFetchDetailsActions;
 
     beforeEach(() => {
@@ -93,7 +93,7 @@ describe('AddUserDetail', () => {
       );
       const instance = wrapper.instance();
       instance.setState({ id: 'some_id' });
-      instance.UNSAFE_componentDidUpdate({});
+      instance.componentDidUpdate({});
       expect(mockFetchDetailsActions).toHaveBeenCalledWith('some_id');
     });
   });
