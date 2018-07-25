@@ -44,10 +44,7 @@ describe('reducer', () => {
   it('handles FETCH_USERS_API_CALL_FAILURE', () => {
     const failureAction = {
       type: actionTypes.FETCH_USERS_API_CALL_FAILURE,
-      payload: {
-        users: null,
-        error: 'error happened',
-      },
+      error: 'error happened',
     };
     const before = {};
     let after;

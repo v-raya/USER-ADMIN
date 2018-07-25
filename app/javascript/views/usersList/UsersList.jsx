@@ -3,7 +3,12 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import { Link as LinkRWD, InputComponent, PageHeader } from 'react-wood-duck';
+import {
+  Link as LinkRWD,
+  InputComponent,
+  PageHeader,
+  Alert,
+} from 'react-wood-duck';
 import Cards from '../../common/Card';
 import AddUser from '../../containers/addUserContainer';
 import ReactTable from 'react-table';
@@ -200,6 +205,15 @@ class UserList extends PureComponent {
                     </div>
                   </div>
                 </form>
+                {this.props.error && (
+                  <Alert
+                    alertClassName="error"
+                    faIcon="fa-exclamation-triangle"
+                    alertCross={false}
+                  >
+                    <strong>Oh no!</strong> An unexpected error occured!
+                  </Alert>
+                )}
                 <br />
                 <div>
                   {this.renderUsersTable({
@@ -247,6 +261,7 @@ UserList.propTypes = {
     })
   ),
   pageSizeOptions: PropTypes.arrayOf(PropTypes.number),
+  error: PropTypes.any,
 };
 
 UserList.defaultProps = {

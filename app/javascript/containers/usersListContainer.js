@@ -27,6 +27,7 @@ function mapStateToProps(state) {
     nextSearch: userList.nextSearch,
     aggregate: userList.aggregate,
     total: userList.total,
+    error: userList.error,
   };
 }
 

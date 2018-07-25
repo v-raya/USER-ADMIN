@@ -30,7 +30,7 @@ const initialValue = {
   error: null,
 };
 
-function userListReducer(state = initialValue, { type, payload }) {
+function userListReducer(state = initialValue, { type, payload, error, meta }) {
   switch (type) {
     case FETCH_USERS_API_CALL_REQUEST:
       return { ...state, fetching: true, error: null };
@@ -53,7 +53,7 @@ function userListReducer(state = initialValue, { type, payload }) {
     case FETCH_USERS_API_CALL_FAILURE: {
       return {
         ...state,
-        error: payload.error,
+        error,
         fetching: false,
         users: null,
       };
