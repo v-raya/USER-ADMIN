@@ -24,7 +24,7 @@ const hackBtnStyles = {
 export const toFullName = ({ first_name, last_name }) =>
   `${last_name}, ${first_name}`;
 
-export const userStatusFormat = enabled => {
+export const userStatusFormat = ({ enabled }) => {
   return enabled ? 'Active' : 'Inactive';
 };
 
