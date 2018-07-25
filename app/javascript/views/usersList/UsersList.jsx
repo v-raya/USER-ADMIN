@@ -94,7 +94,8 @@ class UserList extends PureComponent {
     return (
       <ReactTable
         data={data}
-        showPaginationTop={this.props.size >= 20}
+        showPaginationTop={true}
+        showPaginationBottom={this.props.size >= 20}
         columns={[
           {
             Header: 'Full Name',
