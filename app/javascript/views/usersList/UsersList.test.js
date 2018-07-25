@@ -1,6 +1,6 @@
 import React from 'react';
 import { mount, shallow } from 'enzyme';
-import UsersList, { toFullName } from './UsersList.jsx';
+import UsersList, { toFullName, userStatusFormat } from './UsersList.jsx';
 
 describe('UsersList', () => {
   let wrapper;
@@ -73,6 +73,16 @@ describe('UsersList', () => {
           ).toEqual('Last, First');
         });
       });
+
+      describe('userStatusFormat', () => {
+        it('renders Active  for enabled', () => {
+          expect(userStatusFormat(true)).toEqual('Active');
+        });
+
+        it('renders Activefor disabled', () => {
+          expect(userStatusFormat(false)).toEqual('Inactive');
+        });
+      });
     });
   });
 
@@ -83,17 +93,15 @@ describe('UsersList', () => {
       expect(wrapper.find('ReactTable').prop('columns')[0]['id']).toBe(
         'last_name'
       );
-      expect(wrapper.find('ReactTable').prop('columns')[1]['accessor']).toBe(
+      expect(wrapper.find('ReactTable').prop('columns')[1]['id']).toBe(
         'enabled'
       );
       expect(wrapper.find('ReactTable').prop('columns')[2]['accessor']).toBe(
         'last_login_date_time'
       );
-
       expect(wrapper.find('ReactTable').prop('columns')[3]['accessor']).toBe(
         'racfid'
       );
-
       expect(wrapper.find('ReactTable').prop('columns')[4]['accessor']).toBe(
         'office'
       );

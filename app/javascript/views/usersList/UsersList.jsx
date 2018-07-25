@@ -19,6 +19,10 @@ const hackBtnStyles = {
 export const toFullName = ({ first_name, last_name }) =>
   `${last_name}, ${first_name}`;
 
+export const userStatusFormat = enabled => {
+  return enabled ? 'Active' : 'Inactive';
+};
+
 class UserList extends PureComponent {
   constructor(props) {
     super(props);
@@ -98,7 +102,9 @@ class UserList extends PureComponent {
           },
           {
             Header: 'Status',
-            accessor: 'enabled',
+            id: 'enabled',
+            accessor: userStatusFormat,
+            minWidth: 60,
           },
           {
             Header: 'Last Login',
