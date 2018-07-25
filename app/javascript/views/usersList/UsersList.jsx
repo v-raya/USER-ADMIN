@@ -114,8 +114,8 @@ class UserList extends PureComponent {
             accessor: 'racfid',
           },
           {
-            Header: 'End date',
-            accessor: 'end_date',
+            Header: 'Office Name',
+            accessor: 'office',
           },
         ]}
         manual

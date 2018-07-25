@@ -103,6 +103,23 @@ describe('UsersList', () => {
     it('contains Table and headers', () => {
       expect(wrapper.find('ReactTable').length).toBe(1);
       expect(wrapper.find('ReactTable').prop('columns').length).toBe(5);
+      expect(wrapper.find('ReactTable').prop('columns')[0]['id']).toBe(
+        'last_name'
+      );
+      expect(wrapper.find('ReactTable').prop('columns')[1]['accessor']).toBe(
+        'enabled'
+      );
+      expect(wrapper.find('ReactTable').prop('columns')[2]['accessor']).toBe(
+        'last_login_date_time'
+      );
+
+      expect(wrapper.find('ReactTable').prop('columns')[3]['accessor']).toBe(
+        'racfid'
+      );
+
+      expect(wrapper.find('ReactTable').prop('columns')[4]['accessor']).toBe(
+        'office'
+      );
     });
 
     it('renders navigation link to Dashboard', () => {
