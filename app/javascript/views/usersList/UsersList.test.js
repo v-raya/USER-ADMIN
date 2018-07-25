@@ -1,6 +1,6 @@
 import React from 'react';
 import { mount, shallow } from 'enzyme';
-import UsersList, { toFullName } from './UsersList.jsx';
+import UsersList, { toFullName, userStatusFormat } from './UsersList.jsx';
 
 describe('UsersList', () => {
   let wrapper;
@@ -30,6 +30,29 @@ describe('UsersList', () => {
     it('sets state based on the user action', () => {
       wrapper.instance().handleOnAdd();
       expect(wrapper.instance().state.addUser).toEqual(true);
+    });
+  });
+
+  describe('getTotalPages', () => {
+    it('retuns 1 when resultset is empty', () => {
+      wrapper.setProps({ size: 10, userList: [], total: 419 });
+      expect(wrapper.instance().getTotalPages()).toEqual(1);
+    });
+
+    it('calculates correct page count (total / size) + 1 if there is a remainder.', () => {
+      wrapper.setProps({ size: 10, userList: [{}], total: 419 });
+      expect(wrapper.instance().getTotalPages()).toEqual(42);
+      wrapper.setProps({ size: 10, total: 420, userList: [{}] });
+      expect(wrapper.instance().getTotalPages()).toEqual(42);
+      wrapper.setProps({ size: 10, total: 421, userList: [{}] });
+      expect(wrapper.instance().getTotalPages()).toEqual(43);
+    });
+
+    it('returns -1 (indeterminate) when total numPages can not be calculated', () => {
+      wrapper.setProps({ size: undefined, userList: [{}], total: undefined });
+      expect(wrapper.instance().getTotalPages()).toEqual(-1);
+      wrapper.setProps({ size: 0, userList: [{}], total: 0 });
+      expect(wrapper.instance().getTotalPages()).toEqual(-1);
     });
   });
 
@@ -73,6 +96,16 @@ describe('UsersList', () => {
           ).toEqual('Last, First');
         });
       });
+
+      describe('userStatusFormat', () => {
+        it('renders Active  for enabled', () => {
+          expect(userStatusFormat(true)).toEqual('Active');
+        });
+
+        it('renders Activefor disabled', () => {
+          expect(userStatusFormat(false)).toEqual('Inactive');
+        });
+      });
     });
   });
 
@@ -80,6 +113,21 @@ describe('UsersList', () => {
     it('contains Table and headers', () => {
       expect(wrapper.find('ReactTable').length).toBe(1);
       expect(wrapper.find('ReactTable').prop('columns').length).toBe(5);
+      expect(wrapper.find('ReactTable').prop('columns')[0]['id']).toBe(
+        'last_name'
+      );
+      expect(wrapper.find('ReactTable').prop('columns')[1]['id']).toBe(
+        'enabled'
+      );
+      expect(wrapper.find('ReactTable').prop('columns')[2]['accessor']).toBe(
+        'last_login_date_time'
+      );
+      expect(wrapper.find('ReactTable').prop('columns')[3]['accessor']).toBe(
+        'racfid'
+      );
+      expect(wrapper.find('ReactTable').prop('columns')[4]['accessor']).toBe(
+        'office'
+      );
     });
 
     it('renders navigation link to Dashboard', () => {

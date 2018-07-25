@@ -3,7 +3,12 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import { InputComponent, PageHeader, Alert } from 'react-wood-duck';
+import {
+  Link as LinkRWD,
+  InputComponent,
+  PageHeader,
+  Alert,
+} from 'react-wood-duck';
 import Cards from '../../common/Card';
 import AddUser from '../../containers/addUserContainer';
 import ReactTable from 'react-table';
@@ -18,6 +23,10 @@ const hackBtnStyles = {
 
 export const toFullName = ({ first_name, last_name }) =>
   `${last_name}, ${first_name}`;
+
+export const userStatusFormat = enabled => {
+  return enabled ? 'Active' : 'Inactive';
+};
 
 class UserList extends PureComponent {
   constructor(props) {
@@ -66,8 +75,13 @@ class UserList extends PureComponent {
     ]);
   };
 
-  getTotalPages = () =>
-    this.props.total ? Math.ceil(this.props.total / this.props.size) : -1;
+  getTotalPages = () => {
+    const { userList: records, total, size } = this.props;
+    if (!records) return -1;
+    if (records && Array.isArray(records) && !records.length) return 1;
+    if (total && size) return Math.ceil(total / size);
+    return -1;
+  };
 
   getCurrentPageNumber = () => Math.floor(this.props.from / this.props.size);
 
@@ -85,25 +99,23 @@ class UserList extends PureComponent {
     return (
       <ReactTable
         data={data}
-        showPaginationTop={this.props.size >= 20}
+        showPaginationTop={true}
+        showPaginationBottom={this.props.size >= 20}
         columns={[
           {
             Header: 'Full Name',
             id: 'last_name',
             accessor: toFullName,
             Cell: ({ value, original }) => (
-              <Link
-                href={`${this.props.location.pathname}/user_details/${
-                  original.id
-                }`}
-                text={value}
-              />
+              <Link to={`/user_details/${original.id}`}>{value}</Link>
             ),
             minWidth: 400,
           },
           {
             Header: 'Status',
-            accessor: 'enabled',
+            id: 'enabled',
+            accessor: userStatusFormat,
+            minWidth: 60,
           },
           {
             Header: 'Last Login',
@@ -114,8 +126,8 @@ class UserList extends PureComponent {
             accessor: 'racfid',
           },
           {
-            Header: 'End date',
-            accessor: 'end_date',
+            Header: 'Office Name',
+            accessor: 'office',
           },
         ]}
         manual
@@ -142,7 +154,7 @@ class UserList extends PureComponent {
     return (
       <div>
         Back to:{' '}
-        <Link
+        <LinkRWD
           text="Dashboard"
           href={dashboardUrl}
           clickHandler={dashboardClickHandler}
