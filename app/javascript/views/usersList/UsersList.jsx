@@ -109,7 +109,7 @@ class UserList extends PureComponent {
             Cell: ({ value, original }) => (
               <Link to={`/user_details/${original.id}`}>{value}</Link>
             ),
-            minWidth: 400,
+            minWidth: 200,
           },
           {
             Header: 'Status',
