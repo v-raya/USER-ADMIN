@@ -15,45 +15,57 @@
 
 .ReactTable {
   border: none;
+
   .pagination-bottom,
   .pagination-top {
     text-align: center;
   }
+
   .-pagination {
     display: inline-flex;
     flex-wrap: nowrap;
     box-shadow: 0 0 0 0;
     border-top: 0;
-    .-previous, .-next {
+
+    .-previous,
+    .-next {
       flex: 1 1 40px;
     }
+
     .-center {
       flex: 1 2 150px;
       text-align: center;
     }
+
     .-pageInfo {
       display: inline-flex;
       align-items: baseline;
+
       .-pageJump {
         margin-right: 8px;
       }
+
       .-totalPages {
         margin-left: 8px;
       }
     }
+
     .-pageSizeOptions {
       flex: none;
       margin: 8px 10px;
     }
   }
+
   .rt-table {
     margin-top: 10px;
   }
+
   .btn.btn-default {
     background-color: transparent;
     color: #09798e;
     padding: 0.75rem 0.5rem;
   }
+
   select {
     -moz-appearance: menulist;
     -webkit-appearance: menulist;
