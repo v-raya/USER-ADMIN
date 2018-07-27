@@ -4,6 +4,7 @@ import UsersList from '../containers/usersListContainer';
 import DetailsPage from '../containers/detailsContainer';
 import { store } from '../store/configureStore';
 import { Provider } from 'react-redux';
+import App from './app';
 
 const basename = process.env.RAILS_RELATIVE_URL_ROOT || process.env.BASENAME;
 
@@ -11,6 +12,7 @@ export default (
   <Provider store={store}>
     <Router basename={basename}>
       <Fragment>
+        <Route component={App} />
         <Route path="/" exact component={UsersList} />
         <Route path="/user_details/:id" component={DetailsPage} />
       </Fragment>
