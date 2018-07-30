@@ -24,6 +24,10 @@ export default class UserDetail extends Component {
     this.props.actions.fetchPermissionsActions();
   }
 
+  componentWillUnmount() {
+    this.props.actions.clearDetails();
+  }
+
   currentPathname() {
     return window.location.pathname;
   }
