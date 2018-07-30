@@ -1,22 +1,46 @@
 import React from 'react';
 import { mount, shallow } from 'enzyme';
-import { Link, withRouter } from 'react-router-dom';
+import { Link, MemoryRouter } from 'react-router-dom';
+import { Link as LinkRWD } from 'react-wood-duck';
 import UserDetail from './UserDetail';
 import UserService from '../../_services/users';
 
 describe('UserDetail', () => {
+  let container;
   let wrapper;
+  let mockFetchDetailsActions;
+  let mockFetchPermissionsActions;
 
   beforeEach(() => {
-    wrapper = shallow(
-      <UserDetail
-        details={{}}
-        dashboardUrl={'dburl'}
-        userListUrl={'myUserList'}
-        actions={{}}
-      />,
-      { disableLifecycleMethods: true }
+    // Register mock dispatchActions
+    mockFetchDetailsActions = jest.fn().mockReturnValue(Promise.resolve([]));
+    mockFetchPermissionsActions = jest
+      .fn()
+      .mockReturnValue(Promise.resolve([]));
+
+    container = shallow(
+      <MemoryRouter>
+        <UserDetail
+          details={{}}
+          dashboardUrl="dburl"
+          userListUrl="myUserList"
+          actions={{
+            fetchDetailsActions: mockFetchDetailsActions,
+            fetchPermissionsActions: mockFetchPermissionsActions,
+          }}
+        />
+      </MemoryRouter>
     );
+    wrapper = container.find('UserDetail').dive();
+  });
+
+  describe('statics', () => {
+    describe('defaultProps', () => {
+      it('default props', () => {
+        expect(UserDetail.defaultProps.dashboardUrl).toEqual('/');
+        expect(UserDetail.defaultProps.dashboardClickHandler).not.toThrow();
+      });
+    });
   });
 
   describe('Setting state', () => {
@@ -62,26 +86,6 @@ describe('UserDetail', () => {
   });
 
   describe('#componentDidMount', () => {
-    let mockFetchDetailsActions;
-    let mockFetchPermissionsActions;
-
-    beforeEach(() => {
-      mockFetchDetailsActions = jest.fn();
-      mockFetchPermissionsActions = jest.fn();
-
-      wrapper = mount(
-        <UserDetail
-          details={{}}
-          dashboardUrl={'dburl'}
-          userListUrl={'myUserList'}
-          actions={{
-            fetchDetailsActions: mockFetchDetailsActions,
-            fetchPermissionsActions: mockFetchPermissionsActions,
-          }}
-        />
-      );
-    });
-
     it('fetches details', () => {
       expect(mockFetchDetailsActions).toHaveBeenCalledWith('blank');
     });
@@ -180,32 +184,17 @@ describe('UserDetail', () => {
       });
     });
 
-    describe('Link to user list', () => {
-      let link;
-
-      beforeEach(() => {
-        link = wrapper.find('Link').at(1);
+    describe('breadcrumb', () => {
+      it('has a link to User List', () => {
+        const link = wrapper.find(Link).at(0);
+        expect(link.children().text()).toContain('User List');
+        expect(link.prop('to')).toEqual('/');
       });
 
-      it('link is labeled User List', () => {
-        expect(link.html()).toContain('User List');
+      it('has a link to the CARES dashboard', () => {
+        const link = wrapper.find(LinkRWD).at(0);
+        expect(link.prop('href')).toEqual('dburl');
       });
-    });
-
-    it('first link is pointed at dashboardf', () => {
-      expect(wrapper.find('Link').get(0).props['href']).toEqual('dburl');
-    });
-
-    it('link is pointed at user list', () => {
-      const d = wrapper.find(Link);
-      console.log(d.debug());
-      // expect(wrapper.find(Link))
-      // expect(wrapper.find('Link').get(1).props['href']).toEqual('myUserList');
-    });
-
-    it('default props', () => {
-      expect(UserDetail.defaultProps.dashboardUrl).toEqual('/');
-      expect(UserDetail.defaultProps.dashboardClickHandler).not.toThrow();
     });
   });
 });
