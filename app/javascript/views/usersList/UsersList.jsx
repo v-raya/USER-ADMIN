@@ -2,7 +2,7 @@
 
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import {
   Link as LinkRWD,
   InputComponent,
@@ -168,7 +168,8 @@ class UserList extends PureComponent {
     return (
       <div role="main">
         {this.state.addUser ? (
-          <AddUser addUser={this.state.addUser} />
+          // <AddUser addUser={this.state.addUser} />
+          <Redirect push to="/new" />
         ) : (
           <div>
             <PageHeader pageTitle="Manage Users" button="" />

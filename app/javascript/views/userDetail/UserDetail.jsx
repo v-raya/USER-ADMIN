@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Link, Alert, PageHeader } from 'react-wood-duck';
+import { Link } from 'react-router-dom';
+import { Link as LinkRWD, Alert, PageHeader } from 'react-wood-duck';
 import UserDetailEdit from './UserDetailEdit';
 import UserDetailShow from './UserDetailShow';
 import UserService from '../../_services/users';
@@ -127,13 +128,7 @@ export default class UserDetail extends Component {
   };
 
   render() {
-    const {
-      dashboardUrl,
-      userListUrl,
-      userListClickHandler,
-      dashboardClickHandler,
-      permissionsList,
-    } = this.props;
+    const { dashboardUrl, dashboardClickHandler, permissionsList } = this.props;
 
     return (
       <div>
@@ -142,17 +137,13 @@ export default class UserDetail extends Component {
           <div className="col-md-12">
             {this.alert()}
             Back to:{' '}
-            <Link
+            <LinkRWD
               text="Dashboard"
               href={dashboardUrl}
               clickHandler={dashboardClickHandler}
             />
             &nbsp;&gt;&nbsp;
-            <Link
-              text="User List"
-              href={userListUrl}
-              clickHandler={userListClickHandler}
-            />
+            <Link to="/">User List</Link>
           </div>
           {this.renderCards(permissionsList)}
         </div>
@@ -164,16 +155,12 @@ export default class UserDetail extends Component {
 UserDetail.propTypes = {
   details: PropTypes.object,
   dashboardUrl: PropTypes.string,
-  userListUrl: PropTypes.string,
-  userListClickHandler: PropTypes.func,
   dashboardClickHandler: PropTypes.func,
   permissionsList: PropTypes.array,
   actions: PropTypes.object.isRequired,
 };
 
 UserDetail.defaultProps = {
-  userListUrl: '/',
   dashboardUrl: '/',
-  userListClickHandler: () => {},
   dashboardClickHandler: () => {},
 };
