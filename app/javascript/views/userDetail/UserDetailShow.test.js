@@ -19,6 +19,9 @@ describe('UserDetailEdit', () => {
   describe('when label and className props are passed', () => {
     it('renders the label inside the grid wrapper', () => {
       wrapper = shallow(<UserDetailShow details={details} />);
+      expect(wrapper.find('Cards').props().cardHeaderText).toBe(
+        `County: ${details.county_name}`
+      );
       expect(wrapper.find('ShowField').length).toBe(10);
       expect(
         wrapper

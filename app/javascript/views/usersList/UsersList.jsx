@@ -175,7 +175,7 @@ class UserList extends PureComponent {
             <div className="container">
               {this.renderBreadcrumb()}
               <Cards
-                cardHeaderText={'Manage Users: ' + accountCounty}
+                cardHeaderText={'County: ' + accountCounty}
                 cardHeaderButton={true}
                 headerBtnName="+ Add a user"
                 onEdit={this.handleOnAdd}

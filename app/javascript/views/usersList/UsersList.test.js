@@ -6,9 +6,16 @@ describe('UsersList', () => {
   let wrapper;
 
   beforeEach(() => {
-    wrapper = shallow(<UsersList dashboardUrl={'dburl'} actions={{}} />, {
-      disableLifecycleMethods: true,
-    });
+    wrapper = shallow(
+      <UsersList
+        dashboardUrl={'dburl'}
+        actions={{}}
+        accountCounty="SomeCountyName"
+      />,
+      {
+        disableLifecycleMethods: true,
+      }
+    );
   });
 
   describe('renders components', () => {
@@ -18,6 +25,9 @@ describe('UsersList', () => {
 
     it('checks card component props', () => {
       expect(wrapper.find('Cards').props().cardHeaderButton).toBe(true);
+      expect(wrapper.find('Cards').props().cardHeaderText).toBe(
+        'County: SomeCountyName'
+      );
       expect(wrapper.find('Cards').props().headerBtnName).toBe('+ Add a user');
     });
 
