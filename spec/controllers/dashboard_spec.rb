@@ -21,7 +21,9 @@ describe DashboardController do
     end
 
     it 'is the "catch all" route' do
-      expect(get: '/does-not-exist').to route_to(controller: 'dashboard', action: 'index', path: 'does-not-exist')
+      expect(get: '/does-not-exist').to route_to(controller: 'dashboard',
+                                                 action: 'index',
+                                                 path: 'does-not-exist')
     end
   end
 end
