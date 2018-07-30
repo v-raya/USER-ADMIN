@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import { Link as LinkRWD, PageHeader } from 'react-wood-duck';
 import AddVerifiedUser from './AddVerifiedUser';
 import VerifyUser from './VerifyUser';
-import { Link, PageHeader } from 'react-wood-duck';
 import AddUserDetail from '../../containers/addUserDetailsContainer';
 
 /* eslint camelcase: 0 */
@@ -106,29 +107,20 @@ export default class AddUser extends Component {
   };
 
   render() {
-    const {
-      dashboardUrl,
-      userListUrl,
-      userListClickHandler,
-      dashboardClickHandler,
-    } = this.props;
+    const { dashboardUrl, dashboardClickHandler } = this.props;
     return this.state.addUser ? (
       <div>
         <PageHeader pageTitle="Add User" button="" />
         <div className="container">
           <div className="col-md-12">
             Back to:{' '}
-            <Link
+            <LinkRWD
               text="Dashboard"
               href={dashboardUrl}
               clickHandler={dashboardClickHandler}
             />
             &nbsp;&gt;&nbsp;
-            <Link
-              text="User List"
-              href={userListUrl}
-              clickHandler={userListClickHandler}
-            />
+            <Link to="/">User List</Link>
           </div>
           {this.verifyUser()}
           {this.addUser()}
@@ -144,8 +136,6 @@ export default class AddUser extends Component {
 
 AddUser.propTypes = {
   dashboardUrl: PropTypes.string,
-  userListUrl: PropTypes.string,
-  userListClickHandler: PropTypes.func,
   dashboardClickHandler: PropTypes.func,
   actions: PropTypes.object,
   verifyNewUserDetails: PropTypes.object,
@@ -156,8 +146,7 @@ AddUser.propTypes = {
 };
 
 AddUser.defaultProps = {
-  userListUrl: '/',
   dashboardUrl: '/',
-  userListClickHandler: () => {},
   dashboardClickHandler: () => {},
+  addUser: true,
 };

@@ -8,9 +8,10 @@
 // layout file, like app/views/layouts/application.html.erb
 
 import 'babel-polyfill';
-import ReactDOM from 'react-dom';
-import routes from '../home/routes';
+import React from 'react';
+import { render } from 'react-dom';
+import App from '../App';
 
 if (document.getElementById('app')) {
-  ReactDOM.render(routes, document.getElementById('app'));
+  render(<App />, document.getElementById('app'));
 }
