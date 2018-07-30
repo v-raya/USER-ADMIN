@@ -27,12 +27,6 @@
     box-shadow: 0 0 0 0;
     border-top: 0;
 
-    .select:focus,
-    input:focus {
-      outline: #4d90fe auto 5px;
-      outline-offset: -2px;
-    }
-
     .-previous,
     .-next {
       flex: 1 1 40px;
@@ -76,5 +70,11 @@
     -moz-appearance: menulist;
     -webkit-appearance: menulist;
     background-image: none !important;
+  }
+
+  select:focus,
+  input:focus {
+    outline: #4d90fe auto 5px;
+    outline-offset: -2px;
   }
 }
