@@ -49,7 +49,6 @@ class Pagination extends PaginationRT {
               onBlur={_ => {}}
               onChange={e => onPageSizeChange(Number(e.target.value))}
               value={pageSize}
-              tabIndex={0}
             >
               {pageSizeOptions.map((option, i) => (
                 // eslint-disable-next-line react/no-array-index-key
