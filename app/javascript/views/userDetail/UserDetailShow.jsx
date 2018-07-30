@@ -9,7 +9,7 @@ const UserDetailShow = ({ details, onEdit }) => (
   <div className="row">
     <div className="col-md-12">
       <Cards
-        cardHeaderText={`Manage Users: ${details.county_name}`}
+        cardHeaderText={`County: ${details.county_name}`}
         cardHeaderButton={true}
         onEdit={onEdit}
       >
