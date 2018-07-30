@@ -1,6 +1,8 @@
+require 'pry'
+
 Rails.application.routes.draw do
   root 'dashboard#index'
-  get 'user_details/:id', to: 'user_details#index'
+
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
   namespace :api, defaults: { format: 'json' } do
     resources :user_list, only: [:index] do
@@ -16,5 +18,11 @@ Rails.application.routes.draw do
     get 'account', to: 'account#index'
     get 'permissions_list', to: 'permissions_list#index'
     post 'add_user', to: 'add_user#index'
+  end
+
+  # Single Page App home
+  get '*path', to: 'dashboard#index', constraints: ->(request) do
+    !request.xhr? && request.format.html?
+    # binding.pry
   end
 end
