@@ -4,7 +4,7 @@ import {
   selectDetailRecords,
   permissionsList,
 } from '../selectors/detailSelector';
-import { fetchDetailsActions } from '../actions/detailActions';
+import { fetchDetailsActions, clearDetails } from '../actions/detailActions';
 import { fetchPermissionsActions } from '../actions/permissionsActions';
 import { bindActionCreators } from 'redux';
 
@@ -22,6 +22,7 @@ function mapDispatchToProps(dispatch) {
   const actions = {
     fetchDetailsActions,
     fetchPermissionsActions,
+    clearDetails,
   };
   return {
     actions: bindActionCreators(actions, dispatch),

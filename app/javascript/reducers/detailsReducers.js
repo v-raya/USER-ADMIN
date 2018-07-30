@@ -24,6 +24,14 @@ function fetchDetails(state = { details: null, fetching: false }, action) {
         details: null,
         error: action.error,
       };
+
+    case actionTypes.CLEAR_USER_DETAILS: {
+      return {
+        details: null,
+        fetching: false,
+      };
+    }
+
     default:
       return state;
   }

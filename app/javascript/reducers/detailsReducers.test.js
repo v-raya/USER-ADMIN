@@ -62,4 +62,14 @@ describe('reducer', () => {
     const state = { details: null, fetching: false };
     expect(fetchDetails(undefined, randomAction)).toEqual(state);
   });
+
+  it('clears details', () => {
+    const before = { details: {}, fetching: false, error: null };
+    let after;
+    expect(
+      () =>
+        (after = fetchDetails(before, { type: actionTypes.CLEAR_USER_DETAILS }))
+    ).not.toThrow();
+    expect(after).not.toEqual(before);
+  });
 });
