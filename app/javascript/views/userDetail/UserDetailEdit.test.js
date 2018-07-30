@@ -71,7 +71,9 @@ describe('UserDetailEdit', () => {
           .props().label
       ).toEqual('End Date');
       expect(wrapper.find('[label="Status"]').exists()).toBe(true);
-      expect(wrapper.find('[label="Assigned Roles"]').exists()).toBe(true);
+      expect(wrapper.find('[label="Assigned Permissions"]').exists()).toBe(
+        true
+      );
     });
 
     it('renders the <ShowField/> children at label:fullName', () => {

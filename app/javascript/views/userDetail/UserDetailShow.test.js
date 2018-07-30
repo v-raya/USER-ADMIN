@@ -79,7 +79,7 @@ describe('UserDetailEdit', () => {
           .find('ShowField')
           .at(9)
           .props().label
-      ).toEqual('Assigned Roles');
+      ).toEqual('Assigned Permissions');
     });
 
     it('renders the <ShowField/> props.children at label:fullName', () => {
