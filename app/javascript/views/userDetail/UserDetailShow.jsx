@@ -53,7 +53,7 @@ const UserDetailShow = ({ details, onEdit }) => (
               <ShowField label="Status">{details.enabled}</ShowField>
             </div>
             <div className="col-md-3">
-              <ShowField label="Assigned Roles">
+              <ShowField label="Assigned Permissions">
                 {details.permissions}
               </ShowField>
             </div>
