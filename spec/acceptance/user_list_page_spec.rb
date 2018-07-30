@@ -54,7 +54,7 @@ feature 'User List Page' do
   end
 
   def page_has_basic_text
-    expect(page).to have_content('Manage Users:')
+    expect(page).to have_content('County:')
   end
 
   def page_has_user_list_headers
