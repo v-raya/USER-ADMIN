@@ -71,4 +71,10 @@
     -webkit-appearance: menulist;
     background-image: none !important;
   }
+
+  select:focus,
+  input:focus {
+    outline: #4d90fe auto 5px;
+    outline-offset: -2px;
+  }
 }
