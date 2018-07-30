@@ -45,23 +45,19 @@ class Pagination extends PaginationRT {
       >
         {showPageSizeOptions && (
           <span className="select-wrap -pageSizeOptions">
-            {
-              // eslint-disable-next-line
-              <div tabIndex={0}>
-                <select
-                  onBlur={_ => {}}
-                  onChange={e => onPageSizeChange(Number(e.target.value))}
-                  value={pageSize}
-                >
-                  {pageSizeOptions.map((option, i) => (
-                    // eslint-disable-next-line react/no-array-index-key
-                    <option key={i} value={option}>
-                      {`${option} ${this.props.rowsText}`}
-                    </option>
-                  ))}
-                </select>
-              </div>
-            }
+            <select
+              onBlur={_ => {}}
+              onChange={e => onPageSizeChange(Number(e.target.value))}
+              value={pageSize}
+              tabIndex={0}
+            >
+              {pageSizeOptions.map((option, i) => (
+                // eslint-disable-next-line react/no-array-index-key
+                <option key={i} value={option}>
+                  {`${option} ${this.props.rowsText}`}
+                </option>
+              ))}
+            </select>
           </span>
         )}
         <div className="-previous">
