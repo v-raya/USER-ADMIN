@@ -1,5 +1,5 @@
 import React from 'react';
-import { mount, shallow } from 'enzyme';
+import { shallow } from 'enzyme';
 import { Link, MemoryRouter } from 'react-router-dom';
 import { Link as LinkRWD } from 'react-wood-duck';
 import UserDetail from './UserDetail';
