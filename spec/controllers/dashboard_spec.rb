@@ -19,5 +19,11 @@ describe DashboardController do
       get :index
       expect(response).to render_template 'errors/forbidden_page'
     end
+
+    it 'is the "catch all" route' do
+      expect(get: '/does-not-exist').to route_to(controller: 'dashboard',
+                                                 action: 'index',
+                                                 path: 'does-not-exist')
+    end
   end
 end
