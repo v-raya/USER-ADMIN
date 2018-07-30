@@ -1,5 +1,3 @@
-require 'pry'
-
 Rails.application.routes.draw do
   root 'dashboard#index'
 
@@ -23,6 +21,5 @@ Rails.application.routes.draw do
   # Single Page App home
   get '*path', to: 'dashboard#index', constraints: ->(request) do
     !request.xhr? && request.format.html?
-    # binding.pry
   end
 end
