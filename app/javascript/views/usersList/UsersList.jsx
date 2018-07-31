@@ -180,7 +180,7 @@ class UserList extends PureComponent {
                 headerBtnName="+ Add a user"
                 onEdit={this.handleOnAdd}
               >
-                <form onSubmit={this.submitSearch}>
+                <form onSubmit={this.submitSearch} autoComplete="off">
                   <div className="row">
                     <div className="col-md-10 col-sm-6">
                       <InputComponent
