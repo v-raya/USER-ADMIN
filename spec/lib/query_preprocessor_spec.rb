@@ -43,6 +43,11 @@ describe QueryPreprocessor do
   end
 
   describe 'build_query_hash' do
+    let(:es_match_all_query) do
+      { query: { match_all: {} }, from: 51, size: 25,
+        sort: ["last_name.keyword": { "order": 'asc' }] }
+    end
+
     let(:match_last_name_with_paging) do
       { query: [{ field: 'last_name', value: 'Smith' }],
         from: 51, size: 25, sort: [field: 'last_name', desc: true] }
@@ -54,17 +59,14 @@ describe QueryPreprocessor do
     let(:match_wide_open_with_paging) do
       { query: [], from: 51, size: 25, sort: [field: 'last_name', desc: true] }
     end
-
-    let(:es_match_all_query) { { query: { match_all: {} }, from: 51, size: 25, sort: [] } }
     let(:es_query_for_last_name) do
       { query: { match_phrase_prefix: { last_name: 'Smith' } },
-        from: 51, size: 25, sort: [] }
+        from: 51, size: 25, sort: ["last_name.keyword": { "order": 'asc' }] }
     end
     it 'builds up a query by last name for elastic search correctly' do
       expect(QueryPreprocessor.build_query_hash(match_last_name_with_paging))
         .to eq(es_query_for_last_name)
     end
-
     it 'builds up  wide-open query for elastic search correctly' do
       expect(QueryPreprocessor.build_query_hash(match_wide_open_with_paging))
         .to eq(es_match_all_query)

@@ -59,7 +59,7 @@ module Elastic
           ]
         }
       else
-        { sort: [] }
+        { sort: [{ "last_name.keyword": { order: 'asc' } }] }
       end
     end
 
