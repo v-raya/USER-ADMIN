@@ -21,7 +21,7 @@ const UserDetailEdit = ({
   <div className="row">
     <div className="col-md-12">
       <Cards
-        cardHeaderText={`Manage Users: ${details.county_name}`}
+        cardHeaderText={`County: ${details.county_name}`}
         cardActionButtons={true}
         onCancel={onCancel}
         onSave={onSave}
