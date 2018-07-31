@@ -9,9 +9,9 @@ export const selectDetailRecords = state => {
 
 export const permissionsList = state => {
   return state.fetchPermissions.permissions
-    ? state.fetchPermissions.permissions.permissions.map(list => ({
-        label: list,
-        value: list,
+    ? state.fetchPermissions.permissions.permissions.map(item => ({
+        label: item.replace(/-rollout$/, ''),
+        value: item,
       }))
     : [];
 };
