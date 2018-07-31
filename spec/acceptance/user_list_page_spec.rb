@@ -11,7 +11,7 @@ feature 'User List Page' do
   end
 
   scenario 'has a list of users' do
-    pending 'broken due to elastic search user data being mocked'
+    pending 'works locally fails on test bubble'
     login
     page_has_basic_text
     page_has_user_list_headers
@@ -32,6 +32,12 @@ feature 'User List Page' do
     # expect(page).to be_accessible
     find('.cancel').click
     page_is_user_details
+  end
+
+  scenario 'list of users is sorted' do
+    login
+    # expect(page).to be_accessible
+    expect_sorted_list(users_on_page)
   end
 
   scenario 'search limits the users returned' do
@@ -67,6 +73,14 @@ feature 'User List Page' do
 
   def page_count_users
     page.all('.rt-tr-group a').count
+  end
+
+  def expect_sorted_list(list)
+    expect(list).to eq(list.sort)
+  end
+
+  def users_on_page
+    page.all('.rt-tr-group a').map(&:text)
   end
 
   def first_user_link
