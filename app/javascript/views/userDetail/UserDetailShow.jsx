@@ -6,9 +6,7 @@ import ShowField from '../../common/ShowField';
 /* eslint camelcase: 0 */
 
 function renderPermissions(assignedPermissions, permissionList) {
-  if (!Array.isArray(assignedPermissions)) {
-    debugger;
-  }
+  if (!Array.isArray(assignedPermissions)) return '';
   return (
     assignedPermissions &&
     assignedPermissions.length &&

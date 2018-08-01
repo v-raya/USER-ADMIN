@@ -105,4 +105,9 @@ UserDetailEdit.propTypes = {
   permissionsList: PropTypes.array,
 };
 
+UserDetailEdit.defaultProps = {
+  selectedPermissions: [],
+  permissionsList: [],
+};
+
 export default UserDetailEdit;
