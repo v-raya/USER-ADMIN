@@ -1,7 +1,9 @@
 version: '3.2'
 services:
   perry:
-    image: cwds/perry:3.0.4_828-RC
+    # image: cwds/perry:3.0.4_828-RC
+    # image: cwds/perry:4.0.0_880-RC
+    image: cwds/perry:4.0.0_876-RC
     hostname: perry
     depends_on:
       - cals_db2_data
@@ -14,17 +16,18 @@ services:
       DEV_MODE: ${DEV_MODE}
       LOG_LEVEL: "INFO"
   cals_db2_data:
-    image: cwds/db2data
+    image: cwds/db2data:0.5.6-SNAPSHOT
     hostname: cals_db2_data
     ports:
     - ${DB_CMS_DB2_PORT}:50000
   postgresql_data:
-    image: cwds/postgresql_data
+    # image: cwds/postgresql_data:0.8.1_639-RC
+    image: cwds/postgresql_data:0.8.1_636-RC
     hostname: postgresql_data
     ports:
       - ${DB_POSTGRES_PORT}:${DB_POSTGRES_PORT}
   dora:
-    image: cwds/dora:latest
+    image: cwds/dora:1.6.4-SNAPSHOT
     command: bash -c "./entrypoint.sh 2>&1 | tee 'log.file'"
     depends_on:
           - perry
@@ -50,7 +53,8 @@ services:
       timeout: 10s
       retries: 80
   elasticsearch:
-    image: cwds/elasticsearch_xpack_data:${ELASTICSEARCH_XPACK_DATA_VERSION}
+    image: cwds/elasticsearch_xpack_data:1.6.4-SNAPSHOT
+    # image: cwds/elasticsearch_xpack_data:${ELASTICSEARCH_XPACK_DATA_VERSION}
     depends_on:
       - perry
     ports:
