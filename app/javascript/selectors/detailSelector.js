@@ -7,11 +7,5 @@ export const selectDetailRecords = state => {
   return userDetails;
 };
 
-export const permissionsList = state => {
-  return state.fetchPermissions.permissions
-    ? state.fetchPermissions.permissions.permissions.map(item => ({
-        label: item.replace(/-rollout$/, ''),
-        value: item,
-      }))
-    : [];
-};
+export const permissionsList = state =>
+  state.fetchPermissions.permissions.permissions;

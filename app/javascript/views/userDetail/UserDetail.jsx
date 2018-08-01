@@ -54,6 +54,8 @@ export default class UserDetail extends Component {
 
   onRoleChange = value => {
     const { details } = this.state;
+    console.log(value);
+    debugger;
     this.setState({
       disableActionBtn: false,
       details: { ...details, permissions: value },
