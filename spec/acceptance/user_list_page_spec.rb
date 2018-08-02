@@ -11,7 +11,6 @@ feature 'User List Page' do
   end
 
   scenario 'has a list of users' do
-    pending 'works locally fails on test bubble'
     login
     page_has_basic_text
     page_has_user_list_headers

@@ -2,7 +2,7 @@
 
 require 'capybara'
 require 'capybara/rspec'
-require 'acceptance/support/login_helper'
+require 'acceptance/support/cognito_login_helper'
 require 'selenium/webdriver'
 
 Capybara.register_driver :selenium do |app|
