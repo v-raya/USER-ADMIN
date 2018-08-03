@@ -96,6 +96,15 @@ describe('reducer', () => {
     expect(state.size).toEqual(42);
   });
 
+  it('zeros the from param when pageSize changes', () => {
+    const before = { from: 100 };
+    const after = reducer(before, {
+      type: actionTypes.USER_LIST_SET_PAGE_SIZE,
+      payload: 42,
+    });
+    expect(after.from).toEqual(0);
+  });
+
   it('handles sort updates', () => {
     const mySort = [{ a: 1 }, { a: 1 }];
     const state = reducer(

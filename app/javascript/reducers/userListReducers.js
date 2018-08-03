@@ -89,7 +89,7 @@ function userListReducer(state = initialValue, { type, payload, error, meta }) {
     // TODO: fix FSA
     case USER_LIST_SET_PAGE_SIZE: {
       const size = payload;
-      return { ...state, size };
+      return { ...state, size, from: 0 };
     }
 
     case USER_LIST_SET_PAGE: {
