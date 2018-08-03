@@ -11,7 +11,8 @@ feature 'User List Page' do
   end
 
   scenario 'has a list of users' do
-    pending 'works locally fails on test bubble'
+    pending '/user/:id and user#index are not consistent.
+             No edit button will show if we cannot retrieve the user'
     login
     page_has_basic_text
     page_has_user_list_headers

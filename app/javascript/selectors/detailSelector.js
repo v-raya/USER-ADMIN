@@ -1,3 +1,5 @@
+import safeGet from 'lodash.get';
+
 export const selectDetailRecords = state => {
   const usersObject = state.fetchDetails ? state.fetchDetails.details : null;
   const userDetails = usersObject ? usersObject.records : {};
@@ -7,11 +9,5 @@ export const selectDetailRecords = state => {
   return userDetails;
 };
 
-export const permissionsList = state => {
-  return state.fetchPermissions.permissions
-    ? state.fetchPermissions.permissions.permissions.map(list => ({
-        label: list,
-        value: list,
-      }))
-    : [];
-};
+export const permissionsList = state =>
+  safeGet(state, 'fetchPermissions.permissions.permissions', []);

@@ -5,7 +5,20 @@ import ShowField from '../../common/ShowField';
 
 /* eslint camelcase: 0 */
 
-const UserDetailShow = ({ details, onEdit }) => (
+export function renderPermissions(assignedPermissions, permissionList) {
+  if (!Array.isArray(assignedPermissions)) return '';
+  return (
+    assignedPermissions &&
+    assignedPermissions.length &&
+    assignedPermissions
+      .map(permission => permissionList.find(d => d.name === permission))
+      .filter(value => !!value)
+      .map(({ name, description }) => description)
+      .join(', ')
+  );
+}
+
+const UserDetailShow = ({ details, onEdit, permissionsList }) => (
   <div className="row">
     <div className="col-md-12">
       <Cards
@@ -54,7 +67,7 @@ const UserDetailShow = ({ details, onEdit }) => (
             </div>
             <div className="col-md-3">
               <ShowField label="Assigned Permissions">
-                {details.permissions}
+                {renderPermissions(details.permissions, permissionsList)}
               </ShowField>
             </div>
           </div>
@@ -67,6 +80,16 @@ const UserDetailShow = ({ details, onEdit }) => (
 UserDetailShow.propTypes = {
   details: PropTypes.object,
   onEdit: PropTypes.func,
+  permissionsList: PropTypes.arrayOf(
+    PropTypes.shape({
+      description: PropTypes.string.isRequired,
+      name: PropTypes.string.isRequired,
+    })
+  ),
+};
+
+UserDetailShow.defaultProps = {
+  permissionsList: [],
 };
 
 export default UserDetailShow;

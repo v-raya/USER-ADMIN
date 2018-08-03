@@ -76,14 +76,17 @@ describe('selectors', () => {
   describe('#permissionsList', () => {
     it('selects the permissions when availble', () => {
       const expectedValue = [
-        { label: 'Hello', value: 'Hello' },
-        { label: 'Bye', value: 'Bye' },
+        { name: 'foo-name', description: 'foo-desc' },
+        { name: 'bar-name', description: 'bar-desc' },
       ];
       const state = {
         fetchPermissions: {
           permissions: {
             XHRStatus: 'ready',
-            permissions: ['Hello', 'Bye'],
+            permissions: [
+              { name: 'foo-name', description: 'foo-desc' },
+              { name: 'bar-name', description: 'bar-desc' },
+            ],
           },
         },
       };

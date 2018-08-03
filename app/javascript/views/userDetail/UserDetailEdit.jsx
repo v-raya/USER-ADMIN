@@ -8,6 +8,9 @@ import { STATUS } from '../../_constants/userDetailConstants';
 
 /* eslint camelcase: 0 */
 
+const permissionListToOptions = items =>
+  items.map(({ name, description }) => ({ value: name, label: description }));
+
 const UserDetailEdit = ({
   details,
   selectedPermissions,
@@ -77,9 +80,11 @@ const UserDetailEdit = ({
               <MultiSelect
                 id="Multiselect1"
                 selectedOption={selectedPermissions}
-                options={permissionsList}
+                options={permissionListToOptions(permissionsList)}
                 label="Assigned Permissions"
-                onChange={onRoleChange}
+                onChange={selectedOptions =>
+                  onRoleChange(selectedOptions.split(','))
+                }
               />
             </div>
           </div>
@@ -98,6 +103,11 @@ UserDetailEdit.propTypes = {
   onStatusChange: PropTypes.func,
   onRoleChange: PropTypes.func,
   permissionsList: PropTypes.array,
+};
+
+UserDetailEdit.defaultProps = {
+  selectedPermissions: [],
+  permissionsList: [],
 };
 
 export default UserDetailEdit;

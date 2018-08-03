@@ -1,6 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import UserDetailShow from './UserDetailShow';
+import UserDetailShow, { renderPermissions } from './UserDetailShow';
 
 describe('UserDetailEdit', () => {
   const details = {
@@ -100,5 +100,21 @@ describe('UserDetailEdit', () => {
           .props().children
       ).toEqual(expectedValue);
     });
+  });
+});
+
+describe('renderPermissions', () => {
+  it('return a concatenated comma-delimmited string', () => {
+    const list = [
+      { name: 'foo', description: 'FOO_DESC' },
+      { name: 'bar', description: 'BAR_DESC' },
+      { name: 'quo', description: 'QUO_DESC' },
+      { name: 'qux', description: 'QUX_DESC' },
+    ];
+    expect(renderPermissions(['foo', 'bar'], list)).toEqual(
+      'FOO_DESC, BAR_DESC'
+    );
+    expect(renderPermissions('', list)).toEqual('');
+    expect(renderPermissions(['qux'], list)).toEqual('QUX_DESC');
   });
 });
