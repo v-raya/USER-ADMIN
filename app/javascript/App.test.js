@@ -11,5 +11,11 @@ describe('App', () => {
   it('renders ', () => {
     wrapper = shallow(<App />);
     expect(wrapper.find('GlobalHeader').length).toBe(1);
+    expect(
+      wrapper
+        .find('Route')
+        .at(3)
+        .prop('render')
+    ).not.toThrow();
   });
 });

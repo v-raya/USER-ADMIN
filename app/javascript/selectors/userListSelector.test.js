@@ -62,6 +62,10 @@ describe('selectors', () => {
         { field: 'haystack' },
         { field: 'other_haystack', desc: true },
       ]);
+
+      const state1 = 'some_value';
+      expect(() => (searchParams = getSearchParams(state1))).not.toThrow();
+      expect(getSearchParams(state1)).toEqual({});
     });
   });
 

@@ -6,6 +6,27 @@ const ApiService = require('../api').default;
 const id = 'someid';
 
 describe('UserService', () => {
+  describe('#search', () => {
+    let getSearchSpy23;
+    beforeEach(() => {
+      getSearchSpy23 = jest.spyOn(ApiService, 'get');
+    });
+
+    it('calls #search ApiService', () => {
+      const q = encodeURIComponent(
+        JSON.stringify({
+          query: [],
+          sort: [],
+          size: 10,
+          from: 0,
+        })
+      );
+      getSearchSpy23.mockReturnValue(Promise.resolve({}));
+      UserService.search(q);
+      expect(getSearchSpy23).toHaveBeenCalledWith(`/user_list?q=${q}`);
+    });
+  });
+
   describe('#fetch', () => {
     let getSpy;
 
@@ -16,7 +37,6 @@ describe('UserService', () => {
     it('calls fetch ApiService', () => {
       const lastName = 'don';
       getSpy.mockReturnValue(Promise.resolve({}));
-      expect(getSpy).not.toHaveBeenCalled();
       UserService.fetch(lastName);
       expect(getSpy).toHaveBeenCalledWith(`/user_list?last_name=${lastName}`);
     });

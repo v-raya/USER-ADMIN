@@ -5,14 +5,18 @@ import UserService from '../../_services/users';
 
 describe('AddUserDetail', () => {
   let wrapper;
+  let mockfetchDetailsActions;
 
   beforeEach(() => {
+    mockfetchDetailsActions = jest.fn().mockReturnValue(Promise.resolve([]));
     wrapper = shallow(
       <AddUserDetail
         details={{}}
         dashboardUrl={'dburl'}
         userListUrl={'myUserList'}
-        actions={{}}
+        actions={{
+          fetchDetailsActions: mockfetchDetailsActions,
+        }}
       />,
       { disableLifecycleMethods: true }
     );
@@ -62,6 +66,29 @@ describe('AddUserDetail', () => {
     });
   });
 
+  describe('#onCancel', () => {
+    const mockfetchDetailsActions = jest.fn();
+
+    beforeEach(() => {
+      wrapper.setProps({
+        actions: { fetchDetailsActions: mockfetchDetailsActions },
+      });
+      wrapper.setState({ id: 'id' });
+    });
+
+    afterEach(() => {
+      mockfetchDetailsActions.mockRestore();
+    });
+
+    it('calls the appropriate function', () => {
+      wrapper.instance().onCancel();
+      expect(mockfetchDetailsActions).toHaveBeenCalledWith('id');
+      wrapper.instance().onCancel();
+      expect(wrapper.instance().state.isEdit).toEqual(false);
+      expect(wrapper.instance().state.alert).toEqual(false);
+    });
+  });
+
   describe('#UNSAFE_componentWillReceiveProps', () => {
     it('passes along the props', () => {
       const instance = wrapper.instance();
@@ -89,9 +116,11 @@ describe('AddUserDetail', () => {
           actions={{
             fetchDetailsActions: mockFetchDetailsActions,
           }}
+          id={'some_id'}
         />
       );
       const instance = wrapper.instance();
+      expect(mockFetchDetailsActions).not.toHaveBeenCalled();
       instance.setState({ id: 'some_id' });
       instance.componentDidUpdate({});
       expect(mockFetchDetailsActions).toHaveBeenCalledWith('some_id');

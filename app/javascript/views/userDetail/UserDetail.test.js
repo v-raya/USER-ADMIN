@@ -10,10 +10,12 @@ describe('UserDetail', () => {
   let wrapper;
   let mockFetchDetailsActions;
   let mockFetchPermissionsActions;
+  let mockClearDetailsActions;
 
   beforeEach(() => {
     // Register mock dispatchActions
     mockFetchDetailsActions = jest.fn().mockReturnValue(Promise.resolve([]));
+    mockClearDetailsActions = jest.fn().mockReturnValue(Promise.resolve([]));
     mockFetchPermissionsActions = jest
       .fn()
       .mockReturnValue(Promise.resolve([]));
@@ -27,6 +29,7 @@ describe('UserDetail', () => {
           actions={{
             fetchDetailsActions: mockFetchDetailsActions,
             fetchPermissionsActions: mockFetchPermissionsActions,
+            clearDetails: mockClearDetailsActions,
           }}
         />
       </MemoryRouter>
@@ -85,6 +88,28 @@ describe('UserDetail', () => {
     });
   });
 
+  describe('#onCancel', () => {
+    const mockfetchDetailsActions = jest.fn();
+
+    beforeEach(() => {
+      wrapper.setProps({
+        actions: { fetchDetailsActions: mockfetchDetailsActions },
+      });
+    });
+
+    afterEach(() => {
+      mockfetchDetailsActions.mockRestore();
+    });
+
+    it('calls the appropriate function', () => {
+      wrapper.instance().onCancel();
+      expect(mockfetchDetailsActions).toHaveBeenCalledWith('blank');
+      wrapper.instance().onCancel();
+      expect(wrapper.instance().state.isEdit).toEqual(false);
+      expect(wrapper.instance().state.alert).toEqual(false);
+    });
+  });
+
   describe('#componentDidMount', () => {
     it('fetches details', () => {
       expect(mockFetchDetailsActions).toHaveBeenCalledWith('blank');
@@ -92,6 +117,17 @@ describe('UserDetail', () => {
 
     it('fetches the permissions', () => {
       expect(mockFetchPermissionsActions).toHaveBeenCalledWith();
+    });
+  });
+
+  describe('#componentWillUnmount', () => {
+    it('componentWillUnmount should be called on unmount', () => {
+      const componentWillUnmount = jest.spyOn(
+        wrapper.instance(),
+        'componentWillUnmount'
+      );
+      wrapper.unmount();
+      expect(componentWillUnmount).toHaveBeenCalledWith();
     });
   });
 

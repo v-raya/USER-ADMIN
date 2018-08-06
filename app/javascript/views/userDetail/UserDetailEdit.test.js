@@ -24,6 +24,7 @@ describe('UserDetailEdit', () => {
       expect(wrapper.find('Cards').props().cardHeaderText).toBe(
         `County: ${details.county_name}`
       );
+
       expect(wrapper.find('ShowField').length).toBe(8);
       expect(
         wrapper
