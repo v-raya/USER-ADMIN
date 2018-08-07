@@ -107,6 +107,7 @@ export default class AddUserDetail extends Component {
                   <UserDetailShow
                     details={this.state.details}
                     onEdit={this.onEditClick}
+                    permissionsList={permissionRoles}
                   />
                 </div>
               </div>
