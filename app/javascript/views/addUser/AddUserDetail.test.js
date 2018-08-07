@@ -14,6 +14,7 @@ describe('AddUserDetail', () => {
         details={{}}
         dashboardUrl={'dburl'}
         userListUrl={'myUserList'}
+        permissionRoles={['list1', 'list2']}
         actions={{
           fetchDetailsActions: mockfetchDetailsActions,
         }}
@@ -206,6 +207,10 @@ describe('AddUserDetail', () => {
       it('should display <UserDetailShow/>', () => {
         wrapper.setState({ isEdit: false, details: { id: '12345' } });
         expect(wrapper.find('UserDetailShow').length).toBe(1);
+        expect(wrapper.find('UserDetailShow').props().permissionsList).toEqual([
+          'list1',
+          'list2',
+        ]);
       });
 
       it('should display <UserDetailEdit/>', () => {
