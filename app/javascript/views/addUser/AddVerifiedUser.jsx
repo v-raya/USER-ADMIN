@@ -3,10 +3,17 @@ import PropTypes from 'prop-types';
 import Cards from '../../common/Card';
 import { Alert } from 'react-wood-duck';
 import ShowField from '../../common/ShowField';
+import { verificationError } from '../../_utils/errorCodes';
 
 /* eslint camelcase: 0 */
 
-const AddNewUser = ({ onCancel, onSave, verifyNewUserDetails }) => {
+const AddNewUser = ({
+  onCancel,
+  onSave,
+  verifyNewUserDetails,
+  email,
+  racfid,
+}) => {
   return (
     <div>
       {verifyNewUserDetails.verification_passed ? (
@@ -21,7 +28,7 @@ const AddNewUser = ({ onCancel, onSave, verifyNewUserDetails }) => {
               <div className="col-md-12">
                 <div className="row">
                   <div className="instructions label">
-                    Please Verify the details of the CWS-CMS user you want to
+                    Please Verify the details of the CWS/CMS user you want to
                     add to CWS-CARES
                   </div>
                   <div className="col-md-3">
@@ -68,7 +75,11 @@ const AddNewUser = ({ onCancel, onSave, verifyNewUserDetails }) => {
                 faIcon="fa-exclamation-triangle"
                 alertCross={false}
               >
-                {verifyNewUserDetails.verification_message}
+                {verificationError(
+                  verifyNewUserDetails.error_code,
+                  email,
+                  racfid
+                )}
               </Alert>
             </div>
           </div>
@@ -86,6 +97,8 @@ AddNewUser.propTypes = {
   onCancel: PropTypes.func,
   onSave: PropTypes.func,
   verifyNewUserDetails: PropTypes.object,
+  email: PropTypes.string,
+  racfid: PropTypes.string,
 };
 
 export default AddNewUser;

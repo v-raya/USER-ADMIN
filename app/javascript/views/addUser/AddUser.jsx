@@ -96,6 +96,8 @@ export default class AddUser extends Component {
         <AddVerifiedUser
           verifyNewUserDetails={this.state.verifyNewUserDetails}
           onSave={this.onAddUser}
+          email={this.state.email}
+          racfid={this.state.racfid}
         />
       );
     }

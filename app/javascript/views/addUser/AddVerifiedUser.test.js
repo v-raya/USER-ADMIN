@@ -27,7 +27,7 @@ describe('AddVerifiedUser', () => {
         <AddVerifiedUser verifyNewUserDetails={verifyNewUserDetails} />
       );
       expect(wrapper.find('div.label').text()).toBe(
-        'Please Verify the details of the CWS-CMS user you want to add to CWS-CARES'
+        'Please Verify the details of the CWS/CMS user you want to add to CWS-CARES'
       );
       expect(wrapper.find('ShowField').length).toBe(5);
       expect(
@@ -84,14 +84,12 @@ describe('AddVerifiedUser', () => {
       const newUserDetails = {
         verification_passed: false,
         verification_message: 'No ID',
+        error_code: 'CAP',
       };
       wrapper = shallow(
         <AddVerifiedUser verifyNewUserDetails={newUserDetails} />
       );
       expect(wrapper.find('Alert').length).toBe(1);
-      expect(wrapper.find('Alert').props().children).toBe(
-        newUserDetails.verification_message
-      );
     });
   });
 
