@@ -12,7 +12,7 @@ module Api
       end
       let(:match_all_query) do
         { query: { match_all: {} }, from: 51, size: 25,
-          sort: [{ "last_name.keyword": { order: 'asc' } }] }
+          sort: [{ "last_name.for_sort": { order: 'asc' } }] }
       end
       it 'has a route' do
         expect(get: 'api/user_list').to route_to(
@@ -66,7 +66,7 @@ module Api
         it 'returns a userlist / search limited by last_name' do
           allow(Users::UserRepository).to receive(:search).with(
             { query: { match_phrase_prefix: { last_name: 'Smith' } },
-              from: 51, size: 25, sort: [{ "last_name.keyword": { "order": 'asc' } }] }, 'token'
+              from: 51, size: 25, sort: [{ "last_name.for_sort": { "order": 'asc' } }] }, 'token'
           ).and_return(api_response)
 
           partial_user_response[:meta] = { req: match_last_name_with_paging, total: 1 }

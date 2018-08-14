@@ -51,14 +51,14 @@ describe Elastic::QueryBuilder do
         sort: [
           '_score',
           {
-            'last_name.keyword' =>
+            'last_name.for_sort' =>
             {
               order: 'asc'
             }
           }
         ]
       }
-      input = { 'sort_params' => 'last_name.keyword', 'order_params' => 'asc' }
+      input = { 'sort_params' => 'last_name.for_sort', 'order_params' => 'asc' }
       output = Elastic::QueryBuilder.sort_query(input)
       expect(output).to eq(expected_output)
     end
