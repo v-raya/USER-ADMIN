@@ -1,7 +1,7 @@
 version: '3.2'
 services:
   perry:
-    image: cwds/perry:4.0.0_882-RC
+    image: cwds/perry:4.0.0_887-RC
     hostname: perry
     depends_on:
       - cals_db2_data
@@ -13,7 +13,7 @@ services:
     environment:
       - DEV_MODE
       - COGNITO_MODE
-      - LOG_LEVEL="INFO"
+      - LOG_LEVEL=${LOG_LEVEL}:"INFO"
       - DB_CMS_USER
       - DB_CMS_PASSWORD
       - DB_CMS_JDBC_URL
@@ -69,7 +69,7 @@ services:
       timeout: 10s
       retries: 80
   elasticsearch:
-    image: cwds/elasticsearch_xpack_data:1.6.4-SNAPSHOT
+    image: cwds/elasticsearch_xpack_data:1.6.5-SNAPSHOT
     depends_on:
       - perry
     ports:
