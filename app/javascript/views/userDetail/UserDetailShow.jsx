@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Cards from '../../common/Card';
 import ShowField from '../../common/ShowField';
+import { formatPhoneNumber } from '../../_utils/formatDetails';
 
 /* eslint camelcase: 0 */
 
@@ -51,7 +52,7 @@ const UserDetailShow = ({ details, onEdit, permissionsList }) => (
             </div>
             <div className="col-md-3">
               <ShowField label="Office Phone Number">
-                <span>{details.phone_number}</span>
+                <span>{formatPhoneNumber(details)}</span>
               </ShowField>
             </div>
             <div className="col-md-3">
