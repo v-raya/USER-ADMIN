@@ -1,12 +1,10 @@
 /* eslint camelcase: 0 */
 
-export function formatPhoneNumber(details) {
-  const phone = details.phone_number ? details.phone_number : '';
+export function formatPhoneNumber(phone_number, phone_extension_number) {
+  const phone = phone_number !== undefined ? phone_number : '';
   const ext =
-    details.phone_number &&
-    details.phone_extension_number &&
-    details.phone_extension_number !== '0'
-      ? ` Ext ${details.phone_extension_number}`
+    phone_number && phone_extension_number && phone_extension_number !== '0'
+      ? ` Ext ${phone_extension_number}`
       : '';
   return phone + ext;
 }
