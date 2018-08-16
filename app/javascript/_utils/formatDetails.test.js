@@ -29,4 +29,13 @@ describe('formatPhoneNumber', () => {
       expect(formatPhoneNumber(details)).toEqual('1234567890');
     });
   });
+
+  describe('When only phone extension is available without phone ', () => {
+    it('returns empty ', () => {
+      const details = {
+        phone_extension_number: '12345',
+      };
+      expect(formatPhoneNumber(details)).toEqual('');
+    });
+  });
 });
