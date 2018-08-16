@@ -60,10 +60,7 @@ const AddNewUser = ({
                   <div className="col-md-3">
                     <ShowField label="Office Phone Number">
                       <span>
-                        {formatPhoneNumber(
-                          verifyNewUserDetails.user.phone_number,
-                          verifyNewUserDetails.user.phone_extension_number
-                        )}
+                        {formatPhoneNumber(verifyNewUserDetails.user)}
                       </span>
                     </ShowField>
                   </div>

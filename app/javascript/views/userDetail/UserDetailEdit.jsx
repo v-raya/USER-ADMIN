@@ -57,12 +57,7 @@ const UserDetailEdit = ({
             </div>
             <div className="col-md-3">
               <ShowField label="Office Phone Number">
-                <span>
-                  {formatPhoneNumber(
-                    details.phone_number,
-                    details.phone_extension_number
-                  )}
-                </span>
+                <span>{formatPhoneNumber(details)}</span>
               </ShowField>
             </div>
             <div className="col-md-3">
