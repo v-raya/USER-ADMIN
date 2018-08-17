@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module LoginHelper
+module CognitoLoginHelper
   def login
     visit ENV.fetch('RAILS_RELATIVE_URL_ROOT', '/')
     return unless current_url.include?('login')
