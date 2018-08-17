@@ -10,9 +10,15 @@ module Api
       let(:partial_user_response) do
         { records: [user.to_hash], meta: { total: 1, req: {} } }
       end
+      let(:ascending_last_first_name_sort) do
+        [
+          { "last_name.for_sort": { "order": 'asc' } },
+          { "first_name.for_sort": { "order": 'asc' } }
+        ]
+      end
       let(:match_all_query) do
         { query: { match_all: {} }, from: 51, size: 25,
-          sort: [{ "last_name.for_sort": { order: 'asc' } }] }
+          sort: ascending_last_first_name_sort }
       end
       it 'has a route' do
         expect(get: 'api/user_list').to route_to(
@@ -57,6 +63,13 @@ module Api
             sort: [] }
         end
 
+        let(:ascending_last_first_name_sort) do
+          [
+            { "last_name.for_sort": { "order": 'asc' } },
+            { "first_name.for_sort": { "order": 'asc' } }
+          ]
+        end
+
         before do
           allow(Users::UserRepository).to receive(:new)
             .with(no_args).and_return(user_repository)
@@ -66,7 +79,7 @@ module Api
         it 'returns a userlist / search limited by last_name' do
           allow(Users::UserRepository).to receive(:search).with(
             { query: { match_phrase_prefix: { last_name: 'Smith' } },
-              from: 51, size: 25, sort: [{ "last_name.for_sort": { "order": 'asc' } }] }, 'token'
+              from: 51, size: 25, sort: ascending_last_first_name_sort }, 'token'
           ).and_return(api_response)
 
           partial_user_response[:meta] = { req: match_last_name_with_paging, total: 1 }

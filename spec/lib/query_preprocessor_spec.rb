@@ -43,11 +43,16 @@ describe QueryPreprocessor do
   end
 
   describe 'build_query_hash' do
+    let(:ascending_last_first_name_sort) do
+      [
+        { "last_name.for_sort": { "order": 'asc' } },
+        { "first_name.for_sort": { "order": 'asc' } }
+      ]
+    end
     let(:es_match_all_query) do
       { query: { match_all: {} }, from: 51, size: 25,
-        sort: ["last_name.for_sort": { "order": 'asc' }] }
+        sort: ascending_last_first_name_sort }
     end
-
     let(:match_last_name_with_paging) do
       { query: [{ field: 'last_name', value: 'Smith' }],
         from: 51, size: 25, sort: [field: 'last_name', desc: true] }
@@ -61,7 +66,7 @@ describe QueryPreprocessor do
     end
     let(:es_query_for_last_name) do
       { query: { match_phrase_prefix: { last_name: 'Smith' } },
-        from: 51, size: 25, sort: ["last_name.for_sort": { "order": 'asc' }] }
+        from: 51, size: 25, sort: ascending_last_first_name_sort }
     end
     it 'builds up a query by last name for elastic search correctly' do
       expect(QueryPreprocessor.build_query_hash(match_last_name_with_paging))
