@@ -52,7 +52,10 @@ const UserDetailShow = ({ details, onEdit, permissionsList }) => (
             </div>
             <div className="col-md-3">
               <ShowField label="Office Phone Number">
-                <span>{formatPhoneNumber(details)}</span>
+                <span>
+                  {details.phone_number}
+                  {formatPhoneNumber(details)}
+                </span>
               </ShowField>
             </div>
             <div className="col-md-3">
