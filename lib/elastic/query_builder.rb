@@ -52,14 +52,13 @@ module Elastic
 
     def self.sort_query(page_params)
       if page_params['sort_params'].present? && page_params['order_params'].present?
-        {
-          sort: [
-            '_score',
-            { page_params['sort_params'] => { order: page_params['order_params'] } }
-          ]
-        }
+        { sort: [
+          '_score',
+          { page_params['sort_params'] => { order: page_params['order_params'] } }
+        ] }
       else
-        { sort: [{ "last_name.for_sort": { order: 'asc' } }] }
+        { sort: [{ "last_name.for_sort": { order: 'asc' } },
+                 { "first_name.for_sort": { order: 'asc' } }] }
       end
     end
 
