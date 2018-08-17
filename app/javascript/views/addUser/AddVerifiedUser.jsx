@@ -61,8 +61,8 @@ const AddNewUser = ({
                     <ShowField label="Office Phone Number">
                       <span>
                         {formatPhoneNumber(
-                          verifyNewUserDetails.user.phone_number,
-                          verifyNewUserDetails.user.phone_extension_number
+                          verifyNewUserDetails.user,
+                          verifyNewUserDetails.user
                         )}
                       </span>
                     </ShowField>

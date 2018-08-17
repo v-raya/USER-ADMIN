@@ -7,9 +7,7 @@ describe('formatPhoneNumber', () => {
         phone_number: '1234567890',
         phone_extension_number: '011',
       };
-      expect(
-        formatPhoneNumber(details.phone_number, details.phone_extension_number)
-      ).toEqual('1234567890 Ext 011');
+      expect(formatPhoneNumber(details)).toEqual('1234567890 Ext 011');
     });
   });
 
@@ -18,9 +16,7 @@ describe('formatPhoneNumber', () => {
       const details = {
         phone_number: '1234567890',
       };
-      expect(
-        formatPhoneNumber(details.phone_number, details.phone_extension_number)
-      ).toEqual('1234567890');
+      expect(formatPhoneNumber(details)).toEqual('1234567890');
     });
   });
 
@@ -30,9 +26,7 @@ describe('formatPhoneNumber', () => {
         phone_number: '1234567890',
         phone_extension_number: '0',
       };
-      expect(
-        formatPhoneNumber(details.phone_number, details.phone_extension_number)
-      ).toEqual('1234567890');
+      expect(formatPhoneNumber(details)).toEqual('1234567890');
     });
   });
 
@@ -41,9 +35,7 @@ describe('formatPhoneNumber', () => {
       const details = {
         phone_extension_number: '12345',
       };
-      expect(
-        formatPhoneNumber(details.phone_number, details.phone_extension_number)
-      ).toEqual('');
+      expect(formatPhoneNumber(details)).toEqual('');
     });
   });
 });
