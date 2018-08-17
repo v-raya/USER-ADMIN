@@ -1,12 +1,12 @@
-import { formatPhoneNumber } from './formatDetails';
+import { formatPhoneExtension } from './formatDetails';
 
-describe('formatPhoneNumber', () => {
+describe('formatPhoneExtension', () => {
   describe('When extension is available ', () => {
     it('returns Extension with Ext text ', () => {
       const details = {
         phone_extension_number: '011',
       };
-      expect(formatPhoneNumber(details)).toEqual(' Ext 011');
+      expect(formatPhoneExtension(details)).toEqual(' Ext 011');
     });
   });
 
@@ -15,7 +15,7 @@ describe('formatPhoneNumber', () => {
       const details = {
         phone_number: '1234567890',
       };
-      expect(formatPhoneNumber(details)).toEqual('');
+      expect(formatPhoneExtension(details)).toEqual('');
     });
   });
 });

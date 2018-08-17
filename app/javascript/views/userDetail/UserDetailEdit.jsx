@@ -5,7 +5,7 @@ import ShowField from '../../common/ShowField';
 import DropDownField from 'react-wood-duck/dist/DropDownField';
 import MultiSelect from '../../common/MultiSelect';
 import { STATUS } from '../../_constants/userDetailConstants';
-import { formatPhoneNumber } from '../../_utils/formatDetails';
+import { formatPhoneExtension } from '../../_utils/formatDetails';
 
 /* eslint camelcase: 0 */
 
@@ -59,7 +59,7 @@ const UserDetailEdit = ({
               <ShowField label="Office Phone Number">
                 <span>
                   {details.phone_number}
-                  {formatPhoneNumber(details)}
+                  {formatPhoneExtension(details)}
                 </span>
               </ShowField>
             </div>

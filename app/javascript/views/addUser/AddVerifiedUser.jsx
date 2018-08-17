@@ -4,7 +4,7 @@ import Cards from '../../common/Card';
 import { Alert } from 'react-wood-duck';
 import ShowField from '../../common/ShowField';
 import { verificationError } from '../../_utils/errorCodes';
-import { formatPhoneNumber } from '../../_utils/formatDetails';
+import { formatPhoneExtension } from '../../_utils/formatDetails';
 
 /* eslint camelcase: 0 */
 
@@ -61,7 +61,7 @@ const AddNewUser = ({
                     <ShowField label="Office Phone Number">
                       <span>
                         {verifyNewUserDetails.user.phone_number}
-                        {formatPhoneNumber(verifyNewUserDetails.user)}
+                        {formatPhoneExtension(verifyNewUserDetails.user)}
                       </span>
                     </ShowField>
                   </div>
