@@ -17,6 +17,7 @@ services:
       - DB_CMS_USER
       - DB_CMS_PASSWORD
       - DB_CMS_JDBC_URL
+      - DORA_URL
       - SAF_AUTH_PATH
       - SAF_CLIENT_ID
       - SAF_CLIENT_SECRET
@@ -119,3 +120,4 @@ services:
       - COUNTY_ADMIN_WEB_BASE_URL
       - DASHBOARD_URL
       - RAILS_RELATIVE_URL_ROOT
+      - DEV_MODE

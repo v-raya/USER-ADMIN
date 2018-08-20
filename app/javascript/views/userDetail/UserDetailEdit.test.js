@@ -11,6 +11,7 @@ describe('UserDetailEdit', () => {
     office: 'officeName',
     county_name: 'MyCounty',
     permissions: ['x', 'y'],
+    racfid: 'my RACFID',
   };
 
   let wrapper;
@@ -44,6 +45,12 @@ describe('UserDetailEdit', () => {
           .at(2)
           .props().label
       ).toEqual('CWS Login');
+      expect(
+        wrapper
+          .find('ShowField')
+          .at(2)
+          .props().children
+      ).toEqual('my RACFID');
       expect(
         wrapper
           .find('ShowField')

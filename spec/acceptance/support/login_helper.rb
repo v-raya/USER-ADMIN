@@ -1,22 +1,45 @@
 # frozen_string_literal: true
 
 module LoginHelper
-  def login(login_config = default_json)
+  def login
+    visit ENV['RAILS_RELATIVE_URL_ROOT'] || '/'
+    if page.has_content?('Authorization JSON')
+      json_login
+    else
+      cognito_login
+    end
+
+    go_manage_users if page.has_content?('Services & Resources')
+  end
+
+  def json_login(login_config = default_json)
     login_json = JSON.generate(login_config)
     visit ENV['RAILS_RELATIVE_URL_ROOT'] || '/'
     puts "ENV for county auth: #{ENV.fetch('COUNTY_AUTHORIZATION_ENABLED', nil)}"
     puts "Logging in to county #{login_config[:county_name]}"
 
     puts "visited: landed on #{current_url}"
-    if current_url.include?('login.html')
-      submit_json_form(login_json)
-    else
-      puts 'Already logged in'
-      return
-    end
+
+    submit_json_form(login_json) if current_url.include?('login.html')
+  end
+
+  def cognito_login
+    visit ENV.fetch('RAILS_RELATIVE_URL_ROOT', '/')
+    return unless current_url.include?('login')
+    fill_in 'Email', with: ENV.fetch('COGNITO_USERNAME', 'no-reply@osi.ca.gov')
+    fill_in 'Password', with: ENV.fetch('COGNITO_PASSWORD', 'password')
+    click_on 'Sign In'
+    # verify via MFA using static value assigned to this user.
+    fill_in 'Enter Code', with: 'LETMEIN'
+    click_on 'Verify'
+    # follow from the dashboard to cap
   end
 
   private
+
+  def go_manage_users
+    find(:xpath, '//h3[.="Manage Users"]/ancestor::div[@class="panel panel-default"]').click_on 'Go'
+  end
 
   def submit_json_form(login_json)
     return unless ENV.fetch('COUNTY_AUTHORIZATION_ENABLED', false)
