@@ -50,6 +50,7 @@ group :development, :test do
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
   # Adds support for Capybara system testing and selenium driver
   gem 'capybara', '~> 2.13'
+  gem 'capybara-accessible', github: 'ca-cwds/capybara-accessible'
   gem 'dotenv-rails'
   gem 'foreman', '~> 0.84.0'
   gem 'pry'
@@ -71,6 +72,7 @@ end
 
 group :test do
   gem 'axe-matchers'
+  gem 'poltergeist'
   # Adds support for Capybara system testing and selenium driver
   gem 'rails-controller-testing'
   gem 'rspec'
