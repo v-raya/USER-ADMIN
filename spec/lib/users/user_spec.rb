@@ -26,6 +26,7 @@ module Users
       it { is_expected.to have_attribute(:permissions, Types::Array.optional) }
       it { is_expected.to have_attribute(:verification_passed, Types::Bool.optional) }
       it { is_expected.to have_attribute(:verification_message, Types::String.optional) }
+      it { is_expected.to have_attribute(:phone_extension_number, Types::String.optional) }
     end
   end
 end
