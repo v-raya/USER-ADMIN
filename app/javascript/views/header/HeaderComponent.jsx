@@ -1,5 +1,6 @@
 import React from 'react';
 import { GlobalHeader } from 'react-wood-duck';
+import PropTypes from 'prop-types';
 
 export default class HeaderComponent extends React.Component {
   constructor(props) {
@@ -8,7 +9,7 @@ export default class HeaderComponent extends React.Component {
   }
 
   logoutCallback() {
-    window.location.href = '/logout';
+    window.location.href = this.props.logoutUrl;
   }
 
   render() {
@@ -17,10 +18,14 @@ export default class HeaderComponent extends React.Component {
         <GlobalHeader
           profileName="County CWDS-Admin"
           profileId="profile.id"
-          logoutUrl="/logout"
+          logoutUrl={this.props.logoutUrl}
           logoutCallback={this.logoutCallback}
         />
       </div>
     );
   }
 }
+
+HeaderComponent.propTypes = {
+  logoutUrl: PropTypes.string,
+};
