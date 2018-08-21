@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import Cards from '../../common/Card';
 import ShowField from '../../common/ShowField';
 import { formatPhoneExtension, formatDate } from '../../_utils/formatDetails';
-// import { DateTime } from 'luxon';
 
 /* eslint camelcase: 0 */
 
