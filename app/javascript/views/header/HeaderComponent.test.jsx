@@ -18,7 +18,6 @@ describe('Header Component', () => {
   it('allow user logout', () => {
     let button = wrapper.find('button').last();
     const instance = wrapper.instance();
-
     expect(button.props().onClick).toEqual(instance.logoutCallBack);
   });
 });
