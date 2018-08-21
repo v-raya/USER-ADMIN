@@ -4,6 +4,7 @@ import Cards from '../../common/Card';
 import { Alert } from 'react-wood-duck';
 import ShowField from '../../common/ShowField';
 import { verificationError } from '../../_utils/errorCodes';
+import { formatPhoneExtension } from '../../_utils/formatDetails';
 
 /* eslint camelcase: 0 */
 
@@ -58,7 +59,10 @@ const AddNewUser = ({
                   </div>
                   <div className="col-md-3">
                     <ShowField label="Office Phone Number">
-                      <span>{verifyNewUserDetails.user.phone_number}</span>
+                      <span>
+                        {verifyNewUserDetails.user.phone_number}
+                        {formatPhoneExtension(verifyNewUserDetails.user)}
+                      </span>
                     </ShowField>
                   </div>
                 </div>
