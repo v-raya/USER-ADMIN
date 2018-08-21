@@ -1,7 +1,7 @@
-import { makeUserDetailPath } from './makeUserDetailPath';
+import { makeLogoutUrl } from './makeLogoutUrl';
 
 describe('Home', () => {
-  describe('makeUserDetailPath', () => {
+  describe('makeLogoutUrl', () => {
     let originalUrlRoot;
 
     beforeEach(() => {
@@ -14,23 +14,17 @@ describe('Home', () => {
 
     it('returns the right path and encodes user ids for relative', () => {
       process.env.RAILS_RELATIVE_URL_ROOT = '/cap';
-      expect(makeUserDetailPath('some+user+id')).toEqual(
-        '/cap/user_details/some%2Buser%2Bid'
-      );
+      expect(makeLogoutUrl()).toEqual('/cap/logout');
     });
 
     it('returns the right path and encodes user ids for root path', () => {
       process.env.RAILS_RELATIVE_URL_ROOT = '/';
-      expect(makeUserDetailPath('some+user+id')).toEqual(
-        '/user_details/some%2Buser%2Bid'
-      );
+      expect(makeLogoutUrl()).toEqual('/logout');
     });
 
     it('returns the right path and encodes user ids even when no RAILS_RELATIVE_URL_ROOT is provided', () => {
       delete process.env.RAILS_RELATIVE_URL_ROOT;
-      expect(makeUserDetailPath('some+user+id')).toEqual(
-        '/user_details/some%2Buser%2Bid'
-      );
+      expect(makeLogoutUrl()).toEqual('/logout');
     });
   });
 });
