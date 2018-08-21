@@ -75,6 +75,7 @@ describe('UserDetail', () => {
         instance.onEditClick();
         expect(instance.state.isEdit).toEqual(true);
         expect(instance.state.disableActionBtn).toEqual(true);
+        expect(instance.state.alert).toEqual(false);
       });
     });
   });
