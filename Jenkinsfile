@@ -65,10 +65,10 @@ node(node_to_run_on()) {
           sh "./cc-test-reporter upload-coverage --debug -r ${CC_TEST_REPORTER_ID}"
         }
       }
-      stage('Acceptance Test') {
+      stage('Acceptance Test smoke test') {
         sh "docker-compose up -d --build"
         sh "sleep ${ACCEPTANCE_SLEEP_TIME}"
-        sh "docker-compose exec --env COUNTY_AUTHORIZATION_ENABLED=true --env COUNTY_ADMIN_WEB_BASE_URL=county-admin-web:3000 -T county-admin-test bundle exec rspec spec/acceptance"
+        sh "docker-compose exec --env COUNTY_AUTHORIZATION_ENABLED=true --env COUNTY_ADMIN_WEB_BASE_URL=county-admin-web:3000 -T county-admin-test bundle exec rspec spec/acceptance/user_list_page_spec.rb"
       }
       stage('Publish Image') {
         withDockerRegistry([credentialsId: DOCKER_REGISTRY_CREDENTIALS_ID]) {
@@ -80,9 +80,8 @@ node(node_to_run_on()) {
         sh "curl -v 'http://${JENKINS_USER}:${JENKINS_API_TOKEN}@jenkins.mgmt.cwds.io:8080/job/preint/job/deploy-cap/buildWithParameters?token=${JENKINS_TRIGGER_TOKEN}&cause=Caused%20by%20Build%20${SEMANTIC_VERSION_NUMBER}&APP_VERSION=${SEMANTIC_VERSION_NUMBER}'"
       }
       stage('Preint Acceptance Test') {
-        // should run user_list_page_spec
-       // sh "docker-compose up -d --build county-admin-test"
-       // sh "docker-compose exec -T --env COUNTY_AUTHORIZATION_ENABLED=true --env COUNTY_ADMIN_WEB_BASE_URL=https://web.preint.cwds.io/cap county-admin-test bundle exec rspec spec/acceptance"
+       sh "docker-compose up -d --build county-admin-test"
+       sh "docker-compose exec -T --env COUNTY_AUTHORIZATION_ENABLED=true --env COUNTY_ADMIN_WEB_BASE_URL=https://web.preint.cwds.io/cap county-admin-test bundle exec rspec spec/acceptance/user_list_page_spec.rb"
       }
       stage('Deploy Integration') {
         sh "curl -v 'http://${JENKINS_USER}:${JENKINS_API_TOKEN}@jenkins.mgmt.cwds.io:8080/job/Integration%20Environment/job/deploy-cap/buildWithParameters?token=${JENKINS_TRIGGER_TOKEN}&cause=Caused%20by%20Build%20${SEMANTIC_VERSION_NUMBER}&APP_VERSION=${SEMANTIC_VERSION_NUMBER}'"
