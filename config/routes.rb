@@ -18,6 +18,8 @@ Rails.application.routes.draw do
     post 'add_user', to: 'add_user#index'
   end
 
+  get 'logout', to: 'cap_base#logout'
+
   # Single Page App home
   get '*path', to: 'dashboard#index', constraints: ->(request) do
     !request.xhr? && request.format.html?
