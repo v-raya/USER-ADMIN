@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { GlobalHeader } from 'react-wood-duck';
 
 export default class HeaderComponent extends React.Component {
@@ -15,7 +16,7 @@ export default class HeaderComponent extends React.Component {
     return (
       <div>
         <GlobalHeader
-          profileName="County CWDS-Admin"
+          profileName={this.props.fullName}
           profileId="profile.id"
           logoutUrl="/logout"
           logoutCallback={this.logoutCallback}
@@ -24,3 +25,7 @@ export default class HeaderComponent extends React.Component {
     );
   }
 }
+
+HeaderComponent.propTypes = {
+  fullName: PropTypes.string,
+};
