@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { Provider } from 'react-redux';
-import HeaderComponent from './views/header/HeaderComponent';
+import HeaderComponent from './containers/headerContainer';
 import { store } from './store/configureStore';
 import UsersList from './containers/usersListContainer';
 import DetailsPage from './containers/detailsContainer';
