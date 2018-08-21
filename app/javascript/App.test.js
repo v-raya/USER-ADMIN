@@ -9,7 +9,6 @@ describe('App', () => {
   });
 
   it('renders ', () => {
-    expect(wrapper.find('HeaderComponent').length).toBe(1);
     expect(
       wrapper
         .find('Route')
