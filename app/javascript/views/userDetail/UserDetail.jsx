@@ -68,7 +68,7 @@ export default class UserDetail extends Component {
   };
 
   onEditClick = () => {
-    this.setState({ isEdit: true, alert: false });
+    this.setState({ isEdit: true, alert: false, disableActionBtn: true });
   };
 
   onCancel = () => {
