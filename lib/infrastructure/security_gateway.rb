@@ -12,6 +12,11 @@ module Infrastructure
       response.body if response.status == 200
     end
 
+    def self.get_new_url(callback, value)
+      perry_api_base_url = Rails.configuration.micro_services['perry_api_base_url']
+      "#{perry_api_base_url}/authn/#{value}?callback=#{callback}"
+    end
+
     private
 
     def validation_url(token)
