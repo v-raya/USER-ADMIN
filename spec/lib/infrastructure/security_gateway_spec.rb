@@ -52,5 +52,19 @@ module Infrastructure
         end
       end
     end
+
+    describe '#get_new_url' do
+      context 'with a callback url and login' do
+        it 'returns a login URL' do
+          expect(SecurityGateway.get_new_url('', 'login')).to eq 'https://perry.test/authn/login?callback='
+        end
+      end
+
+      context 'with a callback and logout' do
+        it 'returns a logout URL' do
+          expect(SecurityGateway.get_new_url('www.example.com', 'logout')).to eq 'https://perry.test/authn/logout?callback=www.example.com'
+        end
+      end
+    end
   end
 end
