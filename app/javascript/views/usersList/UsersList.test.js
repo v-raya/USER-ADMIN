@@ -2,7 +2,7 @@ import React from 'react';
 import { mount, shallow } from 'enzyme';
 import UsersList, { toFullName, userStatusFormat } from './UsersList.jsx';
 import { Link } from 'react-router-dom';
-import { formatDate } from '../../_utils/formatDetails';
+import { formatDate } from '../../_utils/formatters';
 
 describe('UsersList', () => {
   let wrapper;

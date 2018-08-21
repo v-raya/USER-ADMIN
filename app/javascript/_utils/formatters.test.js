@@ -1,4 +1,4 @@
-import { formatPhoneExtension, formatDate } from './formatDetails';
+import { formatPhoneExtension, formatDate } from './formatters';
 
 describe('formatPhoneExtension', () => {
   describe('When extension is available ', () => {

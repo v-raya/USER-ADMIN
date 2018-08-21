@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Cards from '../../common/Card';
 import ShowField from '../../common/ShowField';
-import { formatPhoneExtension, formatDate } from '../../_utils/formatDetails';
+import { formatPhoneExtension, formatDate } from '../../_utils/formatters';
 
 /* eslint camelcase: 0 */
 
