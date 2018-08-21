@@ -6,11 +6,12 @@ import { store } from './store/configureStore';
 import UsersList from './containers/usersListContainer';
 import DetailsPage from './containers/detailsContainer';
 import AddUser from './containers/addUserContainer';
+import { makeLogoutUrl } from './_utils/makeLogoutUrl';
 
 const App = () => (
   <Provider store={store}>
     <Fragment>
-      <HeaderComponent />
+      <HeaderComponent logoutUrl={makeLogoutUrl()} />
       <Router basename={process.env.RAILS_RELATIVE_URL_ROOT || ''}>
         <Switch>
           <Route path="/" exact component={UsersList} />
