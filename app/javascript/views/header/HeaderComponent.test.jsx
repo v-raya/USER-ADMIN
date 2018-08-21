@@ -6,13 +6,16 @@ describe('Header Component', () => {
   let wrapper;
   beforeEach(() => {
     const props = {
-      logoutUrl: '/logout',
+      fullName: 'lastname firstname',
     };
     wrapper = shallow(<HeaderComponent {...props} />);
   });
 
   it('renders ', () => {
     expect(wrapper.find('GlobalHeader').length).toBe(1);
+    expect(wrapper.find('GlobalHeader').props().profileName).toEqual(
+      'lastname firstname'
+    );
   });
 
   it('allow user logout', () => {

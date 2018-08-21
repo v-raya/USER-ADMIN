@@ -12,8 +12,6 @@ export default class HeaderComponent extends React.Component {
       <div>
         <GlobalHeader
           profileName={this.props.fullName}
-          profileId="profile.id"
-          logoutUrl="/logout"
           logoutCallback={this.logoutCallback}
         />
       </div>
