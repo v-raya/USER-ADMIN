@@ -100,7 +100,6 @@ class UserList extends PureComponent {
   };
 
   renderUsersTable = ({ data }) => {
-    // console.log(data.last_login_date_time);
     return (
       <ReactTable
         data={data}

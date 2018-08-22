@@ -254,8 +254,8 @@ describe('UsersList', () => {
         });
       });
 
-      describe('#dateFormat', () => {
-        it('renders Active  for enabled', () => {
+      describe('#lastLoginDate', () => {
+        it('renders date in MM/DD/YYYY format', () => {
           expect(lastLoginDate({ last_login_date_time: '2013-03-05' })).toEqual(
             '03/05/2013'
           );
