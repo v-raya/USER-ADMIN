@@ -8,7 +8,8 @@ feature 'User List Page' do
   scenario 'Can log in' do
     login
   end
-  scenario 'validate user list page' do
+
+  skip 'validate user list page' do
     login
     sleep 2
     page_has_basic_text
