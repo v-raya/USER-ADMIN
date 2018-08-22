@@ -26,6 +26,8 @@ module LoginHelper
   def cognito_login
     visit ENV.fetch('RAILS_RELATIVE_URL_ROOT', '/')
     return unless current_url.include?('login')
+    puts "Fill in user name with #{ENV.fetch('COGNITO_USERNAME', 'no-reply@osi.ca.gov')}"
+    puts "Fill in pass with #{ENV.fetch('COGNITO_PASSWORD', 'password')}"
     fill_in 'Email', with: ENV.fetch('COGNITO_USERNAME', 'no-reply@osi.ca.gov')
     fill_in 'Password', with: ENV.fetch('COGNITO_PASSWORD', 'password')
     click_on 'Sign In'
