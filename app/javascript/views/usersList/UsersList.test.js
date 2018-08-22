@@ -2,6 +2,7 @@ import React from 'react';
 import { mount, shallow } from 'enzyme';
 import UsersList, { toFullName, userStatusFormat } from './UsersList.jsx';
 import { Link } from 'react-router-dom';
+import { formatDate } from '../../_utils/formatters';
 
 describe('UsersList', () => {
   let wrapper;
@@ -249,6 +250,17 @@ describe('UsersList', () => {
           expect(userStatusFormat({ enabled: false })).toEqual('Inactive');
         });
       });
+
+      describe('#dateFormat', () => {
+        it('renders Active  for enabled', () => {
+          let lastLoginDate = '2013-03-05';
+          expect(formatDate(lastLoginDate)).toEqual('03/05/2013');
+        });
+
+        it('renders empty when date does not exists', () => {
+          expect(formatDate(null)).toEqual('');
+        });
+      });
     });
   });
 
@@ -283,7 +295,7 @@ describe('UsersList', () => {
       expect(wrapper.find('ReactTable').prop('columns')[1]['id']).toBe(
         'enabled'
       );
-      expect(wrapper.find('ReactTable').prop('columns')[2]['accessor']).toBe(
+      expect(wrapper.find('ReactTable').prop('columns')[2]['id']).toBe(
         'last_login_date_time'
       );
       expect(wrapper.find('ReactTable').prop('columns')[3]['accessor']).toBe(

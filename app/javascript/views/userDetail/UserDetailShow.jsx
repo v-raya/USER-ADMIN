@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Cards from '../../common/Card';
 import ShowField from '../../common/ShowField';
-import { formatPhoneExtension } from '../../_utils/formatDetails';
+import { formatPhoneExtension, formatDate } from '../../_utils/formatters';
 
 /* eslint camelcase: 0 */
 
@@ -42,7 +42,7 @@ const UserDetailShow = ({ details, onEdit, permissionsList }) => (
             </div>
             <div className="col-md-3">
               <ShowField label="Last Login">
-                {details.last_login_date_time}
+                {formatDate(details.last_login_date_time)}
               </ShowField>
             </div>
           </div>
@@ -59,10 +59,14 @@ const UserDetailShow = ({ details, onEdit, permissionsList }) => (
               </ShowField>
             </div>
             <div className="col-md-3">
-              <ShowField label="Start Date"> {details.start_date}</ShowField>
+              <ShowField label="Start Date">
+                {formatDate(details.start_date)}
+              </ShowField>
             </div>
             <div className="col-md-3">
-              <ShowField label="End Date">{details.end_date}</ShowField>
+              <ShowField label="End Date">
+                {formatDate(details.end_date)}
+              </ShowField>
             </div>
           </div>
           <div className="row">
