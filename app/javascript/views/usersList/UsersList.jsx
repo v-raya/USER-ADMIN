@@ -13,6 +13,7 @@ import Cards from '../../common/Card';
 import ReactTable from 'react-table';
 import Pagination from './Pagination';
 import './UsersList.scss';
+import { formatDate } from '../../_utils/formatters';
 
 const hackBtnStyles = {
   marginTop: '22px',
@@ -25,6 +26,10 @@ export const toFullName = ({ first_name, last_name }) =>
 
 export const userStatusFormat = ({ enabled }) => {
   return enabled ? 'Active' : 'Inactive';
+};
+
+export const lastLoginDate = ({ last_login_date_time }) => {
+  return formatDate(last_login_date_time);
 };
 
 class UserList extends PureComponent {
@@ -118,7 +123,8 @@ class UserList extends PureComponent {
           },
           {
             Header: 'Last Login',
-            accessor: 'last_login_date_time',
+            id: 'last_login_date_time',
+            accessor: lastLoginDate,
           },
           {
             Header: 'CWS Login',

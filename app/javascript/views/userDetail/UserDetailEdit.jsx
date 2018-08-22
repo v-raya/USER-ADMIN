@@ -5,6 +5,7 @@ import ShowField from '../../common/ShowField';
 import DropDownField from 'react-wood-duck/dist/DropDownField';
 import MultiSelect from '../../common/MultiSelect';
 import { STATUS } from '../../_constants/userDetailConstants';
+import { formatPhoneExtension, formatDate } from '../../_utils/formatters';
 
 /* eslint camelcase: 0 */
 
@@ -33,7 +34,7 @@ const UserDetailEdit = ({
       >
         <div className="col-md-12">
           <div className="row">
-            <div className="col-md-3">
+            <div className="col-md-5">
               <ShowField label="Full Name">
                 {details.last_name}, {details.first_name} {details.middle_name}
               </ShowField>
@@ -41,42 +42,37 @@ const UserDetailEdit = ({
             <div className="col-md-3">
               <ShowField label="Office Name">{details.office}</ShowField>
             </div>
-            <div className="col-md-3">
+            <div className="col-md-2">
               <ShowField label="CWS Login">{details.racfid}</ShowField>
             </div>
-            <div className="col-md-3">
+            <div className="col-md-2">
               <ShowField label="Last Login">
-                {details.last_login_date_time}
+                {formatDate(details.last_login_date_time)}
               </ShowField>
             </div>
           </div>
           <div className="row">
-            <div className="col-md-3">
+            <div className="col-md-5">
               <ShowField label="Email">{details.email}</ShowField>
             </div>
             <div className="col-md-3">
               <ShowField label="Office Phone Number">
-                <span>{details.phone_number}</span>
+                <span>{formatPhoneExtension(details)}</span>
               </ShowField>
             </div>
-            <div className="col-md-3">
-              <ShowField label="Start Date"> {details.start_date}</ShowField>
+            <div className="col-md-2">
+              <ShowField label="Start Date">
+                {formatDate(details.start_date)}
+              </ShowField>
             </div>
-            <div className="col-md-3">
-              <ShowField label="End Date">{details.end_date}</ShowField>
+            <div className="col-md-2">
+              <ShowField label="End Date">
+                {formatDate(details.end_date)}
+              </ShowField>
             </div>
           </div>
           <div className="row">
-            <div className="col-md-3">
-              <DropDownField
-                id="dropdown1"
-                selectedOption={details.enabled}
-                options={STATUS}
-                label="Status"
-                onChange={onStatusChange}
-              />
-            </div>
-            <div className="col-md-3">
+            <div className="col-md-5">
               <MultiSelect
                 id="Multiselect1"
                 selectedOption={selectedPermissions}
@@ -85,6 +81,15 @@ const UserDetailEdit = ({
                 onChange={selectedOptions =>
                   onRoleChange(selectedOptions.split(','))
                 }
+              />
+            </div>
+            <div className="col-md-3">
+              <DropDownField
+                id="dropdown1"
+                selectedOption={details.enabled}
+                options={STATUS}
+                label="Status"
+                onChange={onStatusChange}
               />
             </div>
           </div>

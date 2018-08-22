@@ -74,6 +74,8 @@ describe('UserDetail', () => {
         const instance = wrapper.instance();
         instance.onEditClick();
         expect(instance.state.isEdit).toEqual(true);
+        expect(instance.state.disableActionBtn).toEqual(true);
+        expect(instance.state.alert).toEqual(false);
       });
     });
   });
@@ -83,7 +85,7 @@ describe('UserDetail', () => {
       wrapper.setState({ alert: true });
       expect(wrapper.find('Alert').length).toBe(1);
       expect(wrapper.find('Alert').props().children).toBe(
-        'Your changes have been made successfuly'
+        'Your changes have been made successfully'
       );
     });
   });

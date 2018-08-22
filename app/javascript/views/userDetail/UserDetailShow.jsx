@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Cards from '../../common/Card';
 import ShowField from '../../common/ShowField';
+import { formatPhoneExtension, formatDate } from '../../_utils/formatters';
 
 /* eslint camelcase: 0 */
 
@@ -28,7 +29,7 @@ const UserDetailShow = ({ details, onEdit, permissionsList }) => (
       >
         <div className="col-md-12">
           <div className="row">
-            <div className="col-md-3">
+            <div className="col-md-5">
               <ShowField label="Full Name">
                 {details.last_name}, {details.first_name} {details.middle_name}
               </ShowField>
@@ -36,39 +37,43 @@ const UserDetailShow = ({ details, onEdit, permissionsList }) => (
             <div className="col-md-3">
               <ShowField label="Office Name">{details.office}</ShowField>
             </div>
-            <div className="col-md-3">
+            <div className="col-md-2">
               <ShowField label="CWS Login">{details.racfid}</ShowField>
             </div>
-            <div className="col-md-3">
+            <div className="col-md-2">
               <ShowField label="Last Login">
-                {details.last_login_date_time}
+                {formatDate(details.last_login_date_time)}
               </ShowField>
             </div>
           </div>
           <div className="row">
-            <div className="col-md-3">
+            <div className="col-md-5">
               <ShowField label="Email">{details.email}</ShowField>
             </div>
             <div className="col-md-3">
               <ShowField label="Office Phone Number">
-                <span>{details.phone_number}</span>
+                <span>{formatPhoneExtension(details)}</span>
               </ShowField>
             </div>
-            <div className="col-md-3">
-              <ShowField label="Start Date"> {details.start_date}</ShowField>
+            <div className="col-md-2">
+              <ShowField label="Start Date">
+                {formatDate(details.start_date)}
+              </ShowField>
             </div>
-            <div className="col-md-3">
-              <ShowField label="End Date">{details.end_date}</ShowField>
+            <div className="col-md-2">
+              <ShowField label="End Date">
+                {formatDate(details.end_date)}
+              </ShowField>
             </div>
           </div>
           <div className="row">
-            <div className="col-md-3">
-              <ShowField label="Status">{details.enabled}</ShowField>
-            </div>
-            <div className="col-md-3">
+            <div className="col-md-5">
               <ShowField label="Assigned Permissions">
                 {renderPermissions(details.permissions, permissionsList)}
               </ShowField>
+            </div>
+            <div className="col-md-3">
+              <ShowField label="Status">{details.enabled}</ShowField>
             </div>
           </div>
         </div>

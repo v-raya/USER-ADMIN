@@ -68,7 +68,7 @@ export default class UserDetail extends Component {
   };
 
   onEditClick = () => {
-    this.setState({ isEdit: true, alert: false });
+    this.setState({ isEdit: true, alert: false, disableActionBtn: true });
   };
 
   onCancel = () => {
@@ -82,7 +82,7 @@ export default class UserDetail extends Component {
     if (this.state.alert) {
       return (
         <Alert alertClassName="success" faIcon="fa-check-circle">
-          {'Your changes have been made successfuly'}
+          {'Your changes have been made successfully'}
         </Alert>
       );
     }
