@@ -4,7 +4,7 @@ import Cards from '../../common/Card';
 import { Alert } from 'react-wood-duck';
 import ShowField from '../../common/ShowField';
 import { verificationError } from '../../_utils/errorCodes';
-import { formatPhoneExtension } from '../../_utils/formatDetails';
+import { formatPhoneExtension } from '../../_utils/formatters';
 
 /* eslint camelcase: 0 */
 

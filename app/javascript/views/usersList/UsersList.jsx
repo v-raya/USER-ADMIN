@@ -13,6 +13,7 @@ import Cards from '../../common/Card';
 import ReactTable from 'react-table';
 import Pagination from './Pagination';
 import './UsersList.scss';
+import { formatDate } from '../../_utils/formatters';
 
 const hackBtnStyles = {
   marginTop: '22px',
@@ -118,7 +119,8 @@ class UserList extends PureComponent {
           },
           {
             Header: 'Last Login',
-            accessor: 'last_login_date_time',
+            id: 'last_login_date_time',
+            accessor: formatDate,
           },
           {
             Header: 'CWS Login',

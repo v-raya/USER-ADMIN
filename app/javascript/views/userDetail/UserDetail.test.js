@@ -74,6 +74,8 @@ describe('UserDetail', () => {
         const instance = wrapper.instance();
         instance.onEditClick();
         expect(instance.state.isEdit).toEqual(true);
+        expect(instance.state.disableActionBtn).toEqual(true);
+        expect(instance.state.alert).toEqual(false);
       });
     });
   });
