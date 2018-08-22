@@ -28,6 +28,10 @@ export const userStatusFormat = ({ enabled }) => {
   return enabled ? 'Active' : 'Inactive';
 };
 
+export const lastLoginDate = ({ last_login_date_time }) => {
+  return formatDate(last_login_date_time);
+};
+
 class UserList extends PureComponent {
   constructor(props) {
     super(props);
@@ -120,7 +124,7 @@ class UserList extends PureComponent {
           {
             Header: 'Last Login',
             id: 'last_login_date_time',
-            accessor: formatDate,
+            accessor: lastLoginDate,
           },
           {
             Header: 'CWS Login',

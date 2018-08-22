@@ -1,8 +1,11 @@
 import React from 'react';
 import { mount, shallow } from 'enzyme';
-import UsersList, { toFullName, userStatusFormat } from './UsersList.jsx';
+import UsersList, {
+  toFullName,
+  userStatusFormat,
+  lastLoginDate,
+} from './UsersList.jsx';
 import { Link } from 'react-router-dom';
-import { formatDate } from '../../_utils/formatters';
 
 describe('UsersList', () => {
   let wrapper;
@@ -251,14 +254,17 @@ describe('UsersList', () => {
         });
       });
 
-      describe('#dateFormat', () => {
-        it('renders Active  for enabled', () => {
-          let lastLoginDate = '2013-03-05';
-          expect(formatDate(lastLoginDate)).toEqual('03/05/2013');
+      describe('#lastLoginDate', () => {
+        it('renders date in MM/DD/YYYY format', () => {
+          expect(lastLoginDate({ last_login_date_time: '2013-03-05' })).toEqual(
+            '03/05/2013'
+          );
         });
 
         it('renders empty when date does not exists', () => {
-          expect(formatDate(null)).toEqual('');
+          expect(lastLoginDate({ last_login_date_time: undefined })).toEqual(
+            ''
+          );
         });
       });
     });
