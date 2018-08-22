@@ -31,16 +31,18 @@ module LoginHelper
     fill_in 'Email', with: ENV.fetch('COGNITO_USERNAME', 'no-reply@osi.ca.gov')
     fill_in 'Password', with: ENV.fetch('COGNITO_PASSWORD', 'password')
     click_on 'Sign In'
-    # verify via MFA using static value assigned to this user.
 
-    if page.has_content?('Account Verification')
-      fill_in 'Enter Code', with: 'LETMEIN'
-      click_on 'Verify'
-    end
-    # follow from the dashboard to cap
+    verify_account
   end
 
   private
+
+  def verify_account
+    # verify via MFA using static value assigned to this user.
+    return unless page.has_content?('Account Verification')
+    fill_in 'Enter Code', with: 'LETMEIN'
+    click_on 'Verify'
+  end
 
   def go_manage_users
     find(:xpath, '//h3[.="Manage Users"]/ancestor::div[@class="panel panel-default"]').click_on 'Go'
