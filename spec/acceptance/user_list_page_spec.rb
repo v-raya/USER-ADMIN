@@ -6,6 +6,10 @@ require 'axe/rspec'
 
 feature 'User List Page' do
   scenario 'Can log in' do
+    visit ENV['RAILS_RELATIVE_URL_ROOT'] || '/'
+    puts current_url
+    puts page.body
+
     login
   end
 
