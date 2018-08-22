@@ -4,6 +4,7 @@ import { Link, Alert, PageHeader, Cards } from 'react-wood-duck';
 import UserDetailEdit from '../userDetail/UserDetailEdit';
 import UserDetailShow from '../userDetail/UserDetailShow';
 import UserService from '../../_services/users';
+import { formatPermissions } from '../../_utils/formatters';
 
 /* eslint camelcase: 0 */
 export default class AddUserDetail extends Component {
@@ -91,7 +92,7 @@ export default class AddUserDetail extends Component {
             {this.state.isEdit ? (
               <UserDetailEdit
                 details={this.state.details}
-                selectedPermissions={this.formattedPermissions(
+                selectedPermissions={formatPermissions(
                   this.state.details.permissions
                 )}
                 onCancel={this.onCancel}
@@ -120,13 +121,6 @@ export default class AddUserDetail extends Component {
         )}
       </div>
     );
-  };
-
-  formattedPermissions = permissions => {
-    if (Array.isArray(permissions)) return permissions;
-    if (permissions === null) return [];
-    if (typeof permissions !== 'undefined') return permissions.split(',');
-    return [];
   };
 
   render() {

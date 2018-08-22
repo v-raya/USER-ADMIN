@@ -1,4 +1,8 @@
-import { formatPhoneExtension, formatDate } from './formatters';
+import {
+  formatPhoneExtension,
+  formatDate,
+  formatPermissions,
+} from './formatters';
 
 describe('formatPhoneExtension', () => {
   describe('When extension is available ', () => {
@@ -37,5 +41,27 @@ describe('#formatDate', () => {
       };
       expect(formatDate(details.start_date)).toEqual('');
     });
+  });
+});
+
+describe('#formattedPermissions', () => {
+  it('handles undefined', () => {
+    expect(formatPermissions(undefined)).toEqual([]);
+  });
+
+  it('handles nil', () => {
+    expect(formatPermissions(null)).toEqual([]);
+  });
+
+  it('handles a string', () => {
+    expect(formatPermissions('abc,123,xyz')).toEqual(['abc', '123', 'xyz']);
+  });
+
+  it('handles an array', () => {
+    expect(formatPermissions(['abc', '123', 'xyz'])).toEqual([
+      'abc',
+      '123',
+      'xyz',
+    ]);
   });
 });

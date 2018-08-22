@@ -128,39 +128,6 @@ describe('AddUserDetail', () => {
     });
   });
 
-  describe('#formattedPermissions', () => {
-    let myFormattedPermissions;
-
-    beforeEach(() => {
-      const instance = wrapper.instance();
-      myFormattedPermissions = instance.formattedPermissions;
-    });
-
-    it('handles undefined', () => {
-      expect(myFormattedPermissions(undefined)).toEqual([]);
-    });
-
-    it('handles nil', () => {
-      expect(myFormattedPermissions(null)).toEqual([]);
-    });
-
-    it('handles a string', () => {
-      expect(myFormattedPermissions('abc,123,xyz')).toEqual([
-        'abc',
-        '123',
-        'xyz',
-      ]);
-    });
-
-    it('handles an array', () => {
-      expect(myFormattedPermissions(['abc', '123', 'xyz'])).toEqual([
-        'abc',
-        '123',
-        'xyz',
-      ]);
-    });
-  });
-
   describe('#onSaveDetails', () => {
     let serviceSpy;
     let wrapper;
