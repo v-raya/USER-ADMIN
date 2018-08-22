@@ -20,7 +20,6 @@ node('int') {
         throw e
     } finally {
       sh "docker-compose down"
-        notify(currentBuild.result)
-        cleanWs()
+      cleanWs()
     }
 }
