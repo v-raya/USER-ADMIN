@@ -77,7 +77,7 @@ node(node_to_run_on()) {
         }
       }
       stage('Deploy Preint') {
-        sh "curl -v 'http://${JENKINS_USER}:${JENKINS_API_TOKEN}@jenkins.mgmt.cwds.io:8080/job/preint/job/deploy-cap/buildWithParameters?token=${JENKINS_TRIGGER_TOKEN}&cause=Caused%20by%20Build%20${SEMANTIC_VERSION_NUMBER}&APP_VERSION=${SEMANTIC_VERSION_NUMBER}'"
+        sh "curl -v 'http://${JENKINS_USER}:${JENKINS_API_TOKEN}@jenkins.mgmt.cwds.io:8080/job/preint/job/deploy-cap/buildWithParameters?token=${JENKINS_TRIGGER_TOKEN}&cause=Caused%20by%20Build%20${SEMANTIC_VERSION_NUMBER}&version=${SEMANTIC_VERSION_NUMBER}'"
         // sh "sleep 300"
       }
       stage('Preint Acceptance Test') {
@@ -89,10 +89,10 @@ node(node_to_run_on()) {
        */
       }
       stage('Deploy Integration') {
-        sh "curl -v 'http://${JENKINS_USER}:${JENKINS_API_TOKEN}@jenkins.mgmt.cwds.io:8080/job/Integration%20Environment/job/deploy-cap/buildWithParameters?token=${JENKINS_TRIGGER_TOKEN}&cause=Caused%20by%20Build%20${SEMANTIC_VERSION_NUMBER}&APP_VERSION=${SEMANTIC_VERSION_NUMBER}'"
+        sh "curl -v 'http://${JENKINS_USER}:${JENKINS_API_TOKEN}@jenkins.mgmt.cwds.io:8080/job/Integration%20Environment/job/deploy-cap/buildWithParameters?token=${JENKINS_TRIGGER_TOKEN}&cause=Caused%20by%20Build%20${SEMANTIC_VERSION_NUMBER}&version=${SEMANTIC_VERSION_NUMBER}'"
         sh "sleep 300"
       }
-      } stage('Integration Acceptance Test') {
+      stage('Integration Acceptance Test') {
        sh "docker-compose up -d --build county-admin-test"
        sh "docker-compose exec -T --env COUNTY_AUTHORIZATION_ENABLED=true --env COUNTY_ADMIN_WEB_BASE_URL=https://web.integration.cwds.io/cap county-admin-test bundle exec rspec spec/acceptance"
       }
