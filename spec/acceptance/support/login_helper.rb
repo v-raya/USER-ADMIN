@@ -31,7 +31,7 @@ module LoginHelper
     click_on 'Sign In'
     # verify via MFA using static value assigned to this user.
 
-    if page.has_content?('Account Verification') do
+    if page.has_content?('Account Verification')
       fill_in 'Enter Code', with: 'LETMEIN'
       click_on 'Verify'
     end
