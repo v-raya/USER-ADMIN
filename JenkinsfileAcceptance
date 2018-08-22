@@ -1,7 +1,7 @@
 DOCKER_GROUP = 'cwds'
 DOCKER_IMAGE = 'cap'
 
-node('cap-slave') {
+node('cogsandbox') {
   def app
     try {
       deleteDir()
