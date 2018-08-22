@@ -13,10 +13,3 @@ export function formatDate(date) {
   let formattedDate = date ? DateTime.fromISO(date).toFormat('MM/dd/yyyy') : '';
   return formattedDate;
 }
-
-export function formatPermissions(permissions) {
-  if (Array.isArray(permissions)) return permissions;
-  if (permissions === null) return [];
-  if (typeof permissions !== 'undefined') return permissions.split(',');
-  return [];
-}
