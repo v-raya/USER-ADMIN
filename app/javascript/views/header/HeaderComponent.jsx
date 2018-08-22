@@ -1,23 +1,17 @@
 import React from 'react';
-import { GlobalHeader } from 'react-wood-duck';
 import PropTypes from 'prop-types';
+import { GlobalHeader } from 'react-wood-duck';
 
 export default class HeaderComponent extends React.Component {
-  constructor(props) {
-    super(props);
-    this.logoutCallback = this.logoutCallback.bind(this);
-  }
-
-  logoutCallback() {
+  logoutCallback = () => {
     window.location.href = this.props.logoutUrl;
-  }
+  };
 
   render() {
     return (
       <div>
         <GlobalHeader
-          profileName="County CWDS-Admin"
-          profileId="profile.id"
+          profileName={this.props.fullName}
           logoutUrl={this.props.logoutUrl}
           logoutCallback={this.logoutCallback}
         />
@@ -27,5 +21,6 @@ export default class HeaderComponent extends React.Component {
 }
 
 HeaderComponent.propTypes = {
+  fullName: PropTypes.string,
   logoutUrl: PropTypes.string,
 };
