@@ -30,8 +30,11 @@ module LoginHelper
     fill_in 'Password', with: ENV.fetch('COGNITO_PASSWORD', 'password')
     click_on 'Sign In'
     # verify via MFA using static value assigned to this user.
-    fill_in 'Enter Code', with: 'LETMEIN'
-    click_on 'Verify'
+
+    if page.has_content?('Account Verification') do
+      fill_in 'Enter Code', with: 'LETMEIN'
+      click_on 'Verify'
+    end
     # follow from the dashboard to cap
   end
 
