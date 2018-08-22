@@ -11,8 +11,8 @@ describe('formatPhoneExtension', () => {
     });
   });
 
-  describe('When phone  and extension does not exists ', () => {
-    it('returns just empty ', () => {
+  describe('When phone_number exists without extension', () => {
+    it('returns phone with ext ', () => {
       const details = {
         phone_number: '1114445555',
         phone_extension_number: undefined,
@@ -21,7 +21,7 @@ describe('formatPhoneExtension', () => {
     });
   });
 
-  describe('When no phone  and extension exists ', () => {
+  describe('When phone_extension_number exists without phone_number ', () => {
     it('returns just empty ', () => {
       const details = {
         phone_number: null,
@@ -31,7 +31,7 @@ describe('formatPhoneExtension', () => {
     });
   });
 
-  describe('When no phone  and no extension exists ', () => {
+  describe('When no phone and no extension', () => {
     it('returns just empty ', () => {
       const details = {};
       expect(formatPhoneExtension(details)).toEqual('');
