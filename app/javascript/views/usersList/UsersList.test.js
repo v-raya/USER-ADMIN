@@ -6,7 +6,6 @@ import UsersList, {
   lastLoginDate,
 } from './UsersList.jsx';
 import { Link } from 'react-router-dom';
-import { formatDate } from '../../_utils/formatters';
 
 describe('UsersList', () => {
   let wrapper;
