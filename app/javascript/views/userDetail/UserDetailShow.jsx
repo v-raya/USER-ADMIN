@@ -29,7 +29,7 @@ const UserDetailShow = ({ details, onEdit, permissionsList }) => (
       >
         <div className="col-md-12">
           <div className="row">
-            <div className="col-md-3">
+            <div className="col-md-5">
               <ShowField label="Full Name">
                 {details.last_name}, {details.first_name} {details.middle_name}
               </ShowField>
@@ -37,17 +37,17 @@ const UserDetailShow = ({ details, onEdit, permissionsList }) => (
             <div className="col-md-3">
               <ShowField label="Office Name">{details.office}</ShowField>
             </div>
-            <div className="col-md-3">
+            <div className="col-md-2">
               <ShowField label="CWS Login">{details.racfid}</ShowField>
             </div>
-            <div className="col-md-3">
+            <div className="col-md-2">
               <ShowField label="Last Login">
                 {formatDate(details.last_login_date_time)}
               </ShowField>
             </div>
           </div>
           <div className="row">
-            <div className="col-md-3">
+            <div className="col-md-5">
               <ShowField label="Email">{details.email}</ShowField>
             </div>
             <div className="col-md-3">
@@ -55,25 +55,25 @@ const UserDetailShow = ({ details, onEdit, permissionsList }) => (
                 <span>{formatPhoneExtension(details)}</span>
               </ShowField>
             </div>
-            <div className="col-md-3">
+            <div className="col-md-2">
               <ShowField label="Start Date">
                 {formatDate(details.start_date)}
               </ShowField>
             </div>
-            <div className="col-md-3">
+            <div className="col-md-2">
               <ShowField label="End Date">
                 {formatDate(details.end_date)}
               </ShowField>
             </div>
           </div>
           <div className="row">
-            <div className="col-md-3">
-              <ShowField label="Status">{details.enabled}</ShowField>
-            </div>
-            <div className="col-md-3">
+            <div className="col-md-5">
               <ShowField label="Assigned Permissions">
                 {renderPermissions(details.permissions, permissionsList)}
               </ShowField>
+            </div>
+            <div className="col-md-3">
+              <ShowField label="Status">{details.enabled}</ShowField>
             </div>
           </div>
         </div>
