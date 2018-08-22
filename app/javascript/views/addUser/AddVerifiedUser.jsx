@@ -60,7 +60,6 @@ const AddNewUser = ({
                   <div className="col-md-3">
                     <ShowField label="Office Phone Number">
                       <span>
-                        {verifyNewUserDetails.user.phone_number}
                         {formatPhoneExtension(verifyNewUserDetails.user)}
                       </span>
                     </ShowField>

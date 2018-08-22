@@ -1,20 +1,39 @@
 import { formatPhoneExtension, formatDate } from './formatters';
 
 describe('formatPhoneExtension', () => {
-  describe('When extension is available ', () => {
-    it('returns Extension with Ext text ', () => {
+  describe('When phone & extension exists ', () => {
+    it('returns phone & Extension with Ext text ', () => {
       const details = {
+        phone_number: '1112222333',
         phone_extension_number: '011',
       };
-      expect(formatPhoneExtension(details)).toEqual(' Ext 011');
+      expect(formatPhoneExtension(details)).toEqual('1112222333 Ext 011');
     });
   });
 
-  describe('When extension is not available ', () => {
+  describe('When phone  and extension does not exists ', () => {
     it('returns just empty ', () => {
       const details = {
-        phone_number: '1234567890',
+        phone_number: '1114445555',
+        phone_extension_number: undefined,
       };
+      expect(formatPhoneExtension(details)).toEqual('1114445555 Ext');
+    });
+  });
+
+  describe('When no phone  and extension exists ', () => {
+    it('returns just empty ', () => {
+      const details = {
+        phone_number: null,
+        phone_extension_number: '111',
+      };
+      expect(formatPhoneExtension(details)).toEqual('');
+    });
+  });
+
+  describe('When no phone  and no extension exists ', () => {
+    it('returns just empty ', () => {
+      const details = {};
       expect(formatPhoneExtension(details)).toEqual('');
     });
   });

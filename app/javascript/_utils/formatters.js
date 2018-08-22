@@ -2,10 +2,14 @@
 
 import { DateTime } from 'luxon';
 
-export function formatPhoneExtension({ phone_extension_number }) {
-  const phoneExtension = phone_extension_number
-    ? ` Ext ${phone_extension_number}`
-    : '';
+export function formatPhoneExtension({ phone_number, phone_extension_number }) {
+  const phoneExtension = !phone_number
+    ? ''
+    : phone_number && phone_extension_number
+      ? `${phone_number} Ext ${phone_extension_number}`
+      : phone_number && !phone_extension_number
+        ? `${phone_number} Ext`
+        : '';
   return phoneExtension;
 }
 
