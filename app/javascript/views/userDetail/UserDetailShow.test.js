@@ -76,13 +76,13 @@ describe('UserDetailEdit', () => {
           .find('ShowField')
           .at(8)
           .props().label
-      ).toEqual('Status');
+      ).toEqual('Assigned Permissions');
       expect(
         wrapper
           .find('ShowField')
           .at(9)
           .props().label
-      ).toEqual('Assigned Permissions');
+      ).toEqual('Status');
     });
 
     it('renders the <ShowField/> props.children at label:fullName', () => {
