@@ -13,5 +13,5 @@ export const userName = state => {
     state.fetchAccount.account && state.fetchAccount.account.account.first_name
       ? state.fetchAccount.account.account.first_name
       : '';
-  return lastName + ' ' + firstName;
+  return firstName + ' ' + lastName;
 };

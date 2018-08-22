@@ -49,10 +49,10 @@ describe('accountSelectors', () => {
           },
         },
       };
-      expect(userName(state)).toEqual('lastname firstname');
+      expect(userName(state)).toEqual('firstname lastname');
     });
 
-    it('display empty string when county is not known', () => {
+    it('display empty string when there is no name', () => {
       const state = {
         fetchAccount: {
           XHRStatus: 'ready',
