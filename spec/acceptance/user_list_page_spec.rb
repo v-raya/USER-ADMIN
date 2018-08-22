@@ -7,13 +7,10 @@ require 'axe/rspec'
 feature 'User List Page' do
   scenario 'Can log in' do
     visit ENV['RAILS_RELATIVE_URL_ROOT'] || '/'
-    puts current_url
-    puts page.body
-
     login
   end
 
-  skip 'validate user list page' do
+  scenario 'validate user list page' do
     login
     sleep 2
     page_has_basic_text
