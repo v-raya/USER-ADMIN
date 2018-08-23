@@ -42,7 +42,7 @@ describe('formatPhoneExtension', () => {
     });
   });
 
-  describe('phoneNumberFormatter ', () => {
+  describe('#phoneNumberFormatter ', () => {
     it('processes an empty string', () => {
       expect(phoneNumberFormatter('')).toEqual(null);
     });
@@ -51,11 +51,11 @@ describe('formatPhoneExtension', () => {
       expect(phoneNumberFormatter('1234567890')).toEqual('(123) 456-7890');
     });
 
-    it('should return null when given a 5 digit number', () => {
+    it('should return null when given a less than 10 digit number', () => {
       expect(phoneNumberFormatter('12345')).toEqual(null);
     });
 
-    it('should return null when given a 11 digit number', () => {
+    it('should return null when given a greater than 10 digit number', () => {
       expect(phoneNumberFormatter('12345678901')).toEqual(null);
     });
 
