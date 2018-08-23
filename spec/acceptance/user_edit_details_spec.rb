@@ -4,7 +4,7 @@ require 'acceptance_helper'
 require 'feature'
 require 'axe/rspec'
 
-feature 'User List Page' do
+feature 'User Edit' do
   scenario 'Can log in' do
     login
   end
