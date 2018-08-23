@@ -16,3 +16,16 @@ export function formatDate(date) {
   let formattedDate = date ? DateTime.fromISO(date).toFormat('MM/dd/yyyy') : '';
   return formattedDate;
 }
+
+export function formatSelectedPermissions(assignedPermissions, permissionList) {
+  if (!Array.isArray(assignedPermissions)) return '';
+  return (
+    assignedPermissions &&
+    assignedPermissions.length &&
+    assignedPermissions
+      .map(permission => permissionList.find(d => d.name === permission))
+      .filter(value => !!value)
+      .map(({ name, description }) => description)
+      .join(', ')
+  );
+}
