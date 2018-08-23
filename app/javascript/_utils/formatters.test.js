@@ -7,7 +7,7 @@ describe('formatPhoneExtension', () => {
         phone_number: '1112222333',
         phone_extension_number: '011',
       };
-      expect(formatPhoneExtension(details)).toEqual('1112222333 Ext 011');
+      expect(formatPhoneExtension(details)).toEqual('(111) 222-2333 Ext 011');
     });
   });
 
@@ -17,7 +17,7 @@ describe('formatPhoneExtension', () => {
         phone_number: '1114445555',
         phone_extension_number: undefined,
       };
-      expect(formatPhoneExtension(details)).toEqual('1114445555 Ext');
+      expect(formatPhoneExtension(details)).toEqual('(111) 444-5555 Ext');
     });
   });
 
