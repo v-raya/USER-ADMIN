@@ -26,16 +26,23 @@ module LoginHelper
   def cognito_login
     visit ENV.fetch('RAILS_RELATIVE_URL_ROOT', '/')
     return unless current_url.include?('login')
+    puts "Fill in user name with #{ENV.fetch('COGNITO_USERNAME', 'no-reply@osi.ca.gov')}"
+    puts "Fill in pass with #{ENV.fetch('COGNITO_PASSWORD', 'password')}"
     fill_in 'Email', with: ENV.fetch('COGNITO_USERNAME', 'no-reply@osi.ca.gov')
     fill_in 'Password', with: ENV.fetch('COGNITO_PASSWORD', 'password')
     click_on 'Sign In'
-    # verify via MFA using static value assigned to this user.
-    fill_in 'Enter Code', with: 'LETMEIN'
-    click_on 'Verify'
-    # follow from the dashboard to cap
+
+    verify_account
   end
 
   private
+
+  def verify_account
+    # verify via MFA using static value assigned to this user.
+    return unless page.has_content?('Account Verification')
+    fill_in 'Enter Code', with: 'LETMEIN'
+    click_on 'Verify'
+  end
 
   def go_manage_users
     find(:xpath, '//h3[.="Manage Users"]/ancestor::div[@class="panel panel-default"]').click_on 'Go'

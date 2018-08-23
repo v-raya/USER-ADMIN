@@ -12,8 +12,10 @@ module UserDetailPageHelper
   end
 
   def remove_permission(permission)
+    return if permission.blank?
     permissions_select.find(:xpath,
-                            "//*[contains(text(), '#{permission}')]/preceding-sibling::span").click
+                            "//*[contains(text(), '#{permission}')]/preceding-sibling::span")
+                      .click
   end
 
   def add_permission(permission)
