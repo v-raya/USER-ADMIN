@@ -1,5 +1,3 @@
-/* eslint camelcase: ["off"] */
-
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { Link, Redirect } from 'react-router-dom';
@@ -13,23 +11,16 @@ import Cards from '../../common/Card';
 import ReactTable from 'react-table';
 import Pagination from './Pagination';
 import './UsersList.scss';
-import { formatDate } from '../../_utils/formatters';
+import {
+  toFullName,
+  userStatusFormat,
+  lastLoginDate,
+} from '../../_constants/userDetailConstants';
 
 const hackBtnStyles = {
   marginTop: '22px',
   padding: '14px 0',
   textAlign: 'center',
-};
-
-export const toFullName = ({ first_name, last_name }) =>
-  `${last_name}, ${first_name}`;
-
-export const userStatusFormat = ({ enabled }) => {
-  return enabled ? 'Active' : 'Inactive';
-};
-
-export const lastLoginDate = ({ last_login_date_time }) => {
-  return formatDate(last_login_date_time);
 };
 
 class UserList extends PureComponent {
@@ -173,7 +164,6 @@ class UserList extends PureComponent {
     return (
       <div role="main">
         {this.state.addUser ? (
-          // <AddUser addUser={this.state.addUser} />
           <Redirect push to="/new" />
         ) : (
           <div>
