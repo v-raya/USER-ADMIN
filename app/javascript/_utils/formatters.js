@@ -17,7 +17,7 @@ export const phoneNumberFormatter = phone_number => {
   return null;
 };
 
-export function formatPhoneExtension({ phone_number, phone_extension_number }) {
+export function formatPhoneNumberExt({ phone_number, phone_extension_number }) {
   const formattedPhoneNumber =
     phone_number && phone_extension_number
       ? `${phoneNumberFormatter(phone_number)} Ext ${phone_extension_number}`
