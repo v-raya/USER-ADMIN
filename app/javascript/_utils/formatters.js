@@ -2,7 +2,7 @@
 
 import { DateTime } from 'luxon';
 
-const phoneNumberFormatter = phone_number => {
+export const phoneNumberFormatter = phone_number => {
   if (phone_number && phone_number.replace) {
     phone_number = phone_number.replace(/[^\d]/g, '');
     const length = 10;
