@@ -1,10 +1,13 @@
 DOCKER_GROUP = 'cwds'
 DOCKER_IMAGE = 'cap'
+SLACK_CHANNEL = '#tech-cap-updates'
+SLACK_CREDENTIALS_ID = 'slackmessagetpt2'
 
 def notify(String status) {
   status = status ?: 'SUCCESS'
     def colorCode = status == 'SUCCESS' ? '#00FF00' : '#FF0000'
     def summary = """*${status}*: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]':\nMore detail in console output at <${env.BUILD_URL}|${env.BUILD_URL}>"""
+
     slackSend(
         channel: SLACK_CHANNEL,
         baseUrl: 'https://hooks.slack.com/services/',
