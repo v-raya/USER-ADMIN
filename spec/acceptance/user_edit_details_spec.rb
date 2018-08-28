@@ -15,7 +15,6 @@ feature 'User Edit' do
     sleep 2
     first_user_link.click
 
-
     pending 'add user validation has accessibility issues'
     check_accessibility
     page_is_user_details
