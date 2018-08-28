@@ -5,7 +5,7 @@ import {
   formatPhoneNumber,
 } from './formatters';
 
-describe('#formatPhoneNumberExt', () => {
+describe('#formatPhoneNumberWithExt', () => {
   describe('When phone & extension exists ', () => {
     it('returns phone & Extension with Ext text ', () => {
       const details = {
@@ -45,7 +45,7 @@ describe('#formatPhoneNumberExt', () => {
     });
   });
 
-  describe('#phoneNumberFormatter ', () => {
+  describe('#formatPhoneNumber ', () => {
     it('processes an empty string', () => {
       expect(formatPhoneNumber('')).toEqual(null);
     });
@@ -88,8 +88,8 @@ describe('#formatDate', () => {
   });
 });
 
-describe('renderPermissions', () => {
-  it('return a concatenated comma-delimmited string', () => {
+describe('#formatSelectedPermissions', () => {
+  it('return a concatenated comma-delimmited string ', () => {
     const list = [
       { name: 'foo', description: 'FOO_DESC' },
       { name: 'bar', description: 'BAR_DESC' },
