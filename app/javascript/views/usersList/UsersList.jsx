@@ -164,7 +164,11 @@ class UserList extends PureComponent {
     return (
       <div role="main">
         {this.state.addUser ? (
+<<<<<<< HEAD
           <Redirect push to="/new" />
+=======
+          <Redirect push to="/verify" />
+>>>>>>> master
         ) : (
           <div>
             <PageHeader pageTitle="Manage Users" button="" />

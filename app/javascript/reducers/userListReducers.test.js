@@ -105,6 +105,17 @@ describe('reducer', () => {
     expect(after.from).toEqual(0);
   });
 
+  it('handles page updates', () => {
+    const state = reducer(
+      {},
+      {
+        type: actionTypes.USER_LIST_SET_PAGE,
+        payload: 42,
+      }
+    );
+    expect(state.from).toEqual(NaN);
+  });
+
   it('handles sort updates', () => {
     const mySort = [{ a: 1 }, { a: 1 }];
     const state = reducer(

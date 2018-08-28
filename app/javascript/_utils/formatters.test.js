@@ -1,17 +1,18 @@
 import {
-  formatPhoneExtension,
+  formatPhoneNumberExt,
   formatDate,
   formatSelectedPermissions,
+  phoneNumberFormatter,
 } from './formatters';
 
-describe('formatPhoneExtension', () => {
+describe('#formatPhoneNumberExt', () => {
   describe('When phone & extension exists ', () => {
     it('returns phone & Extension with Ext text ', () => {
       const details = {
         phone_number: '1112222333',
         phone_extension_number: '011',
       };
-      expect(formatPhoneExtension(details)).toEqual('1112222333 Ext 011');
+      expect(formatPhoneNumberExt(details)).toEqual('(111) 222-2333 Ext 011');
     });
   });
 
@@ -21,7 +22,7 @@ describe('formatPhoneExtension', () => {
         phone_number: '1114445555',
         phone_extension_number: undefined,
       };
-      expect(formatPhoneExtension(details)).toEqual('1114445555 Ext');
+      expect(formatPhoneNumberExt(details)).toEqual('(111) 444-5555 Ext');
     });
   });
 
@@ -31,14 +32,36 @@ describe('formatPhoneExtension', () => {
         phone_number: null,
         phone_extension_number: '111',
       };
-      expect(formatPhoneExtension(details)).toEqual('');
+      expect(formatPhoneNumberExt(details)).toEqual('');
     });
   });
 
   describe('When no phone and no extension', () => {
     it('returns just empty ', () => {
       const details = {};
-      expect(formatPhoneExtension(details)).toEqual('');
+      expect(formatPhoneNumberExt(details)).toEqual('');
+    });
+  });
+
+  describe('#phoneNumberFormatter ', () => {
+    it('processes an empty string', () => {
+      expect(phoneNumberFormatter('')).toEqual(null);
+    });
+
+    it('should return formatted number when given a 10 digit number', () => {
+      expect(phoneNumberFormatter('1234567890')).toEqual('(123) 456-7890');
+    });
+
+    it('should return null when given a less than 10 digit number', () => {
+      expect(phoneNumberFormatter('12345')).toEqual(null);
+    });
+
+    it('should return null when given a greater than 10 digit number', () => {
+      expect(phoneNumberFormatter('12345678901')).toEqual(null);
+    });
+
+    it('should return null when used alphabets', () => {
+      expect(phoneNumberFormatter('abcd')).toEqual(null);
     });
   });
 });
