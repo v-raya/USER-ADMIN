@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { Link as LinkRWD, PageHeader } from 'react-wood-duck';
 import AddVerifiedUser from './AddVerifiedUser';
@@ -130,6 +130,7 @@ export default class AddUser extends Component {
       </div>
     ) : (
       <div>
+        <Redirect from="/new" to={`/add_user`} />
         <AddUserDetail />
       </div>
     );
