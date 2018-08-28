@@ -9,6 +9,19 @@ feature 'User Edit' do
     login
   end
 
+  scenario 'user_details edit/save is accessibile' do
+    login
+    page_has_user_list_headers
+    sleep 2
+    first_user_link.click
+
+    pending 'add user validation has accessibility issues'
+    check_accessibility
+    page_is_user_details
+    click_on('Edit')
+    check_accessibility
+  end
+
   scenario 'user_details edit/save' do
     login
     page_has_user_list_headers

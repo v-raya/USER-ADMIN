@@ -6,12 +6,11 @@ require 'axe/rspec'
 require 'pry'
 
 feature 'Add User Page' do
-  scenario 'entering invalid info and fixing it as we go' do
+  scenario 'entering valid info and completing the add' do
     login
     page_has_user_list_headers
     click_button '+ Add a user'
 
-    # correct the email to a proper address
     email_address = new_email_address
     fill_in('Email', with: new_email_address, match: :prefer_exact)
 
@@ -26,6 +25,23 @@ feature 'Add User Page' do
     click_button 'Add User'
     message = "Successfully added new user. Registration email has been sent to #{email_address}"
     expect(page.find('div.success-message').text).to match(message)
+  end
+
+  scenario 'add user page is accessible' do
+    pending 'add user validation has accessibility issues'
+    login
+    page_has_user_list_headers
+    click_button '+ Add a user'
+
+    fill_in('Email', with: new_email_address, match: :prefer_exact)
+
+    # now enter a valid RACFID valid
+    valid_racfid = 'BKQA2'
+    fill_in('CWS Login', with: valid_racfid, match: :prefer_exact)
+
+    check_accessibility
+    click_button 'Verify User'
+    check_accessibility
   end
 
   scenario 'entering invalid info and fixing it as we go' do
