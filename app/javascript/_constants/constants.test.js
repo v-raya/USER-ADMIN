@@ -1,8 +1,4 @@
-import {
-  toFullName,
-  userStatusFormat,
-  lastLoginDate,
-} from './userDetailConstants';
+import { toFullName, userStatusFormat, lastLoginDate } from './constants';
 
 describe('helpers', () => {
   describe('toFullName', () => {

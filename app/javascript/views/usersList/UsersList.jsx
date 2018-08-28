@@ -15,7 +15,7 @@ import {
   toFullName,
   userStatusFormat,
   lastLoginDate,
-} from '../../_constants/userDetailConstants';
+} from '../../_constants/constants';
 
 const hackBtnStyles = {
   marginTop: '22px',
