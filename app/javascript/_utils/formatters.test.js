@@ -1,5 +1,5 @@
 import {
-  phoneNumberWithExt,
+  formatPhoneNumberWithExt,
   formatDate,
   formatSelectedPermissions,
   formatPhoneNumber,
@@ -12,7 +12,9 @@ describe('#formatPhoneNumberExt', () => {
         phone_number: '1112222333',
         phone_extension_number: '011',
       };
-      expect(phoneNumberWithExt(details)).toEqual('(111) 222-2333 Ext 011');
+      expect(formatPhoneNumberWithExt(details)).toEqual(
+        '(111) 222-2333 Ext 011'
+      );
     });
   });
 
@@ -22,7 +24,7 @@ describe('#formatPhoneNumberExt', () => {
         phone_number: '1114445555',
         phone_extension_number: undefined,
       };
-      expect(phoneNumberWithExt(details)).toEqual('(111) 444-5555 Ext');
+      expect(formatPhoneNumberWithExt(details)).toEqual('(111) 444-5555 Ext');
     });
   });
 
@@ -32,14 +34,14 @@ describe('#formatPhoneNumberExt', () => {
         phone_number: null,
         phone_extension_number: '111',
       };
-      expect(phoneNumberWithExt(details)).toEqual('');
+      expect(formatPhoneNumberWithExt(details)).toEqual('');
     });
   });
 
   describe('When no phone and no extension', () => {
     it('returns just empty ', () => {
       const details = {};
-      expect(phoneNumberWithExt(details)).toEqual('');
+      expect(formatPhoneNumberWithExt(details)).toEqual('');
     });
   });
 

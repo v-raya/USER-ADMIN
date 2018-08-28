@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import Cards from '../../common/Card';
 import ShowField from '../../common/ShowField';
 import {
-  phoneNumberWithExt,
+  formatPhoneNumberWithExt,
   formatDate,
   formatSelectedPermissions,
 } from '../../_utils/formatters';
@@ -43,7 +43,7 @@ const UserDetailShow = ({ details, onEdit, permissionsList }) => (
             </div>
             <div className="col-md-3">
               <ShowField label="Office Phone Number">
-                <span>{phoneNumberWithExt(details)}</span>
+                <span>{formatPhoneNumberWithExt(details)}</span>
               </ShowField>
             </div>
             <div className="col-md-2">

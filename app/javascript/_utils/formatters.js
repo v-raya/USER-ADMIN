@@ -17,14 +17,17 @@ export const formatPhoneNumber = phone_number => {
   return null;
 };
 
-export function phoneNumberWithExt({ phone_number, phone_extension_number }) {
-  const formattedPhoneNumber =
+export function formatPhoneNumberWithExt({
+  phone_number,
+  phone_extension_number,
+}) {
+  const phoneNumber =
     phone_number && phone_extension_number
       ? `${formatPhoneNumber(phone_number)} Ext ${phone_extension_number}`
       : phone_number && !phone_extension_number
         ? `${formatPhoneNumber(phone_number)} Ext`
         : '';
-  return formattedPhoneNumber;
+  return phoneNumber;
 }
 
 export function formatDate(date) {

@@ -8,7 +8,7 @@ import {
   STATUS,
   permissionListToOptions,
 } from '../../_constants/userDetailConstants';
-import { phoneNumberWithExt, formatDate } from '../../_utils/formatters';
+import { formatPhoneNumberWithExt, formatDate } from '../../_utils/formatters';
 
 /* eslint camelcase: 0 */
 
@@ -57,7 +57,7 @@ const UserDetailEdit = ({
             </div>
             <div className="col-md-3">
               <ShowField label="Office Phone Number">
-                <span>{phoneNumberWithExt(details)}</span>
+                <span>{formatPhoneNumberWithExt(details)}</span>
               </ShowField>
             </div>
             <div className="col-md-2">
