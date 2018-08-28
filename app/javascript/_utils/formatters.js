@@ -2,7 +2,7 @@
 
 import { DateTime } from 'luxon';
 
-export const phoneNumberFormatter = phone_number => {
+export const formatPhoneNumber = phone_number => {
   if (phone_number && phone_number.replace) {
     phone_number = phone_number.replace(/[^\d]/g, '');
     const length = 10;
@@ -17,12 +17,12 @@ export const phoneNumberFormatter = phone_number => {
   return null;
 };
 
-export function formatPhoneNumberExt({ phone_number, phone_extension_number }) {
+export function phoneNumberWithExt({ phone_number, phone_extension_number }) {
   const formattedPhoneNumber =
     phone_number && phone_extension_number
-      ? `${phoneNumberFormatter(phone_number)} Ext ${phone_extension_number}`
+      ? `${formatPhoneNumber(phone_number)} Ext ${phone_extension_number}`
       : phone_number && !phone_extension_number
-        ? `${phoneNumberFormatter(phone_number)} Ext`
+        ? `${formatPhoneNumber(phone_number)} Ext`
         : '';
   return formattedPhoneNumber;
 }
