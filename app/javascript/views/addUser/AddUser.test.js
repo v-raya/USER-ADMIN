@@ -74,19 +74,6 @@ describe('VerifyUser', () => {
     });
   });
 
-  describe('#UNSAFE_componentWillReceiveProps', () => {
-    it('passes along the props', () => {
-      const instance = wrapper.instance();
-      instance.UNSAFE_componentWillReceiveProps({
-        id: 'some_id',
-        verifyNewUserDetails: { test_prop: 'prop_value' },
-      });
-      expect(instance.state.verifyNewUserDetails.test_prop).toEqual(
-        'prop_value'
-      );
-    });
-  });
-
   describe('#verifyUser()', () => {
     it('renders VerifyUser Component', () => {
       wrapper.instance().verifyUser();

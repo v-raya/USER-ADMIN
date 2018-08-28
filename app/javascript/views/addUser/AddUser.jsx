@@ -17,7 +17,6 @@ export default class AddUser extends Component {
       disableActionBtn: true,
       addUser: props.addUser,
       verifyNewUserDetails: props.verifyNewUserDetails,
-      details: props.details,
       valid: {
         emailValueValid: true,
       },
@@ -25,14 +24,6 @@ export default class AddUser extends Component {
         emailError: '',
       },
     };
-  }
-
-  UNSAFE_componentWillReceiveProps(nextProps) {
-    let verifyNewUserDetails = nextProps.verifyNewUserDetails;
-    let id = nextProps.id;
-    let permissionRoles = nextProps.permissionRoles;
-    let details = nextProps.details;
-    this.setState({ verifyNewUserDetails, id, details, permissionRoles });
   }
 
   handleEmail = event => {
@@ -142,9 +133,7 @@ AddUser.propTypes = {
   actions: PropTypes.object,
   verifyNewUserDetails: PropTypes.object,
   addUser: PropTypes.bool,
-  id: PropTypes.string,
   permissionRoles: PropTypes.any,
-  details: PropTypes.any,
 };
 
 AddUser.defaultProps = {
