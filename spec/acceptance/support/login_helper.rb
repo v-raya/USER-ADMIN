@@ -15,10 +15,6 @@ module LoginHelper
   def json_login(login_config = default_json)
     login_json = JSON.generate(login_config)
     visit ENV['RAILS_RELATIVE_URL_ROOT'] || '/'
-    puts "ENV for county auth: #{ENV.fetch('COUNTY_AUTHORIZATION_ENABLED', nil)}"
-    puts "Logging in to county #{login_config[:county_name]}"
-
-    puts "visited: landed on #{current_url}"
 
     submit_json_form(login_json) if current_url.include?('login.html')
   end
@@ -26,8 +22,6 @@ module LoginHelper
   def cognito_login
     visit ENV.fetch('RAILS_RELATIVE_URL_ROOT', '/')
     return unless current_url.include?('login')
-    puts "Fill in user name with #{ENV.fetch('COGNITO_USERNAME', 'no-reply@osi.ca.gov')}"
-    puts "Fill in pass with #{ENV.fetch('COGNITO_PASSWORD', 'password')}"
     fill_in 'Email', with: ENV.fetch('COGNITO_USERNAME', 'no-reply@osi.ca.gov')
     fill_in 'Password', with: ENV.fetch('COGNITO_PASSWORD', 'password')
     click_on 'Sign In'
@@ -52,7 +46,6 @@ module LoginHelper
     return unless ENV.fetch('COUNTY_AUTHORIZATION_ENABLED', false)
     fill_in 'Authorization JSON', with: login_json
     click_button 'Sign In'
-    puts "signed in: #{current_url}"
   end
 
   def default_json

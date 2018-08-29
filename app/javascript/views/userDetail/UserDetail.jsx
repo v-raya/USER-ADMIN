@@ -90,7 +90,7 @@ export default class UserDetail extends Component {
 
   renderCards = permissionsList => {
     return (
-      <div>
+      <div role="main">
         {this.state.details.id ? (
           <div>
             {this.state.isEdit ? (

@@ -5,12 +5,12 @@ require 'feature'
 require 'axe/rspec'
 
 feature 'User List Page' do
-  scenario 'Can log in' do
+  scenario 'Can log in', smoke: true do
     visit ENV['RAILS_RELATIVE_URL_ROOT'] || '/'
     login
   end
 
-  scenario 'page is accessible' do
+  scenario 'page is accessible', smoke: true do
     pending 'page has accessibility issues'
     login
     check_accessibility

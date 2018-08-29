@@ -5,11 +5,7 @@ require 'feature'
 require 'axe/rspec'
 
 feature 'User Edit' do
-  scenario 'Can log in' do
-    login
-  end
-
-  scenario 'user_details edit/save is accessibile' do
+  scenario 'user_details edit/save is accessibile', smoke: true do
     login
     page_has_user_list_headers
     sleep 2
@@ -19,6 +15,7 @@ feature 'User Edit' do
     check_accessibility
     page_is_user_details
     click_on('Edit')
+    page_is_user_details
     check_accessibility
   end
 

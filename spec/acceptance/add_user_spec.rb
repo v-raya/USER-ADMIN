@@ -6,13 +6,30 @@ require 'axe/rspec'
 require 'pry'
 
 feature 'Add User Page' do
+  scenario 'Can basically navigate through the page', smoke: true do
+    login
+    page_has_user_list_headers
+    click_button '+ Add a user'
+
+    email_address = new_email_address
+    fill_in('Email', with: email_address, match: :prefer_exact)
+
+    # now enter a valid RACFID valid
+    invalid_racfid = 'invalid'
+    fill_in('CWS Login', with: invalid_racfid, match: :prefer_exact)
+    click_button 'Verify User'
+    expect(page).to have_button('Verify User')
+    pending 'Add user page has accessibility issues'
+    check_accessibility
+  end
+
   scenario 'entering valid info and completing the add' do
     login
     page_has_user_list_headers
     click_button '+ Add a user'
 
     email_address = new_email_address
-    fill_in('Email', with: new_email_address, match: :prefer_exact)
+    fill_in('Email', with: email_address, match: :prefer_exact)
 
     # now enter a valid RACFID valid
     valid_racfid = 'BKQA2'
@@ -25,6 +42,8 @@ feature 'Add User Page' do
     click_button 'Add User'
     message = "Successfully added new user. Registration email has been sent to #{email_address}"
     expect(page.find('div.success-message').text).to match(message)
+    page.evaluate_script 'window.location.reload()'
+    expect(page.find('div.success-message').text).to match(email_address)
   end
 
   scenario 'add user page is accessible' do

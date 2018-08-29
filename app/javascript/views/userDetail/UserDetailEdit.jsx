@@ -32,7 +32,7 @@ const UserDetailEdit = ({
         disableActionBtn={disableActionBtn}
         leftActionBtnName="Cancel"
       >
-        <div className="col-md-12">
+        <div role="main" className="col-md-12">
           <div className="row">
             <div className="col-md-5">
               <ShowField label="Full Name">

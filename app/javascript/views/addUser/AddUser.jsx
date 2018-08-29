@@ -111,7 +111,7 @@ export default class AddUser extends Component {
   render() {
     const { dashboardUrl, dashboardClickHandler } = this.props;
     return this.state.addUser ? (
-      <div>
+      <div role="main">
         <PageHeader pageTitle="Add User" button="" />
         <div className="container">
           <div className="col-md-12">
