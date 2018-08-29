@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { Link as LinkRWD, Alert, PageHeader } from 'react-wood-duck';
 import UserDetailEdit from './UserDetailEdit';
 import UserDetailShow from './UserDetailShow';
-import UserService from '../../_services/users';
+// import UserService from '../../_services/users';
 
 /* eslint camelcase: 0 */
 export default class UserDetail extends Component {
@@ -63,7 +63,8 @@ export default class UserDetail extends Component {
   onSaveDetails = () => {
     const id = this.getUserId(this.currentPathname());
     const { details } = this.state;
-    const response = UserService.saveUserDetails(id, details);
+    const response = this.props.actions.saveUserDetailsActions(id, details);
+    // const response = UserService.saveUserDetails(id, details);
     this.setState({ isEdit: false, alert: true, saveResponse: response });
   };
 
