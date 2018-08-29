@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { Link, Alert, PageHeader, Cards } from 'react-wood-duck';
 import UserDetailEdit from '../userDetail/UserDetailEdit';
 import UserDetailShow from '../userDetail/UserDetailShow';
-import UserService from '../../_services/users';
 
 /* eslint camelcase: 0 */
 export default class AddUserDetail extends Component {
@@ -50,8 +49,8 @@ export default class AddUserDetail extends Component {
 
   onSaveDetails = () => {
     const { details, id } = this.state;
-    const response = UserService.saveUserDetails(id, details);
-    this.setState({ isEdit: false, alert: true, saveResponse: response });
+    this.props.actions.saveUserDetailsActions(id, details);
+    this.setState({ isEdit: false, alert: true });
   };
 
   onEditClick = () => {

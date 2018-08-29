@@ -5,7 +5,10 @@ import {
   permissionsList,
 } from '../selectors/detailSelector';
 import { addUserActions } from '../actions/addUserActions';
-import { fetchDetailsActions } from '../actions/detailActions';
+import {
+  fetchDetailsActions,
+  saveUserDetailsActions,
+} from '../actions/detailActions';
 import { fetchPermissionsActions } from '../actions/permissionsActions';
 import { addUserRecords } from '../selectors/addUserSelector';
 import { bindActionCreators } from 'redux';
@@ -26,6 +29,7 @@ function mapDispatchToProps(dispatch) {
     addUserActions,
     fetchPermissionsActions,
     fetchDetailsActions,
+    saveUserDetailsActions,
   };
   return {
     actions: bindActionCreators(actions, dispatch),
