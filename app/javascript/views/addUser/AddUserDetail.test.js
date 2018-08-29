@@ -63,10 +63,12 @@ describe('AddUserDetail', () => {
   describe('#alert()', () => {
     it('displays <Alert/>', () => {
       wrapper.setState({ alert: true });
-      expect(wrapper.find('Alert').length).toBe(1);
-      expect(wrapper.find('Alert').props().children).toBe(
+      const alertBox = wrapper.find('Alert');
+      expect(alertBox.length).toBe(1);
+      expect(alertBox.props().children).toBe(
         'Your changes have been made successfully'
       );
+      expect(alertBox.props().alertCross).toEqual(false);
     });
   });
 

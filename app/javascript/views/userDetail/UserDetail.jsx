@@ -80,7 +80,11 @@ export default class UserDetail extends Component {
   alert = () => {
     if (this.state.alert) {
       return (
-        <Alert alertClassName="success" faIcon="fa-check-circle">
+        <Alert
+          alertClassName="success"
+          faIcon="fa-check-circle"
+          alertCross={false}
+        >
           {'Your changes have been made successfully'}
         </Alert>
       );
