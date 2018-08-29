@@ -11,7 +11,7 @@ function saveUserDetails(
     case actionTypes.SAVE_USER_DETAILS_API_CALL_SUCCESS:
       const saveUserDetails = {
         XHRStatus: 'ready',
-        records: `${action.saveUserDetails}`,
+        records: { ...action.saveUserDetails },
       };
       return {
         ...state,

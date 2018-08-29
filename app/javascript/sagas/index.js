@@ -4,5 +4,5 @@ export { permissionsSaga } from './getPermissionsSaga';
 export { accountSaga } from './getAccountSaga';
 export { validateNewUserSaga } from './validateNewUserSaga';
 export { addUserSaga } from './addUserSaga';
-export { saveUserDetailsSaga } from './saveDetailsSaga';
+export { saveUserDetailsSaga } from './saveUserDetailsSaga';
 export { watchUserSearchParamUpdates } from './searchUsersSaga';
