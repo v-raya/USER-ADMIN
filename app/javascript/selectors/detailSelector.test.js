@@ -193,37 +193,12 @@ describe('selectors', () => {
             details: {
               XHRStatus: 'ready',
               records: {
-                username: null,
                 id: '9a155ccc-309f-467a-b562-d4d55d76ac80',
-                first_name: 'User',
-                last_name: 'One',
-                county_name: 'Madera',
-                start_date: null,
-                end_date: null,
-                office: null,
-                phone_number: null,
-                email: 'captester123+user1@gmail.com',
-                user_create_date: '2018-06-07',
-                user_last_modified_date: '2018-08-29',
-                last_login_date_time: null,
-                enabled: 'Active',
-                status: 'FORCE_CHANGE_PASSWORD',
-                permissions: null,
-                verification_message: null,
-                verification_passed: null,
-                racfid: null,
-                roles: ['CWS-admin', 'CWS-worker'],
-                auth_header: null,
-                phone_extension_number: null,
               },
             },
-            fetching: false,
-            error: null,
           },
           fetchAccount: {
             account: null,
-            fetching: false,
-            error: null,
           },
         };
         expect(checkEditDisableBtn(state)).toEqual(undefined);
@@ -243,8 +218,6 @@ describe('selectors', () => {
                 userName: null,
               },
             },
-            fetching: false,
-            error: null,
           },
         };
 
@@ -255,13 +228,9 @@ describe('selectors', () => {
         const state = {
           fetchDetails: {
             details: null,
-            fetching: false,
-            error: null,
           },
           fetchAccount: {
             account: null,
-            fetching: false,
-            error: null,
           },
         };
         expect(checkEditDisableBtn(state)).toEqual(undefined);
