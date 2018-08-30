@@ -11,3 +11,20 @@ export const selectDetailRecords = state => {
 
 export const permissionsList = state =>
   safeGet(state, 'fetchPermissions.permissions.permissions', []);
+
+export const checkEditDisableBtn = state => {
+  const accountUserName =
+    state.fetchAccount.account && state.fetchAccount.account.account.userName
+      ? state.fetchAccount.account.account.userName
+      : '';
+  const userDetailRecord =
+    state.fetchDetails.details !== null
+      ? state.fetchDetails.details.records
+      : '';
+  const userDetailRecordId =
+    userDetailRecord !== '' ? state.fetchDetails.details.records.id : '';
+
+  if (!(accountUserName === '' || userDetailRecordId === '')) {
+    return accountUserName === userDetailRecordId;
+  }
+};

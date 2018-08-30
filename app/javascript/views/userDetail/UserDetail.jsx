@@ -111,6 +111,7 @@ export default class UserDetail extends Component {
                 details={this.state.details}
                 onEdit={this.onEditClick}
                 permissionsList={permissionsList}
+                disableEditBtn={this.props.disableEditBtn}
               />
             )}
           </div>
@@ -159,6 +160,7 @@ UserDetail.propTypes = {
   dashboardClickHandler: PropTypes.func,
   permissionsList: PropTypes.array,
   actions: PropTypes.object.isRequired,
+  disableEditBtn: PropTypes.bool,
 };
 
 UserDetail.defaultProps = {

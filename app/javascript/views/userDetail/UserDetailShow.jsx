@@ -19,13 +19,19 @@ export function renderPermissions(assignedPermissions, permissionList) {
   );
 }
 
-const UserDetailShow = ({ details, onEdit, permissionsList }) => (
+const UserDetailShow = ({
+  details,
+  onEdit,
+  permissionsList,
+  disableEditBtn,
+}) => (
   <div className="row">
     <div className="col-md-12">
       <Cards
         cardHeaderText={`County: ${details.county_name}`}
         cardHeaderButton={true}
         onEdit={onEdit}
+        disableBtn={disableEditBtn}
       >
         <div className="col-md-12">
           <div className="row">
@@ -91,6 +97,7 @@ UserDetailShow.propTypes = {
       name: PropTypes.string.isRequired,
     })
   ),
+  disableEditBtn: PropTypes.bool,
 };
 
 UserDetailShow.defaultProps = {

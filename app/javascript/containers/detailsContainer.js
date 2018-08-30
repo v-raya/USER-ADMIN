@@ -3,6 +3,7 @@ import UserDetail from '../views/userDetail/UserDetail';
 import {
   selectDetailRecords,
   permissionsList,
+  checkEditDisableBtn,
 } from '../selectors/detailSelector';
 import { fetchDetailsActions, clearDetails } from '../actions/detailActions';
 import { fetchPermissionsActions } from '../actions/permissionsActions';
@@ -15,6 +16,7 @@ function mapStateToProps(state) {
     userListUrl: process.env.RAILS_RELATIVE_URL_ROOT
       ? process.env.RAILS_RELATIVE_URL_ROOT
       : '/',
+    disableEditBtn: checkEditDisableBtn(state),
   };
 }
 
