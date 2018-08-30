@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { Provider } from 'react-redux';
-import HeaderComponent from './containers/headerContainer';
+import GlobalHeader from './containers/globalHeaderContainer';
 import { store } from './store/configureStore';
 import UsersList from './containers/usersListContainer';
 import DetailsPage from './containers/detailsContainer';
@@ -12,7 +12,7 @@ import { makeLogoutUrl } from './_utils/makeLogoutUrl';
 const App = () => (
   <Provider store={store}>
     <Fragment>
-      <HeaderComponent logoutUrl={makeLogoutUrl()} />
+      <GlobalHeader logoutUrl={makeLogoutUrl()} />
       <Router basename={process.env.RAILS_RELATIVE_URL_ROOT || ''}>
         <Switch>
           <Route path="/" exact component={UsersList} />

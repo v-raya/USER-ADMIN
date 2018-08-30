@@ -1,6 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import HeaderComponent from './HeaderComponent';
+import GlobalHeader from './GlobalHeader';
 
 describe('Header Component', () => {
   let wrapper;
@@ -8,7 +8,7 @@ describe('Header Component', () => {
     const props = {
       fullName: 'lastname firstname',
     };
-    wrapper = shallow(<HeaderComponent {...props} />);
+    wrapper = shallow(<GlobalHeader {...props} />);
   });
 
   it('renders ', () => {

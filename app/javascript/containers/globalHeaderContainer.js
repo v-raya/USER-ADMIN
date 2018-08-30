@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import HeaderComponent from '../views/header/HeaderComponent';
+import GlobalHeader from '../common/GlobalHeader';
 import { bindActionCreators } from 'redux';
 import { fetchAccountActions } from '../actions/accountActions';
 import { userName } from '../selectors/accountSelectors';
@@ -24,4 +24,4 @@ function mapDispatchToProps(dispatch) {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(HeaderComponent);
+)(GlobalHeader);

@@ -3,18 +3,19 @@ import { shallow } from 'enzyme';
 import { Link, MemoryRouter } from 'react-router-dom';
 import { Link as LinkRWD } from 'react-wood-duck';
 import UserDetail from './UserDetail';
-import UserService from '../../_services/users';
 
 describe('UserDetail', () => {
   let container;
   let wrapper;
   let mockFetchDetailsActions;
+  let mockSaveUserDetailsActions;
   let mockFetchPermissionsActions;
   let mockClearDetailsActions;
 
   beforeEach(() => {
     // Register mock dispatchActions
     mockFetchDetailsActions = jest.fn().mockReturnValue(Promise.resolve([]));
+    mockSaveUserDetailsActions = jest.fn().mockReturnValue(Promise.resolve([]));
     mockClearDetailsActions = jest.fn().mockReturnValue(Promise.resolve([]));
     mockFetchPermissionsActions = jest
       .fn()
@@ -30,6 +31,7 @@ describe('UserDetail', () => {
             fetchDetailsActions: mockFetchDetailsActions,
             fetchPermissionsActions: mockFetchPermissionsActions,
             clearDetails: mockClearDetailsActions,
+            saveUserDetailsActions: mockSaveUserDetailsActions,
           }}
         />
       </MemoryRouter>
@@ -91,21 +93,9 @@ describe('UserDetail', () => {
   });
 
   describe('#onCancel', () => {
-    const mockfetchDetailsActions = jest.fn();
-
-    beforeEach(() => {
-      wrapper.setProps({
-        actions: { fetchDetailsActions: mockfetchDetailsActions },
-      });
-    });
-
-    afterEach(() => {
-      mockfetchDetailsActions.mockRestore();
-    });
-
     it('calls the appropriate function', () => {
       wrapper.instance().onCancel();
-      expect(mockfetchDetailsActions).toHaveBeenCalledWith('blank');
+      expect(mockFetchDetailsActions).toHaveBeenCalledWith('blank');
       wrapper.instance().onCancel();
       expect(wrapper.instance().state.isEdit).toEqual(false);
       expect(wrapper.instance().state.alert).toEqual(false);
@@ -144,52 +134,13 @@ describe('UserDetail', () => {
     });
   });
 
-  describe('#formattedPermissions', () => {
-    let myFormattedPermissions;
-
-    beforeEach(() => {
-      const instance = wrapper.instance();
-      myFormattedPermissions = instance.formattedPermissions;
-    });
-
-    it('handles undefined', () => {
-      expect(myFormattedPermissions(undefined)).toEqual([]);
-    });
-
-    it('handles nil', () => {
-      expect(myFormattedPermissions(null)).toEqual([]);
-    });
-
-    it('handles a string', () => {
-      expect(myFormattedPermissions('abc,123,xyz')).toEqual([
-        'abc',
-        '123',
-        'xyz',
-      ]);
-    });
-
-    it('handles an array', () => {
-      expect(myFormattedPermissions(['abc', '123', 'xyz'])).toEqual([
-        'abc',
-        '123',
-        'xyz',
-      ]);
-    });
-  });
-
   describe('#onSaveDetails', () => {
-    let serviceSpy;
-
-    beforeEach(() => {
-      serviceSpy = jest.spyOn(UserService, 'saveUserDetails');
-    });
-
     it('calls the service to patch the user record', () => {
-      const instance = wrapper.instance();
-      const mySaveFunction = instance.onSaveDetails;
-      expect(() => mySaveFunction()).not.toThrow();
-      mySaveFunction();
-      expect(serviceSpy).toHaveBeenCalledWith('blank', {});
+      wrapper.instance().onSaveDetails();
+      expect(mockSaveUserDetailsActions).toHaveBeenCalledWith('blank', {});
+      wrapper.instance().onSaveDetails();
+      expect(wrapper.instance().state.isEdit).toEqual(false);
+      expect(wrapper.instance().state.alert).toEqual(true);
     });
   });
 

@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { GlobalHeader } from 'react-wood-duck';
 
-export default class HeaderComponent extends React.Component {
+export default class GlobalHeaderComponent extends React.Component {
   logoutCallback = () => {
     window.location.href = this.props.logoutUrl;
   };
@@ -20,7 +20,7 @@ export default class HeaderComponent extends React.Component {
   }
 }
 
-HeaderComponent.propTypes = {
+GlobalHeaderComponent.propTypes = {
   fullName: PropTypes.string,
   logoutUrl: PropTypes.string,
 };
