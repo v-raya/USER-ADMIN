@@ -4,13 +4,10 @@ import Cards from '../../common/Card';
 import ShowField from '../../common/ShowField';
 import DropDownField from 'react-wood-duck/dist/DropDownField';
 import MultiSelect from '../../common/MultiSelect';
-import { STATUS } from '../../_constants/userDetailConstants';
-import { formatPhoneNumberExt, formatDate } from '../../_utils/formatters';
+import { STATUS, permissionListToOptions } from '../../_constants/constants';
+import { formatPhoneNumberWithExt, formatDate } from '../../_utils/formatters';
 
 /* eslint camelcase: 0 */
-
-const permissionListToOptions = items =>
-  items.map(({ name, description }) => ({ value: name, label: description }));
 
 const UserDetailEdit = ({
   details,
@@ -57,7 +54,7 @@ const UserDetailEdit = ({
             </div>
             <div className="col-md-3">
               <ShowField label="Office Phone Number">
-                <span>{formatPhoneNumberExt(details)}</span>
+                <span>{formatPhoneNumberWithExt(details)}</span>
               </ShowField>
             </div>
             <div className="col-md-2">

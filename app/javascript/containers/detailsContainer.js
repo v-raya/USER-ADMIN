@@ -5,7 +5,11 @@ import {
   permissionsList,
   checkEditDisableBtn,
 } from '../selectors/detailSelector';
-import { fetchDetailsActions, clearDetails } from '../actions/detailActions';
+import {
+  fetchDetailsActions,
+  clearDetails,
+  saveUserDetailsActions,
+} from '../actions/detailActions';
 import { fetchPermissionsActions } from '../actions/permissionsActions';
 import { bindActionCreators } from 'redux';
 
@@ -25,6 +29,7 @@ function mapDispatchToProps(dispatch) {
     fetchDetailsActions,
     fetchPermissionsActions,
     clearDetails,
+    saveUserDetailsActions,
   };
   return {
     actions: bindActionCreators(actions, dispatch),

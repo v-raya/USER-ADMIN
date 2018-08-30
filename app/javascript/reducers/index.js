@@ -5,6 +5,7 @@ import fetchAccount from './accountReducers';
 import fetchPermissions from './permissionsReducers';
 import validateNewUser from './validateNewUserReducer';
 import addUser from './addUserReducers';
+import saveUserDetails from './saveUserDetailsReducers';
 const reducer = combineReducers({
   userList,
   fetchDetails,
@@ -12,6 +13,7 @@ const reducer = combineReducers({
   fetchPermissions,
   validateNewUser,
   addUser,
+  saveUserDetails,
 });
 
 export default reducer;
