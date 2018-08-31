@@ -1,6 +1,6 @@
 DOCKER_GROUP = 'cwds'
 DOCKER_IMAGE = 'cap'
-SLACK_CHANNEL = '#tech-cals-updates'
+SLACK_CHANNEL = '#tech-cap-updates'
 
 def notify(String status) {
   status = status ?: 'SUCCESS'
