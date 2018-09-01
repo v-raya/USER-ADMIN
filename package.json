@@ -18,6 +18,7 @@
     "build:webpacker": "./bin/webpack",
     "start": "./bin/webpack-dev-server",
     "build": "npm-run-all --serial clean lint test build:webpacker",
+    "dev": "foreman start -f Procfile;",
     "dc:up": "docker-compose up",
     "env:get": "scripts/fetch-env.sh",
     "seed-users": "scripts/seed-users"
