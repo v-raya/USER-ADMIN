@@ -15,21 +15,21 @@ export const permissionsList = state =>
 const getAccountUserName = state =>
   state.fetchAccount.account && state.fetchAccount.account.account.userName
     ? state.fetchAccount.account.account.userName
-    : '';
+    : null;
 const getUserDetailRecordId = state => {
   const userDetailRecord =
     state.fetchDetails.details !== null
       ? state.fetchDetails.details.records
-      : '';
+      : null;
   const userDetailRecordId =
-    userDetailRecord !== '' ? state.fetchDetails.details.records.id : '';
+    userDetailRecord !== null ? state.fetchDetails.details.records.id : null;
   return userDetailRecordId;
 };
 
-export const checkEditDisableBtn = state => {
+export const checkEditDisabledBtn = state => {
   const accountUserName = getAccountUserName(state);
   const userDetailRecordId = getUserDetailRecordId(state);
-  if (!(accountUserName === '' || userDetailRecordId === '')) {
+  if (accountUserName && userDetailRecordId) {
     return accountUserName === userDetailRecordId;
   }
 };

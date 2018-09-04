@@ -1,7 +1,7 @@
 import {
   selectDetailRecords,
   permissionsList,
-  checkEditDisableBtn,
+  checkEditDisabledBtn,
 } from './detailSelector';
 
 describe('selectors', () => {
@@ -129,7 +129,7 @@ describe('selectors', () => {
           error: null,
         },
       };
-      expect(checkEditDisableBtn(state)).toEqual(true);
+      expect(checkEditDisabledBtn(state)).toEqual(true);
     });
 
     describe('userName or record id null scenarios', () => {
@@ -156,7 +156,7 @@ describe('selectors', () => {
             error: null,
           },
         };
-        expect(checkEditDisableBtn(state)).toEqual(undefined);
+        expect(checkEditDisabledBtn(state)).toEqual(undefined);
       });
 
       it('returns false when userName is not null and record id is null', () => {
@@ -182,7 +182,7 @@ describe('selectors', () => {
             error: null,
           },
         };
-        expect(checkEditDisableBtn(state)).toEqual(false);
+        expect(checkEditDisabledBtn(state)).toEqual(undefined);
       });
     });
 
@@ -201,27 +201,7 @@ describe('selectors', () => {
             account: null,
           },
         };
-        expect(checkEditDisableBtn(state)).toEqual(undefined);
-      });
-
-      it('returns undefined when only details is null', () => {
-        const state = {
-          fetchDetails: {
-            details: null,
-            fetching: false,
-            error: null,
-          },
-          fetchAccount: {
-            account: {
-              XHRStatus: 'ready',
-              account: {
-                userName: null,
-              },
-            },
-          },
-        };
-
-        expect(checkEditDisableBtn(state)).toEqual(undefined);
+        expect(checkEditDisabledBtn(state)).toEqual(undefined);
       });
 
       it('returns undefined when account is null and details is null', () => {
@@ -233,7 +213,7 @@ describe('selectors', () => {
             account: null,
           },
         };
-        expect(checkEditDisableBtn(state)).toEqual(undefined);
+        expect(checkEditDisabledBtn(state)).toEqual(undefined);
       });
     });
   });
