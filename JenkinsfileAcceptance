@@ -1,7 +1,6 @@
 DOCKER_GROUP = 'cwds'
 DOCKER_IMAGE = 'cap'
 SLACK_CHANNEL = '#tech-cap-updates'
-SLACK_CREDENTIALS_ID = 'slackmessagetpt2'
 
 def notify(String status) {
   status = status ?: 'SUCCESS'
@@ -10,8 +9,6 @@ def notify(String status) {
 
     slackSend(
         channel: SLACK_CHANNEL,
-        baseUrl: 'https://hooks.slack.com/services/',
-        tokenCredentialId: SLACK_CREDENTIALS_ID,
         color: colorCode,
         message: summary
         )
