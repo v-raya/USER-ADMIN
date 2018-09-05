@@ -1,6 +1,28 @@
-import { toFullName, userStatusFormat, lastLoginDate } from './constants';
+import {
+  permissionListToOptions,
+  toFullName,
+  userStatusFormat,
+  lastLoginDate,
+} from './constants';
 
 describe('helpers', () => {
+  describe('#permissionListToOptions', () => {
+    it('renders a permissions list', () => {
+      const items = [
+        {
+          name: 'permission1',
+          description: 'permission1',
+        },
+      ];
+      expect(permissionListToOptions(items)).toEqual([
+        {
+          value: 'permission1',
+          label: 'permission1',
+        },
+      ]);
+    });
+  });
+
   describe('toFullName', () => {
     it('renders a full name', () => {
       expect(toFullName({ first_name: 'First', last_name: 'Last' })).toEqual(

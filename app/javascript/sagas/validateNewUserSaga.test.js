@@ -49,7 +49,7 @@ describe('sagas', () => {
       });
     });
 
-    describe('when failures come back from the validatoin', () => {
+    describe('when failures come back from the validation', () => {
       it('handles the error', () => {
         const action = { payload: { email: email, racfid: racfid } };
         const gen = validateNewUser(action);

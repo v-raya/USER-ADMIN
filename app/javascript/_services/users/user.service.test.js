@@ -86,6 +86,23 @@ describe('UserService', () => {
       );
     });
 
+    it('calls #patch ApiService when permission are empty', () => {
+      patchSpy.mockReturnValue(Promise.resolve({}));
+      const body = {
+        enabled: true,
+        permissions: [],
+      };
+      UserService.saveUserDetails(id, {
+        enabled: 'Active',
+        permissions: '',
+        first_name: 'firstName',
+      });
+      expect(patchSpy).toHaveBeenCalledWith(
+        '/user_detail/someid/save_user',
+        body
+      );
+    });
+
     it('succeeds when the permissins are still an array from loading', () => {
       patchSpy.mockReturnValue(Promise.resolve({}));
       const body = {

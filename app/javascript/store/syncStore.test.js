@@ -1,4 +1,4 @@
-import { SyncStore } from './syncStore';
+import { SyncStore, observeStore } from './syncStore';
 
 describe('SyncStore', () => {
   let syncStore;
@@ -12,8 +12,9 @@ describe('SyncStore', () => {
         removeItem: jest.fn(),
       };
     });
+    const key = 'MY_KEY';
     mockStore = new MockStore();
-    syncStore = new SyncStore(mockStore, 'MY_KEY');
+    syncStore = new SyncStore(mockStore, key);
   });
 
   it('loads state', () => {
@@ -71,5 +72,29 @@ describe('SyncStore', () => {
     mockStore.removeItem.mockImplementation(throwError);
     expect(_ => syncStore.deleteState()).not.toThrow();
     expect(console.log).toHaveBeenCalledWith(err);
+  });
+});
+
+describe('#observeStore', () => {
+  let mockStore;
+
+  beforeEach(() => {
+    const MockStore = jest.fn().mockImplementation(() => {
+      return {
+        getState: jest.fn(),
+        subscribe: jest.fn(),
+      };
+    });
+    mockStore = new MockStore();
+  });
+
+  it('#handleChange', () => {
+    const select = jest.fn();
+    let onChange = jest.fn();
+    mockStore.getState.mockImplementation(_ => JSON.stringify({}));
+    expect(mockStore.getState).not.toHaveBeenCalledWith([]);
+    observeStore(mockStore, select, onChange);
+    mockStore.subscribe.mockImplementation(_ => {});
+    expect(mockStore.subscribe).not.toThrow();
   });
 });

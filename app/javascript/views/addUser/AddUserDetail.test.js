@@ -95,11 +95,19 @@ describe('AddUserDetail', () => {
   });
 
   describe('#componentDidUpdate', () => {
-    it('passes along the props', () => {
+    it('When previous id and updated id is same, no fetching is performed', () => {
       const instance = wrapper.instance();
-      expect(mockFetchDetailsActions).not.toHaveBeenCalled();
+      const prevProps = { id: 'some_id' };
       instance.setState({ id: 'some_id' });
-      instance.componentDidUpdate({});
+      instance.componentDidUpdate(prevProps);
+      expect(mockFetchDetailsActions).not.toHaveBeenCalled();
+    });
+
+    it('When previous id and updated id is not same, mockFetchDetailsActions is called with id', () => {
+      const instance = wrapper.instance();
+      const prevProps1 = { id: 'some_id1' };
+      instance.setState({ id: 'some_id' });
+      instance.componentDidUpdate(prevProps1);
       expect(mockFetchDetailsActions).toHaveBeenCalledWith('some_id');
     });
   });
