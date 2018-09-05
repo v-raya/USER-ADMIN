@@ -1,4 +1,8 @@
-import { selectDetailRecords, permissionsList } from './detailSelector';
+import {
+  selectDetailRecords,
+  permissionsList,
+  checkEditDisabledBtn,
+} from './detailSelector';
 
 describe('selectors', () => {
   describe('#selectDetailRecords', () => {
@@ -98,6 +102,119 @@ describe('selectors', () => {
         fetchPermissions: {},
       };
       expect(permissionsList(state)).toEqual([]);
+    });
+  });
+
+  describe('#checkEditDisableBtn', () => {
+    it('return true if userName and record id matches', () => {
+      const state = {
+        fetchDetails: {
+          details: {
+            XHRStatus: 'ready',
+            records: {
+              id: '9a155ccc-309f-467a-b562-d4d55d76ac80',
+            },
+          },
+          fetching: false,
+          error: null,
+        },
+        fetchAccount: {
+          account: {
+            XHRStatus: 'ready',
+            account: {
+              userName: '9a155ccc-309f-467a-b562-d4d55d76ac80',
+            },
+          },
+          fetching: false,
+          error: null,
+        },
+      };
+      expect(checkEditDisabledBtn(state)).toEqual(true);
+    });
+
+    describe('userName or record id null scenarios', () => {
+      it('returns undefined when userName is null and record id is not empty', () => {
+        const state = {
+          fetchDetails: {
+            details: {
+              XHRStatus: 'ready',
+              records: {
+                id: '9a155ccc-309f-467a-b562-d4d55d76ac80',
+              },
+            },
+            fetching: false,
+            error: null,
+          },
+          fetchAccount: {
+            account: {
+              XHRStatus: 'ready',
+              account: {
+                userName: null,
+              },
+            },
+            fetching: false,
+            error: null,
+          },
+        };
+        expect(checkEditDisabledBtn(state)).toEqual(undefined);
+      });
+
+      it('returns false when userName is not null and record id is null', () => {
+        const state = {
+          fetchDetails: {
+            details: {
+              XHRStatus: 'ready',
+              records: {
+                id: null,
+              },
+            },
+            fetching: false,
+            error: null,
+          },
+          fetchAccount: {
+            account: {
+              XHRStatus: 'ready',
+              account: {
+                userName: '9a155ccc-309f-467a-b562-d4d55d76ac80',
+              },
+            },
+            fetching: false,
+            error: null,
+          },
+        };
+        expect(checkEditDisabledBtn(state)).toEqual(undefined);
+      });
+    });
+
+    describe('details or account null scenarios', () => {
+      it('returns undefined when only account is null', () => {
+        const state = {
+          fetchDetails: {
+            details: {
+              XHRStatus: 'ready',
+              records: {
+                id: '9a155ccc-309f-467a-b562-d4d55d76ac80',
+              },
+            },
+          },
+          fetchAccount: {
+            account: null,
+          },
+        };
+        expect(checkEditDisabledBtn(state)).toEqual(undefined);
+      });
+
+      it('returns undefined when account is null and details is null', () => {
+        const state = {
+          fetchDetails: {
+            details: null,
+          },
+          fetchAccount: {
+            account: null,
+          },
+        };
+        expect(checkEditDisabledBtn(state)).toEqual(undefined);
+      });
     });
   });
 });
