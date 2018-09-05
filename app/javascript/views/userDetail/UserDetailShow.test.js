@@ -101,5 +101,12 @@ describe('UserDetailEdit', () => {
           .props().children
       ).toEqual(expectedValue);
     });
+
+    it('checks disable edit button props', () => {
+      wrapper = shallow(
+        <UserDetailShow details={details} disableEditBtn={true} />
+      );
+      expect(wrapper.find('Cards').props().disabled).toEqual(true);
+    });
   });
 });

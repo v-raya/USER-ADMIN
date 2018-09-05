@@ -22,7 +22,7 @@ const UserDetailShow = ({
         cardHeaderText={`County: ${details.county_name}`}
         cardHeaderButton={true}
         onEdit={onEdit}
-        disableBtn={disableEditBtn}
+        disabled={disableEditBtn}
       >
         <div className="col-md-12">
           <div className="row">
