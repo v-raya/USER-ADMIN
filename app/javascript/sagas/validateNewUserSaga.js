@@ -6,7 +6,7 @@ import { takeLatest, call, put } from 'redux-saga/effects';
 export function* validateNewUser(action) {
   try {
     let verify = action.payload;
-    const verifyUserDetails = yield call(
+    const verifiedUserDetails = yield call(
       UserService.validateUser,
       verify.email,
       verify.racfid
@@ -14,7 +14,7 @@ export function* validateNewUser(action) {
     // dispatch a success action to the store with the new account details
     yield put({
       type: actionTypes.VALIDATE_NEW_USER_API_CALL_SUCCESS,
-      verifyUserDetails,
+      verifyUserDetails: { verifiedUserDetails, verify: action.payload },
     });
   } catch (error) {
     // dispatch a failure action to the store with the error

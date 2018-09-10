@@ -39,9 +39,15 @@ describe('sagas', () => {
           put({
             type: actionTypes.VALIDATE_NEW_USER_API_CALL_SUCCESS,
             verifyUserDetails: {
-              email: email,
-              racfid: racfid,
-              county_name: 'Sacramento',
+              verifiedUserDetails: {
+                email: email,
+                racfid: racfid,
+                county_name: 'Sacramento',
+              },
+              verify: {
+                email: email,
+                racfid: racfid,
+              },
             },
           })
         );

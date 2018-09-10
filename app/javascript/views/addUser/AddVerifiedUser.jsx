@@ -15,9 +15,10 @@ const AddNewUser = ({
   email,
   racfid,
 }) => {
+  const { verifiedUserDetails } = verifyNewUserDetails;
   return (
     <div>
-      {verifyNewUserDetails.verification_passed ? (
+      {verifiedUserDetails.verification_passed ? (
         <div className="row">
           <div className="col-md-12">
             <Cards
@@ -34,33 +35,33 @@ const AddNewUser = ({
                   </label>
                   <div className="col-md-3">
                     <ShowField label="Full Name">
-                      {verifyNewUserDetails.user.last_name}
+                      {verifiedUserDetails.user.last_name}
                       {', '}
-                      {verifyNewUserDetails.user.first_name}{' '}
-                      {verifyNewUserDetails.user.middle_name}
+                      {verifiedUserDetails.user.first_name}{' '}
+                      {verifiedUserDetails.user.middle_name}
                     </ShowField>
                   </div>
                   <div className="col-md-3">
                     <ShowField label="Office Name">
-                      {verifyNewUserDetails.user.office}
+                      {verifiedUserDetails.user.office}
                     </ShowField>
                   </div>
                   <div className="col-md-3">
                     <ShowField label="CWS Login">
-                      {verifyNewUserDetails.user.racfid}
+                      {verifiedUserDetails.user.racfid}
                     </ShowField>
                   </div>
                 </div>
                 <div className="row">
                   <div className="col-md-3">
                     <ShowField label="Email">
-                      {verifyNewUserDetails.user.email}
+                      {verifiedUserDetails.user.email}
                     </ShowField>
                   </div>
                   <div className="col-md-3">
                     <ShowField label="Office Phone Number">
                       <span>
-                        {formatPhoneNumberWithExt(verifyNewUserDetails.user)}
+                        {formatPhoneNumberWithExt(verifiedUserDetails.user)}
                       </span>
                     </ShowField>
                   </div>
@@ -69,7 +70,7 @@ const AddNewUser = ({
             </Cards>
           </div>
         </div>
-      ) : verifyNewUserDetails.verification_passed === false ? (
+      ) : verifiedUserDetails.verification_passed === false ? (
         <div className="row">
           <div className="col-md-12">
             <div className="alert">
@@ -79,9 +80,9 @@ const AddNewUser = ({
                 alertCross={false}
               >
                 {verificationError(
-                  verifyNewUserDetails.error_code,
-                  email,
-                  racfid
+                  verifiedUserDetails.error_code,
+                  verifyNewUserDetails.verify.email,
+                  verifyNewUserDetails.verify.racfid
                 )}
               </Alert>
             </div>

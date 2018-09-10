@@ -4,14 +4,16 @@ import AddVerifiedUser from './AddVerifiedUser';
 
 describe('AddVerifiedUser', () => {
   const verifyNewUserDetails = {
-    user: {
-      id: 'id',
-      first_name: 'Firstname0',
-      last_name: 'Lastname0',
-      middle_name: 'Middlename0',
-      county_name: 'MyCounty',
+    verifiedUserDetails: {
+      user: {
+        id: 'id',
+        first_name: 'Firstname0',
+        last_name: 'Lastname0',
+        middle_name: 'Middlename0',
+        county_name: 'MyCounty',
+      },
+      verification_passed: true,
     },
-    verification_passed: true,
   };
 
   let wrapper;
@@ -64,11 +66,11 @@ describe('AddVerifiedUser', () => {
 
     it('renders the <ShowField/> props.children at label:fullName', () => {
       let expectedValue = [
-        `${verifyNewUserDetails.user.last_name}`,
+        `${verifyNewUserDetails.verifiedUserDetails.user.last_name}`,
         `${', '}`,
-        `${verifyNewUserDetails.user.first_name}`,
+        `${verifyNewUserDetails.verifiedUserDetails.user.first_name}`,
         `${' '}`,
-        `${verifyNewUserDetails.user.middle_name}`,
+        `${verifyNewUserDetails.verifiedUserDetails.user.middle_name}`,
       ];
       expect(
         wrapper
@@ -82,9 +84,15 @@ describe('AddVerifiedUser', () => {
   describe('when verification not passed', () => {
     it('renders the label inside the grid wrapper', () => {
       const newUserDetails = {
-        verification_passed: false,
-        verification_message: 'No ID',
-        error_code: 'CAP',
+        verifiedUserDetails: {
+          verification_passed: false,
+          verification_message: 'No ID',
+          error_code: 'CAP',
+        },
+        verify: {
+          email: 'email@email.com',
+          racfid: 'racfid',
+        },
       };
       wrapper = shallow(
         <AddVerifiedUser verifyNewUserDetails={newUserDetails} />
@@ -96,7 +104,13 @@ describe('AddVerifiedUser', () => {
   describe('when verification is still in progress', () => {
     it('renders the card with message', () => {
       const newUserDetails = {
-        verification_message: 'No ID',
+        verifiedUserDetails: {
+          verification_message: 'No ID',
+        },
+        verify: {
+          email: 'email@email.com',
+          racfid: 'racfid',
+        },
       };
       wrapper = shallow(
         <AddVerifiedUser verifyNewUserDetails={newUserDetails} />
