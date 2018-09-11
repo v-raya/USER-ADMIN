@@ -2,6 +2,9 @@ FROM ratneshraval/cals-base:0.7
 ENV ENVIRONMENT_REFRESH=2017-10-11 \
   RAILS_RELATIVE_URL_ROOT=/cap
 
+RUN apt-get update -y && \
+  apt-get upgrade -y
+
 RUN mkdir /app
 WORKDIR /app
 COPY Gemfile Gemfile.lock /app/
