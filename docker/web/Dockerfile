@@ -1,9 +1,6 @@
-FROM ratneshraval/cals-base:0.7
+FROM ratneshraval/cals-base:0.8
 ENV ENVIRONMENT_REFRESH=2017-10-11 \
   RAILS_RELATIVE_URL_ROOT=/cap
-
-RUN apt-get update -y && \
-  apt-get upgrade -y
 
 RUN mkdir /app
 WORKDIR /app
