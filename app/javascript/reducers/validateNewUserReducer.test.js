@@ -24,8 +24,8 @@ describe('reducer', () => {
     expect(validateNewUser(state, responseAction)).toEqual({
       fetching: false,
       verifyUserDetails: {
-        XHRStatus: 'ready',
-        records: { last_name: 'first', username: 'user1' },
+        last_name: 'first',
+        username: 'user1',
       },
       error: null,
     });

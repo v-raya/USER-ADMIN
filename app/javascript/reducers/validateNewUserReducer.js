@@ -16,7 +16,7 @@ function validateNewUser(
       return {
         ...state,
         fetching: false,
-        verifyUserDetails: newUserDetails,
+        verifyUserDetails: newUserDetails.records,
         error: null,
       };
 

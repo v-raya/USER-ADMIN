@@ -102,7 +102,7 @@ describe('AddVerifiedUser', () => {
   });
 
   describe('when verification is still in progress', () => {
-    it('renders the card with message', () => {
+    it('renders the card with Loading.....', () => {
       const newUserDetails = {
         verifiedUserDetails: {
           verification_message: 'No ID',
@@ -114,6 +114,22 @@ describe('AddVerifiedUser', () => {
       };
       wrapper = shallow(
         <AddVerifiedUser verifyNewUserDetails={newUserDetails} />
+      );
+      expect(wrapper.find('Cards').length).toBe(1);
+      expect(
+        wrapper
+          .find('span')
+          .at(0)
+          .text()
+      ).toBe('Loading.....');
+    });
+  });
+
+  describe('when props(verifyNewUserDetails) is empty object', () => {
+    it('renders the card with Loading.....', () => {
+      const verifyNewUserDetails = {};
+      const wrapper = shallow(
+        <AddVerifiedUser verifyNewUserDetails={verifyNewUserDetails} />
       );
       expect(wrapper.find('Cards').length).toBe(1);
       expect(

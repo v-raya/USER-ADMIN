@@ -130,10 +130,12 @@ describe('VerifyUser', () => {
       );
       component.setState({
         verifyNewUserDetails: {
-          user: {
-            first_name: 'username1',
-            id: '2',
-            county_name: 'mycounty',
+          verifiedUserDetails: {
+            user: {
+              first_name: 'username1',
+              id: '2',
+              county_name: 'mycounty',
+            },
           },
         },
       });

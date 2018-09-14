@@ -4,24 +4,16 @@ describe('selectors', () => {
   describe('#selectNewUserRecords', () => {
     it('selects the New User detail records ', () => {
       const state = {
-        validateNewUser: {
-          verifyUserDetails: {
-            records: {
-              county_name: 'first',
-              last_name: 'third',
-              roles: [],
-            },
-          },
-        },
-      };
-      expect(selectNewUserRecords(state)).toEqual({
         county_name: 'first',
         last_name: 'third',
+        roles: [],
+      };
+      expect(selectNewUserRecords(state)).toEqual({
         roles: ['CWS-worker'],
       });
     });
 
-    it('roles set to default value  when verifyNewUserDetails are not available', () => {
+    it('roles set to default value when validateNewUser object is empty ', () => {
       const state = {
         validateNewUser: {},
       };
@@ -30,20 +22,16 @@ describe('selectors', () => {
       });
     });
 
-    it('roles set to default value  when user object not available', () => {
+    it('roles set to default value when user object not available', () => {
       const state = {
         validateNewUser: {
-          verifyUserDetails: {
-            records: {
-              user: {},
-            },
+          verifiedUserDetails: {
+            user: {},
           },
         },
       };
       expect(selectNewUserRecords(state)).toEqual({
-        user: {
-          roles: ['CWS-worker'],
-        },
+        roles: ['CWS-worker'],
       });
     });
 

@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 import { Link as LinkRWD, PageHeader } from 'react-wood-duck';
 import AddVerifiedUser from './AddVerifiedUser';
 import VerifyUser from './VerifyUser';
-import AddUserDetail from '../../containers/addUserDetailsContainer';
 
 /* eslint camelcase: 0 */
 export default class AddUser extends Component {
@@ -15,13 +14,11 @@ export default class AddUser extends Component {
       racfid: '',
       email: '',
       disableActionBtn: true,
-      addUser: props.addUser,
+      addUser: true,
       verifyNewUserDetails: props.verifyNewUserDetails,
       valid: {
         emailValueValid: true,
       },
-      id: props.id,
-      details: props.details,
       errorMessage: {
         emailError: '',
       },
@@ -30,10 +27,7 @@ export default class AddUser extends Component {
 
   UNSAFE_componentWillReceiveProps(nextProps) {
     let verifyNewUserDetails = nextProps.verifyNewUserDetails;
-    let id = nextProps.id;
-    let permissionRoles = nextProps.permissionRoles;
-    let details = nextProps.details;
-    this.setState({ verifyNewUserDetails, id, details, permissionRoles });
+    this.setState({ verifyNewUserDetails });
   }
 
   handleEmail = event => {
@@ -97,15 +91,15 @@ export default class AddUser extends Component {
         <AddVerifiedUser
           verifyNewUserDetails={this.state.verifyNewUserDetails}
           onSave={this.onAddUser}
-          email={this.state.email}
-          racfid={this.state.racfid}
         />
       );
     }
   };
 
   onAddUser = () => {
-    this.props.actions.addUserActions(this.state.verifyNewUserDetails.user);
+    this.props.actions.addUserActions(
+      this.state.verifyNewUserDetails.verifiedUserDetails.user
+    );
     this.setState({ addUser: false, verify: false });
   };
 
@@ -132,7 +126,6 @@ export default class AddUser extends Component {
     ) : (
       <div>
         <Redirect from="/new" to={`/add_user`} />
-        <AddUserDetail />
       </div>
     );
   }
@@ -143,14 +136,9 @@ AddUser.propTypes = {
   dashboardClickHandler: PropTypes.func,
   actions: PropTypes.object,
   verifyNewUserDetails: PropTypes.object,
-  addUser: PropTypes.bool,
-  permissionRoles: PropTypes.any,
-  details: PropTypes.any,
-  id: PropTypes.string,
 };
 
 AddUser.defaultProps = {
   dashboardUrl: '/',
   dashboardClickHandler: () => {},
-  addUser: true,
 };

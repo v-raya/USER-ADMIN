@@ -14,7 +14,7 @@ export function* validateNewUser(action) {
     // dispatch a success action to the store with the new account details
     yield put({
       type: actionTypes.VALIDATE_NEW_USER_API_CALL_SUCCESS,
-      verifyUserDetails: { verifiedUserDetails, verify: action.payload },
+      verifyUserDetails: { verifiedUserDetails, verify },
     });
   } catch (error) {
     // dispatch a failure action to the store with the error
