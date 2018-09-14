@@ -7,6 +7,8 @@ describe('Header Component', () => {
   beforeEach(() => {
     const props = {
       fullName: 'lastname firstname',
+      logoutUrl:
+        'https://www.exampleGlobalHeader.com/HeaderComponent-12345_TESTING',
     };
     wrapper = shallow(<GlobalHeader {...props} />);
   });
@@ -22,5 +24,6 @@ describe('Header Component', () => {
     let button = wrapper.find('button').last();
     const instance = wrapper.instance();
     expect(button.props().onClick).toEqual(instance.logoutCallBack);
+    expect(instance.logoutCallback).not.toThrow();
   });
 });

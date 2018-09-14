@@ -7,6 +7,7 @@ import {
   formatDate,
   formatSelectedPermissions,
 } from '../../_utils/formatters';
+import { userStatusTranslator } from '../../_utils/codeToTextTranslator';
 
 /* eslint camelcase: 0 */
 
@@ -65,15 +66,25 @@ const UserDetailShow = ({
           </div>
           <div className="row">
             <div className="col-md-5">
+              <ShowField label="User Status">
+                {details.status}
+                <div>
+                  <div className="value-text-color">
+                    {userStatusTranslator('')}
+                  </div>
+                </div>
+              </ShowField>
+            </div>
+            <div className="col-md-3">
+              <ShowField label="Account Status">{details.enabled}</ShowField>
+            </div>
+            <div className="col-md-4">
               <ShowField label="Assigned Permissions">
                 {formatSelectedPermissions(
                   details.permissions,
                   permissionsList
                 )}
               </ShowField>
-            </div>
-            <div className="col-md-3">
-              <ShowField label="Status">{details.enabled}</ShowField>
             </div>
           </div>
         </div>

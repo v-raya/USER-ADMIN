@@ -107,7 +107,7 @@ class UserList extends PureComponent {
             minWidth: 200,
           },
           {
-            Header: 'Status',
+            Header: 'Account Status',
             id: 'enabled',
             accessor: userStatusFormat,
             minWidth: 60,

@@ -6,6 +6,7 @@ import DropDownField from 'react-wood-duck/dist/DropDownField';
 import MultiSelect from '../../common/MultiSelect';
 import { STATUS, permissionListToOptions } from '../../_constants/constants';
 import { formatPhoneNumberWithExt, formatDate } from '../../_utils/formatters';
+import { userStatusTranslator } from '../../_utils/codeToTextTranslator';
 
 /* eslint camelcase: 0 */
 
@@ -70,6 +71,25 @@ const UserDetailEdit = ({
           </div>
           <div className="row">
             <div className="col-md-5">
+              <ShowField label="User Status">
+                {details.status}
+                <div>
+                  <div className="value-text-color">
+                    {userStatusTranslator(details.status)}
+                  </div>
+                </div>
+              </ShowField>
+            </div>
+            <div className="col-md-3">
+              <DropDownField
+                id="dropdown1"
+                selectedOption={details.enabled}
+                options={STATUS}
+                label="Account Status"
+                onChange={onStatusChange}
+              />
+            </div>
+            <div className="col-md-4">
               <MultiSelect
                 id="Multiselect1"
                 selectedOption={selectedPermissions}
@@ -78,15 +98,6 @@ const UserDetailEdit = ({
                 onChange={selectedOptions =>
                   onRoleChange(selectedOptions.split(','))
                 }
-              />
-            </div>
-            <div className="col-md-3">
-              <DropDownField
-                id="dropdown1"
-                selectedOption={details.enabled}
-                options={STATUS}
-                label="Status"
-                onChange={onStatusChange}
               />
             </div>
           </div>
