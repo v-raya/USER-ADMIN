@@ -45,6 +45,9 @@ module Users
     def self.search(query, auth_header)
       http_search_service = Infrastructure::HttpService.new(search_base_url)
       response = http_search_service.post('/dora/users/user/_search', query, auth_header)
+
+      return response.body[:hits] if response.status == 200
+      Rails.logger.error response.body
       response.body
     end
 

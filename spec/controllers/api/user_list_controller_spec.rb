@@ -34,7 +34,7 @@ module Api
             from: 51, size: 25,
             sort: [{ field: 'last_name', desc: false }] }
         end
-        let(:api_response) { { hits: { hits: [_source: user], total: 1 } } }
+        let(:api_response) { { hits: [_source: user], total: 1 } }
 
         it 'returns a userlist' do
           allow(Users::UserRepository).to receive(:new)
@@ -51,7 +51,7 @@ module Api
       end
 
       describe 'when search params are passed' do
-        let(:api_response) { { hits: { hits: [_source: user], total: 1 } } }
+        let(:api_response) { { hits: [_source: user], total: 1 } }
         let(:match_last_name_with_paging) do
           { query: [{ field: 'last_name', value: 'Smith' }],
             from: 51, size: 25,

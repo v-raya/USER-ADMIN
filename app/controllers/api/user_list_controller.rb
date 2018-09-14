@@ -19,17 +19,19 @@ module Api
       logger.debug "should be posted as #{JSON.generate(es_query_json)}"
 
       es_response = Users::UserRepository.search(es_query_json, session[:token])
-      @users_response = user_response(es_response, query)
-      render json: @users_response, status: :ok
+      user_response(es_response, query)
     end
 
     private
 
     def user_response(es_response, request_query)
-      users = es_response[:hits][:hits].collect { |user| user[:_source] }
-      total = es_response[:hits][:total]
-
-      { records: users, meta: { total: total, req: request_query } }
+      if es_response.key?(:hits)
+        users = es_response[:hits].collect { |user| user[:_source] }
+        total = es_response[:total]
+        render json: { records: users, meta: { total: total, req: request_query } }, status: :ok
+      else
+        render json: es_response, status: 500
+      end
     end
 
     def allowed_params_to_search

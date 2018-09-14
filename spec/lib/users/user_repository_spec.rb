@@ -187,7 +187,27 @@ module Users
 
   describe '.search' do
     let(:search_server) { Infrastructure::HttpService.new('http://stub.example.com') }
-    let(:good_response) { double(body: 'content') }
+    let(:hits) do
+      { total: 303,
+        hits: [
+          {
+            "_source": {
+              "id": 'xxx-yyy-111-222',
+              "email": 'example@email.com'
+            }
+          }
+        ] }
+    end
+    let(:good_response) do
+      double(
+        status: 200,
+        body: {
+          "took": 4,
+          "timed_out": false,
+          "hits": hits
+        }
+      )
+    end
     let(:token) { 'token' }
     before do
       allow(search_server).to receive(:post).with('/dora/users/user/_search', 'my query', token)
@@ -195,8 +215,42 @@ module Users
       allow(Infrastructure::HttpService).to receive(:new).with('https://dora.test')
                                                          .and_return(search_server)
     end
+
     it 'posts the given token to a search service' do
-      expect(UserRepository.search('my query', 'token')).to eq('content')
+      expect(UserRepository.search('my query', 'token')).to eq(hits)
+    end
+
+    describe 'when search service has a problem' do
+      let(:bad_response) do
+        double(
+          body: '
+           "issue_details": [
+              {
+                "incident_id": "d0bc4e4f-ee62-4955-bbba-e532c9f34834",
+                "type": "expected_exception",
+                "user_message": \
+"There was an error processing your request. It has been logged with unique incident id",
+                "technical_message": \
+"POST http://es-inst-1.demo-int.cwds.io:9200/users/user/_search: \
+HTTP/1.1 404 Not Found\n{\"error\":{\"root_cause\":[{\"type\":\"index_not_found_exception\",\
+\"reason\":\"no such index\",\"resource.type\":\"index_or_alias\",\"resource.id\":\"users\",\
+\"index_uuid\":\"_na_\",\"index\":\"users\"}],\"type\":\"index_not_found_exception\",\
+\"reason\":\"no such index\",\"resource.type\":\"index_or_alias\", \"resource.id\":\"users\"\
+,\"index_uuid\":\"_na_\",\"index\":\"users\"},\"status\":404}"
+              }
+            ]',
+          status: 404
+        )
+      end
+
+      before do
+        allow(search_server).to receive(:post).with('/dora/users/user/_search', 'my query', token)
+                                              .and_return(bad_response)
+      end
+
+      it 'posts the given token to a search service' do
+        expect(UserRepository.search('my query', 'token')).to eq(bad_response.body)
+      end
     end
   end
 end
