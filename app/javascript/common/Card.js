@@ -47,6 +47,7 @@ const Cards = props => {
     headerBtnName,
     rightActionBtnName,
     leftActionBtnName,
+    disabled,
   } = props;
   const classField = classNames(
     cardbgcolor,
@@ -68,6 +69,7 @@ const Cards = props => {
                 btnClassName="default pull-right"
                 btnName={headerBtnName}
                 onClick={onEdit}
+                disabled={disabled}
               />
             )}
         </div>
@@ -108,6 +110,7 @@ Cards.propTypes = {
   headerBtnName: PropTypes.string,
   rightActionBtnName: PropTypes.string,
   leftActionBtnName: PropTypes.string,
+  disabled: PropTypes.bool,
 };
 
 Cards.defaultProps = {
@@ -121,6 +124,7 @@ Cards.defaultProps = {
   cardHeaderButton: false,
   rightActionBtnName: 'save',
   headerBtnName: 'Edit',
+  disabled: false,
 };
 
 export default Cards;

@@ -19,5 +19,6 @@ module Perry
     attribute :county_name, Types::String.optional
     attribute :roles, Types::Array.of(Types::String).optional
     attribute :privileges, Types::Array.of(Types::String).optional
+    attribute :userName, Types::String.optional
   end
 end

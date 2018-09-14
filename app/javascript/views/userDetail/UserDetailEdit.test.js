@@ -13,10 +13,13 @@ describe('UserDetailEdit', () => {
     permissions: ['x', 'y'],
     racfid: 'my RACFID',
   };
+  let onRoleChange = () => {};
 
   let wrapper;
   beforeEach(() => {
-    wrapper = shallow(<UserDetailEdit details={details} />);
+    wrapper = shallow(
+      <UserDetailEdit details={details} onRoleChange={onRoleChange} />
+    );
   });
 
   describe('when label and className props are passed', () => {

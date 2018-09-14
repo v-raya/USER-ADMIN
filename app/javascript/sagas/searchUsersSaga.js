@@ -12,8 +12,10 @@ export function* doSomething(action) {
   try {
     let params = yield select(getSearchParams);
     yield put(searchUsers(params));
-  } catch (err) {
-    console.log(err);
+  } catch (error) {
+    yield put({
+      error,
+    });
   }
 }
 

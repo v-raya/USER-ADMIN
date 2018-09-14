@@ -2,30 +2,27 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Cards from '../../common/Card';
 import ShowField from '../../common/ShowField';
-import { formatPhoneExtension, formatDate } from '../../_utils/formatters';
+import {
+  formatPhoneNumberWithExt,
+  formatDate,
+  formatSelectedPermissions,
+} from '../../_utils/formatters';
 
 /* eslint camelcase: 0 */
 
-export function renderPermissions(assignedPermissions, permissionList) {
-  if (!Array.isArray(assignedPermissions)) return '';
-  return (
-    assignedPermissions &&
-    assignedPermissions.length &&
-    assignedPermissions
-      .map(permission => permissionList.find(d => d.name === permission))
-      .filter(value => !!value)
-      .map(({ name, description }) => description)
-      .join(', ')
-  );
-}
-
-const UserDetailShow = ({ details, onEdit, permissionsList }) => (
+const UserDetailShow = ({
+  details,
+  onEdit,
+  permissionsList,
+  disableEditBtn,
+}) => (
   <div className="row">
     <div className="col-md-12">
       <Cards
         cardHeaderText={`County: ${details.county_name}`}
         cardHeaderButton={true}
         onEdit={onEdit}
+        disabled={disableEditBtn}
       >
         <div className="col-md-12">
           <div className="row">
@@ -52,7 +49,7 @@ const UserDetailShow = ({ details, onEdit, permissionsList }) => (
             </div>
             <div className="col-md-3">
               <ShowField label="Office Phone Number">
-                <span>{formatPhoneExtension(details)}</span>
+                <span>{formatPhoneNumberWithExt(details)}</span>
               </ShowField>
             </div>
             <div className="col-md-2">
@@ -69,7 +66,10 @@ const UserDetailShow = ({ details, onEdit, permissionsList }) => (
           <div className="row">
             <div className="col-md-5">
               <ShowField label="Assigned Permissions">
-                {renderPermissions(details.permissions, permissionsList)}
+                {formatSelectedPermissions(
+                  details.permissions,
+                  permissionsList
+                )}
               </ShowField>
             </div>
             <div className="col-md-3">
@@ -91,6 +91,7 @@ UserDetailShow.propTypes = {
       name: PropTypes.string.isRequired,
     })
   ),
+  disableEditBtn: PropTypes.bool,
 };
 
 UserDetailShow.defaultProps = {

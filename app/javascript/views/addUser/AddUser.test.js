@@ -89,6 +89,7 @@ describe('VerifyUser', () => {
 
   describe('#verifyUser()', () => {
     it('renders VerifyUser Component', () => {
+      const wrapper = shallow(<AddUser addUser={false} />);
       wrapper.instance().verifyUser();
       wrapper.setState({ addUser: true });
       expect(wrapper.find('VerifyUser').length).toBe(1);

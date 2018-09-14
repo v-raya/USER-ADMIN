@@ -1,6 +1,18 @@
 DOCKER_GROUP = 'cwds'
 DOCKER_IMAGE = 'cap'
+SLACK_CHANNEL = '#tech-cap-updates'
 
+def notify(String status) {
+  status = status ?: 'SUCCESS'
+    def colorCode = status == 'SUCCESS' ? '#00FF00' : '#FF0000'
+    def summary = """*${status}*: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]':\nMore detail in console output at <${env.BUILD_URL}|${env.BUILD_URL}>"""
+
+    slackSend(
+        channel: SLACK_CHANNEL,
+        color: colorCode,
+        message: summary
+        )
+}
 node('int') {
   def app
     try {
@@ -10,7 +22,8 @@ node('int') {
         }
       stage('Integration Acceptance Test') {
        sh "docker-compose up -d --build county-admin-test"
-       sh "docker-compose exec -T --env COGNITO_USERNAME=${COG_USER} --env COGNITO_PASSWORD=${COG_PASS} --env COUNTY_AUTHORIZATION_ENABLED=true --env COUNTY_ADMIN_WEB_BASE_URL=https://web.integration.cwds.io/cap county-admin-test bundle exec rspec spec/acceptance"
+       sleep 60
+       sh "docker-compose exec -T --env COGNITO_USERNAME=${COG_USER} --env COGNITO_PASSWORD=${COG_PASS} --env COUNTY_AUTHORIZATION_ENABLED=true --env COUNTY_ADMIN_WEB_BASE_URL=https://web.integration.cwds.io/cap county-admin-test bundle exec rspec spec/acceptance --format documentation"
       }
     } catch(Exception e) {
       currentBuild.result = "FAILURE"
@@ -18,5 +31,6 @@ node('int') {
     } finally {
       sh "docker-compose down"
       cleanWs()
+      notify(currentBuild.result)
     }
 }

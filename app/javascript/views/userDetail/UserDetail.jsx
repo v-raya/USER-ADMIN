@@ -4,7 +4,6 @@ import { Link } from 'react-router-dom';
 import { Link as LinkRWD, Alert, PageHeader } from 'react-wood-duck';
 import UserDetailEdit from './UserDetailEdit';
 import UserDetailShow from './UserDetailShow';
-import UserService from '../../_services/users';
 
 /* eslint camelcase: 0 */
 export default class UserDetail extends Component {
@@ -63,8 +62,8 @@ export default class UserDetail extends Component {
   onSaveDetails = () => {
     const id = this.getUserId(this.currentPathname());
     const { details } = this.state;
-    const response = UserService.saveUserDetails(id, details);
-    this.setState({ isEdit: false, alert: true, saveResponse: response });
+    this.props.actions.saveUserDetailsActions(id, details);
+    this.setState({ isEdit: false, alert: true });
   };
 
   onEditClick = () => {
@@ -81,7 +80,11 @@ export default class UserDetail extends Component {
   alert = () => {
     if (this.state.alert) {
       return (
-        <Alert alertClassName="success" faIcon="fa-check-circle">
+        <Alert
+          alertClassName="success"
+          faIcon="fa-check-circle"
+          alertCross={false}
+        >
           {'Your changes have been made successfully'}
         </Alert>
       );
@@ -96,9 +99,7 @@ export default class UserDetail extends Component {
             {this.state.isEdit ? (
               <UserDetailEdit
                 details={this.state.details}
-                selectedPermissions={this.formattedPermissions(
-                  this.state.details.permissions
-                )}
+                selectedPermissions={this.state.details.permissions}
                 onCancel={this.onCancel}
                 onSave={this.onSaveDetails}
                 onStatusChange={this.onStatusChange('enabled')}
@@ -111,6 +112,7 @@ export default class UserDetail extends Component {
                 details={this.state.details}
                 onEdit={this.onEditClick}
                 permissionsList={permissionsList}
+                disableEditBtn={this.props.disableEditBtn}
               />
             )}
           </div>
@@ -119,13 +121,6 @@ export default class UserDetail extends Component {
         )}
       </div>
     );
-  };
-
-  formattedPermissions = permissions => {
-    if (Array.isArray(permissions)) return permissions;
-    if (permissions === null) return [];
-    if (typeof permissions !== 'undefined') return permissions.split(',');
-    return [];
   };
 
   render() {
@@ -159,6 +154,7 @@ UserDetail.propTypes = {
   dashboardClickHandler: PropTypes.func,
   permissionsList: PropTypes.array,
   actions: PropTypes.object.isRequired,
+  disableEditBtn: PropTypes.bool,
 };
 
 UserDetail.defaultProps = {

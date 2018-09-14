@@ -3,10 +3,10 @@ DOCKER_IMAGE = 'cap'
 DOCKER_REGISTRY_CREDENTIALS_ID = '6ba8d05c-ca13-4818-8329-15d41a089ec0'
 CC_TEST_REPORTER_ID = 'e90a72f974bf96ece9ade12a041c8559fef59fd7413cfb08f1db5adc04337197'
 DOCKER_CONTAINER_NAME = 'cap-latest'
-SLACK_CHANNEL = '#casemanagement-stream'
+SLACK_CHANNEL = '#tech-cap-updates'
 SLACK_CREDENTIALS_ID = 'slackmessagetpt2'
 
-SEMANTIC_VERSION_NUMBER = versionString == "DEFAULT" ? "0.84.${env.BUILD_ID}" : versionString
+SEMANTIC_VERSION_NUMBER = versionString == "DEFAULT" ? "0.91.${env.BUILD_ID}" : versionString
 def notify(String status) {
   status = status ?: 'SUCCESS'
     def colorCode = status == 'SUCCESS' ? '#00FF00' : '#FF0000'
@@ -78,11 +78,9 @@ node(node_to_run_on()) {
       }
       stage('Deploy Preint') {
         sh "curl -v 'http://${JENKINS_USER}:${JENKINS_API_TOKEN}@jenkins.mgmt.cwds.io:8080/job/preint/job/deploy-cap/buildWithParameters?token=${JENKINS_TRIGGER_TOKEN}&cause=Caused%20by%20Build%20${SEMANTIC_VERSION_NUMBER}&version=${SEMANTIC_VERSION_NUMBER}'"
-        // sh "sleep 300"
       }
       stage('Deploy Integration') {
         sh "curl -v 'http://${JENKINS_USER}:${JENKINS_API_TOKEN}@jenkins.mgmt.cwds.io:8080/job/Integration%20Environment/job/deploy-cap/buildWithParameters?token=${JENKINS_TRIGGER_TOKEN}&cause=Caused%20by%20Build%20${SEMANTIC_VERSION_NUMBER}&version=${SEMANTIC_VERSION_NUMBER}'"
-        sh "sleep 300"
       }
       stage('Clean Up') {
         sh "docker images ${DOCKER_GROUP}/${DOCKER_IMAGE} --filter \"before=${DOCKER_GROUP}/${DOCKER_IMAGE}:${SEMANTIC_VERSION_NUMBER}\" -q | xargs docker rmi -f || true"

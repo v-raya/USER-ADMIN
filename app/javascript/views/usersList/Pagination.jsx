@@ -37,7 +37,6 @@ class Pagination extends PaginationRT {
       PreviousComponent = previousButton,
       NextComponent = nextButton,
     } = this.props;
-
     return (
       <div
         className={classnames(className, '-pagination')}

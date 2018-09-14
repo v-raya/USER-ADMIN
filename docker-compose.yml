@@ -33,6 +33,8 @@ services:
       - COGNITO_REGION
       - COGNITO_USERPOOL
       - IDP_MAPPING_SCRIPT
+    # logging:
+    #   driver: none
   cals_db2_data:
     image: cwds/db2data:0.5.6-SNAPSHOT
     hostname: cals_db2_data
@@ -47,10 +49,10 @@ services:
     image: cwds/dora:1.6.4-SNAPSHOT
     command: bash -c "./entrypoint.sh 2>&1 | tee 'log.file'"
     depends_on:
-          - perry
-          - elasticsearch
+      - perry
+      - elasticsearch
     ports:
-          - ${DORA_PORT}:8080
+      - ${DORA_PORT}:8080
     environment:
       PERRY_URL: ${PERRY_URL}
       ES_NODES: ${ES_NODES}
@@ -82,6 +84,10 @@ services:
       TOKEN_VALIDATION_URL: ${TOKEN_VALIDATION_URL}
       ELASTIC_SEARCH_MODE: ${ELASTIC_SEARCH_MODE}
       ELASTICSEARCH_XPACK_DATA_VERSION: ${ELASTICSEARCH_XPACK_DATA_VERSION}
+  redis:
+    image: 'redis:3.0'
+    expose:
+      - 6379
   county-admin-web:
     build:
       context: .
@@ -103,9 +109,12 @@ services:
       DASHBOARD_URL: ${DASHBOARD_URL}
       ELASTIC_SEARCH_MODE: ${ELASTIC_SEARCH_MODE}
       RAILS_RELATIVE_URL_ROOT: ${RAILS_RELATIVE_URL_ROOT}
+      REDIS_HOST: 'redis'
+      REDIS_PORT: 6379
     command: ['bundle', 'exec', 'rails', 'server']
     depends_on:
       - perry
+      - redis
   county-admin-test:
     build:
       context: .

@@ -39,9 +39,15 @@ describe('sagas', () => {
           put({
             type: actionTypes.VALIDATE_NEW_USER_API_CALL_SUCCESS,
             verifyUserDetails: {
-              email: email,
-              racfid: racfid,
-              county_name: 'Sacramento',
+              verifiedUserDetails: {
+                email: email,
+                racfid: racfid,
+                county_name: 'Sacramento',
+              },
+              verify: {
+                email: email,
+                racfid: racfid,
+              },
             },
           })
         );
@@ -49,7 +55,7 @@ describe('sagas', () => {
       });
     });
 
-    describe('when failures come back from the validatoin', () => {
+    describe('when failures come back from the validation', () => {
       it('handles the error', () => {
         const action = { payload: { email: email, racfid: racfid } };
         const gen = validateNewUser(action);

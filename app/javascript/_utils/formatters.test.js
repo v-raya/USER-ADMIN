@@ -1,13 +1,20 @@
-import { formatPhoneExtension, formatDate } from './formatters';
+import {
+  formatPhoneNumberWithExt,
+  formatDate,
+  formatSelectedPermissions,
+  formatPhoneNumber,
+} from './formatters';
 
-describe('formatPhoneExtension', () => {
+describe('#formatPhoneNumberWithExt', () => {
   describe('When phone & extension exists ', () => {
     it('returns phone & Extension with Ext text ', () => {
       const details = {
         phone_number: '1112222333',
         phone_extension_number: '011',
       };
-      expect(formatPhoneExtension(details)).toEqual('1112222333 Ext 011');
+      expect(formatPhoneNumberWithExt(details)).toEqual(
+        '(111) 222-2333 Ext 011'
+      );
     });
   });
 
@@ -17,7 +24,7 @@ describe('formatPhoneExtension', () => {
         phone_number: '1114445555',
         phone_extension_number: undefined,
       };
-      expect(formatPhoneExtension(details)).toEqual('1114445555 Ext');
+      expect(formatPhoneNumberWithExt(details)).toEqual('(111) 444-5555 Ext');
     });
   });
 
@@ -27,14 +34,36 @@ describe('formatPhoneExtension', () => {
         phone_number: null,
         phone_extension_number: '111',
       };
-      expect(formatPhoneExtension(details)).toEqual('');
+      expect(formatPhoneNumberWithExt(details)).toEqual('');
     });
   });
 
   describe('When no phone and no extension', () => {
     it('returns just empty ', () => {
       const details = {};
-      expect(formatPhoneExtension(details)).toEqual('');
+      expect(formatPhoneNumberWithExt(details)).toEqual('');
+    });
+  });
+
+  describe('#formatPhoneNumber ', () => {
+    it('processes an empty string', () => {
+      expect(formatPhoneNumber('')).toEqual(null);
+    });
+
+    it('should return formatted number when given a 10 digit number', () => {
+      expect(formatPhoneNumber('1234567890')).toEqual('(123) 456-7890');
+    });
+
+    it('should return null when given a less than 10 digit number', () => {
+      expect(formatPhoneNumber('12345')).toEqual(null);
+    });
+
+    it('should return null when given a greater than 10 digit number', () => {
+      expect(formatPhoneNumber('12345678901')).toEqual(null);
+    });
+
+    it('should return null when used alphabets', () => {
+      expect(formatPhoneNumber('abcd')).toEqual(null);
     });
   });
 });
@@ -56,5 +85,21 @@ describe('#formatDate', () => {
       };
       expect(formatDate(details.start_date)).toEqual('');
     });
+  });
+});
+
+describe('#formatSelectedPermissions', () => {
+  it('return a concatenated comma-delimmited string ', () => {
+    const list = [
+      { name: 'foo', description: 'FOO_DESC' },
+      { name: 'bar', description: 'BAR_DESC' },
+      { name: 'quo', description: 'QUO_DESC' },
+      { name: 'qux', description: 'QUX_DESC' },
+    ];
+    expect(formatSelectedPermissions(['foo', 'bar'], list)).toEqual(
+      'FOO_DESC, BAR_DESC'
+    );
+    expect(formatSelectedPermissions('', list)).toEqual('');
+    expect(formatSelectedPermissions(['qux'], list)).toEqual('QUX_DESC');
   });
 });

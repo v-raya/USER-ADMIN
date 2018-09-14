@@ -20,6 +20,10 @@ end
 
 Capybara.javascript_driver = :accessible_selenium
 
+def check_accessibility
+  expect(page).to be_accessible
+end
+
 Capybara.configure do |config|
   include LoginHelper
   include UserListPageHelper

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { Link as LinkRWD, PageHeader } from 'react-wood-duck';
 import AddVerifiedUser from './AddVerifiedUser';
@@ -17,10 +17,11 @@ export default class AddUser extends Component {
       disableActionBtn: true,
       addUser: props.addUser,
       verifyNewUserDetails: props.verifyNewUserDetails,
-      details: props.details,
       valid: {
         emailValueValid: true,
       },
+      id: props.id,
+      details: props.details,
       errorMessage: {
         emailError: '',
       },
@@ -130,6 +131,7 @@ export default class AddUser extends Component {
       </div>
     ) : (
       <div>
+        <Redirect from="/new" to={`/add_user`} />
         <AddUserDetail />
       </div>
     );
@@ -142,9 +144,9 @@ AddUser.propTypes = {
   actions: PropTypes.object,
   verifyNewUserDetails: PropTypes.object,
   addUser: PropTypes.bool,
-  id: PropTypes.string,
   permissionRoles: PropTypes.any,
   details: PropTypes.any,
+  id: PropTypes.string,
 };
 
 AddUser.defaultProps = {

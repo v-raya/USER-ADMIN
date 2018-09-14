@@ -35,6 +35,18 @@ describe('sagas', () => {
           payload: ['Hello', 'Bye'],
         })
       );
+    });
+  });
+
+  describe('when failure', () => {
+    it('handles error', () => {
+      const gen = doSomething();
+      expect(gen.next().value).toEqual(select(getSearchParams));
+      expect(gen.throw('SEARCH ERROR FAILURE').value).toEqual(
+        put({
+          error: 'SEARCH ERROR FAILURE',
+        })
+      );
       expect(gen.next().done).toBe(true);
     });
   });
