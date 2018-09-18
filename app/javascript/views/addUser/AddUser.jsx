@@ -86,22 +86,24 @@ export default class AddUser extends Component {
     }
   };
 
-  addUser = () => {
-    if (this.state.verify) {
-      return (
-        <AddVerifiedUser
-          verifyNewUserDetails={this.state.verifyNewUserDetails}
-          onSave={this.onAddUser}
-        />
-      );
-    }
-  };
-
   onAddUser = () => {
     this.props.actions.addUserActions(
       this.state.verifyNewUserDetails.verifiedUserDetails.user
     );
     this.setState({ addUser: false, verify: false });
+  };
+
+  addUser = () => {
+    if (this.state.verify) {
+      return (
+        <AddVerifiedUser
+          verifyNewUserDetails={this.state.verifyNewUserDetails}
+          onAddUser={this.onAddUser}
+          email={this.state.email}
+          racfid={this.state.racfid}
+        />
+      );
+    }
   };
 
   render() {

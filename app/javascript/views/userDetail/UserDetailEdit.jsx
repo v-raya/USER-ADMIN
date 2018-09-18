@@ -25,8 +25,10 @@ const UserDetailEdit = ({
       <Cards
         cardHeaderText={`County: ${details.county_name}`}
         cardActionButtons={true}
-        onCancel={onCancel}
-        onSave={onSave}
+        cardActionButton1={true}
+        cardActionButton2={true}
+        handleOnClickButton1={onCancel}
+        handleOnClickButton2={onSave}
         disableActionBtn={disableActionBtn}
         leftActionBtnName="Cancel"
       >

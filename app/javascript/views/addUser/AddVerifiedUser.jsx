@@ -8,7 +8,7 @@ import { formatPhoneNumberWithExt } from '../../_utils/formatters';
 
 /* eslint camelcase: 0 */
 
-const AddNewUser = ({ onCancel, onSave, verifyNewUserDetails }) => {
+const AddNewUser = ({ onAddUser, verifyNewUserDetails }) => {
   const userDetails = verifyNewUserDetails.verifiedUserDetails
     ? verifyNewUserDetails.verifiedUserDetails
     : {};
@@ -20,7 +20,8 @@ const AddNewUser = ({ onCancel, onSave, verifyNewUserDetails }) => {
             <Cards
               cardHeaderText="Add User"
               cardActionButtons={true}
-              onSave={onSave}
+              cardActionButton2={true}
+              handleOnClickButton2={onAddUser}
               rightActionBtnName="Add User"
             >
               <div className="col-md-12">
@@ -92,8 +93,7 @@ const AddNewUser = ({ onCancel, onSave, verifyNewUserDetails }) => {
 };
 
 AddNewUser.propTypes = {
-  onCancel: PropTypes.func,
-  onSave: PropTypes.func,
+  onAddUser: PropTypes.func,
   verifyNewUserDetails: PropTypes.object,
   email: PropTypes.string,
   racfid: PropTypes.string,

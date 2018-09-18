@@ -3,34 +3,6 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { Button } from 'react-wood-duck';
 
-function renderCancelSaveButtons(
-  props,
-  onCancel,
-  disableActionBtn,
-  onSave,
-  rightActionBtnName,
-  leftActionBtnName
-) {
-  return (
-    props.cardActionButtons &&
-    !props.cardHeaderButton && (
-      <div className="pull-right">
-        <Button
-          btnName={leftActionBtnName}
-          btnClassName="default cancel"
-          onClick={onCancel}
-        />
-        <Button
-          btnClassName="primary"
-          disabled={disableActionBtn}
-          btnName={rightActionBtnName}
-          onClick={onSave}
-        />
-      </div>
-    )
-  );
-}
-
 const Cards = props => {
   const {
     children,
@@ -40,9 +12,9 @@ const Cards = props => {
     offsetMediumValue,
     columnMediumWidth,
     columnLargeWidth,
-    onCancel,
+    handleOnClickButton1,
     onEdit,
-    onSave,
+    handleOnClickButton2,
     disableActionBtn,
     headerBtnName,
     rightActionBtnName,
@@ -75,13 +47,24 @@ const Cards = props => {
         </div>
         <div className="card-body">
           {children}
-          {renderCancelSaveButtons(
-            props,
-            onCancel,
-            disableActionBtn,
-            onSave,
-            rightActionBtnName,
-            leftActionBtnName
+          {!props.cardHeaderButton && (
+            <div className="pull-right">
+              {props.cardActionButton1 && (
+                <Button
+                  btnName={leftActionBtnName}
+                  btnClassName="default cancel"
+                  onClick={handleOnClickButton1}
+                />
+              )}
+              {props.cardActionButton2 && (
+                <Button
+                  btnClassName="primary"
+                  disabled={disableActionBtn}
+                  btnName={rightActionBtnName}
+                  onClick={handleOnClickButton2}
+                />
+              )}
+            </div>
           )}
           <div className="clearfix" />
         </div>
@@ -103,10 +86,12 @@ Cards.propTypes = {
   cardActionButtons: PropTypes.bool,
   style: PropTypes.string,
   id: PropTypes.any,
-  onSave: PropTypes.func,
-  onCancel: PropTypes.func,
+  handleOnClickButton1: PropTypes.func,
+  handleOnClickButton2: PropTypes.func,
   onEdit: PropTypes.func,
   disableActionBtn: PropTypes.bool,
+  cardActionButton1: PropTypes.bool,
+  cardActionButton2: PropTypes.bool,
   headerBtnName: PropTypes.string,
   rightActionBtnName: PropTypes.string,
   leftActionBtnName: PropTypes.string,

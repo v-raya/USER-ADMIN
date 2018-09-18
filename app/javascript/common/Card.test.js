@@ -47,6 +47,12 @@ describe('Cards', () => {
         .find('div')
         .at(4)
         .props().className
+    ).toEqual('pull-right');
+    expect(
+      component
+        .find('div')
+        .at(5)
+        .props().className
     ).toEqual('clearfix');
     expect(
       component
@@ -70,6 +76,8 @@ describe('Cards', () => {
     let post = {
       cardHeaderButton: false,
       cardActionButtons: true,
+      cardActionButton1: true,
+      cardActionButton2: true,
     };
     const wrapper = shallow(<Cards {...post} />);
     expect(wrapper.find('Button').length).toBe(2);
