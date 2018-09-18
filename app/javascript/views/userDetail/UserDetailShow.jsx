@@ -70,7 +70,7 @@ const UserDetailShow = ({
                 {details.status}
                 <div>
                   <div className="value-text-color">
-                    {userStatusTranslator('')}
+                    {userStatusTranslator(details.status)}
                   </div>
                 </div>
               </ShowField>
