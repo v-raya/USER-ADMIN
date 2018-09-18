@@ -29,6 +29,8 @@ module Api
     end
 
     describe '#save_user' do
+      let(:error_response) { 'My default error response' }
+
       it 'has a route' do
         expect(patch: 'api/user_detail/33/save_user').to route_to(
           format: 'json',
@@ -50,6 +52,16 @@ module Api
                                     enabled: 'false',
                                     permissions: %w[snapshot hotline] }
         expect(response.body).to eq user.to_json
+      end
+
+      it 'rescues an exception' do
+        allow(Users::UserRepository).to receive(:new).and_raise(ApiError)
+        request.session[:token] = 'my_token'
+        patch :save_user, body: { enabled: 'false' },
+                          params: { id: 55,
+                                    enabled: 'false',
+                                    permissions: %w[snapshot hotline] }
+        expect(response.body).to eq error_response
       end
     end
   end

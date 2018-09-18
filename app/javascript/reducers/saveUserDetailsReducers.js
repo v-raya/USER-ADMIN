@@ -1,7 +1,7 @@
 import * as actionTypes from '../actions/actionTypes';
 
 function saveUserDetails(
-  state = { saveUserDetails: null, fetching: false },
+  state = { saveUserDetails: null, fetching: false, error: null },
   action
 ) {
   switch (action.type) {

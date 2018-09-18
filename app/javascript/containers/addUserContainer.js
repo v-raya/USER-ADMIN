@@ -17,6 +17,7 @@ function mapStateToProps(state) {
       ? process.env.RAILS_RELATIVE_URL_ROOT
       : '/',
     dashboardUrl: '/',
+    validateNewUserError: state.validateNewUser.error,
   };
 }
 

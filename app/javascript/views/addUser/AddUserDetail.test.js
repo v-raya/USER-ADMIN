@@ -72,6 +72,22 @@ describe('AddUserDetail', () => {
     });
   });
 
+  describe('#erroralert()', () => {
+    it('displays error <Alert/>', () => {
+      const props = { message: 'Cognito user validation is failed' };
+      wrapper.setProps({ addUserError: props });
+      const alertBox = wrapper.find('ErrorMessage');
+      expect(alertBox.dive().props().children).toBe(props.message);
+      expect(alertBox.dive().props().alertCross).toEqual(false);
+    });
+
+    it('does not display error <Alert/>', () => {
+      wrapper.setProps({ addUserError: null });
+      const alertBox = wrapper.find('ErrorMessage');
+      expect(alertBox.find('Alert').length).toBe(0);
+    });
+  });
+
   describe('#onCancel', () => {
     it('calls the appropriate function', () => {
       wrapper.setState({ id: 'id' });

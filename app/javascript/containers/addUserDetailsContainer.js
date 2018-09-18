@@ -21,6 +21,7 @@ function mapStateToProps(state) {
     userListUrl: process.env.RAILS_RELATIVE_URL_ROOT
       ? process.env.RAILS_RELATIVE_URL_ROOT
       : '/',
+    addUserError: state.addUser.error,
   };
 }
 

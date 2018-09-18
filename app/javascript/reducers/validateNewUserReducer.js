@@ -1,7 +1,7 @@
 import * as actionTypes from '../actions/actionTypes';
 
 function validateNewUser(
-  state = { verifyUserDetails: null, fetching: false },
+  state = { verifyUserDetails: null, fetching: false, error: null },
   action
 ) {
   switch (action.type) {

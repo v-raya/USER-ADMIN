@@ -8,6 +8,7 @@ module Api
       let(:user_repository) { instance_double('User::UserRepository') }
       let(:user) { Users::VerifyUser.new(username: 'el') }
       let(:token) { 'my_token' }
+      let(:error_response) { 'My default error response' }
 
       it 'has a route' do
         expect(post: 'api/add_user').to route_to(
@@ -27,6 +28,14 @@ module Api
         post :index, params: { racfid: 'AA123PP',
                                email: 'verifyme@gmail.com' }
         expect(response.body).to eq user.to_json
+      end
+
+      it 'rescues an exception' do
+        allow(Users::UserRepository).to receive(:new).and_raise(ApiError)
+        request.session[:token] = 'my_token'
+        post :index, params: { racfid: 'AA123PP',
+                               email: 'verifyme@gmail.com' }
+        expect(response.body).to eq error_response
       end
     end
   end

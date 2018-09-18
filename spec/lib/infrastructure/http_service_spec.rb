@@ -5,6 +5,7 @@ require 'rails_helper'
 module Infrastructure
   describe HttpService do
     let(:connection) { instance_double('Faraday::Connection') }
+    let(:api_error_exception) { CapFaradayMiddleware::ApiErrorException }
     let(:last_name) { 'my_name' }
     describe '#get' do
       context 'returns a valid API response' do
@@ -26,6 +27,9 @@ module Infrastructure
             .with(url: 'https://perry.test')
             .and_yield(connection).and_return(connection)
           expect(connection)
+            .to receive(:use)
+            .with(api_error_exception)
+          expect(connection)
             .to receive(:response)
             .with(:json, parser_options: { symbolize_names: true })
           expect(connection).to receive(:adapter).with(Faraday.default_adapter)
@@ -42,11 +46,14 @@ module Infrastructure
             .with(url: 'https://perry.test')
             .and_yield(connection).and_return(connection)
           allow(connection)
+            .to receive(:use)
+            .with(api_error_exception)
+          allow(connection)
             .to receive(:response)
             .with(:json, parser_options: { symbolize_names: true })
             .and_raise('error message')
           expect(Infrastructure::HttpService.new
-            .get('/resource', last_name, 'showbiz_pizza_token').status).to eq 404
+                 .get('/resource', last_name, 'showbiz_pizza_token').status).to eq 404
         end
       end
     end
@@ -62,10 +69,13 @@ module Infrastructure
           .with(url: 'https://perry.test')
           .and_yield(connection)
           .and_return(connection)
+        expect(connection).to receive(:use).with(api_error_exception)
         expect(connection)
           .to receive(:response)
           .with(:json, parser_options: { symbolize_names: true })
-        expect(connection).to receive(:adapter).with(Faraday.default_adapter)
+        expect(connection)
+          .to receive(:adapter)
+          .with(Faraday.default_adapter)
         allow(connection)
           .to receive(:post)
           .with(no_args)
@@ -87,6 +97,9 @@ module Infrastructure
           .to receive(:new)
           .with(url: 'https://perry.test')
           .and_yield(connection).and_return(connection)
+        allow(connection)
+          .to receive(:use)
+          .with(api_error_exception)
         allow(connection)
           .to receive(:response)
           .with(:json, parser_options: { symbolize_names: true })
@@ -121,6 +134,9 @@ module Infrastructure
           .and_yield(connection)
           .and_return(connection)
         expect(connection)
+          .to receive(:use)
+          .with(api_error_exception)
+        expect(connection)
           .to receive(:response)
           .with(:json, parser_options: { symbolize_names: true })
         expect(connection).to receive(:adapter).with(Faraday.default_adapter)
@@ -145,6 +161,9 @@ module Infrastructure
           .to receive(:new)
           .with(url: 'https://perry.test')
           .and_yield(connection).and_return(connection)
+        allow(connection)
+          .to receive(:use)
+          .with(api_error_exception)
         allow(connection)
           .to receive(:response)
           .with(:json, parser_options: { symbolize_names: true })
@@ -180,6 +199,9 @@ module Infrastructure
           .and_yield(connection)
           .and_return(connection)
         expect(connection)
+          .to receive(:use)
+          .with(api_error_exception)
+        expect(connection)
           .to receive(:response)
           .with(:json, parser_options: { symbolize_names: true })
         expect(connection).to receive(:adapter).with(Faraday.default_adapter)
@@ -204,6 +226,9 @@ module Infrastructure
           .to receive(:new)
           .with(url: 'https://perry.test')
           .and_yield(connection).and_return(connection)
+        allow(connection)
+          .to receive(:use)
+          .with(api_error_exception)
         allow(connection)
           .to receive(:response)
           .with(:json, parser_options: { symbolize_names: true })

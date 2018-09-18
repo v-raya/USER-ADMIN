@@ -3,6 +3,8 @@
 # rubocop:disable Style/RedundantReturn
 # rubocop:disable Style/OptionalArguments
 
+require_relative './cap_faraday_middleware'
+
 module Infrastructure
   class HttpService
     def initialize(base_url = Rails.configuration.micro_services['perry_api_base_url'])
@@ -43,6 +45,7 @@ module Infrastructure
 
     def http_connection
       Faraday.new(url: @base_url) do |connection|
+        connection.use CapFaradayMiddleware::ApiErrorException
         connection.response :json, parser_options: { symbolize_names: true }
         connection.adapter Faraday.default_adapter
       end

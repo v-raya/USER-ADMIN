@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { Link as LinkRWD, Alert, PageHeader } from 'react-wood-duck';
 import UserDetailEdit from './UserDetailEdit';
 import UserDetailShow from './UserDetailShow';
+import ErrorMessage from '../../common/ErrorMessage';
 
 /* eslint camelcase: 0 */
 export default class UserDetail extends Component {
@@ -124,14 +125,18 @@ export default class UserDetail extends Component {
   };
 
   render() {
-    const { dashboardUrl, dashboardClickHandler, permissionsList } = this.props;
+    const {
+      dashboardUrl,
+      dashboardClickHandler,
+      permissionsList,
+      userDetailError,
+    } = this.props;
 
     return (
       <div>
         <PageHeader pageTitle="User Profile" button="" />
         <div className="container">
           <div className="col-md-12">
-            {this.alert()}
             Back to:{' '}
             <LinkRWD
               text="Dashboard"
@@ -140,6 +145,8 @@ export default class UserDetail extends Component {
             />
             &nbsp;&gt;&nbsp;
             <Link to="/">User List</Link>
+            {this.alert()}
+            <ErrorMessage error={userDetailError} />
           </div>
           {this.renderCards(permissionsList)}
         </div>
@@ -155,6 +162,7 @@ UserDetail.propTypes = {
   permissionsList: PropTypes.array,
   actions: PropTypes.object.isRequired,
   disableEditBtn: PropTypes.bool,
+  userDetailError: PropTypes.object,
 };
 
 UserDetail.defaultProps = {

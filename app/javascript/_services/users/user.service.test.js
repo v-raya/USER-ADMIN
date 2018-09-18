@@ -119,6 +119,46 @@ describe('UserService', () => {
         body
       );
     });
+
+    describe('calls #patchSpy Api Service catch block', () => {
+      it('calls #patch ApiService error block with valid error response', () => {
+        const errorResponse = {
+          response: 'error',
+        };
+        patchSpy.mockReturnValue(Promise.reject(errorResponse));
+        const body = {
+          enabled: true,
+          permissions: ['drivethebus', 'getapuppy'],
+        };
+        UserService.saveUserDetails(id, {
+          enabled: 'Active',
+          permissions: 'drivethebus,getapuppy',
+          first_name: 'Pidgeon',
+        });
+        expect(patchSpy).toHaveBeenCalledWith(
+          '/user_detail/someid/save_user',
+          body
+        );
+      });
+
+      it('calls #patch ApiService error block with invalid error response', () => {
+        const errorResponse = 'error';
+        patchSpy.mockReturnValue(Promise.reject(errorResponse));
+        const body = {
+          enabled: true,
+          permissions: ['drivethebus', 'getapuppy'],
+        };
+        UserService.saveUserDetails(id, {
+          enabled: 'Active',
+          permissions: 'drivethebus,getapuppy',
+          first_name: 'Pidgeon',
+        });
+        expect(patchSpy).toHaveBeenCalledWith(
+          '/user_detail/someid/save_user',
+          body
+        );
+      });
+    });
   });
 
   describe('#validateUser', () => {
@@ -136,6 +176,32 @@ describe('UserService', () => {
       expect(getSpy2).toHaveBeenCalledWith(
         `/verify_user?email=${encodeURIComponent(email)}&racfid=${racfid}`
       );
+    });
+
+    describe('#validateUser catch block', () => {
+      it('calls #validateUser ApiService with valid error response', () => {
+        const error = {
+          response: { data: 'error' },
+        };
+        const email = 'email+Special@example.com';
+        const racfid = 'some-racfid';
+        getSpy2.mockReturnValue(Promise.reject(error));
+        UserService.validateUser(email, racfid);
+        expect(getSpy2).toHaveBeenCalledWith(
+          `/verify_user?email=${encodeURIComponent(email)}&racfid=${racfid}`
+        );
+      });
+
+      it('calls #validateUser ApiService with not valid response', () => {
+        const error = 'error';
+        const email = 'email+Special@example.com';
+        const racfid = 'some-racfid';
+        getSpy2.mockReturnValue(Promise.reject(error));
+        UserService.validateUser(email, racfid);
+        expect(getSpy2).toHaveBeenCalledWith(
+          `/verify_user?email=${encodeURIComponent(email)}&racfid=${racfid}`
+        );
+      });
     });
   });
 
@@ -155,6 +221,22 @@ describe('UserService', () => {
         racfid: 'RACFID1',
       };
       getSpy2.mockReturnValue(Promise.resolve({}));
+      UserService.addUser(newUser);
+      expect(getSpy2).toHaveBeenCalledWith(`/add_user`, newUser);
+    });
+
+    it('calls #addUser ApiService error block', () => {
+      const newUser = {
+        email: 'example@example.com',
+        first_name: 'ExampleName',
+        last_name: 'ExampleLastName',
+        county_name: 'Madera',
+        racfid: 'RACFID1',
+      };
+      const errorResponse = {
+        response: 'error',
+      };
+      getSpy2.mockReturnValue(Promise.reject(errorResponse));
       UserService.addUser(newUser);
       expect(getSpy2).toHaveBeenCalledWith(`/add_user`, newUser);
     });

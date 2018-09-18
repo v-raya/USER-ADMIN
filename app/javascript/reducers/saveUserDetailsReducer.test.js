@@ -63,7 +63,7 @@ describe('reducer', () => {
       type: null,
       foreignObject: {},
     };
-    const state = { saveUserDetails: null, fetching: false };
+    const state = { saveUserDetails: null, fetching: false, error: null };
     expect(saveUserDetails(undefined, randomAction)).toEqual(state);
   });
 });

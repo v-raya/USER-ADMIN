@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { Link as LinkRWD, PageHeader } from 'react-wood-duck';
 import AddVerifiedUser from './AddVerifiedUser';
 import VerifyUser from './VerifyUser';
+import ErrorMessage from '../../common/ErrorMessage';
 
 /* eslint camelcase: 0 */
 export default class AddUser extends Component {
@@ -104,7 +105,11 @@ export default class AddUser extends Component {
   };
 
   render() {
-    const { dashboardUrl, dashboardClickHandler } = this.props;
+    const {
+      dashboardUrl,
+      dashboardClickHandler,
+      validateNewUserError,
+    } = this.props;
     return this.state.addUser ? (
       <div>
         <PageHeader pageTitle="Add User" button="" />
@@ -119,6 +124,7 @@ export default class AddUser extends Component {
             &nbsp;&gt;&nbsp;
             <Link to="/">User List</Link>
           </div>
+          <ErrorMessage error={validateNewUserError} />
           {this.verifyUser()}
           {this.addUser()}
         </div>
@@ -136,6 +142,11 @@ AddUser.propTypes = {
   dashboardClickHandler: PropTypes.func,
   actions: PropTypes.object,
   verifyNewUserDetails: PropTypes.object,
+  addUser: PropTypes.bool,
+  permissionRoles: PropTypes.any,
+  details: PropTypes.any,
+  id: PropTypes.string,
+  validateNewUserError: PropTypes.object,
 };
 
 AddUser.defaultProps = {

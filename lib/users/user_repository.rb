@@ -56,8 +56,9 @@ module Users
 
     def sanitize_keys(value)
       Hash[value.map do |k, v|
-        [k.to_s.camelize(:lower), v]
-      end].delete_if { |_k, v| v == '' }
+             [k.to_s.camelize(:lower), v]
+           end
+           ].delete_if { |_k, v| v == '' }
     end
   end
 end

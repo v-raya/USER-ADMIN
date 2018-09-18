@@ -26,7 +26,13 @@ class UserService {
   static validateUser(email, racfid) {
     return ApiService.get(
       `/verify_user?email=${encodeURIComponent(email)}&racfid=${racfid}`
-    ).then(response => response.data);
+    )
+      .then(response => response.data)
+      .catch(error => {
+        if (error.response) {
+          throw error.response.data;
+        }
+      });
   }
 
   static saveUserDetails(id, details) {
@@ -42,9 +48,13 @@ class UserService {
     const isEnabled = details['enabled'] === 'Active';
     const data = { enabled: isEnabled, permissions: permissions };
 
-    return ApiService.patch(`/user_detail/${id}/save_user`, data).then(
-      response => response.data
-    );
+    return ApiService.patch(`/user_detail/${id}/save_user`, data)
+      .then(response => response.data)
+      .catch(error => {
+        if (error.response) {
+          throw error.response.data;
+        }
+      });
   }
 
   static fetchPermissionsList() {
@@ -52,9 +62,13 @@ class UserService {
   }
 
   static addUser(newUser) {
-    return ApiService.post('/add_user', newUser).then(
-      response => response.data.location
-    );
+    return ApiService.post('/add_user', newUser)
+      .then(response => response.data.location)
+      .catch(error => {
+        if (error.response) {
+          throw error.response.data;
+        }
+      });
   }
 }
 

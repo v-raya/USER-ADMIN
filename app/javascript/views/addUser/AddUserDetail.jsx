@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { Link, Alert, PageHeader, Cards } from 'react-wood-duck';
 import UserDetailEdit from '../userDetail/UserDetailEdit';
 import UserDetailShow from '../userDetail/UserDetailShow';
+import ErrorMessage from '../../common/ErrorMessage';
 
 /* eslint camelcase: 0 */
 export default class AddUserDetail extends Component {
@@ -134,13 +135,13 @@ export default class AddUserDetail extends Component {
       userListClickHandler,
       dashboardClickHandler,
       permissionRoles,
+      addUserError,
     } = this.props;
     return (
       <div>
         <PageHeader pageTitle="User Profile" button="" />
         <div className="container">
           <div className="col-md-12">
-            {this.alert()}
             Back to:{' '}
             <Link
               text="Dashboard"
@@ -153,6 +154,8 @@ export default class AddUserDetail extends Component {
               href={userListUrl}
               clickHandler={userListClickHandler}
             />
+            {this.alert()}
+            <ErrorMessage error={addUserError} />
           </div>
           {this.renderCards(permissionRoles)}
         </div>
@@ -170,6 +173,7 @@ AddUserDetail.propTypes = {
   permissionRoles: PropTypes.array,
   actions: PropTypes.object,
   id: PropTypes.any,
+  addUserError: PropTypes.object,
 };
 
 AddUserDetail.defaultProps = {

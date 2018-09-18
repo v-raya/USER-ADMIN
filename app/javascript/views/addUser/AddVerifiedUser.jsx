@@ -77,7 +77,7 @@ const AddNewUser = ({ onCancel, onSave, verifyNewUserDetails }) => {
                   userDetails.error_code,
                   verifyNewUserDetails.verify.email,
                   verifyNewUserDetails.verify.racfid
-                )}
+                ) || userDetails.verification_message}
               </Alert>
             </div>
           </div>

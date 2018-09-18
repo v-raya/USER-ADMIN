@@ -63,7 +63,7 @@ describe('reducer', () => {
       type: null,
       foreignObject: {},
     };
-    const state = { verifyUserDetails: null, fetching: false };
+    const state = { verifyUserDetails: null, fetching: false, error: null };
     expect(validateNewUser(undefined, randomAction)).toEqual(state);
   });
 });

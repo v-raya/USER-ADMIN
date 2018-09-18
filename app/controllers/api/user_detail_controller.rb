@@ -12,6 +12,8 @@ module Api
       updated_user = Users::UserRepository.new.update_user(params[:id],
                                                            user_params, session[:token])
       render json: updated_user
+    rescue ApiError => e
+      render json: e.response, status: e.status
     end
 
     private

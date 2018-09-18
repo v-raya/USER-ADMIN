@@ -21,6 +21,7 @@ function mapStateToProps(state) {
       ? process.env.RAILS_RELATIVE_URL_ROOT
       : '/',
     disableEditBtn: checkEditDisabledBtn(state),
+    userDetailError: state.saveUserDetails.error,
   };
 }
 

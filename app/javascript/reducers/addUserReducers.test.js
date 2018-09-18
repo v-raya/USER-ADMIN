@@ -6,7 +6,7 @@ describe('reducer', () => {
     const requestAction = {
       type: actionTypes.ADD_USER_API_CALL_REQUEST,
     };
-    const state = { addNewUser: null, fetching: false };
+    const state = { addNewUser: null, fetching: false, error: null };
     expect(addUser(state, requestAction)).toEqual({
       fetching: true,
       addNewUser: null,
@@ -62,7 +62,7 @@ describe('reducer', () => {
       type: null,
       foreignObject: {},
     };
-    const state = { addNewUser: null, fetching: false };
+    const state = { addNewUser: null, fetching: false, error: null };
     expect(addUser(undefined, randomAction)).toEqual(state);
   });
 });

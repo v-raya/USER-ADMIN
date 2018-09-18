@@ -186,4 +186,24 @@ describe('UserDetail', () => {
       });
     });
   });
+
+  describe('#erroralert()', () => {
+    it('displays error <Alert/>', () => {
+      const props = { message: 'Cognito user validation is failed' };
+      wrapper.setProps({ userDetailError: props });
+      const alertBox = wrapper.find('ErrorMessage');
+      expect(alertBox.length).toBe(1);
+      expect(alertBox.dive().props().children).toBe(
+        'Cognito user validation is failed'
+      );
+      expect(alertBox.dive().props().alertCross).toEqual(false);
+    });
+
+    it('does not display error <Alert/>', () => {
+      wrapper.setProps({ userDetailError: null });
+      const alertBox = wrapper.find('ErrorMessage');
+      expect(alertBox.length).toBe(1);
+      expect(alertBox.find('Alert').length).toBe(0);
+    });
+  });
 });

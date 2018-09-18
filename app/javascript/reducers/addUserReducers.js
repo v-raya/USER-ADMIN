@@ -1,6 +1,9 @@
 import * as actionTypes from '../actions/actionTypes';
 
-function addUser(state = { addNewUser: null, fetching: false }, action) {
+function addUser(
+  state = { addNewUser: null, fetching: false, error: null },
+  action
+) {
   switch (action.type) {
     case actionTypes.ADD_USER_API_CALL_REQUEST:
       return { ...state, fetching: true, error: null };
