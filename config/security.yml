@@ -2,3 +2,4 @@ permitted_roles:
       - 'County-admin'
       - 'State-admin'
       - 'Office-admin'
+      - 'CALS-admin'
