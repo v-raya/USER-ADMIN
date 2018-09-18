@@ -1,2 +1,4 @@
 permitted_roles:
-      - 'CWS-admin'
+      - 'County-admin'
+      - 'State-admin'
+      - 'Office-admin'
