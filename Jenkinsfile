@@ -78,7 +78,7 @@ node(node_to_run_on()) {
       }
       stage('Deploy Preint') {
         withCredentials([usernameColonPassword(credentialsId: 'fa186416-faac-44c0-a2fa-089aed50ca17', variable: 'jenkinsauth')]) {
-          sh "curl -u $jenkinsauth 'http://jenkins.mgmt.cwds.io:8080/job/preint/job/deploy-cap/buildWithParameters?token=${deployPreint}&&cause=Caused%20by%20Build%20${env.BUILD_ID}&version=${env.BUILD_ID}'"
+          sh "curl -u $jenkinsauth 'http://jenkins.mgmt.cwds.io:8080/job/preint/job/deploy-cap/buildWithParameters?token=${deployPreint}&cause=Caused%20by%20Build%20${env.BUILD_ID}&version=${env.BUILD_ID}'"
         }
       }
       stage('Deploy Integration') {
