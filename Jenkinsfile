@@ -77,10 +77,14 @@ node(node_to_run_on()) {
         }
       }
       stage('Deploy Preint') {
-        sh "curl -v 'http://${JENKINS_USER}:${JENKINS_API_TOKEN}@jenkins.mgmt.cwds.io:8080/job/preint/job/deploy-cap/buildWithParameters?token=${JENKINS_TRIGGER_TOKEN}&cause=Caused%20by%20Build%20${SEMANTIC_VERSION_NUMBER}&version=${SEMANTIC_VERSION_NUMBER}'"
+        withCredentials([usernameColonPassword(credentialsId: 'fa186416-faac-44c0-a2fa-089aed50ca17', variable: 'jenkinsauth')]) {
+          sh "curl -u $jenkinsauth 'http://jenkins.mgmt.cwds.io:8080/job/preint/job/deploy-cap/buildWithParameters?token=${deployPreint}&&cause=Caused%20by%20Build%20${env.BUILD_ID}&version=${env.BUILD_ID}'"
+        }
       }
       stage('Deploy Integration') {
-        sh "curl -v 'http://${JENKINS_USER}:${JENKINS_API_TOKEN}@jenkins.mgmt.cwds.io:8080/job/Integration%20Environment/job/deploy-cap/buildWithParameters?token=${JENKINS_TRIGGER_TOKEN}&cause=Caused%20by%20Build%20${SEMANTIC_VERSION_NUMBER}&version=${SEMANTIC_VERSION_NUMBER}'"
+        withCredentials([usernameColonPassword(credentialsId: 'fa186416-faac-44c0-a2fa-089aed50ca17', variable: 'jenkinsauth')]) {
+          sh "curl -u $jenkinsauth 'http://jenkins.mgmt.cwds.io:8080/job/Integration%20Environment/job/deploy-cap/buildWithParameters?token=${JENKINS_TRIGGER_TOKEN}&cause=Caused%20by%20Build%20${SEMANTIC_VERSION_NUMBER}&version=${SEMANTIC_VERSION_NUMBER}'"
+        }
       }
       stage('Clean Up') {
         sh "docker images ${DOCKER_GROUP}/${DOCKER_IMAGE} --filter \"before=${DOCKER_GROUP}/${DOCKER_IMAGE}:${SEMANTIC_VERSION_NUMBER}\" -q | xargs docker rmi -f || true"
