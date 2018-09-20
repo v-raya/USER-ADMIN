@@ -43,9 +43,9 @@ describe('helpers', () => {
 
   describe('#lastLoginDate', () => {
     it('renders date in MM/DD/YYYY format', () => {
-      expect(lastLoginDate({ last_login_date_time: '2013-03-05' })).toEqual(
-        '03/05/2013'
-      );
+      expect(
+        lastLoginDate({ last_login_date_time: '2013-03-05 08:23:18' })
+      ).toEqual('03/05/2013 08:23:18');
     });
 
     it('renders empty when date does not exists', () => {

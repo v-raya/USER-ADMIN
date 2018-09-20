@@ -3,6 +3,7 @@ import {
   formatDate,
   formatSelectedPermissions,
   formatPhoneNumber,
+  checkDate,
 } from './formatters';
 
 describe('#formatPhoneNumberWithExt', () => {
@@ -85,6 +86,22 @@ describe('#formatDate', () => {
       };
       expect(formatDate(details.start_date)).toEqual('');
     });
+  });
+});
+
+describe('#checkDate', () => {
+  it('when data not exists returns just empty ', () => {
+    const details = {
+      last_login_date: null,
+    };
+    expect(checkDate(details.last_login_date)).toEqual('');
+  });
+
+  it('formats the date as required', () => {
+    const details = {
+      last_login_date: '2001-09-01 08:23:18',
+    };
+    expect(checkDate(details.last_login_date)).toEqual('09/01/2001 08:23:18');
   });
 });
 

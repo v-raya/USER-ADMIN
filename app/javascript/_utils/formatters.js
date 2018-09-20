@@ -35,6 +35,14 @@ export function formatDate(date) {
   return formattedDate;
 }
 
+export function checkDate(date) {
+  return date ? formatLastLogin(date.split(' ')) : '';
+}
+
+function formatLastLogin(array) {
+  return `${DateTime.fromISO(array[0]).toFormat('MM/dd/yyyy')} ${array[1]}`;
+}
+
 export function formatSelectedPermissions(assignedPermissions, permissionList) {
   if (!Array.isArray(assignedPermissions)) return '';
   return (

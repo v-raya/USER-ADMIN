@@ -1,6 +1,6 @@
 /* eslint camelcase: ["off"] */
 
-import { formatDate } from '../_utils/formatters';
+import { checkDate } from '../_utils/formatters';
 
 export const STATUS = [
   { value: 'Active', label: 'Active' },
@@ -18,5 +18,5 @@ export const userStatusFormat = ({ enabled }) => {
 };
 
 export const lastLoginDate = ({ last_login_date_time }) => {
-  return formatDate(last_login_date_time);
+  return checkDate(last_login_date_time);
 };

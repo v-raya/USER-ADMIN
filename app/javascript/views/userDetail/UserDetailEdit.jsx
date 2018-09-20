@@ -5,7 +5,11 @@ import ShowField from '../../common/ShowField';
 import DropDownField from 'react-wood-duck/dist/DropDownField';
 import MultiSelect from '../../common/MultiSelect';
 import { STATUS, permissionListToOptions } from '../../_constants/constants';
-import { formatPhoneNumberWithExt, formatDate } from '../../_utils/formatters';
+import {
+  formatPhoneNumberWithExt,
+  formatDate,
+  checkDate,
+} from '../../_utils/formatters';
 import { userStatusTranslator } from '../../_utils/codeToTextTranslator';
 
 /* eslint camelcase: 0 */
@@ -47,7 +51,7 @@ const UserDetailEdit = ({
             </div>
             <div className="col-md-2">
               <ShowField label="Last Login">
-                {formatDate(details.last_login_date_time)}
+                {checkDate(details.last_login_date_time)}
               </ShowField>
             </div>
           </div>

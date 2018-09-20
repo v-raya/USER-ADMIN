@@ -6,6 +6,7 @@ import {
   formatPhoneNumberWithExt,
   formatDate,
   formatSelectedPermissions,
+  checkDate,
 } from '../../_utils/formatters';
 import { userStatusTranslator } from '../../_utils/codeToTextTranslator';
 
@@ -40,7 +41,7 @@ const UserDetailShow = ({
             </div>
             <div className="col-md-2">
               <ShowField label="Last Login">
-                {formatDate(details.last_login_date_time)}
+                {checkDate(details.last_login_date_time)}
               </ShowField>
             </div>
           </div>
