@@ -37,9 +37,8 @@ feature 'User Edit' do
     first_user_link.click
     page_is_user_details
 
-    original_status = find(:xpath,
-                           "//label[contains(text(),'Status')]/following-sibling::span").text
-    new_status = (original_status == 'Active' ? 'Inactive' : 'Active')
+    original_account_status = details_account_status
+    new_status = (original_account_status == 'Active' ? 'Inactive' : 'Active')
 
     click_on('Edit')
     page_is_user_details
@@ -67,8 +66,7 @@ feature 'User Edit' do
     expect_success
 
     # status has changed to new status
-    expect(find(:xpath,
-                "//label[contains(text(),'Status')]/following-sibling::span").text)
+    expect(details_account_status)
       .to eq(new_status)
     # permissions has changed to new permissions
 
@@ -83,7 +81,7 @@ feature 'User Edit' do
     # put it back
     click_on('Edit')
     sleep 5 # wait for things to load
-    change_status original_status
+    change_status original_account_status
 
     # Add in a real permission to test that we can add one to an empty list, if that's what we have.
     if one_permission.blank?
@@ -95,9 +93,8 @@ feature 'User Edit' do
     click_button 'save'
 
     expect_success
-    expect(find(:xpath,
-                "//label[contains(text(),'Status')]/following-sibling::span").text)
-      .to eq(original_status)
+    expect(details_account_status)
+      .to eq(original_account_status)
 
     expect(find(:xpath,
                 "//label[contains(text(),'Assigned Permissions')]/following-sibling::span").text)

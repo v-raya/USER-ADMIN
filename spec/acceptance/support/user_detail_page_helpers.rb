@@ -39,6 +39,11 @@ module UserDetailPageHelper
     "capqacwds+test+#{Time.now.strftime('%y%m%d.%H%M%S')}@gmail.com"
   end
 
+  def details_account_status
+    find(:xpath,
+         "//label[contains(text(),'Account Status')]/following-sibling::span").text
+  end
+
   private
 
   def permissions_select
