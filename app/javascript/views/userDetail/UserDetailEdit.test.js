@@ -96,6 +96,16 @@ describe('UserDetailEdit', () => {
       );
     });
 
+    it('#MultiSelect, onRoleChange function is called when onChange event triggered ', () => {
+      const onRoleChangeSpy = jasmine.createSpy('onChange');
+      const render = shallow(
+        <UserDetailEdit details={details} onRoleChange={onRoleChangeSpy} />
+      );
+      const value = ['Asian', 'American'];
+      render.find('#Multiselect1').simulate('change', String(value));
+      expect(onRoleChangeSpy).toHaveBeenCalledWith(value);
+    });
+
     it('renders the <ShowField/> children at label:fullName', () => {
       let expectedValue = [
         `${details.last_name}`,

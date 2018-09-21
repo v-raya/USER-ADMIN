@@ -4,9 +4,11 @@ describe('selectors', () => {
   describe('#selectNewUserRecords', () => {
     it('selects the New User detail records ', () => {
       const state = {
-        county_name: 'first',
-        last_name: 'third',
-        roles: [],
+        validateNewUser: {
+          county_name: 'first',
+          last_name: 'third',
+          roles: [],
+        },
       };
       expect(selectNewUserRecords(state)).toEqual({
         roles: ['CWS-worker'],
@@ -22,16 +24,81 @@ describe('selectors', () => {
       });
     });
 
-    it('roles set to default value when user object not available', () => {
+    it('roles set to default value when user object is available', () => {
       const state = {
         validateNewUser: {
-          verifiedUserDetails: {
+          verifyUserDetails: {
             user: {},
           },
         },
       };
       expect(selectNewUserRecords(state)).toEqual({
+        user: {
+          roles: ['CWS-worker'],
+        },
+      });
+    });
+
+    it('roles set to default value when user object not available', () => {
+      const state = {
+        validateNewUser: {
+          verifyUserDetails: {},
+        },
+      };
+      expect(selectNewUserRecords(state)).toEqual({
         roles: ['CWS-worker'],
+      });
+    });
+
+    it('roles set to default value when verifiedUserDetails object is available', () => {
+      const state = {
+        validateNewUser: {
+          verifyUserDetails: {
+            verifiedUserDetails: {
+              county_name: 'MY COUNTY',
+            },
+          },
+        },
+      };
+      expect(selectNewUserRecords(state)).toEqual({
+        verifiedUserDetails: {
+          county_name: 'MY COUNTY',
+          roles: ['CWS-worker'],
+        },
+      });
+    });
+
+    it('roles set to default value when verifiedUserDetails object is not available', () => {
+      const state = {
+        validateNewUser: {
+          verifyUserDetails: {},
+        },
+      };
+      expect(selectNewUserRecords(state)).toEqual({
+        roles: ['CWS-worker'],
+      });
+    });
+
+    it('roles set to default value when roles is available', () => {
+      const state = {
+        validateNewUser: {
+          verifyUserDetails: {
+            verifiedUserDetails: {
+              user: {
+                roles: 'CWDS_WORKER',
+                county_name: 'MY COUNTY',
+              },
+            },
+          },
+        },
+      };
+      expect(selectNewUserRecords(state)).toEqual({
+        verifiedUserDetails: {
+          user: {
+            county_name: 'MY COUNTY',
+            roles: ['CWS-worker'],
+          },
+        },
       });
     });
 
