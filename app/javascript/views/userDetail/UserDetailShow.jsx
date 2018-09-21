@@ -8,7 +8,10 @@ import {
   formatSelectedPermissions,
   checkDate,
 } from '../../_utils/formatters';
-import { userStatusTranslator } from '../../_utils/codeToTextTranslator';
+import {
+  userStatusDescriptionTranslator,
+  userStatusTranslator,
+} from '../../_utils/codeToTextTranslator';
 
 /* eslint camelcase: 0 */
 
@@ -68,10 +71,10 @@ const UserDetailShow = ({
           <div className="row">
             <div className="col-md-5">
               <ShowField label="User Status">
-                {details.status}
+                {userStatusTranslator(details.status)}
                 <div>
                   <div className="value-text-color">
-                    {userStatusTranslator(details.status)}
+                    {userStatusDescriptionTranslator(details.status)}
                   </div>
                 </div>
               </ShowField>

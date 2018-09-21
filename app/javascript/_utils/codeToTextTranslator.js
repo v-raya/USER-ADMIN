@@ -1,4 +1,4 @@
-export function userStatusTranslator(status) {
+export function userStatusDescriptionTranslator(status) {
   const description = {
     UNCONFIRMED: 'User has been created but not confirmed.',
     CONFIRMED: 'User has been confirmed.',
@@ -9,4 +9,12 @@ export function userStatusTranslator(status) {
     FORCE_CHANGE_PASSWORD: 'User has never logged in.',
   };
   return description[status] || '';
+}
+
+export function userStatusTranslator(status) {
+  const userText = {
+    CONFIRMED: 'Confirmed',
+    FORCE_CHANGE_PASSWORD: 'Registration Incomplete',
+  };
+  return userText[status] || '';
 }

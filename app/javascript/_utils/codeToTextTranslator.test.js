@@ -1,27 +1,41 @@
-import { userStatusTranslator } from './codeToTextTranslator';
+import {
+  userStatusDescriptionTranslator,
+  userStatusTranslator,
+} from './codeToTextTranslator';
 
-describe('#userStatusTranslator', () => {
+describe('#userStatusDescriptionTranslator', () => {
   it('return a description based on user status value ', () => {
-    expect(userStatusTranslator('UNCONFIRMED')).toEqual(
+    expect(userStatusDescriptionTranslator('UNCONFIRMED')).toEqual(
       'User has been created but not confirmed.'
     );
-    expect(userStatusTranslator('CONFIRMED')).toEqual(
+    expect(userStatusDescriptionTranslator('CONFIRMED')).toEqual(
       'User has been confirmed.'
     );
-    expect(userStatusTranslator('ARCHIVED')).toEqual(
+    expect(userStatusDescriptionTranslator('ARCHIVED')).toEqual(
       'User is no longer active.'
     );
-    expect(userStatusTranslator('COMPROMISED')).toEqual(
+    expect(userStatusDescriptionTranslator('COMPROMISED')).toEqual(
       'User is disabled due to a potential security threat.'
     );
-    expect(userStatusTranslator('UNKNOWN')).toEqual(
+    expect(userStatusDescriptionTranslator('UNKNOWN')).toEqual(
       'User status is not known.'
     );
-    expect(userStatusTranslator('RESET_REQUIRED')).toEqual(
+    expect(userStatusDescriptionTranslator('RESET_REQUIRED')).toEqual(
       'Need to reset user.'
     );
-    expect(userStatusTranslator('FORCE_CHANGE_PASSWORD')).toEqual(
+    expect(userStatusDescriptionTranslator('FORCE_CHANGE_PASSWORD')).toEqual(
       'User has never logged in.'
+    );
+    expect(userStatusDescriptionTranslator('ASDFGADFASD')).toEqual('');
+    expect(userStatusDescriptionTranslator('')).toEqual('');
+  });
+});
+
+describe('#userStatusTranslator', () => {
+  it('return user friendly text based on user status value ', () => {
+    expect(userStatusTranslator('CONFIRMED')).toEqual('Confirmed');
+    expect(userStatusTranslator('FORCE_CHANGE_PASSWORD')).toEqual(
+      'Registration Incomplete'
     );
     expect(userStatusTranslator('ASDFGADFASD')).toEqual('');
     expect(userStatusTranslator('')).toEqual('');
