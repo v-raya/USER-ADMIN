@@ -25,7 +25,7 @@ describe('UsersList', () => {
           setSort: mockSetSortActions,
           setNextSearch: mockSetNextSearchActions,
         }}
-        accountCounty="SomeCountyName"
+        loggedInUserAccount={{ county_name: 'SomeCountyName' }}
       />,
       {
         disableLifecycleMethods: true,
@@ -107,7 +107,7 @@ describe('UsersList', () => {
             fetchAccountActions: () => {},
             setSearch: mockSetSearchActions,
           }}
-          accountCounty="SomeCountyName"
+          loggedInUserAccount={{ county_name: 'SomeCountyName' }}
           query={query}
           nextSearch="last_name_value"
         />
@@ -150,7 +150,7 @@ describe('UsersList', () => {
             searchUsers: () => {},
             fetchAccountActions: () => {},
           }}
-          accountCounty="SomeCountyName"
+          loggedInUserAccount={{ county_name: 'SomeCountyName' }}
           query={query}
           nextSearch="last_name_value"
         />
@@ -167,7 +167,7 @@ describe('UsersList', () => {
             searchUsers: () => {},
             fetchAccountActions: () => {},
           }}
-          accountCounty="SomeCountyName"
+          loggedInUserAccount={{ county_name: 'SomeCountyName' }}
           query={query}
           nextSearch="last_name_value"
         />
@@ -213,6 +213,7 @@ describe('UsersList', () => {
             fetchAccountActions: mockFetchAccountActions,
             searchUsers: mockSearchUsers,
           }}
+          loggedInUserAccount={{ county_name: 'SomeCountyName' }}
         />
       );
     });
@@ -241,7 +242,7 @@ describe('UsersList', () => {
             searchUsers: () => {},
             fetchAccountActions: () => {},
           }}
-          accountCounty="SomeCountyName"
+          loggedInUserAccount={{ county_name: 'SomeCountyName' }}
           sort={[
             {
               field: 'last_name',

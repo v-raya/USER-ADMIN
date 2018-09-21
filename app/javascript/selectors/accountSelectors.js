@@ -1,7 +1,5 @@
-export const selectCounty = state => {
-  return state.fetchAccount.account
-    ? state.fetchAccount.account.account.county_name
-    : '';
+export const selectLoggedInUserAccount = state => {
+  return state.fetchAccount.account ? state.fetchAccount.account.account : '';
 };
 
 export const userName = state => {

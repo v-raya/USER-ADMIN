@@ -20,5 +20,6 @@ module Perry
     attribute :roles, Types::Array.of(Types::String).optional
     attribute :privileges, Types::Array.of(Types::String).optional
     attribute :userName, Types::String.optional
+    attribute :admin_office_ids, Types::Array.optional
   end
 end

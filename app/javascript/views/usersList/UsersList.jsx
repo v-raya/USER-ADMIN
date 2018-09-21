@@ -160,7 +160,7 @@ class UserList extends PureComponent {
   };
 
   render() {
-    const { accountCounty } = this.props;
+    const { loggedInUserAccount } = this.props;
     return (
       <div role="main">
         {this.state.addUser ? (
@@ -171,7 +171,7 @@ class UserList extends PureComponent {
             <div className="container">
               {this.renderBreadcrumb()}
               <Cards
-                cardHeaderText={'County: ' + accountCounty}
+                cardHeaderText={'County: ' + loggedInUserAccount.county_name}
                 cardHeaderButton={true}
                 headerBtnName="+ Add a user"
                 onEdit={this.handleOnAdd}
@@ -232,7 +232,7 @@ UserList.propTypes = {
   fetching: PropTypes.bool,
   userList: PropTypes.array,
   dashboardUrl: PropTypes.string,
-  accountCounty: PropTypes.string,
+  loggedInUserAccount: PropTypes.object,
   dashboardClickHandler: PropTypes.func,
   actions: PropTypes.object.isRequired,
   nextSearch: PropTypes.string,

@@ -16,6 +16,7 @@ module Perry
       it { is_expected.to have_attribute(:county_name, Types::String.optional) }
       it { is_expected.to have_attribute(:roles, Types::Array.of(Types::String).optional) }
       it { is_expected.to have_attribute(:privileges, Types::Array.of(Types::String).optional) }
+      it { is_expected.to have_attribute(:admin_office_ids, Types::Array.optional) }
     end
   end
 end

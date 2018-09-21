@@ -1,7 +1,7 @@
-import { selectCounty, userName } from './accountSelectors';
+import { selectLoggedInUserAccount, userName } from './accountSelectors';
 
 describe('accountSelectors', () => {
-  describe('#selectCounty', () => {
+  describe('#selectLoggedInUserAccount', () => {
     it('selects the county when availble', () => {
       const state = {
         fetchAccount: {
@@ -16,7 +16,12 @@ describe('accountSelectors', () => {
           },
         },
       };
-      expect(selectCounty(state)).toEqual('Sacramento');
+      expect(selectLoggedInUserAccount(state)).toEqual({
+        user: 'RACFID',
+        staff_id: '0X5',
+        county_code: '20',
+        county_name: 'Sacramento',
+      });
     });
 
     it('display empty string when county is not known', () => {
@@ -28,7 +33,7 @@ describe('accountSelectors', () => {
           county_code: '20',
         },
       };
-      expect(selectCounty(state)).toEqual('');
+      expect(selectLoggedInUserAccount(state)).toEqual('');
     });
   });
 

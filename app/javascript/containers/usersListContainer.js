@@ -10,13 +10,13 @@ import {
   setNextSearch,
 } from '../actions/userListActions';
 import { fetchAccountActions } from '../actions/accountActions';
-import { selectCounty } from '../selectors/accountSelectors';
+import { selectLoggedInUserAccount } from '../selectors/accountSelectors';
 
 function mapStateToProps(state) {
   const { userList } = state;
   return {
     userList: userList.users || [],
-    accountCounty: selectCounty(state),
+    loggedInUserAccount: selectLoggedInUserAccount(state),
     fetching: userList.fetching,
     userListUrl: '/#',
     dashboardUrl: '/',
