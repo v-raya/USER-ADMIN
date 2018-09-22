@@ -23,7 +23,7 @@ describe('UserDetailEdit', () => {
         `County: ${details.county_name}`
       );
       expect(wrapper.find('Cards').props().disabled).toEqual(false);
-      expect(wrapper.find('ShowField').length).toBe(11);
+      expect(wrapper.find('ShowField').length).toBe(10);
       expect(
         wrapper
           .find('ShowField')
@@ -71,23 +71,17 @@ describe('UserDetailEdit', () => {
           .find('ShowField')
           .at(7)
           .props().label
-      ).toEqual('End Date');
+      ).toEqual('User Status');
       expect(
         wrapper
           .find('ShowField')
           .at(8)
           .props().label
-      ).toEqual('User Status');
-      expect(
-        wrapper
-          .find('ShowField')
-          .at(9)
-          .props().label
       ).toEqual('Account Status');
       expect(
         wrapper
           .find('ShowField')
-          .at(10)
+          .at(9)
           .props().label
       ).toEqual('Assigned Permissions');
     });

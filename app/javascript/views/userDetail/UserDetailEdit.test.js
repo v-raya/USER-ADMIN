@@ -29,7 +29,7 @@ describe('UserDetailEdit', () => {
         `County: ${details.county_name}`
       );
 
-      expect(wrapper.find('ShowField').length).toBe(9);
+      expect(wrapper.find('ShowField').length).toBe(8);
       expect(
         wrapper
           .find('ShowField')
@@ -82,12 +82,6 @@ describe('UserDetailEdit', () => {
         wrapper
           .find('ShowField')
           .at(7)
-          .props().label
-      ).toEqual('End Date');
-      expect(
-        wrapper
-          .find('ShowField')
-          .at(8)
           .props().label
       ).toEqual('User Status');
       expect(wrapper.find('[label="Account Status"]').exists()).toBe(true);

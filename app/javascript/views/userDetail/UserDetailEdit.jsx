@@ -67,14 +67,9 @@ const UserDetailEdit = ({
                 <span>{formatPhoneNumberWithExt(details)}</span>
               </ShowField>
             </div>
-            <div className="col-md-2">
+            <div className="col-md-4">
               <ShowField label="Start Date">
                 {formatDate(details.start_date)}
-              </ShowField>
-            </div>
-            <div className="col-md-2">
-              <ShowField label="End Date">
-                {formatDate(details.end_date)}
               </ShowField>
             </div>
           </div>
