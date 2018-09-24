@@ -9,12 +9,14 @@ describe('UsersList', () => {
   let mockSetPageSizeActions;
   let mockSetSortActions;
   let mockSetNextSearchActions;
+  let mockSetOfficesListAction;
 
   beforeEach(() => {
     mockSetPageActions = jest.fn().mockReturnValue(Promise.resolve([]));
     mockSetPageSizeActions = jest.fn().mockReturnValue(Promise.resolve([]));
     mockSetSortActions = jest.fn().mockReturnValue(Promise.resolve([]));
     mockSetNextSearchActions = jest.fn().mockReturnValue(Promise.resolve([]));
+    mockSetOfficesListAction = jest.fn().mockReturnValue(Promise.resolve([]));
 
     wrapper = shallow(
       <UsersList
@@ -24,6 +26,7 @@ describe('UsersList', () => {
           setPageSize: mockSetPageSizeActions,
           setSort: mockSetSortActions,
           setNextSearch: mockSetNextSearchActions,
+          setOfficesList: mockSetOfficesListAction,
         }}
         loggedInUserAccount={{ county_name: 'SomeCountyName' }}
       />,
@@ -73,6 +76,13 @@ describe('UsersList', () => {
     });
   });
 
+  describe('#handleOfficesListChange', () => {
+    it('calls the setOfficesList Actions', () => {
+      wrapper.instance().handleOfficesListChange(['newValue']);
+      expect(mockSetOfficesListAction).toHaveBeenCalledWith(['newValue']);
+    });
+  });
+
   describe('#handlePageSizeChange', () => {
     it('calls the setPageSize Actions', () => {
       let pageIndex = 'someValue';
@@ -105,6 +115,7 @@ describe('UsersList', () => {
           actions={{
             searchUsers: () => {},
             fetchAccountActions: () => {},
+            fetchOfficesActions: () => {},
             setSearch: mockSetSearchActions,
           }}
           loggedInUserAccount={{ county_name: 'SomeCountyName' }}
@@ -149,6 +160,7 @@ describe('UsersList', () => {
           actions={{
             searchUsers: () => {},
             fetchAccountActions: () => {},
+            fetchOfficesActions: () => {},
           }}
           loggedInUserAccount={{ county_name: 'SomeCountyName' }}
           query={query}
@@ -166,6 +178,7 @@ describe('UsersList', () => {
           actions={{
             searchUsers: () => {},
             fetchAccountActions: () => {},
+            fetchOfficesActions: () => {},
           }}
           loggedInUserAccount={{ county_name: 'SomeCountyName' }}
           query={query}
@@ -211,6 +224,7 @@ describe('UsersList', () => {
           dashboardUrl={'dburl'}
           actions={{
             fetchAccountActions: mockFetchAccountActions,
+            fetchOfficesActions: () => {},
             searchUsers: mockSearchUsers,
           }}
           loggedInUserAccount={{ county_name: 'SomeCountyName' }}
@@ -241,6 +255,7 @@ describe('UsersList', () => {
           actions={{
             searchUsers: () => {},
             fetchAccountActions: () => {},
+            fetchOfficesActions: () => {},
           }}
           loggedInUserAccount={{ county_name: 'SomeCountyName' }}
           sort={[

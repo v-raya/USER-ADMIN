@@ -5,6 +5,7 @@ import {
   USER_LIST_SET_SEARCH,
   USER_LIST_SET_SORT,
   USER_LIST_SET_NEXT_SEARCH,
+  USER_LIST_SET_OFFICE_LIST,
 } from './actionTypes';
 
 export const searchUsers = params => ({
@@ -48,6 +49,15 @@ export const setSearch = query => ({
 export const setNextSearch = nextSearch => ({
   type: USER_LIST_SET_NEXT_SEARCH,
   payload: nextSearch,
+});
+
+/**
+ * Updates the search string for `office list`)
+ * @param {Array} officesList search string
+ */
+export const setOfficesList = officesList => ({
+  type: USER_LIST_SET_OFFICE_LIST,
+  payload: officesList,
 });
 
 /**

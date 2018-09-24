@@ -1,5 +1,6 @@
 import {
   permissionListToOptions,
+  officesListToOptions,
   toFullName,
   userStatusFormat,
   lastLoginDate,
@@ -20,6 +21,22 @@ describe('helpers', () => {
           label: 'permission1',
         },
       ]);
+    });
+
+    describe('#officesListToOptions', () => {
+      it('renders a offices list', () => {
+        const items = [
+          {
+            office_name: 'offices1',
+          },
+        ];
+        expect(officesListToOptions(items)).toEqual([
+          {
+            value: 'offices1',
+            label: 'offices1',
+          },
+        ]);
+      });
     });
   });
 

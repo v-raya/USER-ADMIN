@@ -8,7 +8,10 @@ import {
   setSort,
   setSearch,
   setNextSearch,
+  setOfficesList,
 } from '../actions/userListActions';
+import { fetchOfficesActions } from '../actions/officesActions';
+import { officesList } from '../selectors/userListSelector';
 import { fetchAccountActions } from '../actions/accountActions';
 import { selectLoggedInUserAccount } from '../selectors/accountSelectors';
 
@@ -28,6 +31,8 @@ function mapStateToProps(state) {
     aggregate: userList.aggregate,
     total: userList.total,
     error: userList.error,
+    officesList: officesList(state),
+    selectedOfficesList: userList.selectedOfficesList,
   };
 }
 
@@ -42,6 +47,8 @@ function mapDispatchToProps(dispatch) {
         setSort,
         setSearch,
         setNextSearch,
+        setOfficesList,
+        fetchOfficesActions,
       },
       dispatch
     ),

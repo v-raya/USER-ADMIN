@@ -73,6 +73,16 @@ describe('reducer', () => {
     expect(after.nextSearch).toEqual('after');
   });
 
+  it('handles offices list  updates', () => {
+    const before = { selectedOfficesList: 'before' };
+    const action = {
+      type: actionTypes.USER_LIST_SET_OFFICE_LIST,
+      payload: 'after',
+    };
+    const after = reducer(before, action);
+    expect(after.selectedOfficesList).toEqual('after');
+  });
+
   it('handles search criteria updates', () => {
     const myQuery = [{ field: 'haystack', value: 'needle' }];
     const state = reducer(

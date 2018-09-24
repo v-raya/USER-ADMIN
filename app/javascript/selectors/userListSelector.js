@@ -1,3 +1,5 @@
+import safeGet from 'lodash.get';
+
 export const selectUserRecords = state => {
   if (!state.userList) return [];
   return Array.isArray(state.userList.users) ? state.userList.users : [];
@@ -6,6 +8,9 @@ export const selectUserRecords = state => {
 export const isLoading = state => {
   return state.userList.fetching || false;
 };
+
+export const officesList = state =>
+  safeGet(state, 'fetchOffices.offices.offices', []);
 
 export const getSearchParams = ({ userList }) => {
   if (!userList) return {};

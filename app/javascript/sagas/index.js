@@ -1,6 +1,7 @@
 export { countyUsersListSaga } from './getUserListSaga';
 export { detailsSaga } from './getDetailsSaga';
 export { permissionsSaga } from './getPermissionsSaga';
+export { officesSaga } from './getOfficesSaga';
 export { accountSaga } from './getAccountSaga';
 export { validateNewUserSaga } from './validateNewUserSaga';
 export { addUserSaga } from './addUserSaga';

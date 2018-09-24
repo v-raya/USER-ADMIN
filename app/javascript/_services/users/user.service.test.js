@@ -60,6 +60,12 @@ describe('UserService', () => {
       UserService.fetchPermissionsList();
       expect(getSpy).toHaveBeenCalledWith('/permissions_list/');
     });
+
+    it('calls #fetchOfficesList ApiService', () => {
+      getSpy.mockReturnValue(Promise.resolve({}));
+      UserService.fetchOfficesList();
+      expect(getSpy).toHaveBeenCalledWith('/offices_list/');
+    });
   });
 
   describe('#saveUserDetails', () => {

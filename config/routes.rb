@@ -15,6 +15,7 @@ Rails.application.routes.draw do
 
     get 'account', to: 'account#index'
     get 'permissions_list', to: 'permissions_list#index'
+    get 'offices_list', to: 'offices_list#index'
     post 'add_user', to: 'add_user#index'
   end
 

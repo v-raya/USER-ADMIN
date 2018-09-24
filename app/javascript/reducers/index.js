@@ -3,6 +3,7 @@ import userList from './userListReducers';
 import fetchDetails from './detailsReducers';
 import fetchAccount from './accountReducers';
 import fetchPermissions from './permissionsReducers';
+import fetchOffices from './officesReducers';
 import validateNewUser from './validateNewUserReducer';
 import addUser from './addUserReducers';
 import saveUserDetails from './saveUserDetailsReducers';
@@ -11,6 +12,7 @@ const reducer = combineReducers({
   fetchDetails,
   fetchAccount,
   fetchPermissions,
+  fetchOffices,
   validateNewUser,
   addUser,
   saveUserDetails,

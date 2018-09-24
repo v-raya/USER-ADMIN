@@ -7,6 +7,7 @@ import {
   PageHeader,
   Alert,
 } from 'react-wood-duck';
+import MultiSelect from '../../common/MultiSelect';
 import Cards from '../../common/Card';
 import ReactTable from 'react-table';
 import Pagination from './Pagination';
@@ -15,13 +16,8 @@ import {
   toFullName,
   userStatusFormat,
   lastLoginDate,
+  officesListToOptions,
 } from '../../_constants/constants';
-
-const hackBtnStyles = {
-  marginTop: '22px',
-  padding: '14px 0',
-  textAlign: 'center',
-};
 
 class UserList extends PureComponent {
   constructor(props) {
@@ -39,6 +35,7 @@ class UserList extends PureComponent {
       from: this.props.from,
     });
     this.props.actions.fetchAccountActions();
+    this.props.actions.fetchOfficesActions();
   }
 
   handleOnAdd = () => {
@@ -63,6 +60,10 @@ class UserList extends PureComponent {
 
   handleSearchChange = e => {
     this.props.actions.setNextSearch(e.target.value);
+  };
+
+  handleOfficesListChange = value => {
+    this.props.actions.setOfficesList(value);
   };
 
   submitSearch = e => {
@@ -162,7 +163,11 @@ class UserList extends PureComponent {
   };
 
   render() {
-    const { loggedInUserAccount } = this.props;
+    const {
+      loggedInUserAccount,
+      officesList,
+      selectedOfficesList,
+    } = this.props;
     return (
       <div role="main">
         {this.state.addUser ? (
@@ -180,8 +185,22 @@ class UserList extends PureComponent {
               >
                 <form onSubmit={this.submitSearch} autoComplete="off">
                   <div className="row">
-                    <div className="col-md-10 col-sm-6">
+                    <div className="col-md-4 col-sm-6">
+                      <MultiSelect
+                        id="MultiSelect2"
+                        selectedOption={selectedOfficesList}
+                        options={officesListToOptions(officesList)}
+                        label="Filter by Office Name"
+                        onChange={selectedOptions =>
+                          this.handleOfficesListChange(
+                            selectedOptions.split(',')
+                          )
+                        }
+                      />
+                    </div>
+                    <div className="col-md-6 col-sm-6">
                       <InputComponent
+                        label="Search user list"
                         id="searchtext"
                         fieldClassName="form-group"
                         type="text"
@@ -194,8 +213,7 @@ class UserList extends PureComponent {
                     <div className="col-md-2 col-sm-6">
                       <button
                         type="submit"
-                        style={hackBtnStyles}
-                        className="btn btn-primary btn-block btn-sm"
+                        className="btn btn-primary btn-block btn-sm searchButton"
                         disabled={this.isDisabledSearchBtn()}
                       >
                         Search
@@ -260,6 +278,8 @@ UserList.propTypes = {
   ),
   pageSizeOptions: PropTypes.arrayOf(PropTypes.number),
   error: PropTypes.any,
+  officesList: PropTypes.array,
+  selectedOfficesList: PropTypes.array,
 };
 
 UserList.defaultProps = {
@@ -267,5 +287,6 @@ UserList.defaultProps = {
   dashboardClickHandler: () => {},
   sort: [],
   pageSizeOptions: [5, 10, 25, 50, 100],
+  officesList: [],
 };
 export default UserList;

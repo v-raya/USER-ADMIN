@@ -61,6 +61,10 @@ class UserService {
     return ApiService.get(`/permissions_list/`).then(response => response.data);
   }
 
+  static fetchOfficesList() {
+    return ApiService.get(`/offices_list/`).then(response => response.data);
+  }
+
   static addUser(newUser) {
     return ApiService.post('/add_user', newUser)
       .then(response => response.data.location)

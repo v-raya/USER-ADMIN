@@ -4,6 +4,7 @@ import {
   setPage,
   setSearch,
   setNextSearch,
+  setOfficesList,
   setSort,
 } from './userListActions';
 import {
@@ -13,6 +14,7 @@ import {
   USER_LIST_SET_SEARCH,
   USER_LIST_SET_SORT,
   USER_LIST_SET_NEXT_SEARCH,
+  USER_LIST_SET_OFFICE_LIST,
 } from './actionTypes';
 
 describe('UserList Actions', () => {
@@ -60,6 +62,16 @@ describe('UserList Actions', () => {
       expect(setNextSearch(nextSearch)).toEqual({
         type: USER_LIST_SET_NEXT_SEARCH,
         payload: nextSearch,
+      });
+    });
+  });
+
+  describe('#setOfficesList', () => {
+    it('returns type and payload', () => {
+      const officesList = {};
+      expect(setOfficesList(officesList)).toEqual({
+        type: USER_LIST_SET_OFFICE_LIST,
+        payload: officesList,
       });
     });
   });

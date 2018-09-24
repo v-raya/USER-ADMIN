@@ -106,6 +106,34 @@ module Users
       end
     end
 
+    describe '#get_offices_list' do
+      let(:response) { instance_double('Faraday::Response') }
+
+      context 'with no offices' do
+        it 'returns an empty offices list' do
+          allow(response).to receive(:status).and_return(404)
+          allow(http_service)
+            .to receive(:get)
+            .with('/perry/idm/offices', token)
+            .and_return(response)
+          expect(user_repository.get_offices_list(token)).to eq([])
+        end
+      end
+
+      context 'with a list' do
+        it 'returns a offices list' do
+          allow(response).to receive(:status).and_return(200)
+          allow(response).to receive(:body).and_return(['el'])
+          allow(http_service)
+            .to receive(:get)
+            .with('/perry/idm/offices', token)
+            .and_return(response)
+          expect(user_repository.get_offices_list(token))
+            .to eq ['el']
+        end
+      end
+    end
+
     describe '#update_user' do
       let(:response) { instance_double('Faraday::Response') }
       params = {

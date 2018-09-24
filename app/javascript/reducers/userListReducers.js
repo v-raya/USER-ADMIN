@@ -3,6 +3,7 @@ import {
   FETCH_USERS_API_CALL_REQUEST,
   FETCH_USERS_API_CALL_SUCCESS,
   USER_LIST_SET_NEXT_SEARCH,
+  USER_LIST_SET_OFFICE_LIST,
   USER_LIST_SET_PAGE_SIZE,
   USER_LIST_SET_PAGE,
   USER_LIST_SET_SEARCH,
@@ -19,6 +20,7 @@ const initialValue = {
   from: 0,
   size: 50,
   nextSearch: '',
+  selectedOfficesList: [],
   query: [
     {
       field: 'last_name',
@@ -73,6 +75,14 @@ function userListReducer(state = initialValue, { type, payload, error, meta }) {
       return {
         ...state,
         nextSearch,
+      };
+    }
+
+    case USER_LIST_SET_OFFICE_LIST: {
+      const selectedOfficesList = payload;
+      return {
+        ...state,
+        selectedOfficesList,
       };
     }
 

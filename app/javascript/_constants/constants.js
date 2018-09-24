@@ -10,6 +10,12 @@ export const STATUS = [
 export const permissionListToOptions = items =>
   items.map(({ name, description }) => ({ value: name, label: description }));
 
+export const officesListToOptions = items =>
+  items.map(({ office_name }) => ({
+    value: office_name,
+    label: office_name,
+  }));
+
 export const toFullName = ({ first_name, last_name }) =>
   `${last_name}, ${first_name}`;
 
