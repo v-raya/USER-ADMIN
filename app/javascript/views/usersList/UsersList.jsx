@@ -46,10 +46,12 @@ class UserList extends PureComponent {
   };
 
   handlePageChange = pageIndex => {
+    window.scrollTo(0, 0);
     this.props.actions.setPage(pageIndex);
   };
 
   handlePageSizeChange = (pageSize, pageIndex) => {
+    window.scrollTo(0, 0);
     this.props.actions.setPageSize(pageSize);
   };
 
