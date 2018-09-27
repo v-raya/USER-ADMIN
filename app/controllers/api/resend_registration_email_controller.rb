@@ -1,0 +1,11 @@
+# frozen_string_literal: true
+
+module Api
+  class ResendRegistrationEmailController < ActionController::API
+    def show
+      resend_registration_email =
+        Users::UserRepository.new.resend_registration_email(params[:id], session[:token])
+      render json: resend_registration_email
+    end
+  end
+end

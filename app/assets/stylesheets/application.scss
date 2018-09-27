@@ -41,3 +41,14 @@
 .alert {
   padding: 15px;
 }
+
+.resend-email-btn {
+  .btn.btn-primary {
+    background-color: #098e88;
+    margin: 0.5rem auto;
+
+    &.btn.btn-primary:hover {
+      background-color: #077873;
+    }
+  }
+}

@@ -117,3 +117,14 @@ describe('UserDetailEdit', () => {
     });
   });
 });
+
+describe('when Accout Status is FORCE_CHANGE_PASSWORD', () => {
+  const details = {
+    status: 'FORCE_CHANGE_PASSWORD',
+  };
+  it('should have a button as Resend Invite', () => {
+    let wrapper = shallow(<UserDetailEdit details={details} />);
+    expect(wrapper.find('Button').length).toEqual(1);
+    expect(wrapper.find('Button').props().btnName).toBe('Resend Invite');
+  });
+});

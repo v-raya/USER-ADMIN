@@ -11,12 +11,16 @@ describe('UserDetail', () => {
   let mockSaveUserDetailsActions;
   let mockFetchPermissionsActions;
   let mockClearDetailsActions;
+  let mockResendRegistrationEmailActions;
 
   beforeEach(() => {
     // Register mock dispatchActions
     mockFetchDetailsActions = jest.fn().mockReturnValue(Promise.resolve([]));
     mockSaveUserDetailsActions = jest.fn().mockReturnValue(Promise.resolve([]));
     mockClearDetailsActions = jest.fn().mockReturnValue(Promise.resolve([]));
+    mockResendRegistrationEmailActions = jest
+      .fn()
+      .mockReturnValue(Promise.resolve([]));
     mockFetchPermissionsActions = jest
       .fn()
       .mockReturnValue(Promise.resolve([]));
@@ -32,6 +36,7 @@ describe('UserDetail', () => {
             fetchPermissionsActions: mockFetchPermissionsActions,
             clearDetails: mockClearDetailsActions,
             saveUserDetailsActions: mockSaveUserDetailsActions,
+            resendRegistrationEmailActions: mockResendRegistrationEmailActions,
           }}
         />
       </MemoryRouter>
@@ -89,6 +94,24 @@ describe('UserDetail', () => {
       expect(wrapper.find('Alert').props().children).toBe(
         'Your changes have been made successfully'
       );
+    });
+  });
+
+  describe('#emailSent()', () => {
+    it('displays <Alert/>', () => {
+      wrapper.setState({ resendEmail: true });
+      wrapper.setProps({ resendEmailStatus: 'Success' });
+      expect(wrapper.find('Alert').length).toBe(1);
+      expect(wrapper.find('Alert').props().children).toBe(
+        'Registration email has been sent successfully'
+      );
+    });
+  });
+
+  describe('#onResendInvite', () => {
+    it('calls the service to resendRegistrationEmail', () => {
+      wrapper.instance().onResendInvite();
+      expect(mockFetchDetailsActions).toHaveBeenCalledWith('blank');
     });
   });
 

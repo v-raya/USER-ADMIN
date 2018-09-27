@@ -61,6 +61,12 @@ class UserService {
     return ApiService.get(`/permissions_list/`).then(response => response.data);
   }
 
+  static resendRegistrationEmail(id) {
+    return ApiService.get(`/resend_registration_email/${id}`).then(
+      response => response.data
+    );
+  }
+
   static fetchOfficesList() {
     return ApiService.get(`/offices_list/`).then(response => response.data);
   }

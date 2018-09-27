@@ -15,6 +15,7 @@ export default class UserDetail extends Component {
       alert: false,
       disableActionBtn: true,
       details: props.details,
+      resendEmail: true,
     };
   }
 
@@ -60,11 +61,16 @@ export default class UserDetail extends Component {
     });
   };
 
+  onResendInvite = () => {
+    this.props.actions.resendRegistrationEmailActions(this.state.details.id);
+    this.setState({ resendEmail: true });
+  };
+
   onSaveDetails = () => {
     const id = this.getUserId(this.currentPathname());
     const { details } = this.state;
     this.props.actions.saveUserDetailsActions(id, details);
-    this.setState({ isEdit: false, alert: true });
+    this.setState({ isEdit: false, alert: true, resendEmail: false });
   };
 
   onEditClick = () => {
@@ -72,7 +78,7 @@ export default class UserDetail extends Component {
   };
 
   onCancel = () => {
-    this.setState({ isEdit: false, alert: false });
+    this.setState({ isEdit: false, alert: false, resendEmail: false });
     this.props.actions.fetchDetailsActions(
       this.getUserId(this.currentPathname())
     );
@@ -87,6 +93,20 @@ export default class UserDetail extends Component {
           alertCross={false}
         >
           {'Your changes have been made successfully'}
+        </Alert>
+      );
+    }
+  };
+
+  emailSent = () => {
+    if (this.state.resendEmail && this.props.resendEmailStatus === 'Success') {
+      return (
+        <Alert
+          alertClassName="success"
+          faIcon="fa-check-circle"
+          alertCross={false}
+        >
+          {'Registration email has been sent successfully'}
         </Alert>
       );
     }
@@ -107,6 +127,7 @@ export default class UserDetail extends Component {
                 onRoleChange={this.onRoleChange}
                 disableActionBtn={this.state.disableActionBtn}
                 permissionsList={permissionsList}
+                onResendInvite={this.onResendInvite}
               />
             ) : (
               <UserDetailShow
@@ -146,6 +167,7 @@ export default class UserDetail extends Component {
             &nbsp;&gt;&nbsp;
             <Link to="/">User List</Link>
             {this.alert()}
+            {this.emailSent()}
             <ErrorMessage error={userDetailError} />
           </div>
           {this.renderCards(permissionsList)}
@@ -163,6 +185,7 @@ UserDetail.propTypes = {
   actions: PropTypes.object.isRequired,
   disableEditBtn: PropTypes.bool,
   userDetailError: PropTypes.object,
+  resendEmailStatus: PropTypes.string,
 };
 
 UserDetail.defaultProps = {

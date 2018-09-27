@@ -68,6 +68,20 @@ describe('UserService', () => {
     });
   });
 
+  describe('#resendRegistrationEmail', () => {
+    let getSpy;
+
+    beforeEach(() => {
+      getSpy = jest.spyOn(ApiService, 'get');
+    });
+
+    it('calls #resendRegistrationEmail ApiService', () => {
+      getSpy.mockReturnValue(Promise.resolve({}));
+      UserService.resendRegistrationEmail(id);
+      expect(getSpy).toHaveBeenCalledWith('/resend_registration_email/someid');
+    });
+  });
+
   describe('#saveUserDetails', () => {
     let patchSpy;
 

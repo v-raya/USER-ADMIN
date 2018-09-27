@@ -7,3 +7,4 @@ export { validateNewUserSaga } from './validateNewUserSaga';
 export { addUserSaga } from './addUserSaga';
 export { saveUserDetailsSaga } from './saveUserDetailsSaga';
 export { watchUserSearchParamUpdates } from './searchUsersSaga';
+export { resendRegistrationEmailSaga } from './resendRegistrationEmailSaga';

@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Cards from '../../common/Card';
 import ShowField from '../../common/ShowField';
+import { Button } from 'react-wood-duck';
 import DropDownField from 'react-wood-duck/dist/DropDownField';
 import MultiSelect from '../../common/MultiSelect';
 import { STATUS, permissionListToOptions } from '../../_constants/constants';
@@ -26,6 +27,7 @@ const UserDetailEdit = ({
   onStatusChange,
   onRoleChange,
   permissionsList,
+  onResendInvite,
 }) => (
   <div className="row">
     <div className="col-md-12">
@@ -77,10 +79,17 @@ const UserDetailEdit = ({
             <div className="col-md-5">
               <ShowField label="User Status">
                 {userStatusTranslator(details.status)}
-                <div>
-                  <div className="value-text-color">
-                    {userStatusDescriptionTranslator(details.status)}
-                  </div>
+                <div className="value-text-color">
+                  {userStatusDescriptionTranslator(details.status)}
+                  {details.status === 'FORCE_CHANGE_PASSWORD' && (
+                    <div className="resend-email-btn">
+                      <Button
+                        btnClassName="primary"
+                        btnName="Resend Invite"
+                        onClick={onResendInvite}
+                      />
+                    </div>
+                  )}
                 </div>
               </ShowField>
             </div>
@@ -120,6 +129,7 @@ UserDetailEdit.propTypes = {
   onStatusChange: PropTypes.func,
   onRoleChange: PropTypes.func,
   permissionsList: PropTypes.array,
+  onResendInvite: PropTypes.func,
 };
 
 UserDetailEdit.defaultProps = {

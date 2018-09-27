@@ -48,6 +48,11 @@ module Users
       response.headers
     end
 
+    def resend_registration_email(id, token)
+      response = @http_service.get("/perry/idm/users/resend/#{id}", token)
+      response.status
+    end
+
     def self.search(query, auth_header)
       http_search_service = Infrastructure::HttpService.new(search_base_url)
       response = http_search_service.post('/dora/users/user/_search', query, auth_header)

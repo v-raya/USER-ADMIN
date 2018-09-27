@@ -158,6 +158,22 @@ module Users
       end
     end
 
+    describe '#resend_registration_email' do
+      let(:response) { instance_double('Faraday::Response') }
+
+      context 'with user' do
+        it 'returns status as 200' do
+          allow(response).to receive(:status).and_return(200)
+          allow(http_service)
+            .to receive(:get)
+            .with('/perry/idm/users/resend/22', token)
+            .and_return(response)
+          expect(user_repository.resend_registration_email('22', token))
+            .to eq 200
+        end
+      end
+    end
+
     describe '#verify_user' do
       let(:response) { instance_double('Faraday::Response') }
       params = {
