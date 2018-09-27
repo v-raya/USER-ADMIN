@@ -5,7 +5,7 @@ require 'json'
 module Api
   class UserListController < ActionController::API
     def index_legacy
-      params = Users::User.new(allowed_params_to_search).to_h.compact
+      params = Users::UserDetails.new(allowed_params_to_search).to_h.compact
       users = Users::UserRepository.new.get_users(params, session[:token])
       render json: users
     end

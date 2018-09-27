@@ -11,10 +11,12 @@ describe('selectors', () => {
         fetchDetails: {
           details: {
             records: {
-              county_name: 'first',
-              enabled: true,
-              id: '12',
-              name: 'third',
+              user: {
+                county_name: 'first',
+                enabled: true,
+                id: '12',
+                name: 'third',
+              },
             },
           },
         },
@@ -32,10 +34,12 @@ describe('selectors', () => {
         fetchDetails: {
           details: {
             records: {
-              county_name: 'first',
-              enabled: false,
-              id: '12',
-              name: 'third',
+              user: {
+                county_name: 'first',
+                enabled: false,
+                id: '12',
+                name: 'third',
+              },
             },
           },
         },
@@ -53,10 +57,12 @@ describe('selectors', () => {
         fetchDetails: {
           details: {
             records: {
-              county_name: 'first',
-              enabled: 'Not a boolean Value',
-              id: '12',
-              name: 'third',
+              user: {
+                county_name: 'first',
+                enabled: 'Not a boolean Value',
+                id: '12',
+                name: 'third',
+              },
             },
           },
         },

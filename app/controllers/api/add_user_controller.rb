@@ -3,7 +3,7 @@
 module Api
   class AddUserController < ActionController::API
     def index
-      user_params = Users::User.new(allowed_params_to_add).to_h.compact
+      user_params = Users::UserDetails.new(allowed_params_to_add).to_h.compact
       add_user = Users::UserRepository.new.add_user(user_params, session[:token])
       render json: add_user
     rescue ApiError => e

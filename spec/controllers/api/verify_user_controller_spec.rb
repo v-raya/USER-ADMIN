@@ -6,7 +6,7 @@ module Api
   describe VerifyUserController do
     describe '#index' do
       let(:user_repository) { instance_double('User::UserRepository') }
-      let(:user) { Users::User.new(username: 'el') }
+      let(:user) { Users::UserDetails.new(username: 'el') }
       let(:token) { 'my_token' }
       let(:error_response) { 'My default error response' }
       it 'has a route' do

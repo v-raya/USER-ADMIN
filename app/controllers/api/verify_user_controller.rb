@@ -3,7 +3,7 @@
 module Api
   class VerifyUserController < ActionController::API
     def index
-      user_params = Users::User.new(allowed_params_to_verify).to_h.compact
+      user_params = Users::UserDetails.new(allowed_params_to_verify).to_h.compact
       verify_user = Users::UserRepository.new.verify_user(user_params, session[:token])
       render json: verify_user
     rescue ApiError => e

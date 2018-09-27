@@ -8,8 +8,9 @@ module Types
 end
 
 module Users
-  class User < Dry::Struct
+  class UserDetails < Dry::Struct
     constructor_type :schema
+    attribute :user, Types::Object.optional
     attribute :username, Types::String.optional
     attribute :id, Types::String.optional
     attribute :first_name, Types::String.optional
@@ -32,5 +33,12 @@ module Users
     attribute :roles, Types::Array.optional
     attribute :auth_header, Types::String.optional
     attribute :phone_extension_number, Types::String.optional
+  end
+
+  class User < Dry::Struct
+    constructor_type :schema
+    attribute :editable, Types::String.optional
+    attribute :roles, Types::String.optional
+    attribute :user, UserDetails
   end
 end

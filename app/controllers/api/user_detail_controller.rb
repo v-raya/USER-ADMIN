@@ -8,7 +8,7 @@ module Api
     end
 
     def save_user
-      user_params = Users::User.new(allowed_params_for_update).to_h.compact
+      user_params = Users::UserDetails.new(allowed_params_for_update).to_h.compact
       updated_user = Users::UserRepository.new.update_user(params[:id],
                                                            user_params, session[:token])
       render json: updated_user

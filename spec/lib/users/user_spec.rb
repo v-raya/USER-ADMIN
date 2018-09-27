@@ -7,6 +7,14 @@ module Users
   describe User do
     describe 'attributes' do
       subject { User }
+      it { is_expected.to have_attribute(:editable, Types::String.optional) }
+      it { is_expected.to have_attribute(:roles, Types::String.optional) }
+    end
+  end
+
+  describe UserDetails do
+    describe 'attributes' do
+      subject { UserDetails }
       it { is_expected.to have_attribute(:username, Types::String.optional) }
       it { is_expected.to have_attribute(:id, Types::String.optional) }
       it { is_expected.to have_attribute(:first_name, Types::String.optional) }

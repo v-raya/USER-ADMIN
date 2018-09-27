@@ -2,7 +2,8 @@ import safeGet from 'lodash.get';
 
 export const selectDetailRecords = state => {
   const usersObject = state.fetchDetails ? state.fetchDetails.details : null;
-  const userDetails = usersObject ? usersObject.records : {};
+  const userData = usersObject ? usersObject.records : null;
+  const userDetails = userData ? userData.user : {};
   userDetails.enabled === true || userDetails.enabled === 'Active'
     ? (userDetails.enabled = 'Active')
     : (userDetails.enabled = 'Inactive');
