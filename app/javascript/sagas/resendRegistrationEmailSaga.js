@@ -15,7 +15,6 @@ export function* resendEmail(action) {
       type: actionTypes.RESEND_REGISTRATION_EMAIL_API_CALL_SUCCESS,
       resendEmailStatus,
     });
-    console.log('Saga', resendEmailStatus);
   } catch (error) {
     // dispatch a failure action to the store with the error
     yield put({
