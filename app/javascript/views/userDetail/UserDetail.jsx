@@ -15,7 +15,7 @@ export default class UserDetail extends Component {
       alert: false,
       disableActionBtn: true,
       details: props.details,
-      resendEmail: true,
+      resendEmailAlert: false,
     };
   }
 
@@ -63,14 +63,14 @@ export default class UserDetail extends Component {
 
   onResendInvite = () => {
     this.props.actions.resendRegistrationEmailActions(this.state.details.id);
-    this.setState({ resendEmail: true });
+    this.setState({ resendEmailAlert: true });
   };
 
   onSaveDetails = () => {
     const id = this.getUserId(this.currentPathname());
     const { details } = this.state;
     this.props.actions.saveUserDetailsActions(id, details);
-    this.setState({ isEdit: false, alert: true, resendEmail: false });
+    this.setState({ isEdit: false, alert: true, resendEmailAlert: false });
   };
 
   onEditClick = () => {
@@ -78,7 +78,7 @@ export default class UserDetail extends Component {
   };
 
   onCancel = () => {
-    this.setState({ isEdit: false, alert: false, resendEmail: false });
+    this.setState({ isEdit: false, alert: false, resendEmailAlert: false });
     this.props.actions.fetchDetailsActions(
       this.getUserId(this.currentPathname())
     );
@@ -99,7 +99,10 @@ export default class UserDetail extends Component {
   };
 
   emailSent = () => {
-    if (this.state.resendEmail && this.props.resendEmailStatus === 'Success') {
+    if (
+      this.state.resendEmailAlert &&
+      this.props.resendEmailStatus === 'Success'
+    ) {
       return (
         <Alert
           alertClassName="success"
