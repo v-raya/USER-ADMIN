@@ -78,7 +78,9 @@ module Api
 
         it 'returns a userlist / search limited by last_name' do
           allow(Users::UserRepository).to receive(:search).with(
-            { query: { match_phrase_prefix: { last_name: 'Smith' } },
+            { query:
+              { "bool":
+                { "must": [{ match_phrase_prefix: { last_name: 'Smith' } }] } },
               from: 51, size: 25, sort: ascending_last_first_name_sort }, 'token'
           ).and_return(api_response)
 
@@ -93,6 +95,27 @@ module Api
           get :index, params: { q: match_empty_last_name_with_paging.to_json }
           partial_user_response[:meta] = { req: match_empty_last_name_with_paging, total: 1 }
           expect(JSON.parse(response.body, symbolize_names: true)).to eq partial_user_response
+        end
+
+        describe 'when offices are specified' do
+          let(:match_last_name_and_offices_with_paging) do
+            { query: [{ field: 'last_name', value: 'Smith' },
+                      { field: 'office_ids', value: [1, 2, 3] }],
+              from: 51, size: 25,
+              sort: [] }
+          end
+          it 'returns a userlist / search limited by last_name AND the specified offices' do
+            allow(Users::UserRepository).to receive(:search).with(
+              { query: { "bool":
+                         { "must": [{ match_phrase_prefix: { last_name: 'Smith' } },
+                                    { terms: { "office_id.keyword": [1, 2, 3] } }] } },
+                from: 51, size: 25, sort: ascending_last_first_name_sort }, 'token'
+            ).and_return(api_response)
+            partial_user_response[:meta] = { req: match_last_name_and_offices_with_paging,
+                                             total: 1 }
+            get :index, params: { q: match_last_name_and_offices_with_paging.to_json }
+            expect(JSON.parse(response.body, symbolize_names: true)).to eq partial_user_response
+          end
         end
       end
     end

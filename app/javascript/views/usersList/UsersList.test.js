@@ -106,6 +106,10 @@ describe('UsersList', () => {
           field: 'last_name',
           value: 'last_name_value',
         },
+        {
+          field: 'office_ids',
+          value: ['north', 'south', 'east', 'west'],
+        },
       ];
       let mockSetSearchActions;
       mockSetSearchActions = jest.fn().mockReturnValue(Promise.resolve([]));
@@ -121,6 +125,7 @@ describe('UsersList', () => {
           loggedInUserAccount={{ county_name: 'SomeCountyName' }}
           query={query}
           nextSearch="last_name_value"
+          selectedOfficesList={['north', 'south', 'east', 'west']}
         />
       );
       const event = { preventDefault: () => {} };
@@ -143,6 +148,40 @@ describe('UsersList', () => {
       expect(mockSetSortActions).toHaveBeenCalledWith([
         { desc: 'someValue', field: 'someId' },
       ]);
+    });
+  });
+
+  describe('#initialLoadQuery', () => {
+    it('limits the default query to the user admin office for office-admins', () => {
+      expect(
+        wrapper.instance().initialLoadQuery({
+          admin_office_ids: ['a', 'b'],
+          roles: ['Office-admin'],
+        })
+      ).toEqual([
+        {
+          field: 'office_ids',
+          value: ['a', 'b'],
+        },
+      ]);
+    });
+
+    it('Does not limit the default query for county-admins', () => {
+      expect(
+        wrapper.instance().initialLoadQuery({
+          admin_office_ids: ['a', 'b'],
+          roles: ['County-admin', 'Office-admin'],
+        })
+      ).toEqual([]);
+    });
+
+    it('Does not limit the default query for state-admins', () => {
+      expect(
+        wrapper.instance().initialLoadQuery({
+          admin_office_ids: ['a', 'b'],
+          roles: ['State-admin', 'County-admin', 'Office-admin'],
+        })
+      ).toEqual([]);
     });
   });
 
@@ -214,36 +253,108 @@ describe('UsersList', () => {
 
   describe('#UNSAFE_componentDidMount', () => {
     let mockFetchAccountActions;
-    let mockSearchUsers;
+    let mockFetchOfficeListActions;
 
     beforeEach(() => {
       mockFetchAccountActions = jest.fn();
-      mockSearchUsers = jest.fn();
+      mockFetchOfficeListActions = jest.fn();
       mount(
         <UsersList
           dashboardUrl={'dburl'}
           actions={{
             fetchAccountActions: mockFetchAccountActions,
-            fetchOfficesActions: () => {},
-            searchUsers: mockSearchUsers,
+            fetchOfficesActions: mockFetchOfficeListActions,
           }}
           loggedInUserAccount={{ county_name: 'SomeCountyName' }}
         />
       );
     });
 
-    it('fetches users', () => {
-      // TODO: make a stronger expectation of args based on API query DSL (when it emerges)
-      expect(mockSearchUsers).toHaveBeenCalledWith({
-        from: undefined,
-        query: undefined,
-        size: undefined,
-        sort: [],
+    it('fetches the account', () => {
+      expect(mockFetchAccountActions).toHaveBeenCalledWith();
+    });
+
+    it('fetches the office list', () => {
+      expect(mockFetchOfficeListActions).toHaveBeenCalledWith();
+    });
+  });
+
+  describe('#componentDidUpdate', () => {
+    let mockSearchUsers;
+
+    beforeEach(() => {
+      mockSearchUsers = jest.fn();
+      wrapper = mount(
+        <UsersList
+          dashboardUrl={'dburl'}
+          actions={{
+            fetchAccountActions: () => {},
+            fetchOfficesActions: () => {},
+            searchUsers: mockSearchUsers,
+          }}
+          loggedInUserAccount={{
+            county_name: 'SomeCountyName',
+            admin_office_ids: ['42'],
+            roles: ['Office-admin', 'other-role'],
+          }}
+          from={0}
+          sort={[]}
+          size={50}
+        />
+      );
+      wrapper.instance().componentDidUpdate({
+        loggedInUserAccount: {},
       });
     });
 
-    it('fetches the account', () => {
-      expect(mockFetchAccountActions).toHaveBeenCalledWith();
+    it('fetches users', () => {
+      // TODO: make a stronger expectation of args based on API query DSL (when it emerges)
+      expect(mockSearchUsers).toHaveBeenCalledWith({
+        from: 0,
+        query: [{ field: 'office_ids', value: ['42'] }],
+        size: 50,
+        sort: [],
+      });
+    });
+  });
+
+  describe('#isOfficeAdmin', () => {
+    it('accepts Office-admin role only if not state or county admin', () => {
+      const component = shallow(
+        <UsersList
+          dashboardUrl={'dburl'}
+          actions={{
+            searchUsers: () => {},
+            fetchAccountActions: () => {},
+            fetchOfficesActions: () => {},
+          }}
+          loggedInUserAccount={{
+            county_name: 'SomeCountyName',
+            roles: ['Office-admin', 'County-admin'],
+          }}
+        />
+      );
+      expect(component.instance().isOfficeAdmin()).toBe(false);
+    });
+  });
+
+  describe('#isCountyAdmin', () => {
+    it('accepts Office-admin role only if not state', () => {
+      const component = shallow(
+        <UsersList
+          dashboardUrl={'dburl'}
+          actions={{
+            searchUsers: () => {},
+            fetchAccountActions: () => {},
+            fetchOfficesActions: () => {},
+          }}
+          loggedInUserAccount={{
+            county_name: 'SomeCountyName',
+            roles: ['Office-admin', 'County-admin', 'State-admin'],
+          }}
+        />
+      );
+      expect(component.instance().isOfficeAdmin()).toBe(false);
     });
   });
 

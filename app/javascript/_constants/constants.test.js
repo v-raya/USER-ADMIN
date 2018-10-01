@@ -27,12 +27,13 @@ describe('helpers', () => {
       it('renders a offices list', () => {
         const items = [
           {
+            office_id: 'office_id_value',
             office_name: 'offices1',
           },
         ];
         expect(officesListToOptions(items)).toEqual([
           {
-            value: 'offices1',
+            value: 'office_id_value',
             label: 'offices1',
           },
         ]);

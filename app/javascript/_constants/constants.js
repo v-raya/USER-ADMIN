@@ -11,8 +11,8 @@ export const permissionListToOptions = items =>
   items.map(({ name, description }) => ({ value: name, label: description }));
 
 export const officesListToOptions = items =>
-  items.map(({ office_name }) => ({
-    value: office_name,
+  items.map(({ office_id, office_name }) => ({
+    value: office_id,
     label: office_name,
   }));
 
