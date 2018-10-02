@@ -3,8 +3,8 @@
 import { checkDate } from '../_utils/formatters';
 
 export const STATUS = [
-  { value: 'Active', label: 'Active' },
-  { value: 'Inactive', label: 'Inactive' },
+  { value: true, label: 'Active' },
+  { value: false, label: 'Inactive' },
 ];
 
 export const permissionListToOptions = items =>

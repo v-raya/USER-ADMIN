@@ -2,13 +2,18 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import UserDetailShow from './UserDetailShow';
 
-describe('UserDetailEdit', () => {
+describe('UserDetailShow', () => {
   const details = {
     id: 'id',
     first_name: 'Firstname0',
     last_name: 'Lastname0',
     middle_name: 'Middlename0',
     county_name: 'MyCounty',
+  };
+
+  const userDetailObject = {
+    editable: true,
+    user: {},
   };
 
   let wrapper;
@@ -18,11 +23,12 @@ describe('UserDetailEdit', () => {
 
   describe('when label and className props are passed', () => {
     it('renders the label inside the grid wrapper', () => {
-      wrapper = shallow(<UserDetailShow details={details} />);
+      wrapper = shallow(
+        <UserDetailShow details={details} userDetailObject={userDetailObject} />
+      );
       expect(wrapper.find('Cards').props().cardHeaderText).toBe(
         `County: ${details.county_name}`
       );
-      expect(wrapper.find('Cards').props().disabled).toEqual(false);
       expect(wrapper.find('ShowField').length).toBe(10);
       expect(
         wrapper
@@ -102,7 +108,7 @@ describe('UserDetailEdit', () => {
       ).toEqual(expectedValue);
     });
 
-    it('checks disable edit button props', () => {
+    it('sets card disabled prop to true based on disableEditBtn', () => {
       wrapper = shallow(
         <UserDetailShow details={details} disableEditBtn={true} />
       );

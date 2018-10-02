@@ -18,3 +18,11 @@ export function userStatusTranslator(status) {
   };
   return userText[status] || '';
 }
+
+export function accountStatus(enabled) {
+  const status = {
+    true: 'Active',
+    false: 'Inactive',
+  };
+  return status[enabled];
+}

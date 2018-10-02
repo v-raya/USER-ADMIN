@@ -15,6 +15,7 @@ export default class UserDetail extends Component {
       alert: false,
       disableActionBtn: true,
       details: props.details,
+      disableEditBtn: props.disableEditBtn,
       resendEmail: true,
     };
   }
@@ -183,9 +184,9 @@ UserDetail.propTypes = {
   dashboardClickHandler: PropTypes.func,
   permissionsList: PropTypes.array,
   actions: PropTypes.object.isRequired,
-  disableEditBtn: PropTypes.bool,
   userDetailError: PropTypes.object,
   resendEmailStatus: PropTypes.string,
+  disableEditBtn: PropTypes.bool,
 };
 
 UserDetail.defaultProps = {
