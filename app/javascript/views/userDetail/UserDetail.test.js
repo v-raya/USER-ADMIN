@@ -28,6 +28,7 @@ describe('UserDetail', () => {
     container = shallow(
       <MemoryRouter>
         <UserDetail
+          userEditOption={{ editable: true }}
           details={{}}
           dashboardUrl="dburl"
           userListUrl="myUserList"

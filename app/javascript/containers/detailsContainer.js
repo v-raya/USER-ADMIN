@@ -2,8 +2,8 @@ import { connect } from 'react-redux';
 import UserDetail from '../views/userDetail/UserDetail';
 import {
   selectDetailRecords,
+  checkEditDisable,
   permissionsList,
-  checkEditDisabledBtn,
 } from '../selectors/detailSelector';
 import {
   fetchDetailsActions,
@@ -17,12 +17,12 @@ import { bindActionCreators } from 'redux';
 
 function mapStateToProps(state) {
   return {
+    disableEditBtn: checkEditDisable(state),
     details: selectDetailRecords(state),
     permissionsList: permissionsList(state),
     userListUrl: process.env.RAILS_RELATIVE_URL_ROOT
       ? process.env.RAILS_RELATIVE_URL_ROOT
       : '/',
-    disableEditBtn: checkEditDisabledBtn(state),
     userDetailError: state.saveUserDetails.error,
     resendEmailStatus: resendEmail(state),
   };
