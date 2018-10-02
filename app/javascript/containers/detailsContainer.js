@@ -11,7 +11,7 @@ import {
   saveUserDetailsActions,
 } from '../actions/detailActions';
 import {
-  resendEmail,
+  selectResendEmailStatus,
   disableResendEmailButton,
 } from '../selectors/resendEmailSelector';
 import { fetchPermissionsActions } from '../actions/permissionsActions';
@@ -27,7 +27,7 @@ function mapStateToProps(state) {
       : '/',
     disableEditBtn: checkEditDisabledBtn(state),
     userDetailError: state.saveUserDetails.error,
-    resendEmailStatus: resendEmail(state),
+    resendEmailStatus: selectResendEmailStatus(state),
     disableResendEmailButton: disableResendEmailButton(state),
   };
 }

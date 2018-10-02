@@ -1,26 +1,26 @@
 import safeGet from 'lodash.get';
 
-export const resendEmail = state => {
-  const resend = state.resendRegistrationEmail
+export const selectResendEmailStatus = state => {
+  const resendEmail = state.resendRegistrationEmail
     ? state.resendRegistrationEmail.resendEmailStatus
     : null;
-  const statusMessage = resend === 200 ? 'Success' : 'Failure';
+  const statusMessage = resendEmail === 200 ? 'Success' : 'Failure';
   return statusMessage;
 };
 
-export const resendId = state => {
-  const resendId = state.resendRegistrationEmail
-    ? state.resendRegistrationEmail.resendEmailId
+export const selectResendEmailUserId = state => {
+  const userId = state.resendRegistrationEmail
+    ? state.resendRegistrationEmail.resendEmailUserId
     : null;
-  return resendId;
+  return userId;
 };
 
 export const disableResendEmailButton = state => {
-  const userDetailId = safeGet(state, 'fetchDetails.details.records.user.id');
-  const resendEmailId = resendId(state);
+  const userDetailsId = safeGet(state, 'fetchDetails.details.records.user.id');
+  const resendEmailUserId = selectResendEmailUserId(state);
   let index = -1;
-  if (resendEmailId && resendEmailId.length > 0 && userDetailId) {
-    index = resendEmailId.findIndex(id => id === userDetailId);
+  if (resendEmailUserId && resendEmailUserId.length > 0 && userDetailsId) {
+    index = resendEmailUserId.findIndex(id => id === userDetailsId);
   }
   if (index > -1) return true;
   return false;

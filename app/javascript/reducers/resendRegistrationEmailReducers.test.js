@@ -6,27 +6,52 @@ describe('reducer', () => {
     const requestAction = {
       type: actionTypes.RESEND_REGISTRATION_EMAIL_API_CALL_REQUEST,
     };
-    const state = { resendEmailStatus: null, fetching: false };
+    const state = {
+      resendEmailStatus: null,
+      resendEmailUserId: [],
+      fetching: false,
+    };
     expect(resendRegistrationEmail(state, requestAction)).toEqual({
       fetching: true,
+      resendEmailUserId: [],
       resendEmailStatus: null,
       error: null,
     });
   });
 
-  it('handles RESEND_REGISTRATION_EMAIL_API_CALL_SUCCESS', () => {
-    const responseAction = {
-      type: actionTypes.RESEND_REGISTRATION_EMAIL_API_CALL_SUCCESS,
-      resendEmailStatus: { status: '200' },
-    };
-    const state = { resendEmailStatus: null, fetching: true, error: null };
-
-    expect(resendRegistrationEmail(state, responseAction)).toEqual({
-      fetching: false,
-      resendEmailStatus: {
-        status: '200',
-      },
+  describe('handles RESEND_REGISTRATION_EMAIL_API_CALL_SUCCESS', () => {
+    const state = {
+      resendEmailStatus: null,
+      fetching: true,
       error: null,
+      resendEmailUserId: [],
+    };
+    it('returns resendEmailUserId', () => {
+      const responseAction = {
+        type: actionTypes.RESEND_REGISTRATION_EMAIL_API_CALL_SUCCESS,
+        resendEmailStatus: 200,
+        id: 'SOME_ID',
+      };
+      expect(resendRegistrationEmail(state, responseAction)).toEqual({
+        fetching: false,
+        resendEmailStatus: 200,
+        resendEmailUserId: ['SOME_ID'],
+        error: null,
+      });
+    });
+
+    it('returns resendEmailUserId as array[id]', () => {
+      const responseAction1 = {
+        type: actionTypes.RESEND_REGISTRATION_EMAIL_API_CALL_SUCCESS,
+        resendEmailStatus: 200,
+        id: ['SOME_ID1', 'SOME_ID2'],
+      };
+      expect(resendRegistrationEmail(state, responseAction1)).toEqual({
+        fetching: false,
+        resendEmailStatus: 200,
+        resendEmailUserId: ['SOME_ID1', 'SOME_ID2'],
+        error: null,
+      });
     });
   });
 
@@ -50,7 +75,7 @@ describe('reducer', () => {
       resendEmailStatus: { hello: 'world' },
     };
     const state = {
-      resendEmailStatus: ['item1'],
+      resendEmailStatus: ['abcd', 'qwerty'],
       fetching: true,
       error: null,
     };
@@ -62,7 +87,11 @@ describe('reducer', () => {
       type: null,
       foreignObject: {},
     };
-    const state = { resendEmailStatus: null, fetching: false };
+    const state = {
+      resendEmailStatus: null,
+      fetching: false,
+      resendEmailUserId: [],
+    };
     expect(resendRegistrationEmail(undefined, randomAction)).toEqual(state);
   });
 
