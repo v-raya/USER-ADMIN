@@ -19,6 +19,7 @@ import {
 /* eslint camelcase: 0 */
 
 const UserDetailEdit = ({
+  disableResendEmailButton,
   details,
   selectedPermissions,
   onCancel,
@@ -87,6 +88,7 @@ const UserDetailEdit = ({
                         btnClassName="primary"
                         btnName="Resend Invite"
                         onClick={onResendInvite}
+                        disabled={disableResendEmailButton}
                       />
                     </div>
                   )}
@@ -130,6 +132,7 @@ UserDetailEdit.propTypes = {
   onRoleChange: PropTypes.func,
   permissionsList: PropTypes.array,
   onResendInvite: PropTypes.func,
+  disableResendEmailButton: PropTypes.bool,
 };
 
 UserDetailEdit.defaultProps = {

@@ -131,6 +131,7 @@ export default class UserDetail extends Component {
                 disableActionBtn={this.state.disableActionBtn}
                 permissionsList={permissionsList}
                 onResendInvite={this.onResendInvite}
+                disableResendEmailButton={this.props.disableResendEmailButton}
               />
             ) : (
               <UserDetailShow
@@ -189,6 +190,7 @@ UserDetail.propTypes = {
   disableEditBtn: PropTypes.bool,
   userDetailError: PropTypes.object,
   resendEmailStatus: PropTypes.string,
+  disableResendEmailButton: PropTypes.bool,
 };
 
 UserDetail.defaultProps = {
