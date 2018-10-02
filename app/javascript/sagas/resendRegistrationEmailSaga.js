@@ -13,7 +13,8 @@ export function* resendEmail(action) {
     // dispatch a success action to the store with the new users
     yield put({
       type: actionTypes.RESEND_REGISTRATION_EMAIL_API_CALL_SUCCESS,
-      resendEmailResponse: { resendEmailStatus, id },
+      resendEmailStatus,
+      id,
     });
   } catch (error) {
     // dispatch a failure action to the store with the error
