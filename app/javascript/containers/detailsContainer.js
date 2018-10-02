@@ -10,7 +10,10 @@ import {
   clearDetails,
   saveUserDetailsActions,
 } from '../actions/detailActions';
-import { resendEmail } from '../selectors/resendEmailSelector';
+import {
+  resendEmail,
+  disableResendEmailButton,
+} from '../selectors/resendEmailSelector';
 import { fetchPermissionsActions } from '../actions/permissionsActions';
 import { resendRegistrationEmailActions } from '../actions/resendRegistrationEmailActions';
 import { bindActionCreators } from 'redux';
@@ -25,6 +28,7 @@ function mapStateToProps(state) {
     disableEditBtn: checkEditDisabledBtn(state),
     userDetailError: state.saveUserDetails.error,
     resendEmailStatus: resendEmail(state),
+    disableResendEmailButton: disableResendEmailButton(state),
   };
 }
 
