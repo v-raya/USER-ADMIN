@@ -11,11 +11,10 @@ module Api
     end
 
     def index
-      return index_legacy unless Elastic::QueryBuilder.elastic_search?
       q = allowed_params_to_search[:q]
       query = q ? JSON.parse(q, symbolize_names: true) : {}
 
-      es_query_json = QueryPreprocessor.build_query_hash(query)
+      es_query_json = Elastic::UserQueryBuilder.get_search(query)
       logger.debug "should be posted as #{JSON.generate(es_query_json)}"
 
       es_response = Users::UserRepository.search(es_query_json, session[:token])

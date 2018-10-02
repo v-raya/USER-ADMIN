@@ -11,6 +11,7 @@ import {
 import {
   userStatusDescriptionTranslator,
   userStatusTranslator,
+  accountStatus,
 } from '../../_utils/codeToTextTranslator';
 
 /* eslint camelcase: 0 */
@@ -75,7 +76,9 @@ const UserDetailShow = ({
               </ShowField>
             </div>
             <div className="col-md-3">
-              <ShowField label="Account Status">{details.enabled}</ShowField>
+              <ShowField label="Account Status">
+                {accountStatus(details.enabled)}
+              </ShowField>
             </div>
             <div className="col-md-4">
               <ShowField label="Assigned Permissions">

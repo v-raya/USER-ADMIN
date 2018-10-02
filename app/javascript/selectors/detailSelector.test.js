@@ -1,10 +1,58 @@
 import {
   selectDetailRecords,
   permissionsList,
-  checkEditDisabledBtn,
+  checkEditDisable,
+  selectUserDetailObject,
 } from './detailSelector';
 
 describe('selectors', () => {
+  describe('#selectUserDetailObject', () => {
+    it('selects the user detail object when records exists', () => {
+      const state = {
+        fetchDetails: {
+          details: {
+            records: {
+              editable: true,
+              roles: ['SomeRole'],
+              user: {
+                county_name: 'first',
+                enabled: true,
+                id: '12',
+                name: 'third',
+              },
+            },
+          },
+        },
+      };
+      expect(selectUserDetailObject(state)).toEqual({
+        editable: true,
+        roles: ['SomeRole'],
+        user: { county_name: 'first', enabled: true, id: '12', name: 'third' },
+      });
+    });
+
+    it('selects the user detail object when fetchDetails does not exist', () => {
+      const state = {};
+      expect(selectUserDetailObject(state)).toEqual(null);
+    });
+
+    it('selects the user detail object when fetchDetails exist', () => {
+      const state = {
+        fetchDetails: {},
+      };
+      expect(selectUserDetailObject(state)).toEqual(null);
+    });
+
+    it('selects the user detail object when details are empty', () => {
+      const state = {
+        fetchDetails: {
+          details: {},
+        },
+      };
+      expect(selectUserDetailObject(state)).toEqual(undefined);
+    });
+  });
+
   describe('#selectDetailRecords', () => {
     it('selects the user detail records when enabled is true', () => {
       const state = {
@@ -24,7 +72,7 @@ describe('selectors', () => {
       expect(selectDetailRecords(state)).toEqual({
         county_name: 'first',
         id: '12',
-        enabled: 'Active',
+        enabled: true,
         name: 'third',
       });
     });
@@ -47,7 +95,7 @@ describe('selectors', () => {
       expect(selectDetailRecords(state)).toEqual({
         county_name: 'first',
         id: '12',
-        enabled: 'Inactive',
+        enabled: false,
         name: 'third',
       });
     });
@@ -69,17 +117,15 @@ describe('selectors', () => {
       };
       expect(selectDetailRecords(state)).toEqual({
         county_name: 'first',
-        enabled: 'Inactive',
+        enabled: 'Not a boolean Value',
         id: '12',
         name: 'third',
       });
     });
 
-    it('selects no user details', () => {
-      const state = {
-        other_stuff: { bad: 'ignore' },
-      };
-      expect(selectDetailRecords(state)).toEqual({ enabled: 'Inactive' });
+    it('returns empty when fetchDetails does not exit', () => {
+      const state = {};
+      expect(selectDetailRecords(state)).toEqual({});
     });
   });
 
@@ -111,116 +157,65 @@ describe('selectors', () => {
     });
   });
 
-  describe('#checkEditDisableBtn', () => {
-    it('return true if userName and record id matches', () => {
+  describe('#checkEditDisable', () => {
+    it('return true when editable is false', () => {
       const state = {
         fetchDetails: {
           details: {
             XHRStatus: 'ready',
             records: {
-              id: '9a155ccc-309f-467a-b562-d4d55d76ac80',
+              editable: false,
+              user: {},
             },
           },
-          fetching: false,
-          error: null,
-        },
-        fetchAccount: {
-          account: {
-            XHRStatus: 'ready',
-            account: {
-              userName: '9a155ccc-309f-467a-b562-d4d55d76ac80',
-            },
-          },
-          fetching: false,
-          error: null,
         },
       };
-      expect(checkEditDisabledBtn(state)).toEqual(true);
+      expect(checkEditDisable(state)).toEqual(true);
     });
 
-    describe('userName or record id null scenarios', () => {
-      it('returns undefined when userName is null and record id is not empty', () => {
-        const state = {
-          fetchDetails: {
-            details: {
-              XHRStatus: 'ready',
-              records: {
-                id: '9a155ccc-309f-467a-b562-d4d55d76ac80',
-              },
+    it('return the false if editable is true', () => {
+      const state = {
+        fetchDetails: {
+          details: {
+            XHRStatus: 'ready',
+            records: {
+              editable: true,
+              user: {},
             },
-            fetching: false,
-            error: null,
           },
-          fetchAccount: {
-            account: {
-              XHRStatus: 'ready',
-              account: {
-                userName: null,
-              },
-            },
-            fetching: false,
-            error: null,
-          },
-        };
-        expect(checkEditDisabledBtn(state)).toEqual(undefined);
-      });
-
-      it('returns false when userName is not null and record id is null', () => {
-        const state = {
-          fetchDetails: {
-            details: {
-              XHRStatus: 'ready',
-              records: {
-                id: null,
-              },
-            },
-            fetching: false,
-            error: null,
-          },
-          fetchAccount: {
-            account: {
-              XHRStatus: 'ready',
-              account: {
-                userName: '9a155ccc-309f-467a-b562-d4d55d76ac80',
-              },
-            },
-            fetching: false,
-            error: null,
-          },
-        };
-        expect(checkEditDisabledBtn(state)).toEqual(undefined);
-      });
+        },
+      };
+      expect(checkEditDisable(state)).toEqual(false);
     });
 
-    describe('details or account null scenarios', () => {
-      it('returns undefined when only account is null', () => {
-        const state = {
-          fetchDetails: {
-            details: {
-              XHRStatus: 'ready',
-              records: {
-                id: '9a155ccc-309f-467a-b562-d4d55d76ac80',
-              },
+    it('return the true if editable is null', () => {
+      const state = {
+        fetchDetails: {
+          details: {
+            XHRStatus: 'ready',
+            records: {
+              editable: null,
+              user: {},
             },
           },
-          fetchAccount: {
-            account: null,
-          },
-        };
-        expect(checkEditDisabledBtn(state)).toEqual(undefined);
-      });
+        },
+      };
+      expect(checkEditDisable(state)).toEqual(true);
+    });
 
-      it('returns undefined when account is null and details is null', () => {
-        const state = {
-          fetchDetails: {
-            details: null,
+    it('return the true if editable is undefined ', () => {
+      const state = {
+        fetchDetails: {
+          details: {
+            XHRStatus: 'ready',
+            records: {
+              editable: undefined,
+              user: {},
+            },
           },
-          fetchAccount: {
-            account: null,
-          },
-        };
-        expect(checkEditDisabledBtn(state)).toEqual(undefined);
-      });
+        },
+      };
+      expect(checkEditDisable(state)).toEqual(true);
     });
   });
 });

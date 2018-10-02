@@ -28,15 +28,54 @@ class UserList extends PureComponent {
   }
 
   componentDidMount() {
-    this.props.actions.searchUsers({
-      query: this.props.query,
-      sort: this.props.sort,
-      size: this.props.size,
-      from: this.props.from,
-    });
     this.props.actions.fetchAccountActions();
     this.props.actions.fetchOfficesActions();
   }
+
+  componentDidUpdate(prevProps) {
+    if (this.props.loggedInUserAccount !== prevProps.loggedInUserAccount) {
+      this.props.actions.searchUsers({
+        query: this.initialLoadQuery(this.props.loggedInUserAccount),
+        sort: this.props.sort,
+        size: this.props.size,
+        from: this.props.from,
+      });
+    }
+  }
+
+  isStateAdmin = loggedInUserAccount => {
+    return loggedInUserAccount.roles.includes('State-admin');
+  };
+
+  initialLoadQuery = loggedInUserAccount => {
+    if (this.isOfficeAdmin(loggedInUserAccount)) {
+      this.props.actions.setOfficesList(loggedInUserAccount.admin_office_ids);
+      return [
+        {
+          field: 'office_ids',
+          value: loggedInUserAccount.admin_office_ids,
+        },
+      ];
+    } else {
+      return [];
+    }
+  };
+
+  isCountyAdmin = loggedInUserAccount => {
+    return (
+      !this.isStateAdmin(loggedInUserAccount) &&
+      loggedInUserAccount.roles.includes('County-admin')
+    );
+  };
+
+  isOfficeAdmin = loggedInUserAccount => {
+    return (
+      loggedInUserAccount !== undefined &&
+      !this.isStateAdmin(loggedInUserAccount) &&
+      !this.isCountyAdmin(loggedInUserAccount) &&
+      loggedInUserAccount.roles.includes('Office-admin')
+    );
+  };
 
   handleOnAdd = () => {
     this.setState({ addUser: true });
@@ -68,8 +107,15 @@ class UserList extends PureComponent {
 
   submitSearch = e => {
     e.preventDefault();
+    const offices = this.props.selectedOfficesList
+      ? this.props.selectedOfficesList.filter(officeId => {
+          return officeId !== '';
+        })
+      : [];
+
     this.props.actions.setSearch([
       { field: 'last_name', value: this.props.nextSearch },
+      { field: 'office_ids', value: offices },
     ]);
   };
 
@@ -227,7 +273,7 @@ class UserList extends PureComponent {
                     faIcon="fa-exclamation-triangle"
                     alertCross={false}
                   >
-                    <strong>Oh no!</strong> An unexpected error occured!
+                    <strong>Oh no!</strong> An unexpected error occurred!
                   </Alert>
                 )}
                 <br />

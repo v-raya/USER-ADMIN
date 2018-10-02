@@ -26,6 +26,10 @@ const initialValue = {
       field: 'last_name',
       value: '',
     },
+    {
+      field: 'office_ids',
+      value: [],
+    },
   ],
   users: [],
   fetching: false,

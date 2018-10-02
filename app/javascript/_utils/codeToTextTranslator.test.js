@@ -1,6 +1,7 @@
 import {
   userStatusDescriptionTranslator,
   userStatusTranslator,
+  accountStatus,
 } from './codeToTextTranslator';
 
 describe('#userStatusDescriptionTranslator', () => {
@@ -39,5 +40,12 @@ describe('#userStatusTranslator', () => {
     );
     expect(userStatusTranslator('ASDFGADFASD')).toEqual('');
     expect(userStatusTranslator('')).toEqual('');
+  });
+});
+
+describe('#accountStatus', () => {
+  it('return Active/Inactive  based on enabled value ', () => {
+    expect(accountStatus(true)).toEqual('Active');
+    expect(accountStatus(false)).toEqual('Inactive');
   });
 });
