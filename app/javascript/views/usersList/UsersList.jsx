@@ -48,14 +48,17 @@ class UserList extends PureComponent {
   };
 
   initialLoadQuery = loggedInUserAccount => {
-    return this.isOfficeAdmin(loggedInUserAccount)
-      ? [
-          {
-            field: 'office_ids',
-            value: loggedInUserAccount.admin_office_ids,
-          },
-        ]
-      : [];
+    if (this.isOfficeAdmin(loggedInUserAccount)) {
+      this.props.actions.setOfficesList(loggedInUserAccount.admin_office_ids);
+      return [
+        {
+          field: 'office_ids',
+          value: loggedInUserAccount.admin_office_ids,
+        },
+      ];
+    } else {
+      return [];
+    }
   };
 
   isCountyAdmin = loggedInUserAccount => {

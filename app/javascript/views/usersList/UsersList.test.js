@@ -113,7 +113,7 @@ describe('UsersList', () => {
       ];
       let mockSetSearchActions;
       mockSetSearchActions = jest.fn().mockReturnValue(Promise.resolve([]));
-      const wrapper = shallow(
+      const wrapperLocal = shallow(
         <UsersList
           dashboardUrl={'dburl'}
           actions={{
@@ -129,7 +129,7 @@ describe('UsersList', () => {
         />
       );
       const event = { preventDefault: () => {} };
-      wrapper.instance().submitSearch(event);
+      wrapperLocal.instance().submitSearch(event);
       expect(mockSetSearchActions).toHaveBeenCalledWith(query);
     });
   });
@@ -166,7 +166,15 @@ describe('UsersList', () => {
       ]);
     });
 
-    it('Does not limit the default query for county-admins', () => {
+    it('selects the default office ids in the select-list', () => {
+      wrapper.instance().initialLoadQuery({
+        admin_office_ids: ['a', 'b'],
+        roles: ['Office-admin'],
+      });
+      expect(mockSetOfficesListAction).toHaveBeenCalledWith(['a', 'b']);
+    });
+
+    it('does not limit the default query for county-admins', () => {
       expect(
         wrapper.instance().initialLoadQuery({
           admin_office_ids: ['a', 'b'],
@@ -175,7 +183,7 @@ describe('UsersList', () => {
       ).toEqual([]);
     });
 
-    it('Does not limit the default query for state-admins', () => {
+    it('does not limit the default query for state-admins', () => {
       expect(
         wrapper.instance().initialLoadQuery({
           admin_office_ids: ['a', 'b'],
@@ -284,13 +292,14 @@ describe('UsersList', () => {
 
     beforeEach(() => {
       mockSearchUsers = jest.fn();
-      wrapper = mount(
+      const wrapperLocal = mount(
         <UsersList
           dashboardUrl={'dburl'}
           actions={{
             fetchAccountActions: () => {},
             fetchOfficesActions: () => {},
             searchUsers: mockSearchUsers,
+            setOfficesList: mockSetOfficesListAction,
           }}
           loggedInUserAccount={{
             county_name: 'SomeCountyName',
@@ -302,7 +311,8 @@ describe('UsersList', () => {
           size={50}
         />
       );
-      wrapper.instance().componentDidUpdate({
+
+      wrapperLocal.instance().componentDidUpdate({
         loggedInUserAccount: {},
       });
     });
