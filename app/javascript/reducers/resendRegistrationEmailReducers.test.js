@@ -75,7 +75,7 @@ describe('reducer', () => {
       resendEmailStatus: { hello: 'world' },
     };
     const state = {
-      resendEmailStatus: ['abcd', 'qwerty'],
+      resendEmailStatus: ['item1'],
       fetching: true,
       error: null,
     };

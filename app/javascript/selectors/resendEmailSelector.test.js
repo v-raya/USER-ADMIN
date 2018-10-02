@@ -37,7 +37,7 @@ describe('#selectDetailRecords', () => {
 });
 
 describe('#selectResendEmailUserId', () => {
-  it('returns the resendEmailUserId', () => {
+  it('returns resendEmailUserId', () => {
     const state = {
       resendRegistrationEmail: {
         resendEmailUserId: 'id1',
@@ -97,7 +97,7 @@ describe('#disableResendEmailButton', () => {
     expect(disableResendEmailButton(state)).toBe(false);
   });
 
-  it('selects false', () => {
+  it('selects false when userDetailsId is not equal to resendEmailUserId', () => {
     const state = {
       fetchDetails: {
         details: {
