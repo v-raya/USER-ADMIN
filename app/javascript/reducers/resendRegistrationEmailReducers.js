@@ -1,9 +1,12 @@
 import * as actionTypes from '../actions/actionTypes';
 
-function resendRegistrationEmail(
-  state = { resendEmailStatus: null, fetching: false },
-  action
-) {
+const initialState = {
+  resendEmailStatus: null,
+  fetching: false,
+  resendEmailId: [],
+};
+
+function resendRegistrationEmail(state = initialState, action) {
   switch (action.type) {
     case actionTypes.RESEND_REGISTRATION_EMAIL_API_CALL_REQUEST:
       return { ...state, fetching: true, error: null };
@@ -11,12 +14,13 @@ function resendRegistrationEmail(
     case actionTypes.RESEND_REGISTRATION_EMAIL_API_CALL_SUCCESS:
       const status = {
         XHRStatus: 'ready',
-        response: action.resendEmailStatus,
+        response: action.resendEmailResponse,
       };
       return {
         ...state,
         fetching: false,
-        resendEmailStatus: status.response,
+        resendEmailStatus: status.response.resendEmailStatus,
+        resendEmailId: state.resendEmailId.concat(status.response.id),
         error: null,
       };
 
