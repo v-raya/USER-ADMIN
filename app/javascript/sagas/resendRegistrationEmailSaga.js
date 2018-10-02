@@ -5,15 +5,15 @@ import { takeLatest, call, put } from 'redux-saga/effects';
 // worker saga: makes the api call when watcher saga sees the action
 export function* resendEmail(action) {
   try {
-    let id = action.payload;
+    let id = action.payload.id;
     const resendEmailStatus = yield call(
       UserService.resendRegistrationEmail,
-      id.id
+      id
     );
     // dispatch a success action to the store with the new users
     yield put({
       type: actionTypes.RESEND_REGISTRATION_EMAIL_API_CALL_SUCCESS,
-      resendEmailStatus,
+      resendEmailResponse: { resendEmailStatus, id },
     });
   } catch (error) {
     // dispatch a failure action to the store with the error
