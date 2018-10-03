@@ -100,7 +100,7 @@ describe('UserDetail', () => {
 
   describe('#emailSent()', () => {
     it('displays <Alert/>', () => {
-      wrapper.setState({ resendEmail: true });
+      wrapper.setState({ resendEmailAlert: true });
       wrapper.setProps({ resendEmailStatus: 'Success' });
       expect(wrapper.find('Alert').length).toBe(1);
       expect(wrapper.find('Alert').props().children).toBe(

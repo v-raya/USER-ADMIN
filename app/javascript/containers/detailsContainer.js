@@ -10,7 +10,10 @@ import {
   clearDetails,
   saveUserDetailsActions,
 } from '../actions/detailActions';
-import { resendEmail } from '../selectors/resendEmailSelector';
+import {
+  selectResendEmailStatus,
+  disableResendEmailButton,
+} from '../selectors/resendEmailSelector';
 import { fetchPermissionsActions } from '../actions/permissionsActions';
 import { resendRegistrationEmailActions } from '../actions/resendRegistrationEmailActions';
 import { bindActionCreators } from 'redux';
@@ -24,7 +27,8 @@ function mapStateToProps(state) {
       ? process.env.RAILS_RELATIVE_URL_ROOT
       : '/',
     userDetailError: state.saveUserDetails.error,
-    resendEmailStatus: resendEmail(state),
+    resendEmailStatus: selectResendEmailStatus(state),
+    disableResendEmailButton: disableResendEmailButton(state),
   };
 }
 

@@ -15,8 +15,8 @@ export default class UserDetail extends Component {
       alert: false,
       disableActionBtn: true,
       details: props.details,
+      resendEmailAlert: false,
       disableEditBtn: props.disableEditBtn,
-      resendEmail: true,
     };
   }
 
@@ -64,14 +64,14 @@ export default class UserDetail extends Component {
 
   onResendInvite = () => {
     this.props.actions.resendRegistrationEmailActions(this.state.details.id);
-    this.setState({ resendEmail: true });
+    this.setState({ resendEmailAlert: true });
   };
 
   onSaveDetails = () => {
     const id = this.getUserId(this.currentPathname());
     const { details } = this.state;
     this.props.actions.saveUserDetailsActions(id, details);
-    this.setState({ isEdit: false, alert: true, resendEmail: false });
+    this.setState({ isEdit: false, alert: true, resendEmailAlert: false });
   };
 
   onEditClick = () => {
@@ -79,7 +79,7 @@ export default class UserDetail extends Component {
   };
 
   onCancel = () => {
-    this.setState({ isEdit: false, alert: false, resendEmail: false });
+    this.setState({ isEdit: false, alert: false, resendEmailAlert: false });
     this.props.actions.fetchDetailsActions(
       this.getUserId(this.currentPathname())
     );
@@ -100,7 +100,10 @@ export default class UserDetail extends Component {
   };
 
   emailSent = () => {
-    if (this.state.resendEmail && this.props.resendEmailStatus === 'Success') {
+    if (
+      this.state.resendEmailAlert &&
+      this.props.resendEmailStatus === 'Success'
+    ) {
       return (
         <Alert
           alertClassName="success"
@@ -129,6 +132,7 @@ export default class UserDetail extends Component {
                 disableActionBtn={this.state.disableActionBtn}
                 permissionsList={permissionsList}
                 onResendInvite={this.onResendInvite}
+                disableResendEmailButton={this.props.disableResendEmailButton}
               />
             ) : (
               <UserDetailShow
@@ -186,6 +190,7 @@ UserDetail.propTypes = {
   actions: PropTypes.object.isRequired,
   userDetailError: PropTypes.object,
   resendEmailStatus: PropTypes.string,
+  disableResendEmailButton: PropTypes.bool,
   disableEditBtn: PropTypes.bool,
 };
 

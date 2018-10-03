@@ -19,28 +19,24 @@ describe('sagas', () => {
 
   describe('#resendEmail', () => {
     const id = 'abcdefghijklmnopqrstuvwxyz';
+    const resendEmailStatus = 200;
     beforeEach(() => {
       UserService.resendRegistrationEmail = jest.fn();
     });
 
     describe('when successful', () => {
       it('executes the happy-path saga', () => {
-        const action = { payload: { id: id } };
+        const action = { payload: { id } };
         const gen = resendEmail(action);
 
         expect(gen.next().value).toEqual(
           call(UserService.resendRegistrationEmail, id)
         );
-        expect(
-          gen.next({
-            id: id,
-          }).value
-        ).toEqual(
+        expect(gen.next({ resendEmailStatus, id }).value).toEqual(
           put({
             type: actionTypes.RESEND_REGISTRATION_EMAIL_API_CALL_SUCCESS,
-            resendEmailStatus: {
-              id: id,
-            },
+            resendEmailStatus: { resendEmailStatus, id },
+            id,
           })
         );
         expect(gen.next().done).toBe(true);
@@ -49,7 +45,7 @@ describe('sagas', () => {
 
     describe('when failures come back ', () => {
       it('handles the error', () => {
-        const action = { payload: { id: id } };
+        const action = { payload: { id } };
         const gen = resendEmail(action);
 
         expect(gen.next().value).toEqual(
