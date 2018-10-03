@@ -38,7 +38,7 @@ module Users
     end
 
     def get_offices_list(token)
-      response = @http_service.get('/perry/idm/offices', token)
+      response = @http_service.get('/perry/idm/admin-offices', token)
       return [] if response.status == 404
       response.body { Offices.new }
     end

@@ -114,7 +114,7 @@ module Users
           allow(response).to receive(:status).and_return(404)
           allow(http_service)
             .to receive(:get)
-            .with('/perry/idm/offices', token)
+            .with('/perry/idm/admin-offices', token)
             .and_return(response)
           expect(user_repository.get_offices_list(token)).to eq([])
         end
@@ -126,7 +126,7 @@ module Users
           allow(response).to receive(:body).and_return(['el'])
           allow(http_service)
             .to receive(:get)
-            .with('/perry/idm/offices', token)
+            .with('/perry/idm/admin-offices', token)
             .and_return(response)
           expect(user_repository.get_offices_list(token))
             .to eq ['el']

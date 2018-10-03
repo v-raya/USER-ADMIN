@@ -39,7 +39,7 @@ const initialValue = {
 function userListReducer(state = initialValue, { type, payload, error, meta }) {
   switch (type) {
     case FETCH_USERS_API_CALL_REQUEST:
-      return { ...state, fetching: true, error: null };
+      return { ...state, fetching: true, error: null, query: payload.query };
 
     case FETCH_USERS_API_CALL_SUCCESS: {
       const {
@@ -83,7 +83,7 @@ function userListReducer(state = initialValue, { type, payload, error, meta }) {
     }
 
     case USER_LIST_SET_OFFICE_LIST: {
-      const selectedOfficesList = payload;
+      const selectedOfficesList = payload.filter(value => value.trim() !== '');
       return {
         ...state,
         selectedOfficesList,
@@ -91,8 +91,7 @@ function userListReducer(state = initialValue, { type, payload, error, meta }) {
     }
 
     case USER_LIST_SET_SEARCH: {
-      const _query = payload;
-      const query = _query.filter(({ value }) => value !== '');
+      const query = payload;
       return {
         ...state,
         from: 0,

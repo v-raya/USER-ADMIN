@@ -18,6 +18,7 @@ import {
   lastLoginDate,
   officesListToOptions,
 } from '../../_constants/constants';
+import { isEqual } from 'lodash';
 
 class UserList extends PureComponent {
   constructor(props) {
@@ -52,12 +53,16 @@ class UserList extends PureComponent {
       this.props.actions.setOfficesList(loggedInUserAccount.admin_office_ids);
       return [
         {
+          field: 'last_name',
+          value: this.props.nextSearch,
+        },
+        {
           field: 'office_ids',
           value: loggedInUserAccount.admin_office_ids,
         },
       ];
     } else {
-      return [];
+      return this.props.query;
     }
   };
 
@@ -107,11 +112,7 @@ class UserList extends PureComponent {
 
   submitSearch = e => {
     e.preventDefault();
-    const offices = this.props.selectedOfficesList
-      ? this.props.selectedOfficesList.filter(officeId => {
-          return officeId !== '';
-        })
-      : [];
+    const offices = this.props.selectedOfficesList;
 
     this.props.actions.setSearch([
       { field: 'last_name', value: this.props.nextSearch },
@@ -130,13 +131,17 @@ class UserList extends PureComponent {
   getCurrentPageNumber = () => Math.floor(this.props.from / this.props.size);
 
   isDisabledSearchBtn = () => {
-    const { query, nextSearch } = this.props;
-    if (!query) return false;
-    const lastNameSearch = query.find(
-      ({ field, value }) => field === 'last_name'
+    const { selectedOfficesList, nextSearch, query } = this.props;
+
+    const lastNameSearch = query.find(({ field }) => field === 'last_name');
+
+    const officeSearch = query.find(({ field }) => field === 'office_ids');
+
+    return (
+      lastNameSearch &&
+      lastNameSearch.value === nextSearch &&
+      isEqual(officeSearch.value.sort(), selectedOfficesList.sort())
     );
-    if (!lastNameSearch) return false;
-    return lastNameSearch.value === nextSearch;
   };
 
   renderUsersTable = ({ data }) => {
@@ -237,6 +242,7 @@ class UserList extends PureComponent {
                         selectedOption={selectedOfficesList}
                         options={officesListToOptions(officesList)}
                         label="Filter by Office Name"
+                        placeholder={`(${officesList.length})`}
                         onChange={selectedOptions =>
                           this.handleOfficesListChange(
                             selectedOptions.split(',')
@@ -334,5 +340,6 @@ UserList.defaultProps = {
   sort: [],
   pageSizeOptions: [5, 10, 25, 50, 100],
   officesList: [],
+  nextSearch: '',
 };
 export default UserList;
