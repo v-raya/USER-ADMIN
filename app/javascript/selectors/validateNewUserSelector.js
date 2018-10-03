@@ -3,10 +3,7 @@ export const selectNewUserRecords = state => {
   const userDetails = usersObject.verifyUserDetails
     ? usersObject.verifyUserDetails
     : {};
-  const roles = userDetails.verifiedUserDetails
-    ? userDetails.verifiedUserDetails
-    : userDetails;
-  const user = roles.user ? roles.user : roles;
+  const user = userDetails.user ? userDetails.user : userDetails;
   user.roles ? (user.roles = ['CWS-worker']) : (user.roles = ['CWS-worker']);
   return userDetails;
 };
