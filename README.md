@@ -22,3 +22,7 @@ Things you may want to cover:
 * Deployment instructions
 
 * Pull Requests and code climate
+
+# Questions
+
+If you have any questions regarding the contents of this repository, please email the Office of Systems Integration at FOSS@osi.ca.gov.
