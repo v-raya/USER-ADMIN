@@ -11,6 +11,17 @@ describe('UsersList', () => {
   let mockSetNextSearchActions;
   let mockSetOfficesListAction;
 
+  const query = [
+    {
+      field: 'last_name',
+      value: 'last_name_value',
+    },
+    {
+      field: 'office_ids',
+      value: ['north', 'south', 'east', 'west'],
+    },
+  ];
+
   beforeEach(() => {
     mockSetPageActions = jest.fn().mockReturnValue(Promise.resolve([]));
     mockSetPageSizeActions = jest.fn().mockReturnValue(Promise.resolve([]));
@@ -29,6 +40,8 @@ describe('UsersList', () => {
           setOfficesList: mockSetOfficesListAction,
         }}
         loggedInUserAccount={{ county_name: 'SomeCountyName' }}
+        query={query}
+        selectedOfficesList={['somevalue']}
       />,
       {
         disableLifecycleMethods: true,
@@ -101,16 +114,6 @@ describe('UsersList', () => {
 
   describe('#submitSearch', () => {
     it('calls the setSearch Actions', () => {
-      const query = [
-        {
-          field: 'last_name',
-          value: 'last_name_value',
-        },
-        {
-          field: 'office_ids',
-          value: ['north', 'south', 'east', 'west'],
-        },
-      ];
       let mockSetSearchActions;
       mockSetSearchActions = jest.fn().mockReturnValue(Promise.resolve([]));
       const wrapperLocal = shallow(
@@ -152,6 +155,10 @@ describe('UsersList', () => {
   });
 
   describe('#initialLoadQuery', () => {
+    const query = [
+      { field: 'last_name', value: 'last_name_value' },
+      { field: 'office_ids', value: ['east', 'north', 'south', 'west'] },
+    ];
     it('limits the default query to the user admin office for office-admins', () => {
       expect(
         wrapper.instance().initialLoadQuery({
@@ -159,10 +166,8 @@ describe('UsersList', () => {
           roles: ['Office-admin'],
         })
       ).toEqual([
-        {
-          field: 'office_ids',
-          value: ['a', 'b'],
-        },
+        { field: 'last_name', value: '' },
+        { field: 'office_ids', value: ['a', 'b'] },
       ]);
     });
 
@@ -180,7 +185,7 @@ describe('UsersList', () => {
           admin_office_ids: ['a', 'b'],
           roles: ['County-admin', 'Office-admin'],
         })
-      ).toEqual([]);
+      ).toEqual(query);
     });
 
     it('does not limit the default query for state-admins', () => {
@@ -189,18 +194,22 @@ describe('UsersList', () => {
           admin_office_ids: ['a', 'b'],
           roles: ['State-admin', 'County-admin', 'Office-admin'],
         })
-      ).toEqual([]);
+      ).toEqual(query);
     });
   });
 
   describe('#isDisabledSearchBtn', () => {
-    it('returns true when query is passed', () => {
-      const query = [
-        {
-          field: 'last_name',
-          value: 'last_name_value',
-        },
-      ];
+    let query = [
+      {
+        field: 'last_name',
+        value: 'last_name_value',
+      },
+      {
+        field: 'office_ids',
+        value: ['somevalue'],
+      },
+    ];
+    it('returns true when query and entered search criteria are same', () => {
       const component = shallow(
         <UsersList
           dashboardUrl={'dburl'}
@@ -212,13 +221,13 @@ describe('UsersList', () => {
           loggedInUserAccount={{ county_name: 'SomeCountyName' }}
           query={query}
           nextSearch="last_name_value"
+          selectedOfficesList={['somevalue']}
         />
       );
       expect(component.instance().isDisabledSearchBtn()).toEqual(true);
     });
 
-    it('returns false when search query is not passed', () => {
-      const query = [{}];
+    it('returns false when search query and entered search criteria are different', () => {
       const component = shallow(
         <UsersList
           dashboardUrl={'dburl'}
@@ -229,7 +238,8 @@ describe('UsersList', () => {
           }}
           loggedInUserAccount={{ county_name: 'SomeCountyName' }}
           query={query}
-          nextSearch="last_name_value"
+          nextSearch="new_last_name"
+          selectedOfficesList={['new_value']}
         />
       );
       expect(component.instance().isDisabledSearchBtn()).toEqual(false);
@@ -274,6 +284,8 @@ describe('UsersList', () => {
             fetchOfficesActions: mockFetchOfficeListActions,
           }}
           loggedInUserAccount={{ county_name: 'SomeCountyName' }}
+          query={query}
+          selectedOfficesList={['somevalue']}
         />
       );
     });
@@ -309,6 +321,9 @@ describe('UsersList', () => {
           from={0}
           sort={[]}
           size={50}
+          query={query}
+          nextSearch="some_value"
+          selectedOfficesList={['somevalue']}
         />
       );
 
@@ -321,7 +336,10 @@ describe('UsersList', () => {
       // TODO: make a stronger expectation of args based on API query DSL (when it emerges)
       expect(mockSearchUsers).toHaveBeenCalledWith({
         from: 0,
-        query: [{ field: 'office_ids', value: ['42'] }],
+        query: [
+          { field: 'last_name', value: 'some_value' },
+          { field: 'office_ids', value: ['42'] },
+        ],
         size: 50,
         sort: [],
       });
@@ -342,6 +360,8 @@ describe('UsersList', () => {
             county_name: 'SomeCountyName',
             roles: ['Office-admin', 'County-admin'],
           }}
+          query={query}
+          selectedOfficesList={['somevalue']}
         />
       );
       expect(component.instance().isOfficeAdmin()).toBe(false);
@@ -362,6 +382,8 @@ describe('UsersList', () => {
             county_name: 'SomeCountyName',
             roles: ['Office-admin', 'County-admin', 'State-admin'],
           }}
+          query={query}
+          selectedOfficesList={['somevalue']}
         />
       );
       expect(component.instance().isOfficeAdmin()).toBe(false);
@@ -385,6 +407,8 @@ describe('UsersList', () => {
               desc: 'value',
             },
           ]}
+          query={query}
+          selectedOfficesList={['somevalue']}
         />
       );
 

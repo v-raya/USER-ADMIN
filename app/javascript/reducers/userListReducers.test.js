@@ -5,12 +5,16 @@ describe('reducer', () => {
   it('handles FETCH_USERS_API_CALL_REQUEST', () => {
     const requestAction = {
       type: actionTypes.FETCH_USERS_API_CALL_REQUEST,
+      payload: {
+        query: [],
+      },
     };
     const state = { userList: null, fetching: false };
     expect(reducer(state, requestAction)).toEqual({
       fetching: true,
       userList: null,
       error: null,
+      query: [],
     });
   });
 
@@ -74,13 +78,13 @@ describe('reducer', () => {
   });
 
   it('handles offices list  updates', () => {
-    const before = { selectedOfficesList: 'before' };
+    const before = { selectedOfficesList: ['before', ''] };
     const action = {
       type: actionTypes.USER_LIST_SET_OFFICE_LIST,
-      payload: 'after',
+      payload: ['after'],
     };
     const after = reducer(before, action);
-    expect(after.selectedOfficesList).toEqual('after');
+    expect(after.selectedOfficesList).toEqual(['after']);
   });
 
   it('handles search criteria updates', () => {
