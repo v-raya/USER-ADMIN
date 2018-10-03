@@ -3,18 +3,14 @@ import PropTypes from 'prop-types';
 import Cards from '../../common/Card';
 import { Alert } from 'react-wood-duck';
 import ShowField from '../../common/ShowField';
-import { verificationError } from '../../_utils/errorCodes';
 import { formatPhoneNumberWithExt } from '../../_utils/formatters';
 
 /* eslint camelcase: 0 */
 
 const AddNewUser = ({ onAddUser, verifyNewUserDetails }) => {
-  const userDetails = verifyNewUserDetails.verifiedUserDetails
-    ? verifyNewUserDetails.verifiedUserDetails
-    : {};
   return (
     <div>
-      {userDetails.verification_passed ? (
+      {verifyNewUserDetails.verification_passed ? (
         <div className="row">
           <div className="col-md-12">
             <Cards
@@ -32,32 +28,34 @@ const AddNewUser = ({ onAddUser, verifyNewUserDetails }) => {
                   </label>
                   <div className="col-md-3">
                     <ShowField label="Full Name">
-                      {userDetails.user.last_name}
+                      {verifyNewUserDetails.user.last_name}
                       {', '}
-                      {userDetails.user.first_name}{' '}
-                      {userDetails.user.middle_name}
+                      {verifyNewUserDetails.user.first_name}{' '}
+                      {verifyNewUserDetails.user.middle_name}
                     </ShowField>
                   </div>
                   <div className="col-md-3">
                     <ShowField label="Office Name">
-                      {userDetails.user.office}
+                      {verifyNewUserDetails.user.office}
                     </ShowField>
                   </div>
                   <div className="col-md-3">
                     <ShowField label="CWS Login">
-                      {userDetails.user.racfid}
+                      {verifyNewUserDetails.user.racfid}
                     </ShowField>
                   </div>
                 </div>
                 <div className="row">
                   <div className="col-md-3">
                     <ShowField label="Email">
-                      {userDetails.user.email}
+                      {verifyNewUserDetails.user.email}
                     </ShowField>
                   </div>
                   <div className="col-md-3">
                     <ShowField label="Office Phone Number">
-                      <span>{formatPhoneNumberWithExt(userDetails.user)}</span>
+                      <span>
+                        {formatPhoneNumberWithExt(verifyNewUserDetails.user)}
+                      </span>
                     </ShowField>
                   </div>
                 </div>
@@ -65,7 +63,7 @@ const AddNewUser = ({ onAddUser, verifyNewUserDetails }) => {
             </Cards>
           </div>
         </div>
-      ) : userDetails.verification_passed === false ? (
+      ) : verifyNewUserDetails.verification_passed === false ? (
         <div className="row">
           <div className="col-md-12">
             <div className="alert">
@@ -74,11 +72,7 @@ const AddNewUser = ({ onAddUser, verifyNewUserDetails }) => {
                 faIcon="fa-exclamation-triangle"
                 alertCross={false}
               >
-                {verificationError(
-                  userDetails.error_code,
-                  verifyNewUserDetails.verify.email,
-                  verifyNewUserDetails.verify.racfid
-                ) || userDetails.verification_message}
+                {verifyNewUserDetails.verification_message}
               </Alert>
             </div>
           </div>

@@ -54,17 +54,13 @@ describe('selectors', () => {
       const state = {
         validateNewUser: {
           verifyUserDetails: {
-            verifiedUserDetails: {
-              county_name: 'MY COUNTY',
-            },
+            county_name: 'MY COUNTY',
           },
         },
       };
       expect(selectNewUserRecords(state)).toEqual({
-        verifiedUserDetails: {
-          county_name: 'MY COUNTY',
-          roles: ['CWS-worker'],
-        },
+        county_name: 'MY COUNTY',
+        roles: ['CWS-worker'],
       });
     });
 
@@ -83,21 +79,17 @@ describe('selectors', () => {
       const state = {
         validateNewUser: {
           verifyUserDetails: {
-            verifiedUserDetails: {
-              user: {
-                roles: 'CWDS_WORKER',
-                county_name: 'MY COUNTY',
-              },
+            user: {
+              roles: 'CWDS_WORKER',
+              county_name: 'MY COUNTY',
             },
           },
         },
       };
       expect(selectNewUserRecords(state)).toEqual({
-        verifiedUserDetails: {
-          user: {
-            county_name: 'MY COUNTY',
-            roles: ['CWS-worker'],
-          },
+        user: {
+          county_name: 'MY COUNTY',
+          roles: ['CWS-worker'],
         },
       });
     });

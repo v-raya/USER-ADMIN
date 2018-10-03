@@ -87,9 +87,7 @@ export default class AddUser extends Component {
   };
 
   onAddUser = () => {
-    this.props.actions.addUserActions(
-      this.state.verifyNewUserDetails.verifiedUserDetails.user
-    );
+    this.props.actions.addUserActions(this.state.verifyNewUserDetails.user);
     this.setState({ addUser: false, verify: false });
   };
 
@@ -133,7 +131,7 @@ export default class AddUser extends Component {
       </div>
     ) : (
       <div>
-        <Redirect from="/new" to={`/add_user`} />
+        <Redirect from="/verify" to={`/add_user`} />
       </div>
     );
   }
