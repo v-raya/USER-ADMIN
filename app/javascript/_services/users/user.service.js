@@ -45,8 +45,7 @@ class UserService {
       });
     }
 
-    const isEnabled = details['enabled'] === 'Active';
-    const data = { enabled: isEnabled, permissions: permissions };
+    const data = { enabled: details['enabled'], permissions: permissions };
 
     return ApiService.patch(`/user_detail/${id}/save_user`, data)
       .then(response => response.data)

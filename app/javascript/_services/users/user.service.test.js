@@ -96,7 +96,7 @@ describe('UserService', () => {
         permissions: ['drivethebus', 'getapuppy'],
       };
       UserService.saveUserDetails(id, {
-        enabled: 'Active',
+        enabled: true,
         permissions: 'drivethebus,getapuppy',
         first_name: 'Pidgeon',
       });
@@ -113,7 +113,7 @@ describe('UserService', () => {
         permissions: [],
       };
       UserService.saveUserDetails(id, {
-        enabled: 'Active',
+        enabled: true,
         permissions: '',
         first_name: 'firstName',
       });
@@ -130,7 +130,7 @@ describe('UserService', () => {
         permissions: ['drivethebus', 'getapuppy'],
       };
       UserService.saveUserDetails(id, {
-        enabled: 'Active',
+        enabled: true,
         permissions: ['drivethebus', 'getapuppy'],
         first_name: 'Pidgeon',
       });
@@ -151,7 +151,7 @@ describe('UserService', () => {
           permissions: ['drivethebus', 'getapuppy'],
         };
         UserService.saveUserDetails(id, {
-          enabled: 'Active',
+          enabled: true,
           permissions: 'drivethebus,getapuppy',
           first_name: 'Pidgeon',
         });

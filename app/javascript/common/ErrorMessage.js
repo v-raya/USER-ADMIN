@@ -9,7 +9,7 @@ const ErrorMessage = ({ error }) =>
       faIcon="fa-exclamation-triangle"
       alertCross={false}
     >
-      {error.message}
+      {error.user_message}
     </Alert>
   ) : null;
 

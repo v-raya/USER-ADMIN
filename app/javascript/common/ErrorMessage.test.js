@@ -9,9 +9,9 @@ describe('Error Message', () => {
   });
 
   it('verify error block with error code', () => {
-    const props = { message: 'Cognito user validation is failed' };
+    const props = { user_message: 'Cognito user validation is failed' };
     const errorComp = shallow(<ErrorMessage error={props} />);
     expect(errorComp.find('Alert').length).toEqual(1);
-    expect(errorComp.contains(props.message)).toBe(true);
+    expect(errorComp.contains(props.user_message)).toBe(true);
   });
 });

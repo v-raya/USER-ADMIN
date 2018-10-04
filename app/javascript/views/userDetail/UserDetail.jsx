@@ -17,6 +17,7 @@ export default class UserDetail extends Component {
       details: props.details,
       resendEmailAlert: false,
       disableEditBtn: props.disableEditBtn,
+      disableErrorAlert: false,
     };
   }
 
@@ -71,11 +72,20 @@ export default class UserDetail extends Component {
     const id = this.getUserId(this.currentPathname());
     const { details } = this.state;
     this.props.actions.saveUserDetailsActions(id, details);
-    this.setState({ isEdit: false, alert: true, resendEmailAlert: false });
+    this.setState({
+      isEdit: false,
+      alert: true,
+      resendEmailAlert: false,
+      disableErrorAlert: true,
+    });
   };
 
   onEditClick = () => {
-    this.setState({ isEdit: true, alert: false, disableActionBtn: true });
+    this.setState({
+      isEdit: true,
+      alert: false,
+      disableActionBtn: true,
+    });
   };
 
   onCancel = () => {
@@ -171,9 +181,10 @@ export default class UserDetail extends Component {
             />
             &nbsp;&gt;&nbsp;
             <Link to="/">User List</Link>
-            {this.alert()}
+            {/* {this.alert()} */}
             {this.emailSent()}
-            <ErrorMessage error={userDetailError} />
+            {this.state.disableErrorAlert &&
+              userDetailError && <ErrorMessage error={userDetailError} />}
           </div>
           {this.renderCards(permissionsList)}
         </div>

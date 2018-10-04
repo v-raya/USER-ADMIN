@@ -88,15 +88,15 @@ describe('UserDetail', () => {
     });
   });
 
-  describe('#alert()', () => {
-    it('displays <Alert/>', () => {
-      wrapper.setState({ alert: true });
-      expect(wrapper.find('Alert').length).toBe(1);
-      expect(wrapper.find('Alert').props().children).toBe(
-        'Your changes have been made successfully'
-      );
-    });
-  });
+  // describe('#alert()', () => {
+  //   it('displays <Alert/>', () => {
+  //     wrapper.setState({ alert: true });
+  //     expect(wrapper.find('Alert').length).toBe(1);
+  //     expect(wrapper.find('Alert').props().children).toBe(
+  //       'Your changes have been made successfully'
+  //     );
+  //   });
+  // });
 
   describe('#emailSent()', () => {
     it('displays <Alert/>', () => {
@@ -213,21 +213,20 @@ describe('UserDetail', () => {
 
   describe('#erroralert()', () => {
     it('displays error <Alert/>', () => {
-      const props = { message: 'Cognito user validation is failed' };
+      const props = { user_message: 'Cognito user validation is failed' };
+      wrapper.setState({ disableErrorAlert: true });
       wrapper.setProps({ userDetailError: props });
       const alertBox = wrapper.find('ErrorMessage');
       expect(alertBox.length).toBe(1);
-      expect(alertBox.dive().props().children).toBe(
-        'Cognito user validation is failed'
-      );
+      expect(alertBox.dive().props().children).toBe(props.user_message);
       expect(alertBox.dive().props().alertCross).toEqual(false);
     });
 
     it('does not display error <Alert/>', () => {
+      wrapper.setState({ disableErrorAlert: false });
       wrapper.setProps({ userDetailError: null });
       const alertBox = wrapper.find('ErrorMessage');
-      expect(alertBox.length).toBe(1);
-      expect(alertBox.find('Alert').length).toBe(0);
+      expect(alertBox.length).toBe(0);
     });
   });
 });
