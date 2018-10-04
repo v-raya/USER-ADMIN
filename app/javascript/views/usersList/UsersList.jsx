@@ -17,6 +17,7 @@ import {
   userStatusFormat,
   lastLoginDate,
   officesListToOptions,
+  getOfficeTranslator,
 } from '../../_constants/constants';
 import { isEqual } from 'lodash';
 
@@ -144,7 +145,8 @@ class UserList extends PureComponent {
     );
   };
 
-  renderUsersTable = ({ data }) => {
+  renderUsersTable = ({ data, officesList }) => {
+    const translateOffice = getOfficeTranslator(officesList);
     return (
       <ReactTable
         data={data}
@@ -177,7 +179,8 @@ class UserList extends PureComponent {
           },
           {
             Header: 'Office Name',
-            accessor: 'office',
+            id: 'office_name',
+            accessor: translateOffice,
           },
         ]}
         manual
@@ -219,6 +222,7 @@ class UserList extends PureComponent {
       officesList,
       selectedOfficesList,
     } = this.props;
+
     return (
       <div role="main">
         {this.state.addUser ? (
@@ -286,6 +290,7 @@ class UserList extends PureComponent {
                 <div>
                   {this.renderUsersTable({
                     data: this.props.userList,
+                    officesList,
                   })}
                 </div>
               </Cards>

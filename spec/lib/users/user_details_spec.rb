@@ -15,7 +15,7 @@ module Users
       it { is_expected.to have_attribute(:racfid, Types::String.optional) }
       it { is_expected.to have_attribute(:start_date, Types::String.optional) }
       it { is_expected.to have_attribute(:end_date, Types::String.optional) }
-      it { is_expected.to have_attribute(:office, Types::String.optional) }
+      it { is_expected.to have_attribute(:office_id, Types::String.optional) }
       it { is_expected.to have_attribute(:phone_number, Types::String.optional) }
       it { is_expected.to have_attribute(:email, Types::String.optional) }
       it { is_expected.to have_attribute(:user_create_date, Types::String.optional) }

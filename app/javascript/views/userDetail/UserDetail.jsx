@@ -129,7 +129,7 @@ export default class UserDetail extends Component {
   renderCards = permissionsList => {
     return (
       <div>
-        {this.state.details.id ? (
+        {this.state.details && this.state.details.id ? (
           <div>
             {this.state.isEdit ? (
               <UserDetailEdit
@@ -143,6 +143,7 @@ export default class UserDetail extends Component {
                 permissionsList={permissionsList}
                 onResendInvite={this.onResendInvite}
                 disableResendEmailButton={this.props.disableResendEmailButton}
+                officesList={this.props.officesList}
               />
             ) : (
               <UserDetailShow
@@ -150,6 +151,7 @@ export default class UserDetail extends Component {
                 onEdit={this.onEditClick}
                 permissionsList={permissionsList}
                 disableEditBtn={this.props.disableEditBtn}
+                officesList={this.props.officesList}
               />
             )}
           </div>
@@ -203,6 +205,12 @@ UserDetail.propTypes = {
   resendEmailStatus: PropTypes.string,
   disableResendEmailButton: PropTypes.bool,
   disableEditBtn: PropTypes.bool,
+  officesList: PropTypes.arrayOf(
+    PropTypes.shape({
+      office_name: PropTypes.string.isRequired,
+      office_id: PropTypes.string.isRequired,
+    })
+  ),
 };
 
 UserDetail.defaultProps = {

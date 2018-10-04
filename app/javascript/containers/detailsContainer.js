@@ -17,6 +17,7 @@ import {
 import { fetchPermissionsActions } from '../actions/permissionsActions';
 import { resendRegistrationEmailActions } from '../actions/resendRegistrationEmailActions';
 import { bindActionCreators } from 'redux';
+import { officesList } from '../selectors/userListSelector';
 
 function mapStateToProps(state) {
   return {
@@ -29,6 +30,7 @@ function mapStateToProps(state) {
     userDetailError: state.saveUserDetails.error,
     resendEmailStatus: selectResendEmailStatus(state),
     disableResendEmailButton: disableResendEmailButton(state),
+    officesList: officesList(state),
   };
 }
 

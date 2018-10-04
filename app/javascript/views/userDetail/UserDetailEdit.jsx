@@ -5,7 +5,11 @@ import ShowField from '../../common/ShowField';
 import { Button } from 'react-wood-duck';
 import DropDownField from 'react-wood-duck/dist/DropDownField';
 import MultiSelect from '../../common/MultiSelect';
-import { STATUS, permissionListToOptions } from '../../_constants/constants';
+import {
+  STATUS,
+  permissionListToOptions,
+  translateOffice,
+} from '../../_constants/constants';
 import {
   formatPhoneNumberWithExt,
   formatDate,
@@ -29,6 +33,7 @@ const UserDetailEdit = ({
   onRoleChange,
   permissionsList,
   onResendInvite,
+  officesList,
 }) => (
   <div className="row">
     <div className="col-md-12">
@@ -50,7 +55,9 @@ const UserDetailEdit = ({
               </ShowField>
             </div>
             <div className="col-md-3">
-              <ShowField label="Office Name">{details.office}</ShowField>
+              <ShowField label="Office Name">
+                {translateOffice(details, officesList)}
+              </ShowField>
             </div>
             <div className="col-md-2">
               <ShowField label="CWS Login">{details.racfid}</ShowField>
@@ -133,6 +140,12 @@ UserDetailEdit.propTypes = {
   permissionsList: PropTypes.array,
   onResendInvite: PropTypes.func,
   disableResendEmailButton: PropTypes.bool,
+  officesList: PropTypes.arrayOf(
+    PropTypes.shape({
+      office_name: PropTypes.string.isRequired,
+      office_id: PropTypes.string.isRequired,
+    })
+  ),
 };
 
 UserDetailEdit.defaultProps = {

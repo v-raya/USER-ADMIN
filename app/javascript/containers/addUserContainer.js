@@ -7,6 +7,7 @@ import { addUserRecords } from '../selectors/addUserSelector';
 import { bindActionCreators } from 'redux';
 import { permissionsList } from '../selectors/detailSelector';
 import { fetchPermissionsActions } from '../actions/permissionsActions';
+import { officesList } from '../selectors/userListSelector';
 
 function mapStateToProps(state) {
   return {
@@ -18,6 +19,7 @@ function mapStateToProps(state) {
       : '/',
     dashboardUrl: '/',
     validateNewUserError: state.validateNewUser.error,
+    officesList: officesList(state),
   };
 }
 

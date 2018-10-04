@@ -4,6 +4,8 @@ import {
   toFullName,
   userStatusFormat,
   lastLoginDate,
+  translateOffice,
+  getOfficeTranslator,
 } from './constants';
 
 describe('helpers', () => {
@@ -68,6 +70,46 @@ describe('helpers', () => {
 
     it('renders empty when date does not exists', () => {
       expect(lastLoginDate({ last_login_date_time: undefined })).toEqual('');
+    });
+  });
+
+  describe('#translateOffice', () => {
+    const offices = [
+      { office_id: 'north', office_name: 'North Office' },
+      { office_id: 'south', office_name: 'South Office' },
+    ];
+    it('renders the name of an office given a record containing office_id', () => {
+      expect(translateOffice({ office_id: 'north' }, offices)).toEqual(
+        'North Office'
+      );
+    });
+
+    it('renders the id if no office was found', () => {
+      expect(translateOffice({ office_id: 'wrong' }, offices)).toEqual('wrong');
+    });
+
+    it('renders a safe message if no office was assigned', () => {
+      expect(translateOffice({ first_name: 'Someone' }, offices)).toEqual('');
+    });
+  });
+
+  describe('#getOfficeTranslator', () => {
+    const translate = getOfficeTranslator([
+      { office_id: 'north', office_name: 'North Office' },
+      { office_id: 'south', office_name: 'South Office' },
+    ]);
+
+    it('returns a translator function which can translate office_ids', () => {
+      expect(translate({ office_id: 'north' })).toEqual('North Office');
+      expect(translate({ office_id: 'south' })).toEqual('South Office');
+    });
+
+    it('returns a translator which returns the office_id itself when not found', () => {
+      expect(translate({ office_id: 'west' })).toEqual('west');
+    });
+
+    it('returns a translator which returns empty-string when no office id is supplied', () => {
+      expect(translate({})).toEqual('');
     });
   });
 });

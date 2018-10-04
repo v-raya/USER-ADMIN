@@ -4,10 +4,11 @@ import Cards from '../../common/Card';
 import { Alert } from 'react-wood-duck';
 import ShowField from '../../common/ShowField';
 import { formatPhoneNumberWithExt } from '../../_utils/formatters';
+import { translateOffice } from '../../_constants/constants';
 
 /* eslint camelcase: 0 */
 
-const AddNewUser = ({ onAddUser, verifyNewUserDetails }) => {
+const AddNewUser = ({ onAddUser, verifyNewUserDetails, officesList }) => {
   return (
     <div>
       {verifyNewUserDetails.verification_passed ? (
@@ -36,7 +37,7 @@ const AddNewUser = ({ onAddUser, verifyNewUserDetails }) => {
                   </div>
                   <div className="col-md-3">
                     <ShowField label="Office Name">
-                      {verifyNewUserDetails.user.office}
+                      {translateOffice(verifyNewUserDetails.user, officesList)}
                     </ShowField>
                   </div>
                   <div className="col-md-3">
@@ -91,6 +92,12 @@ AddNewUser.propTypes = {
   verifyNewUserDetails: PropTypes.object,
   email: PropTypes.string,
   racfid: PropTypes.string,
+  officesList: PropTypes.arrayOf(
+    PropTypes.shape({
+      office_name: PropTypes.string.isRequired,
+      office_id: PropTypes.string.isRequired,
+    })
+  ),
 };
 
 export default AddNewUser;

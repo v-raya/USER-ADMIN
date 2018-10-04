@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Cards from '../../common/Card';
 import ShowField from '../../common/ShowField';
+import { translateOffice } from '../../_constants/constants';
 import {
   formatPhoneNumberWithExt,
   formatDate,
@@ -21,6 +22,7 @@ const UserDetailShow = ({
   onEdit,
   permissionsList,
   disableEditBtn,
+  officesList,
 }) => (
   <div className="row">
     <div className="col-md-12">
@@ -38,7 +40,9 @@ const UserDetailShow = ({
               </ShowField>
             </div>
             <div className="col-md-3">
-              <ShowField label="Office Name">{details.office}</ShowField>
+              <ShowField label="Office Name">
+                {translateOffice(details, officesList)}
+              </ShowField>
             </div>
             <div className="col-md-2">
               <ShowField label="CWS Login">{details.racfid}</ShowField>
@@ -105,6 +109,12 @@ UserDetailShow.propTypes = {
     })
   ),
   disableEditBtn: PropTypes.bool,
+  officesList: PropTypes.arrayOf(
+    PropTypes.shape({
+      office_name: PropTypes.string.isRequired,
+      office_id: PropTypes.string.isRequired,
+    })
+  ),
 };
 
 UserDetailShow.defaultProps = {
