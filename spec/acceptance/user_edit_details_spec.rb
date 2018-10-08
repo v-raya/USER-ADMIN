@@ -34,7 +34,9 @@ feature 'User Edit' do
     page_is_user_details
     click_link 'User List'
     page_has_user_list_headers
+
     first_user_link.click
+
     page_is_user_details
 
     original_account_status = details_account_status

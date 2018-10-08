@@ -12,6 +12,7 @@ import {
 import { fetchPermissionsActions } from '../actions/permissionsActions';
 import { addUserRecords } from '../selectors/addUserSelector';
 import { bindActionCreators } from 'redux';
+import { officesList } from '../selectors/userListSelector';
 
 function mapStateToProps(state) {
   return {
@@ -22,6 +23,7 @@ function mapStateToProps(state) {
       ? process.env.RAILS_RELATIVE_URL_ROOT
       : '/',
     addUserError: state.addUser.error,
+    officesList: officesList(state),
   };
 }
 

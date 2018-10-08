@@ -106,6 +106,7 @@ export default class AddUserDetail extends Component {
                 onRoleChange={this.onRoleChange}
                 disableActionBtn={this.state.disableActionBtn}
                 permissionsList={permissionRoles}
+                officesList={this.props.officesList}
               />
             ) : (
               <div>
@@ -114,6 +115,7 @@ export default class AddUserDetail extends Component {
                     details={this.state.details}
                     onEdit={this.onEditClick}
                     permissionsList={permissionRoles}
+                    officesList={this.props.officesList}
                   />
                 </div>
               </div>
@@ -174,6 +176,7 @@ AddUserDetail.propTypes = {
   actions: PropTypes.object,
   id: PropTypes.any,
   addUserError: PropTypes.object,
+  officesList: PropTypes.array,
 };
 
 AddUserDetail.defaultProps = {
@@ -181,4 +184,5 @@ AddUserDetail.defaultProps = {
   dashboardUrl: '/',
   userListClickHandler: () => {},
   dashboardClickHandler: () => {},
+  officesList: [],
 };

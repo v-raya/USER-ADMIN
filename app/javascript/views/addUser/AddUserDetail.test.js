@@ -6,7 +6,10 @@ describe('AddUserDetail', () => {
   let wrapper;
   let mockFetchDetailsActions;
   let mockSaveUserDetailsActions;
-
+  const officeList = [
+    { office_id: 'north', office_name: 'North Office' },
+    { office_id: 'south', office_name: 'South Office' },
+  ];
   beforeEach(() => {
     mockFetchDetailsActions = jest.fn().mockReturnValue(Promise.resolve([]));
     mockSaveUserDetailsActions = jest.fn().mockReturnValue(Promise.resolve([]));
@@ -21,6 +24,7 @@ describe('AddUserDetail', () => {
           fetchDetailsActions: mockFetchDetailsActions,
           saveUserDetailsActions: mockSaveUserDetailsActions,
         }}
+        officesList={officeList}
       />,
       { disableLifecycleMethods: true }
     );
@@ -69,6 +73,12 @@ describe('AddUserDetail', () => {
         'Your changes have been made successfully'
       );
       expect(alertBox.props().alertCross).toEqual(false);
+    });
+
+    it('displays no <Alert/> when alert is false', () => {
+      wrapper.setState({ alert: false });
+      const alertBox = wrapper.find('Alert');
+      expect(alertBox.length).toBe(0);
     });
   });
 
@@ -167,6 +177,9 @@ describe('AddUserDetail', () => {
         expect(wrapper.find('UserDetailEdit').length).toBe(1);
         expect(wrapper.find('UserDetailEdit').props().disableActionBtn).toBe(
           true
+        );
+        expect(wrapper.find('UserDetailEdit').props().officesList).toBe(
+          officeList
         );
       });
     });
