@@ -32,14 +32,6 @@ export class SyncStore {
       console.log(err);
     }
   }
-
-  deleteState() {
-    try {
-      this.store.removeItem(this.key);
-    } catch (err) {
-      console.log(err);
-    }
-  }
 }
 
 export function observeStore(store, select, onChange) {
@@ -58,4 +50,11 @@ export function observeStore(store, select, onChange) {
   return unsubscribe;
 }
 
+export function deleteState() {
+  try {
+    window.sessionStorage.removeItem(CLIENT_STORE_KEY);
+  } catch (err) {
+    console.log(err);
+  }
+}
 export default SyncStore;

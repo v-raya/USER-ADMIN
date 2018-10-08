@@ -1,4 +1,4 @@
-import { SyncStore, observeStore } from './syncStore';
+import { SyncStore, observeStore, deleteState } from './syncStore';
 
 describe('SyncStore', () => {
   let syncStore;
@@ -55,24 +55,6 @@ describe('SyncStore', () => {
     expect(console.log).toHaveBeenCalledTimes(1);
     expect(console.log).toHaveBeenLastCalledWith(err);
   });
-
-  it('deletes state', () => {
-    mockStore.removeItem.mockImplementation(_ => {});
-    expect(mockStore.removeItem).not.toHaveBeenCalled();
-    syncStore.deleteState();
-    expect(mockStore.removeItem).toHaveBeenCalledWith('MY_KEY');
-    expect(mockStore.removeItem).toHaveBeenCalledTimes(1);
-  });
-
-  it('handles removeItem errors', () => {
-    const err = Error('Oh nos!');
-    const throwError = () => {
-      throw err;
-    };
-    mockStore.removeItem.mockImplementation(throwError);
-    expect(_ => syncStore.deleteState()).not.toThrow();
-    expect(console.log).toHaveBeenCalledWith(err);
-  });
 });
 
 describe('#observeStore', () => {
@@ -96,5 +78,35 @@ describe('#observeStore', () => {
     observeStore(mockStore, select, onChange);
     mockStore.subscribe.mockImplementation(_ => {});
     expect(mockStore.subscribe).not.toThrow();
+  });
+});
+
+describe('#deleteStore', () => {
+  let mockStore;
+
+  beforeEach(() => {
+    const MockStore = jest.fn().mockImplementation(() => {
+      return {
+        removeItem: jest.fn(),
+      };
+    });
+    const key = 'MY_KEY';
+    mockStore = new MockStore(key);
+  });
+
+  it('deletes state', () => {
+    mockStore.removeItem.mockImplementation(_ => {});
+    expect(mockStore.removeItem).not.toHaveBeenCalled();
+    expect(mockStore.removeItem).not.toThrow();
+  });
+
+  it('handles removeItem errors', () => {
+    const err = Error('Oh nos!');
+    const throwError = () => {
+      throw err;
+    };
+    mockStore.removeItem.mockImplementation(throwError);
+    expect(_ => deleteState()).not.toThrow();
+    expect(console.log).toHaveBeenCalledWith(err);
   });
 });
