@@ -16,7 +16,7 @@ module Api
       params.permit(:email,
                     :first_name,
                     :last_name,
-                    :office,
+                    :office_id,
                     :county_name,
                     :user_create_date,
                     :user_last_modified_date,
