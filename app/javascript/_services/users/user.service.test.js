@@ -6,6 +6,12 @@ const ApiService = require('../api').default;
 const id = 'someid';
 
 describe('UserService', () => {
+  let getSpy;
+
+  beforeEach(() => {
+    getSpy = jest.spyOn(ApiService, 'get');
+  });
+
   describe('#search', () => {
     let getSearchSpy23;
     beforeEach(() => {
@@ -28,12 +34,6 @@ describe('UserService', () => {
   });
 
   describe('#fetch', () => {
-    let getSpy;
-
-    beforeEach(() => {
-      getSpy = jest.spyOn(ApiService, 'get');
-    });
-
     it('calls fetch ApiService', () => {
       const lastName = 'don';
       getSpy.mockReturnValue(Promise.resolve({}));
@@ -43,28 +43,34 @@ describe('UserService', () => {
   });
 
   describe('#fetchUserDetails', () => {
-    let getSpy;
-
-    beforeEach(() => {
-      getSpy = jest.spyOn(ApiService, 'get');
-    });
-
     it('calls #fetchUsersDetails ApiService', () => {
       getSpy.mockReturnValue(Promise.resolve({}));
       UserService.fetchUserDetails(id);
       expect(getSpy).toHaveBeenCalledWith('/user_detail/someid');
     });
+  });
 
-    it('calls #fetchPermissionList ApiService', () => {
+  describe('#fetchPermissionsList', () => {
+    it('calls #fetchPermissionsList ApiService', () => {
       getSpy.mockReturnValue(Promise.resolve({}));
       UserService.fetchPermissionsList();
       expect(getSpy).toHaveBeenCalledWith('/permissions_list/');
     });
+  });
 
+  describe('#fetchOfficesList', () => {
     it('calls #fetchOfficesList ApiService', () => {
       getSpy.mockReturnValue(Promise.resolve({}));
       UserService.fetchOfficesList();
       expect(getSpy).toHaveBeenCalledWith('/offices_list/');
+    });
+  });
+
+  describe('#fetchRolesList', () => {
+    it('calls #fetchRolesList ApiService', () => {
+      getSpy.mockReturnValue(Promise.resolve({}));
+      UserService.fetchRolesList();
+      expect(getSpy).toHaveBeenCalledWith('/roles_list/');
     });
   });
 

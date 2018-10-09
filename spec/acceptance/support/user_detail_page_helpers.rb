@@ -2,6 +2,8 @@
 
 module UserDetailPageHelper
   def page_is_user_details
+    # find forces a wait for the content to appear, while the expect does not.
+    find('h1', text: 'User Profile')
     expect(page).to have_content('User Profile')
   end
 

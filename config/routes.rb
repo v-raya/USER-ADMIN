@@ -13,12 +13,13 @@ Rails.application.routes.draw do
       end
     end
 
-    resources :resend_registration_email, only: [:show] do 
+    resources :resend_registration_email, only: [:show] do
     end
 
     get 'account', to: 'account#index'
     get 'permissions_list', to: 'permissions_list#index'
     get 'offices_list', to: 'offices_list#index'
+    get 'roles_list', to: 'roles_list#index'
     post 'add_user', to: 'add_user#index'
   end
 

@@ -7,14 +7,17 @@ export const STATUS = [
   { value: false, label: 'Inactive' },
 ];
 
-export const permissionListToOptions = items =>
-  items.map(({ name, description }) => ({ value: name, label: description }));
-
 export const officesListToOptions = items =>
   items.map(({ office_id, office_name }) => ({
     value: office_id,
     label: office_name,
   }));
+
+export const permissionListToOptions = items =>
+  items.map(({ name, description }) => ({ value: name, label: description }));
+
+export const roleListToOptions = items =>
+  items.map(({ id, name }) => ({ value: id, label: name }));
 
 export const toFullName = ({ first_name, last_name }) =>
   `${last_name}, ${first_name}`;

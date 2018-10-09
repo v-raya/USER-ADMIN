@@ -26,6 +26,7 @@ export default class UserDetail extends Component {
       this.getUserId(this.currentPathname())
     );
     this.props.actions.fetchPermissionsActions();
+    this.props.actions.fetchRolesActions();
   }
 
   componentWillUnmount() {

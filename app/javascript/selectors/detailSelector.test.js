@@ -1,6 +1,7 @@
 import {
   selectDetailRecords,
   permissionsList,
+  rolesList,
   checkEditDisable,
   selectUserDetailObject,
 } from './detailSelector';
@@ -130,7 +131,7 @@ describe('selectors', () => {
   });
 
   describe('#permissionsList', () => {
-    it('selects the permissions when availble', () => {
+    it('selects the permissions when available', () => {
       const expectedValue = [
         { name: 'foo-name', description: 'foo-desc' },
         { name: 'bar-name', description: 'bar-desc' },
@@ -147,6 +148,34 @@ describe('selectors', () => {
         },
       };
       expect(permissionsList(state)).toEqual(expectedValue);
+    });
+
+    it('returns empty array when permissions are not available', () => {
+      const state = {
+        fetchPermissions: {},
+      };
+      expect(permissionsList(state)).toEqual([]);
+    });
+  });
+
+  describe('#rolesList', () => {
+    it('selects the roles when available', () => {
+      const expectedValue = [
+        { id: 'foo-id', name: 'foo-name' },
+        { id: 'bar-id', name: 'bar-name' },
+      ];
+      const state = {
+        fetchRoles: {
+          roles: {
+            XHRStatus: 'ready',
+            roles: [
+              { id: 'foo-id', name: 'foo-name' },
+              { id: 'bar-id', name: 'bar-name' },
+            ],
+          },
+        },
+      };
+      expect(rolesList(state)).toEqual(expectedValue);
     });
 
     it('returns empty array when permissions are not available', () => {

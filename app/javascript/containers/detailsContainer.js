@@ -4,6 +4,7 @@ import {
   selectDetailRecords,
   checkEditDisable,
   permissionsList,
+  rolesList,
 } from '../selectors/detailSelector';
 import {
   fetchDetailsActions,
@@ -15,6 +16,7 @@ import {
   disableResendEmailButton,
 } from '../selectors/resendEmailSelector';
 import { fetchPermissionsActions } from '../actions/permissionsActions';
+import { fetchRolesActions } from '../actions/rolesActions';
 import { resendRegistrationEmailActions } from '../actions/resendRegistrationEmailActions';
 import { bindActionCreators } from 'redux';
 import { officesList } from '../selectors/userListSelector';
@@ -24,6 +26,7 @@ function mapStateToProps(state) {
     disableEditBtn: checkEditDisable(state),
     details: selectDetailRecords(state),
     permissionsList: permissionsList(state),
+    rolesList: rolesList(state),
     userListUrl: process.env.RAILS_RELATIVE_URL_ROOT
       ? process.env.RAILS_RELATIVE_URL_ROOT
       : '/',
@@ -38,6 +41,7 @@ function mapDispatchToProps(dispatch) {
   const actions = {
     fetchDetailsActions,
     fetchPermissionsActions,
+    fetchRolesActions,
     clearDetails,
     saveUserDetailsActions,
     resendRegistrationEmailActions,

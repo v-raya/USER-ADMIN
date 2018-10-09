@@ -43,6 +43,12 @@ module Users
       response.body { Offices.new }
     end
 
+    def get_roles_list(token)
+      response = @http_service.get('/perry/idm/roles', token)
+      return [] if response.status == 404
+      response.body { Roles.new }
+    end
+
     def add_user(parameters, token)
       response = @http_service.post('/perry/idm/users', parameters, token)
       response.headers

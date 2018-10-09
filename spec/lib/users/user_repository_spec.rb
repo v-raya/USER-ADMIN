@@ -106,9 +106,36 @@ module Users
       end
     end
 
-    describe '#get_offices_list' do
+    describe '#get_roles_list' do
       let(:response) { instance_double('Faraday::Response') }
 
+      context 'with no roles' do
+        it 'returns an empty roles list' do
+          allow(response).to receive(:status).and_return(404)
+          allow(http_service)
+            .to receive(:get)
+            .with('/perry/idm/roles', token)
+            .and_return(response)
+          expect(user_repository.get_roles_list(token)).to eq([])
+        end
+      end
+
+      context 'with a list' do
+        it 'returns a roles list' do
+          allow(response).to receive(:status).and_return(200)
+          allow(response).to receive(:body).and_return(%w[user admin])
+          allow(http_service)
+            .to receive(:get)
+            .with('/perry/idm/roles', token)
+            .and_return(response)
+          expect(user_repository.get_roles_list(token))
+            .to eq %w[user admin]
+        end
+      end
+    end
+
+    describe '#get_offices_list' do
+      let(:response) { instance_double('Faraday::Response') }
       context 'with no offices' do
         it 'returns an empty offices list' do
           allow(response).to receive(:status).and_return(404)
@@ -119,7 +146,6 @@ module Users
           expect(user_repository.get_offices_list(token)).to eq([])
         end
       end
-
       context 'with a list' do
         it 'returns a offices list' do
           allow(response).to receive(:status).and_return(200)

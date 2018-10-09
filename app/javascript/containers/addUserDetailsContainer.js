@@ -3,6 +3,7 @@ import AddUserDetail from '../views/addUser/AddUserDetail';
 import {
   selectDetailRecords,
   permissionsList,
+  rolesList,
 } from '../selectors/detailSelector';
 import { addUserActions } from '../actions/addUserActions';
 import {
@@ -10,6 +11,7 @@ import {
   saveUserDetailsActions,
 } from '../actions/detailActions';
 import { fetchPermissionsActions } from '../actions/permissionsActions';
+import { fetchRolesActions } from '../actions/rolesActions';
 import { addUserRecords } from '../selectors/addUserSelector';
 import { bindActionCreators } from 'redux';
 import { officesList } from '../selectors/userListSelector';
@@ -18,6 +20,7 @@ function mapStateToProps(state) {
   return {
     id: addUserRecords(state),
     permissionRoles: permissionsList(state),
+    rolesList: rolesList(state),
     details: selectDetailRecords(state),
     userListUrl: process.env.RAILS_RELATIVE_URL_ROOT
       ? process.env.RAILS_RELATIVE_URL_ROOT
@@ -31,6 +34,7 @@ function mapDispatchToProps(dispatch) {
   const actions = {
     addUserActions,
     fetchPermissionsActions,
+    fetchRolesActions,
     fetchDetailsActions,
     saveUserDetailsActions,
   };
