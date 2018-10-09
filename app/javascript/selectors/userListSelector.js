@@ -26,3 +26,11 @@ export const getSearchParams = ({ userList }) => {
 export const getSerializedSearchParams = ({ userList }) => {
   return encodeURIComponent(JSON.stringify(getSearchParams({ userList })));
 };
+
+export const checkOfficeNames = offices => {
+  if (offices && offices.length !== 0) {
+    return offices.filter(value => value.trim() !== '');
+  } else {
+    return [];
+  }
+};

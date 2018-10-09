@@ -36,7 +36,7 @@ module UserListPageHelper
     last_name = user_name.match(/([^,]*),/)[1]
     puts "search for #{last_name}"
 
-    fill_in 'searchtext', with: last_name
+    fill_in 'searchLastName', with: last_name
     click_on 'Search'
   end
 end

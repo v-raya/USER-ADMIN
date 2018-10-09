@@ -2,6 +2,60 @@ import reducer from './userListReducers';
 import * as actionTypes from '../actions/actionTypes';
 
 describe('reducer', () => {
+  it('handles FETCH_ACCOUNT_API_CALL_REQUEST', () => {
+    const before = {
+      fetching: false,
+    };
+    const action = {
+      type: actionTypes.FETCH_ACCOUNT_API_CALL_REQUEST,
+      payload: 'Asdfggzxcvb',
+    };
+    const after = reducer(before, action);
+    expect(after.fetching).toEqual(true);
+  });
+
+  it('handles FETCH_ACCOUNT_API_CALL_SUCCESS', () => {
+    const before = {
+      inputData: {},
+      countyName: '',
+    };
+    const action = {
+      type: actionTypes.FETCH_ACCOUNT_API_CALL_SUCCESS,
+      payload: { admin_office_ids: ['1234509876'], county_name: 'Madera' },
+    };
+    const after = reducer(before, action);
+    expect(after.inputData.officeNames).toEqual(['1234509876']);
+    expect(after.countyName).toEqual('Madera');
+  });
+
+  it('handles FETCH_ACCOUNT_API_CALL_SUCCESS when officeNames is not undefined', () => {
+    const before = {
+      inputData: {
+        officeNames: ['someOffice'],
+      },
+      countyName: '',
+    };
+    const action = {
+      type: actionTypes.FETCH_ACCOUNT_API_CALL_SUCCESS,
+      payload: { admin_office_ids: ['1234509876'], county_name: 'Madera' },
+    };
+    const after = reducer(before, action);
+    expect(after.inputData.officeNames).toEqual(['someOffice']);
+    expect(after.countyName).toEqual('Madera');
+  });
+
+  it('handles FETCH_ACCOUNT_API_CALL_FAILURE', () => {
+    const before = {
+      error: null,
+    };
+    const action = {
+      type: actionTypes.FETCH_ACCOUNT_API_CALL_FAILURE,
+      payload: { error: 'someError' },
+    };
+    const after = reducer(before, action);
+    expect(after.error).toEqual('someError');
+  });
+
   it('handles FETCH_USERS_API_CALL_REQUEST', () => {
     const requestAction = {
       type: actionTypes.FETCH_USERS_API_CALL_REQUEST,
@@ -67,24 +121,21 @@ describe('reducer', () => {
     expect(reducer(state, unexpectedAction)).toEqual(state);
   });
 
-  it('handles next search updates', () => {
-    const before = { nextSearch: 'before' };
+  it('handles input change', () => {
+    const before = {
+      inputData: { lastName: 'oldLastName' },
+    };
+    const key = 'lastName';
+    const value = 'newLastName';
     const action = {
-      type: actionTypes.USER_LIST_SET_NEXT_SEARCH,
-      payload: 'after',
+      type: actionTypes.HANDLE_INPUT_CHANGE,
+      payload: {
+        key,
+        value,
+      },
     };
     const after = reducer(before, action);
-    expect(after.nextSearch).toEqual('after');
-  });
-
-  it('handles offices list  updates', () => {
-    const before = { selectedOfficesList: ['before', ''] };
-    const action = {
-      type: actionTypes.USER_LIST_SET_OFFICE_LIST,
-      payload: ['after'],
-    };
-    const after = reducer(before, action);
-    expect(after.selectedOfficesList).toEqual(['after']);
+    expect(after.inputData).toEqual({ lastName: 'newLastName' });
   });
 
   it('handles search criteria updates', () => {

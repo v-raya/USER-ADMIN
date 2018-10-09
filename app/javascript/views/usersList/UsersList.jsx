@@ -35,53 +35,13 @@ class UserList extends PureComponent {
   }
 
   componentDidUpdate(prevProps) {
-    if (this.props.loggedInUserAccount !== prevProps.loggedInUserAccount) {
-      this.props.actions.searchUsers({
-        query: this.initialLoadQuery(this.props.loggedInUserAccount),
-        sort: this.props.sort,
-        size: this.props.size,
-        from: this.props.from,
-      });
+    if (isEqual(prevProps.inputData, {}) && this.props.inputData.officeNames) {
+      this.props.actions.setSearch([
+        { field: 'last_name', value: this.props.lastName },
+        { field: 'office_ids', value: this.props.officeNames },
+      ]);
     }
   }
-
-  isStateAdmin = loggedInUserAccount => {
-    return loggedInUserAccount.roles.includes('State-admin');
-  };
-
-  initialLoadQuery = loggedInUserAccount => {
-    if (this.isOfficeAdmin(loggedInUserAccount)) {
-      this.props.actions.setOfficesList(loggedInUserAccount.admin_office_ids);
-      return [
-        {
-          field: 'last_name',
-          value: this.props.nextSearch,
-        },
-        {
-          field: 'office_ids',
-          value: loggedInUserAccount.admin_office_ids,
-        },
-      ];
-    } else {
-      return this.props.query;
-    }
-  };
-
-  isCountyAdmin = loggedInUserAccount => {
-    return (
-      !this.isStateAdmin(loggedInUserAccount) &&
-      loggedInUserAccount.roles.includes('County-admin')
-    );
-  };
-
-  isOfficeAdmin = loggedInUserAccount => {
-    return (
-      loggedInUserAccount !== undefined &&
-      !this.isStateAdmin(loggedInUserAccount) &&
-      !this.isCountyAdmin(loggedInUserAccount) &&
-      loggedInUserAccount.roles.includes('Office-admin')
-    );
-  };
 
   handleOnAdd = () => {
     this.setState({ addUser: true });
@@ -103,22 +63,26 @@ class UserList extends PureComponent {
     );
   };
 
-  handleSearchChange = e => {
-    this.props.actions.setNextSearch(e.target.value);
-  };
-
-  handleOfficesListChange = value => {
-    this.props.actions.setOfficesList(value);
-  };
-
   submitSearch = e => {
     e.preventDefault();
-    const offices = this.props.selectedOfficesList;
-
     this.props.actions.setSearch([
-      { field: 'last_name', value: this.props.nextSearch },
-      { field: 'office_ids', value: offices },
+      { field: 'last_name', value: this.props.lastName },
+      { field: 'office_ids', value: this.props.officeNames },
     ]);
+  };
+
+  isDisabledSearchBtn = () => {
+    const { officeNames, lastName, query } = this.props;
+
+    const lastNameSearch = query.find(({ field }) => field === 'last_name');
+
+    const officeSearch = query.find(({ field }) => field === 'office_ids');
+
+    return (
+      lastNameSearch &&
+      lastNameSearch.value === lastName &&
+      isEqual(officeSearch.value.sort(), officeNames.sort())
+    );
   };
 
   getTotalPages = () => {
@@ -130,20 +94,6 @@ class UserList extends PureComponent {
   };
 
   getCurrentPageNumber = () => Math.floor(this.props.from / this.props.size);
-
-  isDisabledSearchBtn = () => {
-    const { selectedOfficesList, nextSearch, query } = this.props;
-
-    const lastNameSearch = query.find(({ field }) => field === 'last_name');
-
-    const officeSearch = query.find(({ field }) => field === 'office_ids');
-
-    return (
-      lastNameSearch &&
-      lastNameSearch.value === nextSearch &&
-      isEqual(officeSearch.value.sort(), selectedOfficesList.sort())
-    );
-  };
 
   renderUsersTable = ({ data, officesList }) => {
     const translateOffice = getOfficeTranslator(officesList);
@@ -225,12 +175,7 @@ class UserList extends PureComponent {
   };
 
   render() {
-    const {
-      loggedInUserAccount,
-      officesList,
-      selectedOfficesList,
-    } = this.props;
-
+    const { countyName, officesList, officeNames, lastName } = this.props;
     return (
       <div role="main">
         {this.state.addUser ? (
@@ -241,7 +186,7 @@ class UserList extends PureComponent {
             <div className="container">
               {this.renderBreadcrumb()}
               <Cards
-                cardHeaderText={'County: ' + loggedInUserAccount.county_name}
+                cardHeaderText={'County: ' + countyName}
                 cardHeaderButton={true}
                 headerBtnName="+ Add a user"
                 onEdit={this.handleOnAdd}
@@ -250,13 +195,14 @@ class UserList extends PureComponent {
                   <div className="row">
                     <div className="col-md-4 col-sm-6">
                       <MultiSelect
-                        id="MultiSelect2"
-                        selectedOption={selectedOfficesList}
+                        id="searchOfficeName"
+                        selectedOption={officeNames}
                         options={officesListToOptions(officesList)}
                         label="Filter by Office Name"
                         placeholder={`(${officesList.length})`}
                         onChange={selectedOptions =>
-                          this.handleOfficesListChange(
+                          this.props.actions.handleSearchChange(
+                            'officeNames',
                             selectedOptions.split(',')
                           )
                         }
@@ -265,11 +211,16 @@ class UserList extends PureComponent {
                     <div className="col-md-6 col-sm-6">
                       <InputComponent
                         label="Search user list"
-                        id="searchtext"
+                        id="searchLastName"
                         fieldClassName="form-group"
                         type="text"
-                        value={this.props.nextSearch}
-                        onChange={this.handleSearchChange}
+                        value={lastName}
+                        onChange={event =>
+                          this.props.actions.handleSearchChange(
+                            'lastName',
+                            event.target.value
+                          )
+                        }
                         placeholder="search user by Last name"
                         autocomplete="off"
                       />
@@ -317,10 +268,9 @@ UserList.propTypes = {
   fetching: PropTypes.bool,
   userList: PropTypes.array,
   dashboardUrl: PropTypes.string,
-  loggedInUserAccount: PropTypes.object,
+  countyName: PropTypes.string,
   dashboardClickHandler: PropTypes.func,
   actions: PropTypes.object.isRequired,
-  nextSearch: PropTypes.string,
   total: PropTypes.number,
   location: PropTypes.shape({
     pathname: PropTypes.string,
@@ -344,7 +294,10 @@ UserList.propTypes = {
   pageSizeOptions: PropTypes.arrayOf(PropTypes.number),
   error: PropTypes.any,
   officesList: PropTypes.array,
-  selectedOfficesList: PropTypes.array,
+  handleSearchChange: PropTypes.func,
+  officeNames: PropTypes.array,
+  lastName: PropTypes.string,
+  inputData: PropTypes.object,
 };
 
 UserList.defaultProps = {
@@ -353,6 +306,7 @@ UserList.defaultProps = {
   sort: [],
   pageSizeOptions: [5, 10, 25, 50, 100],
   officesList: [],
-  nextSearch: '',
+  lastName: '',
+  officeNames: [],
 };
 export default UserList;

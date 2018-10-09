@@ -1,14 +1,4 @@
-import {
-  FETCH_USERS_API_CALL_FAILURE,
-  FETCH_USERS_API_CALL_REQUEST,
-  FETCH_USERS_API_CALL_SUCCESS,
-  USER_LIST_SET_NEXT_SEARCH,
-  USER_LIST_SET_OFFICE_LIST,
-  USER_LIST_SET_PAGE_SIZE,
-  USER_LIST_SET_PAGE,
-  USER_LIST_SET_SEARCH,
-  USER_LIST_SET_SORT,
-} from '../actions/actionTypes';
+import * as actionTypes from '../actions/actionTypes';
 
 const initialValue = {
   sort: [
@@ -18,9 +8,7 @@ const initialValue = {
     // },
   ],
   from: 0,
-  size: 50,
-  nextSearch: '',
-  selectedOfficesList: [],
+  size: 5,
   query: [
     {
       field: 'last_name',
@@ -34,14 +22,16 @@ const initialValue = {
   users: [],
   fetching: false,
   error: null,
+  inputData: {},
+  countyName: '',
 };
 
 function userListReducer(state = initialValue, { type, payload, error, meta }) {
   switch (type) {
-    case FETCH_USERS_API_CALL_REQUEST:
+    case actionTypes.FETCH_USERS_API_CALL_REQUEST:
       return { ...state, fetching: true, error: null, query: payload.query };
 
-    case FETCH_USERS_API_CALL_SUCCESS: {
+    case actionTypes.FETCH_USERS_API_CALL_SUCCESS: {
       const {
         records: users,
         meta: { total, request },
@@ -56,7 +46,7 @@ function userListReducer(state = initialValue, { type, payload, error, meta }) {
       };
     }
 
-    case FETCH_USERS_API_CALL_FAILURE: {
+    case actionTypes.FETCH_USERS_API_CALL_FAILURE: {
       return {
         ...state,
         error,
@@ -66,7 +56,7 @@ function userListReducer(state = initialValue, { type, payload, error, meta }) {
     }
 
     // TODO: fix FSA
-    case USER_LIST_SET_SORT: {
+    case actionTypes.USER_LIST_SET_SORT: {
       const sort = payload;
       return {
         ...state,
@@ -74,23 +64,16 @@ function userListReducer(state = initialValue, { type, payload, error, meta }) {
       };
     }
 
-    case USER_LIST_SET_NEXT_SEARCH: {
-      const nextSearch = payload;
+    case actionTypes.HANDLE_INPUT_CHANGE:
       return {
         ...state,
-        nextSearch,
+        inputData: {
+          ...state.inputData,
+          [payload.key]: payload.value,
+        },
       };
-    }
 
-    case USER_LIST_SET_OFFICE_LIST: {
-      const selectedOfficesList = payload.filter(value => value.trim() !== '');
-      return {
-        ...state,
-        selectedOfficesList,
-      };
-    }
-
-    case USER_LIST_SET_SEARCH: {
+    case actionTypes.USER_LIST_SET_SEARCH: {
       const query = payload;
       return {
         ...state,
@@ -100,18 +83,44 @@ function userListReducer(state = initialValue, { type, payload, error, meta }) {
     }
 
     // TODO: fix FSA
-    case USER_LIST_SET_PAGE_SIZE: {
+    case actionTypes.USER_LIST_SET_PAGE_SIZE: {
       const size = payload;
       return { ...state, size, from: 0 };
     }
 
-    case USER_LIST_SET_PAGE: {
+    case actionTypes.USER_LIST_SET_PAGE: {
       const pageIndex = payload;
       return {
         ...state,
         from: pageIndex * state.size,
       };
     }
+
+    case actionTypes.FETCH_ACCOUNT_API_CALL_REQUEST:
+      return { ...state, fetching: true, error: null };
+
+    case actionTypes.FETCH_ACCOUNT_API_CALL_SUCCESS:
+      return {
+        ...state,
+        fetching: false,
+        inputData: {
+          ...state.inputData,
+          officeNames:
+            state.inputData.officeNames === undefined
+              ? payload.admin_office_ids
+              : state.inputData.officeNames,
+        },
+        countyName: payload.county_name,
+        error: null,
+      };
+
+    case actionTypes.FETCH_ACCOUNT_API_CALL_FAILURE:
+      return {
+        ...state,
+        fetching: false,
+        inputData: {},
+        error: payload.error,
+      };
 
     default:
       return state;

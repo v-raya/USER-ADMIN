@@ -1,15 +1,12 @@
-import {
-  FETCH_USERS_API_CALL_REQUEST,
-  USER_LIST_SET_PAGE_SIZE,
-  USER_LIST_SET_PAGE,
-  USER_LIST_SET_SEARCH,
-  USER_LIST_SET_SORT,
-  USER_LIST_SET_NEXT_SEARCH,
-  USER_LIST_SET_OFFICE_LIST,
-} from './actionTypes';
+import * as actionTypes from './actionTypes';
+
+export const fetchAccountActions = token => ({
+  type: actionTypes.FETCH_ACCOUNT_API_CALL_REQUEST,
+  payload: token,
+});
 
 export const searchUsers = params => ({
-  type: FETCH_USERS_API_CALL_REQUEST,
+  type: actionTypes.FETCH_USERS_API_CALL_REQUEST,
   payload: params,
 });
 
@@ -18,7 +15,7 @@ export const searchUsers = params => ({
  * @param {number} size Integer number of records per page
  */
 export const setPageSize = size => ({
-  type: USER_LIST_SET_PAGE_SIZE,
+  type: actionTypes.USER_LIST_SET_PAGE_SIZE,
   payload: size,
 });
 
@@ -27,7 +24,7 @@ export const setPageSize = size => ({
  * @param {number} pageNumber Integer page number of paged results
  */
 export const setPage = pageNumber => ({
-  type: USER_LIST_SET_PAGE,
+  type: actionTypes.USER_LIST_SET_PAGE,
   payload: pageNumber,
 });
 
@@ -38,26 +35,18 @@ export const setPage = pageNumber => ({
  * @param {string|number|boolean} query[].value Value on which to search
  */
 export const setSearch = query => ({
-  type: USER_LIST_SET_SEARCH,
+  type: actionTypes.USER_LIST_SET_SEARCH,
   payload: query,
 });
 
 /**
- * Updates the "preflight" search string for `last_name`)
- * @param {string} nextSearch search string
+ * Updates the "preflight" search input for both `last_name` and `office_name`)
+ * @param {string} lastName and @param {Array} officeNames search string
  */
-export const setNextSearch = nextSearch => ({
-  type: USER_LIST_SET_NEXT_SEARCH,
-  payload: nextSearch,
-});
 
-/**
- * Updates the search string for `office list`)
- * @param {Array} officesList search string
- */
-export const setOfficesList = officesList => ({
-  type: USER_LIST_SET_OFFICE_LIST,
-  payload: officesList,
+export const handleSearchChange = (key, value) => ({
+  type: actionTypes.HANDLE_INPUT_CHANGE,
+  payload: { key, value },
 });
 
 /**
@@ -66,5 +55,5 @@ export const setOfficesList = officesList => ({
  */
 export const setSort = sort => ({
   payload: sort,
-  type: USER_LIST_SET_SORT,
+  type: actionTypes.USER_LIST_SET_SORT,
 });

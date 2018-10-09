@@ -3,9 +3,9 @@ import {
   setPageSize,
   setPage,
   setSearch,
-  setNextSearch,
-  setOfficesList,
+  handleSearchChange,
   setSort,
+  fetchAccountActions,
 } from './userListActions';
 import {
   FETCH_USERS_API_CALL_REQUEST,
@@ -13,9 +13,19 @@ import {
   USER_LIST_SET_PAGE,
   USER_LIST_SET_SEARCH,
   USER_LIST_SET_SORT,
-  USER_LIST_SET_NEXT_SEARCH,
-  USER_LIST_SET_OFFICE_LIST,
+  HANDLE_INPUT_CHANGE,
+  FETCH_ACCOUNT_API_CALL_REQUEST,
 } from './actionTypes';
+
+describe('#fetchAccountActions', () => {
+  it('returns type and payload', () => {
+    const token = 'ABCDEFGHIJKLMOPQRST';
+    expect(fetchAccountActions(token)).toEqual({
+      type: FETCH_ACCOUNT_API_CALL_REQUEST,
+      payload: token,
+    });
+  });
+});
 
 describe('UserList Actions', () => {
   describe('#searchUsers', () => {
@@ -56,22 +66,14 @@ describe('UserList Actions', () => {
     });
   });
 
-  describe('#setNextSearch', () => {
+  describe('#handleSearchChange', () => {
     it('returns type and payload', () => {
-      const nextSearch = {};
-      expect(setNextSearch(nextSearch)).toEqual({
-        type: USER_LIST_SET_NEXT_SEARCH,
-        payload: nextSearch,
-      });
-    });
-  });
+      const value = {};
+      const key = 'someString';
 
-  describe('#setOfficesList', () => {
-    it('returns type and payload', () => {
-      const officesList = {};
-      expect(setOfficesList(officesList)).toEqual({
-        type: USER_LIST_SET_OFFICE_LIST,
-        payload: officesList,
+      expect(handleSearchChange(key, value)).toEqual({
+        type: HANDLE_INPUT_CHANGE,
+        payload: { key, value },
       });
     });
   });

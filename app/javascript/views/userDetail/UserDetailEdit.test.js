@@ -8,7 +8,7 @@ describe('UserDetailEdit', () => {
     first_name: 'Firstname0',
     last_name: 'Lastname0',
     middle_name: 'Middlename0',
-    office: 'officeName',
+    office: 'officeNames',
     county_name: 'MyCounty',
     permissions: ['x', 'y'],
     racfid: 'my RACFID',

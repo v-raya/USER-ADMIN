@@ -7,19 +7,17 @@ import {
   setPageSize,
   setSort,
   setSearch,
-  setNextSearch,
-  setOfficesList,
+  handleSearchChange,
+  fetchAccountActions,
 } from '../actions/userListActions';
 import { fetchOfficesActions } from '../actions/officesActions';
-import { officesList } from '../selectors/userListSelector';
-import { fetchAccountActions } from '../actions/accountActions';
-import { selectLoggedInUserAccount } from '../selectors/accountSelectors';
+import { officesList, checkOfficeNames } from '../selectors/userListSelector';
 
 function mapStateToProps(state) {
   const { userList } = state;
   return {
     userList: userList.users || [],
-    loggedInUserAccount: selectLoggedInUserAccount(state),
+    countyName: userList.countyName,
     fetching: userList.fetching,
     userListUrl: '/#',
     dashboardUrl: '/',
@@ -27,12 +25,13 @@ function mapStateToProps(state) {
     from: userList.from,
     sort: userList.sort,
     query: userList.query,
-    nextSearch: userList.nextSearch,
     aggregate: userList.aggregate,
     total: userList.total,
     error: userList.error,
     officesList: officesList(state),
-    selectedOfficesList: userList.selectedOfficesList,
+    inputData: userList.inputData,
+    lastName: userList.inputData.lastName,
+    officeNames: checkOfficeNames(userList.inputData.officeNames),
   };
 }
 
@@ -46,9 +45,8 @@ function mapDispatchToProps(dispatch) {
         setPageSize,
         setSort,
         setSearch,
-        setNextSearch,
-        setOfficesList,
         fetchOfficesActions,
+        handleSearchChange,
       },
       dispatch
     ),

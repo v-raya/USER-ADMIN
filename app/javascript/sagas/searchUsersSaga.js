@@ -1,12 +1,7 @@
 import { takeLatest, select, put } from 'redux-saga/effects';
 import { getSearchParams } from '../selectors/userListSelector';
 import { searchUsers } from '../actions/userListActions';
-import {
-  USER_LIST_SET_PAGE,
-  USER_LIST_SET_PAGE_SIZE,
-  USER_LIST_SET_SORT,
-  USER_LIST_SET_SEARCH,
-} from '../actions/actionTypes';
+import * as actionTypes from '../actions/actionTypes';
 
 export function* doSomething(action) {
   try {
@@ -22,10 +17,10 @@ export function* doSomething(action) {
 export function* watchUserSearchParamUpdates() {
   yield takeLatest(
     [
-      USER_LIST_SET_SEARCH,
-      USER_LIST_SET_SORT,
-      USER_LIST_SET_PAGE,
-      USER_LIST_SET_PAGE_SIZE,
+      actionTypes.USER_LIST_SET_SEARCH,
+      actionTypes.USER_LIST_SET_SORT,
+      actionTypes.USER_LIST_SET_PAGE,
+      actionTypes.USER_LIST_SET_PAGE_SIZE,
     ],
     doSomething
   );

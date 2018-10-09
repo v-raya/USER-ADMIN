@@ -12,7 +12,6 @@ export function* getDetails(action) {
       type: actionTypes.FETCH_DETAILS_API_CALL_SUCCESS,
       details,
     });
-    // console.log("userList:"+ userList.message);
   } catch (error) {
     // dispatch a failure action to the store with the error
     yield put({

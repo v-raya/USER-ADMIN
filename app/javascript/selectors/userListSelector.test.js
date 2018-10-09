@@ -4,6 +4,7 @@ import {
   getSearchParams,
   getSerializedSearchParams,
   officesList,
+  checkOfficeNames,
 } from './userListSelector';
 
 describe('selectors', () => {
@@ -115,5 +116,24 @@ describe('selectors', () => {
       };
       expect(officesList(state)).toEqual([]);
     });
+  });
+
+  describe('#checkOfficeNames', () => {
+    it('filters out empty string from the offices array ', () => {
+      const expectedValue = ['someValue'];
+      const offices = ['', 'someValue'];
+      expect(checkOfficeNames(offices)).toEqual(expectedValue);
+    });
+  });
+
+  it('returns empty array when offices are not available', () => {
+    const offices = [];
+    const expectedValue = [];
+    expect(checkOfficeNames(offices)).toEqual(expectedValue);
+  });
+
+  it('returns empty array when office is undefined', () => {
+    const expectedValue = [];
+    expect(checkOfficeNames(undefined)).toEqual(expectedValue);
   });
 });

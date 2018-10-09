@@ -1,15 +1,25 @@
 import AccountService from '../_services/account';
 import * as actionTypes from '../actions/actionTypes';
 import { takeLatest, call, put } from 'redux-saga/effects';
+import { isOfficeAdmin } from '../_utils/checkAdminRoles';
 
 // worker saga: makes the api call when watcher saga sees the action
 export function* getAccount() {
   try {
-    const account = yield call(AccountService.fetchCurrent);
-    // dispatch a success action to the store with the new account details
+    const response = yield call(AccountService.fetchCurrent);
+
+    // Check admin role for office-admin, if not send admins office-ID as empty array
+    const account = isOfficeAdmin(response)
+      ? response
+      : {
+          ...response,
+          admin_office_ids: [],
+        };
+
+    // Dispatch a success action to the store with the new account details
     yield put({
       type: actionTypes.FETCH_ACCOUNT_API_CALL_SUCCESS,
-      account,
+      payload: account,
     });
   } catch (error) {
     // dispatch a failure action to the store with the error
