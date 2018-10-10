@@ -178,11 +178,11 @@ describe('selectors', () => {
       expect(rolesList(state)).toEqual(expectedValue);
     });
 
-    it('returns empty array when permissions are not available', () => {
+    it('returns empty array when roles are not available', () => {
       const state = {
-        fetchPermissions: {},
+        fetchRoles: {},
       };
-      expect(permissionsList(state)).toEqual([]);
+      expect(rolesList(state)).toEqual([]);
     });
   });
 
