@@ -16,14 +16,22 @@ module Api
         )
       end
 
-      it 'returns roles list' do
-        allow(Users::UserRepository).to receive(:new)
-          .with(no_args).and_return(user_repository)
-        allow(user_repository).to receive(:get_roles_list)
-          .with('token').and_return(roles)
-        request.session[:token] = 'token'
-        get :index
-        expect(response.body).to eq roles.to_json
+      describe 'with a valid request' do
+        before do
+          allow(Users::UserRepository).to receive(:new)
+            .with(no_args).and_return(user_repository)
+          allow(user_repository).to receive(:get_roles_list)
+            .with('token').and_return(roles)
+          request.session[:token] = 'token'
+          get :index
+        end
+        it 'returns roles list' do
+          expect(response.body).to eq roles.to_json
+        end
+
+        it 'responds successfully' do
+          expect(response.status).to eq 200
+        end
       end
     end
   end

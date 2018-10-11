@@ -16,14 +16,21 @@ module Api
         )
       end
 
-      it 'returns permissions list' do
-        allow(Users::UserRepository).to receive(:new)
-          .with(no_args).and_return(user_repository)
-        allow(user_repository).to receive(:get_permissions_list)
-          .with('token').and_return(permissions)
-        request.session[:token] = 'token'
-        get :index
-        expect(response.body).to eq permissions.to_json
+      describe 'with a valid request' do
+        before do
+          allow(Users::UserRepository).to receive(:new)
+            .with(no_args).and_return(user_repository)
+          allow(user_repository).to receive(:get_permissions_list)
+            .with('token').and_return(permissions)
+          request.session[:token] = 'token'
+          get :index
+        end
+        it 'returns permissions list' do
+          expect(response.body).to eq permissions.to_json
+        end
+        it 'responds successfully' do
+          expect(response.status).to eq 200
+        end
       end
     end
   end
