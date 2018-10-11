@@ -61,9 +61,9 @@ class UserService {
   }
 
   static resendRegistrationEmail(id) {
-    return ApiService.get(`/resend_registration_email/${id}`).then(
-      response => response.data
-    );
+    return ApiService.get(
+      `/resend_registration_email/0?email=${encodeURIComponent(id)}`
+    ).then(response => response.data);
   }
 
   static fetchOfficesList() {
