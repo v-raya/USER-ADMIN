@@ -3,9 +3,7 @@
 module Api
   class RolesListController < ActionController::API
     def index
-      token = session[:token]
-      roles = Users::UserRepository.new.get_roles_list(token)
-      render json: roles
+      render json: Users::UserRepository.new.get_roles_list(session[:token])
     end
   end
 end
