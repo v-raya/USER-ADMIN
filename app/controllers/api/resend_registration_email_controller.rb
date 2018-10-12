@@ -2,7 +2,7 @@
 
 module Api
   class ResendRegistrationEmailController < ActionController::API
-    def show
+    def index
       resend_registration_email =
         Users::UserRepository.new.resend_registration_email(params.permit(:email).to_h, session[:token])
       render json: resend_registration_email

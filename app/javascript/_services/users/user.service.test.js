@@ -79,7 +79,7 @@ describe('UserService', () => {
       getSpy.mockReturnValue(Promise.resolve({}));
       UserService.resendRegistrationEmail(id);
       expect(getSpy).toHaveBeenCalledWith(
-        '/resend_registration_email/0?email=someid'
+        '/resend_registration_email?email=someid'
       );
     });
   });

@@ -62,7 +62,7 @@ class UserService {
 
   static resendRegistrationEmail(id) {
     return ApiService.get(
-      `/resend_registration_email/0?email=${encodeURIComponent(id)}`
+      `/resend_registration_email?email=${encodeURIComponent(id)}`
     ).then(response => response.data);
   }
 

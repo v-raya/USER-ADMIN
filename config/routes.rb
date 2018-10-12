@@ -13,7 +13,7 @@ Rails.application.routes.draw do
       end
     end
 
-    resources :resend_registration_email, only: [:show] do 
+    resources :resend_registration_email, only: [:index] do
     end
 
     get 'account', to: 'account#index'

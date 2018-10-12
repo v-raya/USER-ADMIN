@@ -16,9 +16,9 @@ module Users
         it 'returns an empty user' do
           allow(response).to receive(:status).and_return(404)
           allow(http_service)
-            .to receive(:get)
-            .with('/perry/idm/users', params, token)
-            .and_return(response)
+          .to receive(:get)
+          .with('/perry/idm/users', params, token)
+          .and_return(response)
           expect(user_repository.get_users(params, token)).to eq([])
         end
       end
@@ -29,9 +29,9 @@ module Users
           allow(response).to receive(:status).and_return(200)
           allow(response).to receive(:body).and_return([{ username: 'El' }])
           allow(http_service)
-            .to receive(:get)
-            .with('/perry/idm/users', {}, token)
-            .and_return(response)
+          .to receive(:get)
+          .with('/perry/idm/users', {}, token)
+          .and_return(response)
           expect(user_repository.get_users(parameter, token)).to eq [User.new(username: 'El')]
         end
       end
@@ -41,11 +41,11 @@ module Users
           allow(response).to receive(:status).and_return(200)
           allow(response).to receive(:body).and_return([{ username: 'El' }])
           allow(http_service)
-            .to receive(:get)
-            .with('/perry/idm/users', params, token)
-            .and_return(response)
+          .to receive(:get)
+          .with('/perry/idm/users', params, token)
+          .and_return(response)
           expect(user_repository.get_users(params, token))
-            .to eq [User.new(username: 'El')]
+          .to eq [User.new(username: 'El')]
         end
       end
     end
@@ -57,9 +57,9 @@ module Users
         it 'returns an empty user_detail' do
           allow(response).to receive(:status).and_return(404)
           allow(http_service)
-            .to receive(:get)
-            .with('/perry/idm/users/22', token)
-            .and_return(response)
+          .to receive(:get)
+          .with('/perry/idm/users/22', token)
+          .and_return(response)
           expect(user_repository.get_users_details('22', token)).to eq({})
         end
       end
@@ -69,11 +69,11 @@ module Users
           allow(response).to receive(:status).and_return(200)
           allow(response).to receive(:body).and_return(id: 'El')
           allow(http_service)
-            .to receive(:get)
-            .with('/perry/idm/users/33', token)
-            .and_return(response)
+          .to receive(:get)
+          .with('/perry/idm/users/33', token)
+          .and_return(response)
           expect(user_repository.get_users_details('33', token))
-            .to eq User.new(id: 'El')
+          .to eq User.new(id: 'El')
         end
       end
     end
@@ -85,9 +85,9 @@ module Users
         it 'returns an empty permissions list' do
           allow(response).to receive(:status).and_return(404)
           allow(http_service)
-            .to receive(:get)
-            .with('/perry/idm/permissions', token)
-            .and_return(response)
+          .to receive(:get)
+          .with('/perry/idm/permissions', token)
+          .and_return(response)
           expect(user_repository.get_permissions_list(token)).to eq([])
         end
       end
@@ -97,11 +97,11 @@ module Users
           allow(response).to receive(:status).and_return(200)
           allow(response).to receive(:body).and_return(['el'])
           allow(http_service)
-            .to receive(:get)
-            .with('/perry/idm/permissions', token)
-            .and_return(response)
+          .to receive(:get)
+          .with('/perry/idm/permissions', token)
+          .and_return(response)
           expect(user_repository.get_permissions_list(token))
-            .to eq ['el']
+          .to eq ['el']
         end
       end
     end
@@ -113,9 +113,9 @@ module Users
         it 'returns an empty offices list' do
           allow(response).to receive(:status).and_return(404)
           allow(http_service)
-            .to receive(:get)
-            .with('/perry/idm/admin-offices', token)
-            .and_return(response)
+          .to receive(:get)
+          .with('/perry/idm/admin-offices', token)
+          .and_return(response)
           expect(user_repository.get_offices_list(token)).to eq([])
         end
       end
@@ -125,11 +125,11 @@ module Users
           allow(response).to receive(:status).and_return(200)
           allow(response).to receive(:body).and_return(['el'])
           allow(http_service)
-            .to receive(:get)
-            .with('/perry/idm/admin-offices', token)
-            .and_return(response)
+          .to receive(:get)
+          .with('/perry/idm/admin-offices', token)
+          .and_return(response)
           expect(user_repository.get_offices_list(token))
-            .to eq ['el']
+          .to eq ['el']
         end
       end
     end
@@ -149,11 +149,11 @@ module Users
             permissions: %w[snapshot hotline]
           )
           allow(http_service)
-            .to receive(:patch)
-            .with('/perry/idm/users/55', params, token)
-            .and_return(response)
+          .to receive(:patch)
+          .with('/perry/idm/users/55', params, token)
+          .and_return(response)
           expect(user_repository.update_user('55', params, token))
-            .to eq User.new(id: '55', enabled: 'true', permissions: %w[snapshot hotline])
+          .to eq User.new(id: '55', enabled: 'true', permissions: %w[snapshot hotline])
         end
       end
     end
@@ -165,11 +165,11 @@ module Users
         it 'returns status as 200' do
           allow(response).to receive(:status).and_return(200)
           allow(http_service)
-            .to receive(:get)
-            .with('/perry/idm/users/resend/22', token)
-            .and_return(response)
+          .to receive(:get)
+          .with('/perry/idm/users/resend', "22", token)
+          .and_return(response)
           expect(user_repository.resend_registration_email('22', token))
-            .to eq 200
+          .to eq 200
         end
       end
     end
@@ -185,9 +185,9 @@ module Users
         it 'returns an empty response' do
           allow(response).to receive(:status).and_return(404)
           allow(http_service)
-            .to receive(:get)
-            .with('/perry/idm/users/verify', params, token)
-            .and_return(response)
+          .to receive(:get)
+          .with('/perry/idm/users/verify', params, token)
+          .and_return(response)
           expect(user_repository.verify_user(params, token)).to eq({})
         end
       end
@@ -196,13 +196,13 @@ module Users
         it 'returns a response' do
           allow(response).to receive(:status).and_return(200)
           allow(response).to receive(:body)
-            .and_return(verification_passed: 'True', verification_message: 'No user')
+          .and_return(verification_passed: 'True', verification_message: 'No user')
           allow(http_service)
-            .to receive(:get)
-            .with('/perry/idm/users/verify', params, token)
-            .and_return(response)
+          .to receive(:get)
+          .with('/perry/idm/users/verify', params, token)
+          .and_return(response)
           expect(user_repository.verify_user(params, token))
-            .to eq VerifyUser.new(verification_passed: 'True', verification_message: 'No user')
+          .to eq VerifyUser.new(verification_passed: 'True', verification_message: 'No user')
         end
       end
     end
@@ -219,11 +219,11 @@ module Users
         it 'add user' do
           allow(response).to receive(:headers).and_return(location)
           allow(http_service)
-            .to receive(:post)
-            .with('/perry/idm/users', params, token)
-            .and_return(response)
+          .to receive(:post)
+          .with('/perry/idm/users', params, token)
+          .and_return(response)
           expect(user_repository.add_user(params, token))
-            .to eq 'http://www.google.com/assnlk123-afdb1324-we132'
+          .to eq 'http://www.google.com/assnlk123-afdb1324-we132'
         end
       end
     end
@@ -235,9 +235,9 @@ module Users
     let(:token) { 'token' }
     before do
       allow(search_server).to receive(:post).with('/dora/users/user/_search', 'my query', token)
-                                            .and_return(good_response)
+      .and_return(good_response)
       allow(Infrastructure::HttpService).to receive(:new).with('https://dora.test')
-                                                         .and_return(search_server)
+      .and_return(search_server)
     end
     it 'posts the given token to a search service' do
       expect(UserRepository.search('my query', 'token')).to eq('content')
