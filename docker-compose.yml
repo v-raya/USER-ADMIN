@@ -46,7 +46,7 @@ services:
     ports:
       - ${DB_POSTGRES_PORT}:${DB_POSTGRES_PORT}
   dora:
-    image: cwds/dora:1.6.4-SNAPSHOT
+    image: cwds/cwds/dora:1.7.9
     command: bash -c "./entrypoint.sh 2>&1 | tee 'log.file'"
     depends_on:
       - perry
