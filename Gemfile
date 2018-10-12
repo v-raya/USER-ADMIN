@@ -18,6 +18,8 @@ gem 'faraday', '~> 0.13.1'
 gem 'faraday_middleware', '~> 0.12.2'
 gem 'feature'
 
+gem 'newrelic_rpm', '~> 5.4', '>= 5.4.0.347'
+
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.1', '= 5.1.6'
 
