@@ -62,6 +62,7 @@ plugins:
     config:
       allow_affero_copyleft: true
       allow_strong_copyleft: true
+      license_whitelist: ["New Relic"]
     issue_override:
       severity: major
 exclude_patterns:
