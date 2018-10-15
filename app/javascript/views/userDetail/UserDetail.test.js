@@ -10,6 +10,7 @@ describe('UserDetail', () => {
   let mockFetchDetailsActions;
   let mockSaveUserDetailsActions;
   let mockFetchPermissionsActions;
+  let mockFetchRolesActions;
   let mockClearDetailsActions;
   let mockResendRegistrationEmailActions;
 
@@ -24,7 +25,7 @@ describe('UserDetail', () => {
     mockFetchPermissionsActions = jest
       .fn()
       .mockReturnValue(Promise.resolve([]));
-
+    mockFetchRolesActions = jest.fn().mockReturnValue(Promise.resolve([]));
     container = shallow(
       <MemoryRouter>
         <UserDetail
@@ -35,6 +36,7 @@ describe('UserDetail', () => {
           actions={{
             fetchDetailsActions: mockFetchDetailsActions,
             fetchPermissionsActions: mockFetchPermissionsActions,
+            fetchRolesActions: mockFetchRolesActions,
             clearDetails: mockClearDetailsActions,
             saveUserDetailsActions: mockSaveUserDetailsActions,
             resendRegistrationEmailActions: mockResendRegistrationEmailActions,
@@ -133,6 +135,10 @@ describe('UserDetail', () => {
 
     it('fetches the permissions', () => {
       expect(mockFetchPermissionsActions).toHaveBeenCalledWith();
+    });
+
+    it('fetches the roles', () => {
+      expect(mockFetchRolesActions).toHaveBeenCalledWith();
     });
   });
 

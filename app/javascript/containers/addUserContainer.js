@@ -7,6 +7,7 @@ import { addUserRecords } from '../selectors/addUserSelector';
 import { bindActionCreators } from 'redux';
 import { permissionsList } from '../selectors/detailSelector';
 import { fetchPermissionsActions } from '../actions/permissionsActions';
+import { fetchRolesActions } from '../actions/rolesActions';
 import { officesList } from '../selectors/userListSelector';
 
 function mapStateToProps(state) {
@@ -28,6 +29,7 @@ function mapDispatchToProps(dispatch) {
     validateNewUserActions,
     addUserActions,
     fetchPermissionsActions,
+    fetchRolesActions,
   };
   return {
     actions: bindActionCreators(actions, dispatch),

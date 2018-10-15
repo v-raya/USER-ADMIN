@@ -43,6 +43,15 @@ module Users
       response.body { Offices.new }
     end
 
+    def get_roles_list(token)
+      response = @http_service.get('/perry/idm/roles', token)
+      if response.status == 404
+        return [{ id: 'CWS-worker', name: 'CWS Worker (stub)' },
+                { id: 'CALS-external-worker', name: 'CALS external worker (stub)' }]
+      end
+      response.body { Roles.new }
+    end
+
     def add_user(parameters, token)
       response = @http_service.post('/perry/idm/users', parameters, token)
       response.headers

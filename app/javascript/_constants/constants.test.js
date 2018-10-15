@@ -1,6 +1,7 @@
 import {
   permissionListToOptions,
   officesListToOptions,
+  roleListToOptions,
   toFullName,
   userStatusFormat,
   lastLoginDate,
@@ -24,22 +25,39 @@ describe('helpers', () => {
         },
       ]);
     });
+  });
 
-    describe('#officesListToOptions', () => {
-      it('renders a offices list', () => {
-        const items = [
-          {
-            office_id: 'office_id_value',
-            office_name: 'offices1',
-          },
-        ];
-        expect(officesListToOptions(items)).toEqual([
-          {
-            value: 'office_id_value',
-            label: 'offices1',
-          },
-        ]);
-      });
+  describe('#roleListToOptions', () => {
+    it('renders a role list', () => {
+      const items = [
+        {
+          id: 'role1',
+          name: 'Role One',
+        },
+      ];
+      expect(roleListToOptions(items)).toEqual([
+        {
+          value: 'role1',
+          label: 'Role One',
+        },
+      ]);
+    });
+  });
+
+  describe('#officesListToOptions', () => {
+    it('renders a offices list', () => {
+      const items = [
+        {
+          office_id: 'office_id_value',
+          office_name: 'offices1',
+        },
+      ];
+      expect(officesListToOptions(items)).toEqual([
+        {
+          value: 'office_id_value',
+          label: 'offices1',
+        },
+      ]);
     });
   });
 
