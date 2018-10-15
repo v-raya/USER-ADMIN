@@ -194,7 +194,7 @@ module Users
           allow(response).to receive(:status).and_return(200)
           allow(http_service)
             .to receive(:get)
-            .with('/perry/idm/users/resend/22', token)
+            .with('/perry/idm/users/resend', '22', token)
             .and_return(response)
           expect(user_repository.resend_registration_email('22', token))
             .to eq 200

@@ -1,0 +1,24 @@
+#
+# This file configures the New Relic Agent.  New Relic monitors Ruby, Java,
+# .NET, PHP, Python, Node, and Go applications with deep visibility and low
+# overhead.  For more information, visit www.newrelic.com.
+#
+# Generated October 12, 2018, for version 5.4.0.347
+#
+# For full documentation of agent configuration options, please refer to
+# https://docs.newrelic.com/docs/agents/ruby-agent/installation-configuration/ruby-agent-configuration
+
+common: &default_settings
+  # Required license key associated with your New Relic account.
+  license_key: “YOUR_KEY”
+
+  # Your application name. Renaming here affects where data displays in New
+  # Relic.  For more details, see https://docs.newrelic.com/docs/apm/new-relic-apm/maintenance/renaming-applications
+  app_name: “County Admin”
+
+  # To disable the agent regardless of other settings, uncomment the following:
+  # Productoin deploymenrts will not use this file, but one defined for the whole CARES project.  This setting will only apply to non-prod environments.
+  agent_enabled: false
+
+  # Logging level for log/newrelic_agent.log
+  log_level: info

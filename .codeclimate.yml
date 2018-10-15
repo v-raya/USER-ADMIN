@@ -57,13 +57,6 @@ plugins:
   rubocop:
     enabled: true
     channel: rubocop-0-55
-  git-legal:
-    enabled: true
-    config:
-      allow_affero_copyleft: true
-      allow_strong_copyleft: true
-    issue_override:
-      severity: major
 exclude_patterns:
   - "config/"
   - "db/"

@@ -84,7 +84,9 @@ describe('UserService', () => {
     it('calls #resendRegistrationEmail ApiService', () => {
       getSpy.mockReturnValue(Promise.resolve({}));
       UserService.resendRegistrationEmail(id);
-      expect(getSpy).toHaveBeenCalledWith('/resend_registration_email/someid');
+      expect(getSpy).toHaveBeenCalledWith(
+        '/resend_registration_email?email=someid'
+      );
     });
   });
 

@@ -57,8 +57,8 @@ module Users
       response.headers
     end
 
-    def resend_registration_email(id, token)
-      response = @http_service.get("/perry/idm/users/resend/#{id}", token)
+    def resend_registration_email(parameters, token)
+      response = @http_service.get('/perry/idm/users/resend', parameters, token)
       response.status
     end
 
