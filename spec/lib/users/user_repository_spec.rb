@@ -117,8 +117,7 @@ module Users
             .with('/perry/idm/roles', token)
             .and_return(response)
           expect(user_repository.get_roles_list(token))
-            .to eq([{ id: 'CWS-worker', name: 'CWS Worker (stub)' },
-                    { id: 'CALS-external-worker', name: 'CALS external worker (stub)' }])
+            .to eq([])
         end
       end
 

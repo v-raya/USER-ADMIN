@@ -15,7 +15,7 @@ export const selectDetailRecords = state => {
 export const permissionsList = state =>
   safeGet(state, 'fetchPermissions.permissions.permissions', []);
 
-export const rolesList = state => safeGet(state, 'fetchRoles.roles.roles', []);
+export const rolesList = state => safeGet(state, 'fetchRoles.roles', []);
 
 export const checkEditDisable = state =>
   !safeGet(state, 'fetchDetails.details.records.editable');

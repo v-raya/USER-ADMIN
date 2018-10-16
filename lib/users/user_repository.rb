@@ -45,10 +45,7 @@ module Users
 
     def get_roles_list(token)
       response = @http_service.get('/perry/idm/roles', token)
-      if response.status == 404
-        return [{ id: 'CWS-worker', name: 'CWS Worker (stub)' },
-                { id: 'CALS-external-worker', name: 'CALS external worker (stub)' }]
-      end
+      return [] if response.status == 404
       response.body { Roles.new }
     end
 

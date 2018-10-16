@@ -166,13 +166,10 @@ describe('selectors', () => {
       ];
       const state = {
         fetchRoles: {
-          roles: {
-            XHRStatus: 'ready',
-            roles: [
-              { id: 'foo-id', name: 'foo-name' },
-              { id: 'bar-id', name: 'bar-name' },
-            ],
-          },
+          roles: [
+            { id: 'foo-id', name: 'foo-name' },
+            { id: 'bar-id', name: 'bar-name' },
+          ],
         },
       };
       expect(rolesList(state)).toEqual(expectedValue);

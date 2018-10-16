@@ -107,6 +107,7 @@ export default class AddUserDetail extends Component {
                 disableActionBtn={this.state.disableActionBtn}
                 permissionsList={permissionRoles}
                 officesList={this.props.officesList}
+                rolesList={this.props.rolesList}
               />
             ) : (
               <div>
@@ -116,6 +117,7 @@ export default class AddUserDetail extends Component {
                     onEdit={this.onEditClick}
                     permissionsList={permissionRoles}
                     officesList={this.props.officesList}
+                    rolesList={this.props.rolesList}
                   />
                 </div>
               </div>
@@ -176,7 +178,18 @@ AddUserDetail.propTypes = {
   actions: PropTypes.object,
   id: PropTypes.any,
   addUserError: PropTypes.object,
-  officesList: PropTypes.array,
+  rolesList: PropTypes.arrayOf(
+    PropTypes.shape({
+      office_name: PropTypes.string.isRequired,
+      office_id: PropTypes.string.isRequired,
+    })
+  ),
+  officesList: PropTypes.arrayOf(
+    PropTypes.shape({
+      office_name: PropTypes.string.isRequired,
+      office_id: PropTypes.string.isRequired,
+    })
+  ),
 };
 
 AddUserDetail.defaultProps = {

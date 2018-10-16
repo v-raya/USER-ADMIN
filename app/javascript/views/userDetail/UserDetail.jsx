@@ -145,6 +145,7 @@ export default class UserDetail extends Component {
                 onResendInvite={this.onResendInvite}
                 disableResendEmailButton={this.props.disableResendEmailButton}
                 officesList={this.props.officesList}
+                rolesList={this.props.rolesList}
               />
             ) : (
               <UserDetailShow
@@ -153,6 +154,7 @@ export default class UserDetail extends Component {
                 permissionsList={permissionsList}
                 disableEditBtn={this.props.disableEditBtn}
                 officesList={this.props.officesList}
+                rolesList={this.props.rolesList}
               />
             )}
           </div>
@@ -206,6 +208,12 @@ UserDetail.propTypes = {
   resendEmailStatus: PropTypes.string,
   disableResendEmailButton: PropTypes.bool,
   disableEditBtn: PropTypes.bool,
+  rolesList: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.string.isRequired,
+      name: PropTypes.string.isRequired,
+    })
+  ),
   officesList: PropTypes.arrayOf(
     PropTypes.shape({
       office_name: PropTypes.string.isRequired,

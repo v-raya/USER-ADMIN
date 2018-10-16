@@ -8,6 +8,7 @@ import validateNewUser from './validateNewUserReducer';
 import addUser from './addUserReducers';
 import saveUserDetails from './saveUserDetailsReducers';
 import resendRegistrationEmail from './resendRegistrationEmailReducers';
+import fetchRoles from './rolesReducers';
 const reducer = combineReducers({
   userList,
   fetchDetails,
@@ -18,6 +19,7 @@ const reducer = combineReducers({
   addUser,
   saveUserDetails,
   resendRegistrationEmail,
+  fetchRoles,
 });
 
 export default reducer;

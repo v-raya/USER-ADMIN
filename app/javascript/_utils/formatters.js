@@ -55,3 +55,15 @@ export function formatSelectedPermissions(assignedPermissions, permissionList) {
       .join(', ')
   );
 }
+
+export function formatSelectedRoles(assignedRoles, rolesList) {
+  if (!Array.isArray(assignedRoles)) return '';
+  const role =
+    assignedRoles &&
+    assignedRoles.length &&
+    assignedRoles
+      .map(role => rolesList.find(d => d.id === role))
+      .filter(value => !!value)
+      .map(({ id, name }) => name)[0];
+  return role === undefined ? assignedRoles[0] : role;
+}

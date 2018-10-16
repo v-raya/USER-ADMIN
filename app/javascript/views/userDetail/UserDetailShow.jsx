@@ -8,6 +8,7 @@ import {
   formatDate,
   formatSelectedPermissions,
   checkDate,
+  formatSelectedRoles,
 } from '../../_utils/formatters';
 import {
   userStatusDescriptionTranslator,
@@ -23,6 +24,7 @@ const UserDetailShow = ({
   permissionsList,
   disableEditBtn,
   officesList,
+  rolesList,
 }) => (
   <div className="row">
     <div className="col-md-12">
@@ -34,7 +36,7 @@ const UserDetailShow = ({
       >
         <div className="col-md-12">
           <div className="row">
-            <div className="col-md-5">
+            <div className="col-md-3">
               <ShowField label="Full Name">
                 {details.last_name}, {details.first_name} {details.middle_name}
               </ShowField>
@@ -47,14 +49,14 @@ const UserDetailShow = ({
             <div className="col-md-2">
               <ShowField label="CWS Login">{details.racfid}</ShowField>
             </div>
-            <div className="col-md-2">
-              <ShowField label="Last Login">
-                {checkDate(details.last_login_date_time)}
+            <div className="col-md-4">
+              <ShowField label="Role">
+                {formatSelectedRoles(details.roles, rolesList)}
               </ShowField>
             </div>
           </div>
           <div className="row">
-            <div className="col-md-5">
+            <div className="col-md-3">
               <ShowField label="Email">{details.email}</ShowField>
             </div>
             <div className="col-md-3">
@@ -62,14 +64,21 @@ const UserDetailShow = ({
                 <span>{formatPhoneNumberWithExt(details)}</span>
               </ShowField>
             </div>
-            <div className="col-md-4">
+            <div className="col-md-2">
               <ShowField label="Start Date">
                 {formatDate(details.start_date)}
               </ShowField>
             </div>
+            <div className="col-md-4">
+              <ShowField label="Last Login">
+                {checkDate(details.last_login_date_time)}
+              </ShowField>
+            </div>
           </div>
+          <br />
+          <br />
           <div className="row">
-            <div className="col-md-5">
+            <div className="col-md-3">
               <ShowField label="User Status">
                 {userStatusTranslator(details.status)}
                 <div>
@@ -84,7 +93,7 @@ const UserDetailShow = ({
                 {accountStatus(details.enabled)}
               </ShowField>
             </div>
-            <div className="col-md-4">
+            <div className="col-md-6">
               <ShowField label="Assigned Permissions">
                 {formatSelectedPermissions(
                   details.permissions,
@@ -102,6 +111,12 @@ const UserDetailShow = ({
 UserDetailShow.propTypes = {
   details: PropTypes.object,
   onEdit: PropTypes.func,
+  rolesList: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.string.isRequired,
+      name: PropTypes.string.isRequired,
+    })
+  ),
   permissionsList: PropTypes.arrayOf(
     PropTypes.shape({
       description: PropTypes.string.isRequired,

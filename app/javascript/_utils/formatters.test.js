@@ -4,6 +4,7 @@ import {
   formatSelectedPermissions,
   formatPhoneNumber,
   checkDate,
+  formatSelectedRoles,
 } from './formatters';
 
 describe('#formatPhoneNumberWithExt', () => {
@@ -118,5 +119,20 @@ describe('#formatSelectedPermissions', () => {
     );
     expect(formatSelectedPermissions('', list)).toEqual('');
     expect(formatSelectedPermissions(['qux'], list)).toEqual('QUX_DESC');
+  });
+});
+
+describe('#formatSelectedRoles', () => {
+  it('return first index of the array ', () => {
+    const list = [
+      { id: 'foo', name: 'FOO_DESC' },
+      { id: 'bar', name: 'BAR_DESC' },
+      { id: 'quo', name: 'QUO_DESC' },
+      { id: 'qux', name: 'QUX_DESC' },
+    ];
+    expect(formatSelectedRoles(['foo', 'bar'], list)).toEqual('FOO_DESC');
+    expect(formatSelectedRoles('', list)).toEqual('');
+    expect(formatSelectedRoles(['qux'], list)).toEqual('QUX_DESC');
+    expect(formatSelectedRoles(['bad'], list)).toEqual('bad');
   });
 });
