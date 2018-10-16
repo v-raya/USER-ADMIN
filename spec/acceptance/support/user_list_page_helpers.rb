@@ -7,7 +7,7 @@ module UserListPageHelper
 
   def page_has_user_list_headers
     expect(page.body).to match(
-      /Manage Users.*County:.*Full Name.*Status.*Last Login.*CWS Login.*Office Name/
+      /Manage Users.*County:.*Full Name.*Status.*Last Log in.*CWS Login.*Office Name.*Role/
     )
   end
 

@@ -417,7 +417,7 @@ describe('UsersList', () => {
         id: '1234AGFS',
       };
       expect(wrapper.find('ReactTable').length).toBe(1);
-      expect(wrapper.find('ReactTable').prop('columns').length).toBe(5);
+      expect(wrapper.find('ReactTable').prop('columns').length).toBe(6);
       expect(wrapper.find('ReactTable').prop('columns')[0]['id']).toBe(
         'last_name'
       );

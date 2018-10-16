@@ -147,6 +147,7 @@ class UserList extends PureComponent {
 
   renderUsersTable = ({ data, officesList }) => {
     const translateOffice = getOfficeTranslator(officesList);
+
     return (
       <ReactTable
         data={data}
@@ -163,24 +164,31 @@ class UserList extends PureComponent {
             minWidth: 200,
           },
           {
-            Header: 'Account Status',
+            Header: 'Status',
             id: 'enabled',
             accessor: userStatusFormat,
             minWidth: 60,
           },
           {
-            Header: 'Last Login',
+            Header: 'Last Log in',
             id: 'last_login_date_time',
+            minWidth: 150,
             accessor: lastLoginDate,
           },
           {
             Header: 'CWS Login',
+            minWidth: 80,
             accessor: 'racfid',
           },
           {
             Header: 'Office Name',
             id: 'office_name',
             accessor: translateOffice,
+          },
+          {
+            Header: 'Role',
+            id: 'user_role',
+            accessor: 'roles',
           },
         ]}
         manual
