@@ -8,7 +8,7 @@ const initialValue = {
     // },
   ],
   from: 0,
-  size: 5,
+  size: 50,
   query: [
     {
       field: 'last_name',
