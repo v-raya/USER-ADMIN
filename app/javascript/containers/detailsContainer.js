@@ -4,6 +4,7 @@ import {
   selectDetailRecords,
   checkEditDisable,
   permissionsList,
+  possibleRoles,
   rolesList,
 } from '../selectors/detailSelector';
 import {
@@ -23,6 +24,7 @@ import { officesList } from '../selectors/userListSelector';
 
 function mapStateToProps(state) {
   return {
+    possibleRoles: possibleRoles(state),
     disableEditBtn: checkEditDisable(state),
     details: selectDetailRecords(state),
     permissionsList: permissionsList(state),

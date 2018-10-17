@@ -9,6 +9,7 @@ import {
   STATUS,
   permissionListToOptions,
   translateOffice,
+  possibleRolesOptions,
 } from '../../_constants/constants';
 import {
   formatPhoneNumberWithExt,
@@ -34,6 +35,8 @@ const UserDetailEdit = ({
   permissionsList,
   onResendInvite,
   officesList,
+  possibleRoles,
+  rolesList,
 }) => (
   <div className="row">
     <div className="col-md-12">
@@ -49,7 +52,7 @@ const UserDetailEdit = ({
       >
         <div className="col-md-12">
           <div className="row">
-            <div className="col-md-5">
+            <div className="col-md-3">
               <ShowField label="Full Name">
                 {details.last_name}, {details.first_name} {details.middle_name}
               </ShowField>
@@ -62,14 +65,16 @@ const UserDetailEdit = ({
             <div className="col-md-2">
               <ShowField label="CWS Login">{details.racfid}</ShowField>
             </div>
-            <div className="col-md-2">
-              <ShowField label="Last Login">
-                {checkDate(details.last_login_date_time)}
-              </ShowField>
+            <div className="col-md-4">
+              <DropDownField
+                id="role"
+                options={possibleRolesOptions(possibleRoles, rolesList)}
+                label="Role"
+              />
             </div>
           </div>
           <div className="row">
-            <div className="col-md-5">
+            <div className="col-md-3">
               <ShowField label="Email">{details.email}</ShowField>
             </div>
             <div className="col-md-3">
@@ -77,14 +82,20 @@ const UserDetailEdit = ({
                 <span>{formatPhoneNumberWithExt(details)}</span>
               </ShowField>
             </div>
-            <div className="col-md-4">
+            <div className="col-md-2">
               <ShowField label="Start Date">
                 {formatDate(details.start_date)}
               </ShowField>
             </div>
+            <div className="col-md-4">
+              <ShowField label="Last Login">
+                {checkDate(details.last_login_date_time)}
+              </ShowField>
+            </div>
           </div>
+          <br />
           <div className="row">
-            <div className="col-md-5">
+            <div className="col-md-3">
               <ShowField label="User Status">
                 {userStatusTranslator(details.status)}
                 <div className="value-text-color">
@@ -111,7 +122,7 @@ const UserDetailEdit = ({
                 onChange={onStatusChange}
               />
             </div>
-            <div className="col-md-4">
+            <div className="col-md-6">
               <MultiSelect
                 id="Multiselect1"
                 selectedOption={selectedPermissions}
@@ -140,10 +151,17 @@ UserDetailEdit.propTypes = {
   permissionsList: PropTypes.array,
   onResendInvite: PropTypes.func,
   disableResendEmailButton: PropTypes.bool,
+  possibleRoles: PropTypes.array,
   officesList: PropTypes.arrayOf(
     PropTypes.shape({
       office_name: PropTypes.string.isRequired,
       office_id: PropTypes.string.isRequired,
+    })
+  ),
+  rolesList: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.string.isRequired,
+      name: PropTypes.string.isRequired,
     })
   ),
 };

@@ -12,19 +12,31 @@ describe('UserDetailEdit', () => {
     county_name: 'MyCounty',
     permissions: ['x', 'y'],
     racfid: 'my RACFID',
+    status: 'FORCE_CHANGE_PASSWORD',
   };
-  let onRoleChange = () => {};
+
+  let possibleRolesOptions = () => {};
+
+  const rolesList = [
+    { id: 'role1', name: 'roleOne' },
+    { id: 'role2', name: 'roleTwo' },
+  ];
+  let possibleRoles = ['role1', 'role2'];
 
   let wrapper;
   beforeEach(() => {
     wrapper = shallow(
-      <UserDetailEdit details={details} onRoleChange={onRoleChange} />
+      <UserDetailEdit
+        details={details}
+        possibleRoles={possibleRoles}
+        rolesList={rolesList}
+        possibleRolesOptions={possibleRolesOptions}
+      />
     );
   });
 
   describe('when label and className props are passed', () => {
     it('renders the label inside the grid wrapper', () => {
-      wrapper = shallow(<UserDetailEdit details={details} />);
       expect(wrapper.find('Cards').props().cardHeaderText).toBe(
         `County: ${details.county_name}`
       );
@@ -59,25 +71,25 @@ describe('UserDetailEdit', () => {
           .find('ShowField')
           .at(3)
           .props().label
-      ).toEqual('Last Login');
+      ).toEqual('Email');
       expect(
         wrapper
           .find('ShowField')
           .at(4)
           .props().label
-      ).toEqual('Email');
+      ).toEqual('Office Phone Number');
       expect(
         wrapper
           .find('ShowField')
           .at(5)
           .props().label
-      ).toEqual('Office Phone Number');
+      ).toEqual('Start Date');
       expect(
         wrapper
           .find('ShowField')
           .at(6)
           .props().label
-      ).toEqual('Start Date');
+      ).toEqual('Last Login');
       expect(
         wrapper
           .find('ShowField')
@@ -91,9 +103,22 @@ describe('UserDetailEdit', () => {
     });
 
     it('#MultiSelect, onRoleChange function is called when onChange event triggered ', () => {
+      let possibleRolesOptions = () => {};
+
+      const rolesList = [
+        { id: 'role1', name: 'roleOne' },
+        { id: 'role2', name: 'roleTwo' },
+      ];
+      let possibleRoles = ['role1', 'role2'];
       const onRoleChangeSpy = jasmine.createSpy('onChange');
       const render = shallow(
-        <UserDetailEdit details={details} onRoleChange={onRoleChangeSpy} />
+        <UserDetailEdit
+          details={details}
+          rolesList={rolesList}
+          onRoleChange={onRoleChangeSpy}
+          possibleRoles={possibleRoles}
+          possibleRolesOptions={possibleRolesOptions}
+        />
       );
       const value = ['Asian', 'American'];
       render.find('#Multiselect1').simulate('change', String(value));
@@ -116,15 +141,11 @@ describe('UserDetailEdit', () => {
       ).toEqual(expectedValue);
     });
   });
-});
 
-describe('when Accout Status is FORCE_CHANGE_PASSWORD', () => {
-  const details = {
-    status: 'FORCE_CHANGE_PASSWORD',
-  };
-  it('should have a button as Resend Invite', () => {
-    let wrapper = shallow(<UserDetailEdit details={details} />);
-    expect(wrapper.find('Button').length).toEqual(1);
-    expect(wrapper.find('Button').props().btnName).toBe('Resend Invite');
+  describe('when Accout Status is FORCE_CHANGE_PASSWORD', () => {
+    it('should have a button as Resend Invite', () => {
+      expect(wrapper.find('Button').length).toEqual(1);
+      expect(wrapper.find('Button').props().btnName).toBe('Resend Invite');
+    });
   });
 });

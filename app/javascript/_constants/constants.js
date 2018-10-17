@@ -56,3 +56,18 @@ export const getOfficeTranslator = officesList => {
   });
   return user => translateOfficeMap(user, officeMap);
 };
+
+export const possibleRolesOptions = (possibleRoles, rolesList) => {
+  let options = [];
+  rolesList.forEach(role => {
+    possibleRoles.forEach(item => {
+      if (item === role.id) {
+        options.push(role.name);
+      }
+    });
+  });
+
+  return options.map(item => {
+    return { label: item, value: item };
+  });
+};

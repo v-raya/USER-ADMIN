@@ -4,6 +4,7 @@ import {
   rolesList,
   checkEditDisable,
   selectUserDetailObject,
+  possibleRoles,
 } from './detailSelector';
 
 describe('selectors', () => {
@@ -63,8 +64,6 @@ describe('selectors', () => {
               user: {
                 county_name: 'first',
                 enabled: true,
-                id: '12',
-                name: 'third',
               },
             },
           },
@@ -72,9 +71,7 @@ describe('selectors', () => {
       };
       expect(selectDetailRecords(state)).toEqual({
         county_name: 'first',
-        id: '12',
         enabled: true,
-        name: 'third',
       });
     });
 
@@ -84,9 +81,7 @@ describe('selectors', () => {
           details: {
             records: {
               user: {
-                county_name: 'first',
                 enabled: false,
-                id: '12',
                 name: 'third',
               },
             },
@@ -94,8 +89,6 @@ describe('selectors', () => {
         },
       };
       expect(selectDetailRecords(state)).toEqual({
-        county_name: 'first',
-        id: '12',
         enabled: false,
         name: 'third',
       });
@@ -107,20 +100,16 @@ describe('selectors', () => {
           details: {
             records: {
               user: {
-                county_name: 'first',
                 enabled: 'Not a boolean Value',
                 id: '12',
-                name: 'third',
               },
             },
           },
         },
       };
       expect(selectDetailRecords(state)).toEqual({
-        county_name: 'first',
         enabled: 'Not a boolean Value',
         id: '12',
-        name: 'third',
       });
     });
 
@@ -180,6 +169,31 @@ describe('selectors', () => {
         fetchRoles: {},
       };
       expect(rolesList(state)).toEqual([]);
+    });
+  });
+
+  describe('#possibleRoles', () => {
+    it('selects the roles when available', () => {
+      const state = {
+        fetchDetails: {
+          details: {
+            XHRStatus: 'ready',
+            records: {
+              editable: false,
+              possible_roles: ['role1', 'role2'],
+              user: {},
+            },
+          },
+        },
+      };
+      expect(possibleRoles(state)).toEqual(['role1', 'role2']);
+    });
+
+    it('returns empty array when roles are not available', () => {
+      const state = {
+        fetchDetails: {},
+      };
+      expect(possibleRoles(state)).toEqual([]);
     });
   });
 

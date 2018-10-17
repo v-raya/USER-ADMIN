@@ -146,6 +146,7 @@ export default class UserDetail extends Component {
                 disableResendEmailButton={this.props.disableResendEmailButton}
                 officesList={this.props.officesList}
                 rolesList={this.props.rolesList}
+                possibleRoles={this.props.possibleRoles}
               />
             ) : (
               <UserDetailShow
@@ -208,6 +209,7 @@ UserDetail.propTypes = {
   resendEmailStatus: PropTypes.string,
   disableResendEmailButton: PropTypes.bool,
   disableEditBtn: PropTypes.bool,
+  possibleRoles: PropTypes.array,
   rolesList: PropTypes.arrayOf(
     PropTypes.shape({
       id: PropTypes.string.isRequired,

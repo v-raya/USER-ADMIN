@@ -7,6 +7,7 @@ import {
   lastLoginDate,
   translateOffice,
   getOfficeTranslator,
+  possibleRolesOptions,
 } from './constants';
 
 describe('helpers', () => {
@@ -108,6 +109,23 @@ describe('helpers', () => {
 
     it('renders a safe message if no office was assigned', () => {
       expect(translateOffice({ first_name: 'Someone' }, offices)).toEqual('');
+    });
+  });
+
+  describe('#possibleRolesOptions', () => {
+    const rolesList = [
+      { id: 'role1', name: 'roleOne' },
+      { id: 'role2', name: 'roleTwo' },
+    ];
+    const possibleRoles = ['role1', 'role2'];
+    const expectedValue = [
+      { label: 'roleOne', value: 'roleOne' },
+      { label: 'roleTwo', value: 'roleTwo' },
+    ];
+    it('renders the name of a role given possibleRoles with role_id', () => {
+      expect(possibleRolesOptions(possibleRoles, rolesList)).toEqual(
+        expectedValue
+      );
     });
   });
 

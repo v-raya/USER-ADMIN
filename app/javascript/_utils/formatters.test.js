@@ -123,16 +123,22 @@ describe('#formatSelectedPermissions', () => {
 });
 
 describe('#formatSelectedRoles', () => {
+  const list = [
+    { id: 'foo', name: 'FOO_DESC' },
+    { id: 'bar', name: 'BAR_DESC' },
+    { id: 'quo', name: 'QUO_DESC' },
+    { id: 'qux', name: 'QUX_DESC' },
+  ];
   it('return first index of the array ', () => {
-    const list = [
-      { id: 'foo', name: 'FOO_DESC' },
-      { id: 'bar', name: 'BAR_DESC' },
-      { id: 'quo', name: 'QUO_DESC' },
-      { id: 'qux', name: 'QUX_DESC' },
-    ];
     expect(formatSelectedRoles(['foo', 'bar'], list)).toEqual('FOO_DESC');
-    expect(formatSelectedRoles('', list)).toEqual('');
     expect(formatSelectedRoles(['qux'], list)).toEqual('QUX_DESC');
+  });
+
+  it('return empty when there is no role ', () => {
+    expect(formatSelectedRoles('', list)).toEqual('');
+  });
+
+  it('return original-id when it is not in the list ', () => {
     expect(formatSelectedRoles(['bad'], list)).toEqual('bad');
     expect(formatSelectedRoles([], list)).toEqual('');
   });

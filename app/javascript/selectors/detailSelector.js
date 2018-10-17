@@ -6,6 +6,9 @@ export const selectUserDetailObject = state => {
   return userData;
 };
 
+export const possibleRoles = state =>
+  safeGet(state, 'fetchDetails.details.records.possible_roles', []);
+
 export const selectDetailRecords = state => {
   const userData = selectUserDetailObject(state);
   const userDetails = userData ? userData.user : {};
