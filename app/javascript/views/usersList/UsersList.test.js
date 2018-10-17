@@ -132,6 +132,7 @@ describe('UsersList', () => {
             searchUsers: () => {},
             fetchAccountActions: () => {},
             fetchOfficesActions: () => {},
+            fetchRolesActions: () => {},
             setSearch: mockSetSearchActions,
           }}
           query={query}
@@ -181,6 +182,7 @@ describe('UsersList', () => {
             searchUsers: () => {},
             fetchAccountActions: () => {},
             fetchOfficesActions: () => {},
+            fetchRolesActions: () => {},
           }}
           query={query}
           lastName="last_name_value"
@@ -198,6 +200,7 @@ describe('UsersList', () => {
             searchUsers: () => {},
             fetchAccountActions: () => {},
             fetchOfficesActions: () => {},
+            fetchRolesActions: () => {},
           }}
           query={query}
           lastName="new_last_name"
@@ -234,16 +237,19 @@ describe('UsersList', () => {
   describe('#UNSAFE_componentDidMount', () => {
     let mockFetchAccountActions;
     let mockFetchOfficeListActions;
+    let mockFetchRolesActions;
 
     beforeEach(() => {
       mockFetchAccountActions = jest.fn();
       mockFetchOfficeListActions = jest.fn();
+      mockFetchRolesActions = jest.fn();
       mount(
         <UsersList
           dashboardUrl={'dburl'}
           actions={{
             fetchAccountActions: mockFetchAccountActions,
             fetchOfficesActions: mockFetchOfficeListActions,
+            fetchRolesActions: mockFetchRolesActions,
           }}
           loggedInUserAccount={{ county_name: 'SomeCountyName' }}
           query={query}
@@ -258,6 +264,10 @@ describe('UsersList', () => {
 
     it('fetches the office list', () => {
       expect(mockFetchOfficeListActions).toHaveBeenCalledWith();
+    });
+
+    it('fetches the roles list', () => {
+      expect(mockFetchRolesActions).toHaveBeenCalledWith();
     });
   });
 
@@ -283,6 +293,7 @@ describe('UsersList', () => {
           actions={{
             fetchAccountActions: () => {},
             fetchOfficesActions: () => {},
+            fetchRolesActions: () => {},
             setSearch: mockSetSearch,
             setOfficesList: mockSetOfficesListAction,
           }}
@@ -328,6 +339,7 @@ describe('UsersList', () => {
             searchUsers: () => {},
             fetchAccountActions: () => {},
             fetchOfficesActions: () => {},
+            fetchRolesActions: () => {},
           }}
           loggedInUserAccount={{ county_name: 'SomeCountyName' }}
           sort={[

@@ -134,5 +134,6 @@ describe('#formatSelectedRoles', () => {
     expect(formatSelectedRoles('', list)).toEqual('');
     expect(formatSelectedRoles(['qux'], list)).toEqual('QUX_DESC');
     expect(formatSelectedRoles(['bad'], list)).toEqual('bad');
+    expect(formatSelectedRoles([], list)).toEqual('');
   });
 });

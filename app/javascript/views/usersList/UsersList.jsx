@@ -20,6 +20,7 @@ import {
   getOfficeTranslator,
 } from '../../_constants/constants';
 import { isEqual } from 'lodash';
+import { formatSelectedRoles } from '../../_utils/formatters';
 
 class UserList extends PureComponent {
   constructor(props) {
@@ -32,6 +33,7 @@ class UserList extends PureComponent {
   componentDidMount() {
     this.props.actions.fetchAccountActions();
     this.props.actions.fetchOfficesActions();
+    this.props.actions.fetchRolesActions();
   }
 
   componentDidUpdate(prevProps) {
@@ -97,6 +99,8 @@ class UserList extends PureComponent {
 
   renderUsersTable = ({ data, officesList }) => {
     const translateOffice = getOfficeTranslator(officesList);
+    const translateRoles = data =>
+      formatSelectedRoles(data.roles, this.props.rolesList);
 
     return (
       <ReactTable
@@ -138,7 +142,7 @@ class UserList extends PureComponent {
           {
             Header: 'Role',
             id: 'user_role',
-            accessor: 'roles',
+            accessor: translateRoles,
           },
         ]}
         manual
@@ -298,6 +302,7 @@ UserList.propTypes = {
   officeNames: PropTypes.array,
   lastName: PropTypes.string,
   inputData: PropTypes.object,
+  rolesList: PropTypes.array,
 };
 
 UserList.defaultProps = {

@@ -11,7 +11,9 @@ import {
   fetchAccountActions,
 } from '../actions/userListActions';
 import { fetchOfficesActions } from '../actions/officesActions';
+import { fetchRolesActions } from '../actions/rolesActions';
 import { officesList, checkOfficeNames } from '../selectors/userListSelector';
+import { rolesList } from '../selectors/detailSelector';
 
 function mapStateToProps(state) {
   const { userList } = state;
@@ -32,6 +34,7 @@ function mapStateToProps(state) {
     inputData: userList.inputData,
     lastName: userList.inputData.lastName,
     officeNames: checkOfficeNames(userList.inputData.officeNames),
+    rolesList: rolesList(state),
   };
 }
 
@@ -47,6 +50,7 @@ function mapDispatchToProps(dispatch) {
         setSearch,
         fetchOfficesActions,
         handleSearchChange,
+        fetchRolesActions,
       },
       dispatch
     ),

@@ -57,13 +57,16 @@ export function formatSelectedPermissions(assignedPermissions, permissionList) {
 }
 
 export function formatSelectedRoles(assignedRoles, rolesList) {
+  let role = '';
   if (!Array.isArray(assignedRoles)) return '';
-  const role =
-    assignedRoles &&
-    assignedRoles.length &&
-    assignedRoles
+  if (assignedRoles && assignedRoles.length !== 0) {
+    role = assignedRoles
       .map(role => rolesList.find(d => d.id === role))
-      .filter(value => !!value)
+      .filter(value => value)
       .map(({ id, name }) => name)[0];
-  return role === undefined ? assignedRoles[0] : role;
+  }
+  if (role === undefined) {
+    role = assignedRoles[0];
+  }
+  return role;
 }
