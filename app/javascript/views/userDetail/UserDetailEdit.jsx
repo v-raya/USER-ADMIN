@@ -31,6 +31,7 @@ const UserDetailEdit = ({
   onSave,
   disableActionBtn,
   onStatusChange,
+  onPermissionChange,
   onRoleChange,
   permissionsList,
   onResendInvite,
@@ -65,11 +66,14 @@ const UserDetailEdit = ({
             <div className="col-md-2">
               <ShowField label="CWS Login">{details.racfid}</ShowField>
             </div>
+
             <div className="col-md-4">
               <DropDownField
-                id="role"
+                id="dropdown1"
+                selectedOption={details.roles.toString()}
                 options={possibleRolesOptions(possibleRoles, rolesList)}
-                label="Role"
+                label="Roles"
+                onChange={onRoleChange}
               />
             </div>
           </div>
@@ -95,43 +99,45 @@ const UserDetailEdit = ({
           </div>
           <br />
           <div className="row">
-            <div className="col-md-3">
-              <ShowField label="User Status">
-                {userStatusTranslator(details.status)}
-                <div className="value-text-color">
-                  {userStatusDescriptionTranslator(details.status)}
-                  {details.status === 'FORCE_CHANGE_PASSWORD' && (
-                    <div className="resend-email-btn">
-                      <Button
-                        btnClassName="primary"
-                        btnName="Resend Invite"
-                        onClick={onResendInvite}
-                        disabled={disableResendEmailButton}
-                      />
-                    </div>
-                  )}
-                </div>
-              </ShowField>
-            </div>
-            <div className="col-md-3">
-              <DropDownField
-                id="dropdown1"
-                selectedOption={details.enabled}
-                options={STATUS}
-                label="Account Status"
-                onChange={onStatusChange}
-              />
-            </div>
-            <div className="col-md-6">
-              <MultiSelect
-                id="Multiselect1"
-                selectedOption={selectedPermissions}
-                options={permissionListToOptions(permissionsList)}
-                label="Assigned Permissions"
-                onChange={selectedOptions =>
-                  onRoleChange(selectedOptions.split(','))
-                }
-              />
+            <div>
+              <div className="col-md-3">
+                <ShowField label="User Status">
+                  {userStatusTranslator(details.status)}
+                  <div className="value-text-color">
+                    {userStatusDescriptionTranslator(details.status)}
+                    {details.status === 'FORCE_CHANGE_PASSWORD' && (
+                      <div className="resend-email-btn">
+                        <Button
+                          btnClassName="primary"
+                          btnName="Resend Invite"
+                          onClick={onResendInvite}
+                          disabled={disableResendEmailButton}
+                        />
+                      </div>
+                    )}
+                  </div>
+                </ShowField>
+              </div>
+              <div className="col-md-3">
+                <DropDownField
+                  id="dropdown2"
+                  selectedOption={details.enabled}
+                  options={STATUS}
+                  label="Account Status"
+                  onChange={onStatusChange}
+                />
+              </div>
+              <div className="col-md-6">
+                <MultiSelect
+                  id="Multiselect1"
+                  selectedOption={details.permissions}
+                  options={permissionListToOptions(permissionsList)}
+                  label="Assigned Permissions"
+                  onChange={selectedOptions =>
+                    onPermissionChange(selectedOptions.split(','))
+                  }
+                />
+              </div>
             </div>
           </div>
         </div>
@@ -148,6 +154,7 @@ UserDetailEdit.propTypes = {
   disableActionBtn: PropTypes.bool,
   onStatusChange: PropTypes.func,
   onRoleChange: PropTypes.func,
+  onPermissionChange: PropTypes.func,
   permissionsList: PropTypes.array,
   onResendInvite: PropTypes.func,
   disableResendEmailButton: PropTypes.bool,

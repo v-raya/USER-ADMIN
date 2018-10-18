@@ -44,13 +44,15 @@ module Api
         allow(Users::UserRepository).to receive(:new).and_return(user_repository)
         allow(user_repository).to receive(:update_user)
           .with('55', { enabled: 'false',
-                        permissions: %w[snapshot hotline] }, token)
+                        permissions: %w[snapshot hotline],
+                        roles: %w[role1 role2] }, token)
           .and_return(user)
         request.session[:token] = 'my_token'
         patch :save_user, body: { enabled: 'false' },
                           params: { id: 55,
                                     enabled: 'false',
-                                    permissions: %w[snapshot hotline] }
+                                    permissions: %w[snapshot hotline],
+                                    roles: %w[role1 role2] }
         expect(response.body).to eq user.to_json
       end
 

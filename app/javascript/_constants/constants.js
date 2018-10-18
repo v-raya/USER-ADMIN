@@ -37,7 +37,6 @@ export const translateOffice = (userObject, officesList) => {
   const recordFound = officesList.find(record => {
     return record.office_id === office_id;
   });
-
   return recordFound ? recordFound.office_name : office_id;
 };
 
@@ -62,12 +61,10 @@ export const possibleRolesOptions = (possibleRoles, rolesList) => {
   rolesList.forEach(role => {
     possibleRoles.forEach(item => {
       if (item === role.id) {
-        options.push(role.name);
+        options.push({ value: role.id, label: role.name });
       }
     });
   });
 
-  return options.map(item => {
-    return { label: item, value: item };
-  });
+  return options;
 };

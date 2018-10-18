@@ -19,7 +19,7 @@ module Api
     private
 
     def allowed_params_for_update
-      params.permit(:enabled, permissions: []).to_h
+      params.permit(:enabled, permissions: [], roles: []).to_h
     end
   end
 end

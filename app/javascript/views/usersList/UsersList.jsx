@@ -225,7 +225,7 @@ class UserList extends PureComponent {
                             event.target.value
                           )
                         }
-                        placeholder="search user by Last name"
+                        placeholder="Search users by Last name"
                         autocomplete="off"
                       />
                     </div>

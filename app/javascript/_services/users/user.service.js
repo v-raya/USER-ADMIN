@@ -36,18 +36,12 @@ class UserService {
   }
 
   static saveUserDetails(id, details) {
-    const permissions = [];
-    if (Array.isArray(details.permissions)) {
-      [].push.apply(permissions, details['permissions']);
-    } else if (details['permissions']) {
-      details['permissions'].split(',').forEach(value => {
-        permissions.push(value);
-      });
-    }
-
-    const data = { enabled: details['enabled'], permissions: permissions };
-
-    return ApiService.patch(`/user_detail/${id}/save_user`, data)
+    const userData = {
+      enabled: details['enabled'],
+      permissions: details['permissions'],
+      roles: details.roles,
+    };
+    return ApiService.patch(`/user_detail/${id}/save_user`, userData)
       .then(response => response.data)
       .catch(error => {
         if (error.response) {

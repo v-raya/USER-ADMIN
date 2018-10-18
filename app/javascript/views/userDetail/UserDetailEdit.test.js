@@ -12,9 +12,12 @@ describe('UserDetailEdit', () => {
     county_name: 'MyCounty',
     permissions: ['x', 'y'],
     racfid: 'my RACFID',
+    roles: ['ROLE1', 'ROLE2'],
     status: 'FORCE_CHANGE_PASSWORD',
   };
 
+  let onPermissionChange = () => {};
+  let onRoleChange = () => {};
   let possibleRolesOptions = () => {};
 
   const rolesList = [
@@ -28,6 +31,8 @@ describe('UserDetailEdit', () => {
     wrapper = shallow(
       <UserDetailEdit
         details={details}
+        onPermissionChange={onPermissionChange}
+        onRoleChange={onRoleChange}
         possibleRoles={possibleRoles}
         rolesList={rolesList}
         possibleRolesOptions={possibleRolesOptions}
@@ -60,12 +65,6 @@ describe('UserDetailEdit', () => {
           .at(2)
           .props().label
       ).toEqual('CWS Login');
-      expect(
-        wrapper
-          .find('ShowField')
-          .at(2)
-          .props().children
-      ).toEqual('my RACFID');
       expect(
         wrapper
           .find('ShowField')
@@ -104,7 +103,7 @@ describe('UserDetailEdit', () => {
 
     it('#MultiSelect, onRoleChange function is called when onChange event triggered ', () => {
       let possibleRolesOptions = () => {};
-
+      const onPermissionChange = jasmine.createSpy('onChange');
       const rolesList = [
         { id: 'role1', name: 'roleOne' },
         { id: 'role2', name: 'roleTwo' },
@@ -115,6 +114,7 @@ describe('UserDetailEdit', () => {
         <UserDetailEdit
           details={details}
           rolesList={rolesList}
+          onPermissionChange={onPermissionChange}
           onRoleChange={onRoleChangeSpy}
           possibleRoles={possibleRoles}
           possibleRolesOptions={possibleRolesOptions}
@@ -122,7 +122,7 @@ describe('UserDetailEdit', () => {
       );
       const value = ['Asian', 'American'];
       render.find('#Multiselect1').simulate('change', String(value));
-      expect(onRoleChangeSpy).toHaveBeenCalledWith(value);
+      expect(onPermissionChange).toHaveBeenCalledWith(value);
     });
 
     it('renders the <ShowField/> children at label:fullName', () => {

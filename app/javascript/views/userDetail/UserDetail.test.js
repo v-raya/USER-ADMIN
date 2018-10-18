@@ -57,22 +57,31 @@ describe('UserDetail', () => {
   });
 
   describe('Setting state', () => {
-    describe('#onStatusChange() function', () => {
+    describe('#handleDropDownChange() function', () => {
       it('should set the Status state when event is triggered', () => {
-        const expectedvalue = { enabled: true };
         const instance = wrapper.instance();
-        const myFunction = instance.onStatusChange('enabled');
+        const myFunction = instance.handleDropDownChange('enabled');
         expect(() => myFunction({ value: true })).not.toThrow();
-        expect(instance.state.details).toEqual(expectedvalue);
+        expect(instance.state.details).toEqual({ enabled: true });
         expect(instance.state.disableActionBtn).toBe(false);
       });
     });
 
-    describe('#onRoleChange', () => {
+    describe('#handleOnRoleChange', () => {
+      it('will set the details state with updated roles when event is triggered ', () => {
+        const instance = wrapper.instance();
+        const myFunc = instance.handleOnRoleChange('roles');
+        expect(() => myFunc({ value: 'role2' })).not.toThrow();
+        expect(instance.state.details).toEqual({ roles: ['role2'] });
+        expect(instance.state.disableActionBtn).toBe(false);
+      });
+    });
+
+    describe('#handleOnPermissionChange', () => {
       it('should set the Permissions state when event is triggered', () => {
         const expectedValue = { permissions: { 0: 'Hotline-rollout' } };
         const instance = wrapper.instance();
-        const myFunction = instance.onRoleChange;
+        const myFunction = instance.handleOnPermissionChange;
         expect(() => myFunction({ 0: 'Hotline-rollout' })).not.toThrow();
         expect(instance.state.details).toEqual(expectedValue);
         expect(instance.state.disableActionBtn).toBe(false);

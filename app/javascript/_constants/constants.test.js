@@ -119,8 +119,8 @@ describe('helpers', () => {
     ];
     const possibleRoles = ['role1', 'role2'];
     const expectedValue = [
-      { label: 'roleOne', value: 'roleOne' },
-      { label: 'roleTwo', value: 'roleTwo' },
+      { label: 'roleOne', value: 'role1' },
+      { label: 'roleTwo', value: 'role2' },
     ];
     it('renders the name of a role given possibleRoles with role_id', () => {
       expect(possibleRolesOptions(possibleRoles, rolesList)).toEqual(

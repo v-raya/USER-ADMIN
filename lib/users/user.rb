@@ -8,6 +8,7 @@ module Users
     constructor_type :schema
     attribute :editable, Types::String.optional
     attribute :possible_roles, Types::Array.optional
+    attribute :roles, Types::String.optional
     attribute :user, UserDetails
   end
 end

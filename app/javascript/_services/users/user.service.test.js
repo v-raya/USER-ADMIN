@@ -102,10 +102,12 @@ describe('UserService', () => {
       const body = {
         enabled: true,
         permissions: ['drivethebus', 'getapuppy'],
+        roles: 'RoleOne',
       };
       UserService.saveUserDetails(id, {
         enabled: true,
-        permissions: 'drivethebus,getapuppy',
+        permissions: ['drivethebus', 'getapuppy'],
+        roles: 'RoleOne',
         first_name: 'Pidgeon',
       });
       expect(patchSpy).toHaveBeenCalledWith(
@@ -114,33 +116,18 @@ describe('UserService', () => {
       );
     });
 
-    it('calls #patch ApiService when permission are empty', () => {
+    it('calls #patch ApiService when permission & roles are empty', () => {
       patchSpy.mockReturnValue(Promise.resolve({}));
       const body = {
         enabled: true,
         permissions: [],
+        roles: '',
       };
       UserService.saveUserDetails(id, {
         enabled: true,
-        permissions: '',
+        permissions: [],
+        roles: '',
         first_name: 'firstName',
-      });
-      expect(patchSpy).toHaveBeenCalledWith(
-        '/user_detail/someid/save_user',
-        body
-      );
-    });
-
-    it('succeeds when the permissins are still an array from loading', () => {
-      patchSpy.mockReturnValue(Promise.resolve({}));
-      const body = {
-        enabled: true,
-        permissions: ['drivethebus', 'getapuppy'],
-      };
-      UserService.saveUserDetails(id, {
-        enabled: true,
-        permissions: ['drivethebus', 'getapuppy'],
-        first_name: 'Pidgeon',
       });
       expect(patchSpy).toHaveBeenCalledWith(
         '/user_detail/someid/save_user',
@@ -157,10 +144,12 @@ describe('UserService', () => {
         const body = {
           enabled: true,
           permissions: ['drivethebus', 'getapuppy'],
+          roles: 'RoleOne',
         };
         UserService.saveUserDetails(id, {
           enabled: true,
-          permissions: 'drivethebus,getapuppy',
+          permissions: ['drivethebus', 'getapuppy'],
+          roles: 'RoleOne',
           first_name: 'Pidgeon',
         });
         expect(patchSpy).toHaveBeenCalledWith(
@@ -175,10 +164,12 @@ describe('UserService', () => {
         const body = {
           enabled: true,
           permissions: ['drivethebus', 'getapuppy'],
+          roles: 'RoleOne',
         };
         UserService.saveUserDetails(id, {
-          enabled: 'Active',
-          permissions: 'drivethebus,getapuppy',
+          enabled: true,
+          permissions: ['drivethebus', 'getapuppy'],
+          roles: 'RoleOne',
           first_name: 'Pidgeon',
         });
         expect(patchSpy).toHaveBeenCalledWith(
@@ -235,32 +226,25 @@ describe('UserService', () => {
 
   describe('#addUser', () => {
     let getSpy2;
+    const newUser = {
+      email: 'example@example.com',
+      first_name: 'ExampleName',
+      last_name: 'ExampleLastName',
+      county_name: 'Madera',
+      racfid: 'RACFID1',
+    };
 
     beforeEach(() => {
       getSpy2 = jest.spyOn(ApiService, 'post');
     });
 
     it('calls #addUser ApiService', () => {
-      const newUser = {
-        email: 'example@example.com',
-        first_name: 'ExampleName',
-        last_name: 'ExampleLastName',
-        county_name: 'Madera',
-        racfid: 'RACFID1',
-      };
       getSpy2.mockReturnValue(Promise.resolve({}));
       UserService.addUser(newUser);
       expect(getSpy2).toHaveBeenCalledWith(`/add_user`, newUser);
     });
 
     it('calls #addUser ApiService error block', () => {
-      const newUser = {
-        email: 'example@example.com',
-        first_name: 'ExampleName',
-        last_name: 'ExampleLastName',
-        county_name: 'Madera',
-        racfid: 'RACFID1',
-      };
       const errorResponse = {
         response: 'error',
       };

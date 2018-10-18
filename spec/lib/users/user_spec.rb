@@ -9,6 +9,7 @@ module Users
       subject { User }
       it { is_expected.to have_attribute(:editable, Types::String.optional) }
       it { is_expected.to have_attribute(:possible_roles, Types::Array.optional) }
+      it { is_expected.to have_attribute(:roles, Types::String.optional) }
     end
   end
 end

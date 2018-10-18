@@ -48,7 +48,7 @@ export default class UserDetail extends Component {
     this.setState({ details });
   }
 
-  onStatusChange = name => ({ value }) => {
+  handleDropDownChange = name => ({ value }) => {
     const { details } = this.state;
     this.setState({
       details: { ...details, [name]: value },
@@ -56,7 +56,15 @@ export default class UserDetail extends Component {
     });
   };
 
-  onRoleChange = value => {
+  handleOnRoleChange = name => ({ value }) => {
+    const { details } = this.state;
+    this.setState({
+      details: { ...details, [name]: [value] },
+      disableActionBtn: false,
+    });
+  };
+
+  handleOnPermissionChange = value => {
     const { details } = this.state;
     this.setState({
       disableActionBtn: false,
@@ -138,8 +146,9 @@ export default class UserDetail extends Component {
                 selectedPermissions={this.state.details.permissions}
                 onCancel={this.onCancel}
                 onSave={this.onSaveDetails}
-                onStatusChange={this.onStatusChange('enabled')}
-                onRoleChange={this.onRoleChange}
+                onStatusChange={this.handleDropDownChange('enabled')}
+                onPermissionChange={this.handleOnPermissionChange}
+                onRoleChange={this.handleOnRoleChange('roles')}
                 disableActionBtn={this.state.disableActionBtn}
                 permissionsList={permissionsList}
                 onResendInvite={this.onResendInvite}
