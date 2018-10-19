@@ -79,8 +79,8 @@ node(node_to_run_on()) {
       stage('Trigger Security scan') {
         build job: 'tenable-scan', 
           parameters: [
-            [$class: 'StringParameterValue', name: 'CONTAINER_NAME', value: 'cap'],
-            [$class: 'StringParameterValue', name: 'CONTAINER_VERSION', value: '0.94.402']
+            [$class: 'StringParameterValue', name: 'CONTAINER_NAME', value: "${DOCKER_IMAGE}"],
+            [$class: 'StringParameterValue', name: 'CONTAINER_VERSION', value: "${SEMANTIC_VERSION_NUMBER}"]
           ],
           wait: false 
       }
