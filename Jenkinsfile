@@ -76,6 +76,14 @@ node(node_to_run_on()) {
           app.push('latest')
         }
       }
+      stage('Trigger Security scan') {
+        build job: 'tenable-scan', 
+          parameters: [
+            [$class: 'StringParameterValue', name: 'CONTAINER_NAME', value: 'cap'],
+            [$class: 'StringParameterValue', name: 'CONTAINER_VERSION', value: '0.94.402']
+          ],
+          wait: false 
+      }
       stage('Deploy Preint') {
         withCredentials([usernameColonPassword(credentialsId: 'fa186416-faac-44c0-a2fa-089aed50ca17', variable: 'jenkinsauth')]) {
           sh "curl -v -u $jenkinsauth 'http://jenkins.mgmt.cwds.io:8080/job/preint/job/deploy-cap/buildWithParameters?token=${JENKINS_TRIGGER_TOKEN}&cause=Caused%20by%20Build%20${SEMANTIC_VERSION_NUMBER}&version=${SEMANTIC_VERSION_NUMBER}'"
