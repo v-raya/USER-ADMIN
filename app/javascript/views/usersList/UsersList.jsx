@@ -97,10 +97,9 @@ class UserList extends PureComponent {
 
   getCurrentPageNumber = () => Math.floor(this.props.from / this.props.size);
 
-  renderUsersTable = ({ data, officesList }) => {
+  renderUsersTable = ({ data, officesList, rolesList }) => {
     const translateOffice = getOfficeTranslator(officesList);
-    const translateRoles = data =>
-      formatSelectedRoles(data.roles, this.props.rolesList);
+    const translateRoles = data => formatSelectedRoles(data.roles, rolesList);
 
     return (
       <ReactTable
@@ -254,6 +253,7 @@ class UserList extends PureComponent {
                   {this.renderUsersTable({
                     data: this.props.userList,
                     officesList,
+                    rolesList: this.props.rolesList,
                   })}
                 </div>
               </Cards>

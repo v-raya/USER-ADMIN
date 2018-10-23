@@ -140,6 +140,13 @@ describe('#formatSelectedRoles', () => {
 
   it('return original-id when it is not in the list ', () => {
     expect(formatSelectedRoles(['bad'], list)).toEqual('bad');
+  });
+
+  it('return empty string when role is empty array', () => {
     expect(formatSelectedRoles([], list)).toEqual('');
+  });
+
+  it('return original ID when empty list is passed', () => {
+    expect(formatSelectedRoles(['good'], [])).toEqual('good');
   });
 });

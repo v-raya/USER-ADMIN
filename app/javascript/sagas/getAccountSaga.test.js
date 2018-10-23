@@ -18,25 +18,6 @@ describe('sagas', () => {
     });
 
     describe('when successful', () => {
-      it('executes the happy-path saga with state-admin as role', () => {
-        const response = {
-          admin_office_ids: ['12345'],
-          roles: ['State-admin'],
-        };
-        const gen = getAccount();
-        expect(gen.next().value).toEqual(call(AccountService.fetchCurrent));
-        expect(gen.next(response).value).toEqual(
-          put({
-            type: actionTypes.FETCH_ACCOUNT_API_CALL_SUCCESS,
-            payload: {
-              admin_office_ids: [],
-              roles: ['State-admin'],
-            },
-          })
-        );
-        expect(gen.next().done).toBe(true);
-      });
-
       it('executes the happy-path saga', () => {
         const response = {
           admin_office_ids: ['12345'],

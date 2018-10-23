@@ -1,4 +1,5 @@
 import * as actionTypes from '../actions/actionTypes';
+import { getAdminOfficeIDs } from '../_utils/checkAdminRoles';
 
 const initialValue = {
   sort: [
@@ -24,6 +25,8 @@ const initialValue = {
   error: null,
   inputData: {},
   countyName: '',
+  userFirstName: '',
+  userLastName: '',
 };
 
 function userListReducer(state = initialValue, { type, payload, error, meta }) {
@@ -107,10 +110,12 @@ function userListReducer(state = initialValue, { type, payload, error, meta }) {
           ...state.inputData,
           officeNames:
             state.inputData.officeNames === undefined
-              ? payload.admin_office_ids
+              ? getAdminOfficeIDs(payload)
               : state.inputData.officeNames,
         },
         countyName: payload.county_name,
+        userFirstName: payload.first_name,
+        userLastName: payload.last_name,
         error: null,
       };
 

@@ -1,31 +1,22 @@
 import { userName } from './globalHeaderSelectors';
 
-describe('accountSelectors', () => {
+describe('globalHeaderSelectors', () => {
   describe('#userName', () => {
-    it('selects the firstName and lastName when availble', () => {
+    it('selects the firstName and lastName when available', () => {
       const state = {
         userList: {
-          account: {
-            XHRStatus: 'ready',
-            user: 'RACFID',
-            staff_id: '0X5',
-            county_code: '20',
-            county_name: 'Sacramento',
-            last_name: 'lastname',
-            first_name: 'firstname',
-          },
+          userLastName: 'lastName',
+          userFirstName: 'firstName',
         },
       };
-      expect(userName(state)).toEqual('firstname lastname');
+      expect(userName(state)).toEqual('firstName lastName');
     });
 
-    it('display empty string when there is no name', () => {
+    it('display empty string when there is no first name and no last name ', () => {
       const state = {
         userList: {
-          XHRStatus: 'ready',
-          user: 'RACFID',
-          staff_id: '0X5',
-          county_code: '20',
+          userFirstName: '',
+          userLastName: '',
         },
       };
       expect(userName(state)).toEqual(' ');

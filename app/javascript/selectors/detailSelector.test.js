@@ -164,10 +164,15 @@ describe('selectors', () => {
       expect(rolesList(state)).toEqual(expectedValue);
     });
 
-    it('returns empty array when roles are not available', () => {
+    it('returns empty array when fetchRoles object is empty', () => {
       const state = {
         fetchRoles: {},
       };
+      expect(rolesList(state)).toEqual([]);
+    });
+
+    it('returns empty array when roles is an empty array', () => {
+      const state = { fetchRoles: { roles: [] } };
       expect(rolesList(state)).toEqual([]);
     });
   });

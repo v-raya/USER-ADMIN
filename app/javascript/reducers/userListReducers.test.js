@@ -18,14 +18,24 @@ describe('reducer', () => {
     const before = {
       inputData: {},
       countyName: '',
+      userLastName: '',
+      userFirstName: '',
     };
     const action = {
       type: actionTypes.FETCH_ACCOUNT_API_CALL_SUCCESS,
-      payload: { admin_office_ids: ['1234509876'], county_name: 'Madera' },
+      payload: {
+        roles: ['Office-admin'],
+        admin_office_ids: ['1234509876'],
+        county_name: 'Madera',
+        first_name: 'User first name',
+        last_name: 'User last name',
+      },
     };
     const after = reducer(before, action);
     expect(after.inputData.officeNames).toEqual(['1234509876']);
     expect(after.countyName).toEqual('Madera');
+    expect(after.userFirstName).toEqual('User first name');
+    expect(after.userLastName).toEqual('User last name');
   });
 
   it('handles FETCH_ACCOUNT_API_CALL_SUCCESS when officeNames is not undefined', () => {
