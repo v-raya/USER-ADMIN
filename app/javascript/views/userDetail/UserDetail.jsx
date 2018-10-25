@@ -17,7 +17,6 @@ export default class UserDetail extends Component {
       details: props.details,
       resendEmailAlert: false,
       disableEditBtn: props.disableEditBtn,
-      disableErrorAlert: false,
     };
   }
 
@@ -85,7 +84,6 @@ export default class UserDetail extends Component {
       isEdit: false,
       alert: true,
       resendEmailAlert: false,
-      disableErrorAlert: true,
     });
   };
 
@@ -104,17 +102,21 @@ export default class UserDetail extends Component {
     );
   };
 
-  alert = () => {
-    if (this.state.alert) {
-      return (
-        <Alert
-          alertClassName="success"
-          faIcon="fa-check-circle"
-          alertCross={false}
-        >
-          {'Your changes have been made successfully'}
-        </Alert>
-      );
+  showAlert = (alert, userDetailError) => {
+    if (alert) {
+      if (userDetailError) {
+        return <ErrorMessage error={userDetailError} />;
+      } else {
+        return (
+          <Alert
+            alertClassName="success"
+            faIcon="fa-check-circle"
+            alertCross={false}
+          >
+            {'Your changes have been made successfully'}
+          </Alert>
+        );
+      }
     }
   };
 
@@ -182,6 +184,7 @@ export default class UserDetail extends Component {
       permissionsList,
       userDetailError,
     } = this.props;
+    const { alert } = this.state;
 
     return (
       <div>
@@ -196,10 +199,8 @@ export default class UserDetail extends Component {
             />
             &nbsp;&gt;&nbsp;
             <Link to="/">User List</Link>
-            {/* {this.alert()} */}
+            {this.showAlert(alert, userDetailError)}
             {this.emailSent()}
-            {this.state.disableErrorAlert &&
-              userDetailError && <ErrorMessage error={userDetailError} />}
           </div>
           {this.renderCards(permissionsList)}
         </div>
