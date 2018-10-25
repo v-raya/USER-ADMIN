@@ -5,6 +5,7 @@ import { Link as LinkRWD, Alert, PageHeader } from 'react-wood-duck';
 import UserDetailEdit from './UserDetailEdit';
 import UserDetailShow from './UserDetailShow';
 import ErrorMessage from '../../common/ErrorMessage';
+import Cards from '../../common/Card';
 
 /* eslint camelcase: 0 */
 export default class UserDetail extends Component {
@@ -17,6 +18,7 @@ export default class UserDetail extends Component {
       details: props.details,
       resendEmailAlert: false,
       disableEditBtn: props.disableEditBtn,
+      XHRStatus: props.XHRStatus,
     };
   }
 
@@ -43,8 +45,9 @@ export default class UserDetail extends Component {
   }
 
   UNSAFE_componentWillReceiveProps(nextProps) {
-    let details = nextProps.details;
-    this.setState({ details });
+    const details = nextProps.details;
+    const XHRStatus = nextProps.XHRStatus;
+    this.setState({ details, XHRStatus });
   }
 
   handleDropDownChange = name => ({ value }) => {
@@ -138,7 +141,12 @@ export default class UserDetail extends Component {
   };
 
   renderCards = permissionsList => {
-    return (
+    console.log(this.state);
+    return this.state.XHRStatus !== 'ready' ? (
+      <Cards>
+        <span>{'Loading...'}</span>
+      </Cards>
+    ) : (
       <div>
         {this.state.details && this.state.details.id ? (
           <div>
@@ -171,7 +179,15 @@ export default class UserDetail extends Component {
             )}
           </div>
         ) : (
-          ''
+          <div className="row">
+            <div className="col-md-12">
+              <Cards
+                cardHeaderText={'User not found'}
+                cardHeaderButton={false}
+                disabled={this.props.disableEditBtn}
+              />
+            </div>
+          </div>
         )}
       </div>
     );
@@ -219,6 +235,7 @@ UserDetail.propTypes = {
   resendEmailStatus: PropTypes.string,
   disableResendEmailButton: PropTypes.bool,
   disableEditBtn: PropTypes.bool,
+  XHRStatus: PropTypes.string,
   possibleRoles: PropTypes.array,
   rolesList: PropTypes.arrayOf(
     PropTypes.shape({

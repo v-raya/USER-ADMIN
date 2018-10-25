@@ -6,6 +6,7 @@ import {
   permissionsList,
   possibleRoles,
   rolesList,
+  fetchingStatus,
 } from '../selectors/detailSelector';
 import {
   fetchDetailsActions,
@@ -24,6 +25,7 @@ import { officesList } from '../selectors/userListSelector';
 
 function mapStateToProps(state) {
   return {
+    XHRStatus: fetchingStatus(state),
     possibleRoles: possibleRoles(state),
     disableEditBtn: checkEditDisable(state),
     details: selectDetailRecords(state),

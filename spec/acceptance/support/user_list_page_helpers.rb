@@ -25,11 +25,30 @@ module UserListPageHelper
   end
 
   def first_user_link
-    page.find('.rt-table').first('.rt-tr-group').first('.rt-td > a')
+    # first cell contains the link
+    first_user.first.find('a')
+  end
+
+  def table_cells
+    %i[full_name status last_log_in cws_login office_name role]
+  end
+
+  def first_user
+    page.find('.rt-table').first('.rt-tr-group').all('.rt-td')
+  end
+
+  def second_user
+    page.find('.rt-table').all('.rt-tr-group')[1].all('.rt-td')
   end
 
   def second_user_link
-    page.find('.rt-table').all('.rt-tr-group')[1].first('.rt-td > a')
+    second_user.first.find('a')
+  end
+
+  def text_values(user_row)
+    user_hash = {}
+    user_row.zip(table_cells) { |user_value, cell_name| user_hash[cell_name] = user_value.text }
+    user_hash
   end
 
   def search_users(user_name)
@@ -38,5 +57,12 @@ module UserListPageHelper
 
     fill_in 'searchLastName', with: last_name
     click_on 'Search'
+  end
+
+  def expect_valid_role(user_row)
+    valid_roles = ['CWS Worker', 'County Administrator', 'CALS External Worker',
+                   'State Administratoe',
+                   'Office Administrator']
+    expect(valid_roles).to include user_row[:role]
   end
 end

@@ -189,12 +189,20 @@ describe('UserDetail', () => {
 
     describe('renders cards', () => {
       it('should display <UserDetailShow/>', () => {
-        wrapper.setState({ isEdit: false, details: { id: '12345' } });
+        wrapper.setState({
+          isEdit: false,
+          details: { id: '12345' },
+          XHRStatus: 'ready',
+        });
         expect(wrapper.find('UserDetailShow').length).toBe(1);
       });
 
       it('should display <UserDetailEdit/>', () => {
-        wrapper.setState({ isEdit: true, details: { id: '12345' } });
+        wrapper.setState({
+          isEdit: true,
+          details: { id: '12345' },
+          XHRStatus: 'ready',
+        });
         expect(wrapper.find('UserDetailEdit').length).toBe(1);
         expect(wrapper.find('UserDetailEdit').props().disableActionBtn).toBe(
           true

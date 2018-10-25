@@ -8,6 +8,7 @@
     "test:rspec": "bundle exec rspec --no-color  spec/lib spec/controllers",
     "test:jest:watch": "npm run test:jest -- --watch",
     "lint:test:eslint": "eslint --format tap \"app/javascript/**/*.{js,jsx}\"",
+    "lint:test:eslintfix": "eslint --format tap \"app/javascript/**/*.{js,jsx}\" --fix",
     "lint:test:rubocop": "bundle exec rubocop --format tap",
     "lint:test:stylelint": "stylelint --custom-formatter scripts/stylelint-formatter.tap.js \"app/{assets,javascript}/**/*.{scss,css}\"",
     "lint:test": "run-p --print-label lint:test:*",

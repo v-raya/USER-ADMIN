@@ -22,3 +22,6 @@ export const rolesList = state => safeGet(state, 'fetchRoles.roles', []);
 
 export const checkEditDisable = state =>
   !safeGet(state, 'fetchDetails.details.records.editable');
+
+export const fetchingStatus = state =>
+  safeGet(state, 'fetchDetails.details.XHRStatus');

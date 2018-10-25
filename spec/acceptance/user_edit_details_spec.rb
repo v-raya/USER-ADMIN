@@ -9,6 +9,17 @@ feature 'User Edit' do
     login
   end
 
+  scenario 'user_details view of inaccessible or missing user shows "User not found"' do
+    login
+    page_has_user_list_headers
+    sleep 2
+    first_user_url = first_user_link[:href]
+    visit "#{first_user_url}BAD_EXTRA_CHARS"
+    page_is_user_details
+    expect(page).to have_content('User not found')
+    click_on 'User List'
+  end
+
   scenario 'user_details edit/save is accessibile' do
     login
     page_has_user_list_headers

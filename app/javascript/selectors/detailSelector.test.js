@@ -3,6 +3,7 @@ import {
   permissionsList,
   rolesList,
   checkEditDisable,
+  fetchingStatus,
   selectUserDetailObject,
   possibleRoles,
 } from './detailSelector';
@@ -129,10 +130,7 @@ describe('selectors', () => {
         fetchPermissions: {
           permissions: {
             XHRStatus: 'ready',
-            permissions: [
-              { name: 'foo-name', description: 'foo-desc' },
-              { name: 'bar-name', description: 'bar-desc' },
-            ],
+            permissions: expectedValue,
           },
         },
       };
@@ -155,10 +153,7 @@ describe('selectors', () => {
       ];
       const state = {
         fetchRoles: {
-          roles: [
-            { id: 'foo-id', name: 'foo-name' },
-            { id: 'bar-id', name: 'bar-name' },
-          ],
+          roles: expectedValue,
         },
       };
       expect(rolesList(state)).toEqual(expectedValue);
@@ -203,64 +198,48 @@ describe('selectors', () => {
   });
 
   describe('#checkEditDisable', () => {
-    it('return true when editable is false', () => {
-      const state = {
+    const getFetchDetailEditableState = editable => {
+      return {
         fetchDetails: {
           details: {
             XHRStatus: 'ready',
             records: {
-              editable: false,
+              editable: editable,
               user: {},
             },
           },
         },
       };
+    };
+    it('return true when editable is false', () => {
+      const state = getFetchDetailEditableState(false);
       expect(checkEditDisable(state)).toEqual(true);
     });
 
-    it('return the false if editable is true', () => {
-      const state = {
-        fetchDetails: {
-          details: {
-            XHRStatus: 'ready',
-            records: {
-              editable: true,
-              user: {},
-            },
-          },
-        },
-      };
+    it('return false if editable is true', () => {
+      const state = getFetchDetailEditableState(true);
       expect(checkEditDisable(state)).toEqual(false);
     });
 
-    it('return the true if editable is null', () => {
-      const state = {
-        fetchDetails: {
-          details: {
-            XHRStatus: 'ready',
-            records: {
-              editable: null,
-              user: {},
-            },
-          },
-        },
-      };
+    it('return true if editable is null', () => {
+      const state = getFetchDetailEditableState(null);
       expect(checkEditDisable(state)).toEqual(true);
     });
 
-    it('return the true if editable is undefined ', () => {
+    it('return true if editable is undefined ', () => {
+      const state = getFetchDetailEditableState(undefined);
+      expect(checkEditDisable(state)).toEqual(true);
+    });
+  });
+
+  describe('#fetchingStatus', () => {
+    it('return the value of the details XHR status', () => {
       const state = {
         fetchDetails: {
-          details: {
-            XHRStatus: 'ready',
-            records: {
-              editable: undefined,
-              user: {},
-            },
-          },
+          details: { XHRStatus: 'ready' },
         },
       };
-      expect(checkEditDisable(state)).toEqual(true);
+      expect(fetchingStatus(state)).toEqual('ready');
     });
   });
 });
