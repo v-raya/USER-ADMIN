@@ -4,12 +4,10 @@ require 'spec_helper'
 require 'rspec/dry/struct'
 
 module Users
-  describe User do
+  describe EditDetails do
     describe 'attributes' do
-      subject { User }
+      subject { EditDetails }
       it { is_expected.to have_attribute(:editable, Types::String.optional) }
-      it { is_expected.to have_attribute(:possible_roles, Types::Array.optional) }
-      it { is_expected.to have_attribute(:roles, Types::String.optional) }
     end
   end
 end

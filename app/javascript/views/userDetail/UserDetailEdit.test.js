@@ -101,7 +101,7 @@ describe('UserDetailEdit', () => {
       );
     });
 
-    it('#MultiSelect, onRoleChange function is called when onChange event triggered ', () => {
+    it('#AssignPermissions, onRoleChange function is called when onChange event triggered ', () => {
       let possibleRolesOptions = () => {};
       const onPermissionChange = jasmine.createSpy('onChange');
       const rolesList = [
@@ -121,7 +121,7 @@ describe('UserDetailEdit', () => {
         />
       );
       const value = ['Asian', 'American'];
-      render.find('#Multiselect1').simulate('change', String(value));
+      render.find('#AssignPermissions').simulate('change', String(value));
       expect(onPermissionChange).toHaveBeenCalledWith(value);
     });
 
@@ -142,7 +142,7 @@ describe('UserDetailEdit', () => {
     });
   });
 
-  describe('when Accout Status is FORCE_CHANGE_PASSWORD', () => {
+  describe('when Account Status is FORCE_CHANGE_PASSWORD', () => {
     it('should have a button as Resend Invite', () => {
       expect(wrapper.find('Button').length).toEqual(1);
       expect(wrapper.find('Button').props().btnName).toBe('Resend Invite');

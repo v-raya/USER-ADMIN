@@ -7,7 +7,11 @@ export const selectUserDetailObject = state => {
 };
 
 export const possibleRoles = state =>
-  safeGet(state, 'fetchDetails.details.records.possible_roles', []);
+  safeGet(
+    state,
+    'fetchDetails.details.records.edit_details.roles.possible_values',
+    []
+  );
 
 export const selectDetailRecords = state => {
   const userData = selectUserDetailObject(state);
@@ -21,7 +25,10 @@ export const permissionsList = state =>
 export const rolesList = state => safeGet(state, 'fetchRoles.roles', []);
 
 export const checkEditDisable = state =>
-  !safeGet(state, 'fetchDetails.details.records.editable');
+  !safeGet(state, 'fetchDetails.details.records.edit_details.editable');
+
+export const disableRolesDropDown = state =>
+  !safeGet(state, 'fetchDetails.details.records.edit_details.roles.editable');
 
 export const fetchingStatus = state =>
   safeGet(state, 'fetchDetails.details.XHRStatus');

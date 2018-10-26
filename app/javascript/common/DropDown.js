@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Select from '@cwds/components/lib/Select';
 
-class MultiSelect extends React.Component {
+class DropDown extends React.Component {
   render() {
     const {
       gridClassName,
@@ -14,14 +14,16 @@ class MultiSelect extends React.Component {
       onChange,
       selectClassName,
       placeholder,
+      multiSelect,
+      simpleValue,
     } = this.props;
     return (
       <div className="form-group">
         <div className={gridClassName}>
           <label htmlFor={label}>{label}</label>
           <Select
-            multi
-            simpleValue
+            multi={multiSelect}
+            simpleValue={simpleValue}
             value={selectedOption}
             id={id}
             onChange={onChange}
@@ -36,7 +38,7 @@ class MultiSelect extends React.Component {
   }
 }
 
-MultiSelect.propTypes = {
+DropDown.propTypes = {
   options: PropTypes.array,
   id: PropTypes.string,
   selectedOption: PropTypes.array,
@@ -46,6 +48,8 @@ MultiSelect.propTypes = {
   label: PropTypes.string,
   selectClassName: PropTypes.string,
   disabled: PropTypes.bool,
+  multiSelect: PropTypes.bool,
+  simpleValue: PropTypes.bool,
 };
 
-export default MultiSelect;
+export default DropDown;

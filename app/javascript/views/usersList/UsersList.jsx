@@ -7,7 +7,7 @@ import {
   PageHeader,
   Alert,
 } from 'react-wood-duck';
-import MultiSelect from '../../common/MultiSelect';
+import DropDown from '../../common/DropDown';
 import Cards from '../../common/Card';
 import ReactTable from 'react-table';
 import Pagination from './Pagination';
@@ -198,7 +198,7 @@ class UserList extends PureComponent {
                 <form onSubmit={this.submitSearch} autoComplete="off">
                   <div className="row">
                     <div className="col-md-4 col-sm-6">
-                      <MultiSelect
+                      <DropDown
                         id="searchOfficeName"
                         selectedOption={officeNames}
                         options={officesListToOptions(officesList)}
@@ -210,6 +210,8 @@ class UserList extends PureComponent {
                             selectedOptions.split(',')
                           )
                         }
+                        multiSelect={true}
+                        simpleValue={true}
                       />
                     </div>
                     <div className="col-md-6 col-sm-6">

@@ -6,6 +6,7 @@ import {
   permissionsList,
   possibleRoles,
   rolesList,
+  disableRolesDropDown,
   fetchingStatus,
 } from '../selectors/detailSelector';
 import {
@@ -42,6 +43,7 @@ function mapStateToProps(state) {
     resendEmailStatus: selectResendEmailStatus(state),
     disableResendEmailButton: disableResendEmailButton(state),
     officesList: officesList(state),
+    isRolesDisabled: disableRolesDropDown(state),
   };
 }
 

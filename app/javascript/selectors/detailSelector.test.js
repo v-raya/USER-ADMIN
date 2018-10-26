@@ -6,31 +6,33 @@ import {
   fetchingStatus,
   selectUserDetailObject,
   possibleRoles,
+  disableRolesDropDown,
 } from './detailSelector';
 
 describe('selectors', () => {
+  let initialState = {
+    fetchDetails: {
+      details: {
+        XHRStatus: 'ready',
+        records: {
+          edit_details: {
+            editable: true,
+            roles: { possible_values: ['role1', 'role2'] },
+          },
+          user: {},
+        },
+      },
+    },
+  };
+
   describe('#selectUserDetailObject', () => {
     it('selects the user detail object when records exists', () => {
-      const state = {
-        fetchDetails: {
-          details: {
-            records: {
-              editable: true,
-              roles: ['SomeRole'],
-              user: {
-                county_name: 'first',
-                enabled: true,
-                id: '12',
-                name: 'third',
-              },
-            },
-          },
+      expect(selectUserDetailObject(initialState)).toEqual({
+        edit_details: {
+          editable: true,
+          roles: { possible_values: ['role1', 'role2'] },
         },
-      };
-      expect(selectUserDetailObject(state)).toEqual({
-        editable: true,
-        roles: ['SomeRole'],
-        user: { county_name: 'first', enabled: true, id: '12', name: 'third' },
+        user: {},
       });
     });
 
@@ -57,19 +59,20 @@ describe('selectors', () => {
   });
 
   describe('#selectDetailRecords', () => {
-    it('selects the user detail records when enabled is true', () => {
-      const state = {
+    const getDetailsEnableState = isDetailsRecordsEnabled => {
+      return {
+        ...initialState,
         fetchDetails: {
           details: {
             records: {
-              user: {
-                county_name: 'first',
-                enabled: true,
-              },
+              user: { enabled: isDetailsRecordsEnabled, county_name: 'first' },
             },
           },
         },
       };
+    };
+    it('selects the user detail records when enabled is true', () => {
+      const state = getDetailsEnableState(true);
       expect(selectDetailRecords(state)).toEqual({
         county_name: 'first',
         enabled: true,
@@ -77,40 +80,18 @@ describe('selectors', () => {
     });
 
     it('selects the user detail records when enabled is false', () => {
-      const state = {
-        fetchDetails: {
-          details: {
-            records: {
-              user: {
-                enabled: false,
-                name: 'third',
-              },
-            },
-          },
-        },
-      };
+      const state = getDetailsEnableState(false);
       expect(selectDetailRecords(state)).toEqual({
         enabled: false,
-        name: 'third',
+        county_name: 'first',
       });
     });
 
     it('selects the user detail records when enabled is some other value', () => {
-      const state = {
-        fetchDetails: {
-          details: {
-            records: {
-              user: {
-                enabled: 'Not a boolean Value',
-                id: '12',
-              },
-            },
-          },
-        },
-      };
+      const state = getDetailsEnableState('Not a boolean value');
       expect(selectDetailRecords(state)).toEqual({
-        enabled: 'Not a boolean Value',
-        id: '12',
+        county_name: 'first',
+        enabled: 'Not a boolean value',
       });
     });
 
@@ -174,19 +155,7 @@ describe('selectors', () => {
 
   describe('#possibleRoles', () => {
     it('selects the roles when available', () => {
-      const state = {
-        fetchDetails: {
-          details: {
-            XHRStatus: 'ready',
-            records: {
-              editable: false,
-              possible_roles: ['role1', 'role2'],
-              user: {},
-            },
-          },
-        },
-      };
-      expect(possibleRoles(state)).toEqual(['role1', 'role2']);
+      expect(possibleRoles(initialState)).toEqual(['role1', 'role2']);
     });
 
     it('returns empty array when roles are not available', () => {
@@ -198,48 +167,74 @@ describe('selectors', () => {
   });
 
   describe('#checkEditDisable', () => {
-    const getFetchDetailEditableState = editable => {
+    const getDetailsEditableState = isDetailsEditable => {
       return {
+        ...initialState,
         fetchDetails: {
           details: {
-            XHRStatus: 'ready',
+            records: { edit_details: { editable: isDetailsEditable } },
+          },
+        },
+      };
+    };
+    it('return true when editable is false', () => {
+      const state = getDetailsEditableState(false);
+      expect(checkEditDisable(state)).toEqual(true);
+    });
+
+    it('return the false if editable is true', () => {
+      const state = getDetailsEditableState(true);
+      expect(checkEditDisable(state)).toEqual(false);
+    });
+
+    it('return the true if editable is null', () => {
+      const state = getDetailsEditableState(null);
+      expect(checkEditDisable(state)).toEqual(true);
+    });
+
+    it('return true if editable is undefined ', () => {
+      const state = getDetailsEditableState(undefined);
+      expect(checkEditDisable(state)).toEqual(true);
+    });
+  });
+
+  describe('#disableRolesDropDown', () => {
+    const getRolesEditableState = isRolesEditable => {
+      return {
+        ...initialState,
+        fetchDetails: {
+          details: {
             records: {
-              editable: editable,
-              user: {},
+              edit_details: { roles: { editable: isRolesEditable } },
             },
           },
         },
       };
     };
     it('return true when editable is false', () => {
-      const state = getFetchDetailEditableState(false);
-      expect(checkEditDisable(state)).toEqual(true);
+      const state = getRolesEditableState(false);
+      expect(disableRolesDropDown(state)).toEqual(true);
     });
 
     it('return false if editable is true', () => {
-      const state = getFetchDetailEditableState(true);
-      expect(checkEditDisable(state)).toEqual(false);
+      const state = getRolesEditableState(true);
+      expect(disableRolesDropDown(state)).toEqual(false);
     });
 
     it('return true if editable is null', () => {
-      const state = getFetchDetailEditableState(null);
-      expect(checkEditDisable(state)).toEqual(true);
+      const state = getRolesEditableState(null);
+      expect(disableRolesDropDown(state)).toEqual(true);
     });
 
     it('return true if editable is undefined ', () => {
-      const state = getFetchDetailEditableState(undefined);
-      expect(checkEditDisable(state)).toEqual(true);
+      const state = getRolesEditableState(undefined);
+      expect(disableRolesDropDown(state)).toEqual(true);
     });
   });
 
   describe('#fetchingStatus', () => {
     it('return the value of the details XHR status', () => {
-      const state = {
-        fetchDetails: {
-          details: { XHRStatus: 'ready' },
-        },
-      };
-      expect(fetchingStatus(state)).toEqual('ready');
+      expect(fetchingStatus(initialState)).toEqual('ready');
     });
   });
 });

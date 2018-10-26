@@ -4,9 +4,9 @@ require 'dry-struct'
 require 'users/types'
 
 module Users
-  class User < Dry::Struct
+  class EditDetails < Dry::Struct
     constructor_type :schema
-    attribute :edit_details, EditDetails
-    attribute :user, UserDetails
+    attribute :editable, Types::String.optional
+    attribute :roles, Roles
   end
 end

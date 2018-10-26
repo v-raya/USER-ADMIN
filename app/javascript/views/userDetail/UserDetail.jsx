@@ -176,6 +176,7 @@ export default class UserDetail extends Component {
                 officesList={this.props.officesList}
                 rolesList={this.props.rolesList}
                 possibleRoles={this.props.possibleRoles}
+                isRolesDisabled={this.props.isRolesDisabled}
               />
             ) : (
               <UserDetailShow
@@ -260,6 +261,7 @@ UserDetail.propTypes = {
       office_id: PropTypes.string.isRequired,
     })
   ),
+  isRolesDisabled: PropTypes.bool,
 };
 
 UserDetail.defaultProps = {

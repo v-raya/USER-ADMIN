@@ -1,8 +1,8 @@
 import React from 'react';
-import MultiSelect from './MultiSelect';
+import DropDown from './DropDown';
 import { shallow } from 'enzyme';
 
-describe('MultiSelect', function() {
+describe('DropDown', function() {
   let onChangeSpy;
 
   beforeEach((onChangeSpy = jasmine.createSpy('onChange')));
@@ -14,8 +14,11 @@ describe('MultiSelect', function() {
     label: 'label name',
     selectClassName: 'classnames',
     onChange: onChangeSpy,
+    multiSelect: true,
+    simpleValue: true,
+    disabled: false,
   };
-  const wrapper = shallow(<MultiSelect {...props} />);
+  const wrapper = shallow(<DropDown {...props} />);
   const instance = wrapper.instance();
 
   it('has basic elements ', () => {
@@ -31,6 +34,9 @@ describe('MultiSelect', function() {
     expect(instance.props.label).toEqual('label name');
     expect(instance.props.selectClassName).toEqual('classnames');
     expect(instance.props.onChange).toEqual(onChangeSpy);
+    expect(instance.props.multiSelect).toEqual(true);
+    expect(instance.props.simpleValue).toEqual(true);
+    expect(instance.props.disabled).toEqual(false);
   });
 
   it('returns the Input and Label tags', () => {

@@ -7,7 +7,8 @@ module Users
   describe Roles do
     describe 'attributes' do
       subject { Roles }
-      it { is_expected.to have_attribute(:roles, Types::Array.optional) }
+      it { is_expected.to have_attribute(:editable, Types::String.optional) }
+      it { is_expected.to have_attribute(:possible_values, Types::Array.optional) }
     end
   end
 end

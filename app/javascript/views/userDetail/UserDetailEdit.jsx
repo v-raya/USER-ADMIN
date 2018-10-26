@@ -3,8 +3,7 @@ import PropTypes from 'prop-types';
 import Cards from '../../common/Card';
 import ShowField from '../../common/ShowField';
 import { Button } from 'react-wood-duck';
-import DropDownField from 'react-wood-duck/dist/DropDownField';
-import MultiSelect from '../../common/MultiSelect';
+import DropDown from '../../common/DropDown';
 import {
   STATUS,
   permissionListToOptions,
@@ -38,6 +37,7 @@ const UserDetailEdit = ({
   officesList,
   possibleRoles,
   rolesList,
+  isRolesDisabled,
 }) => (
   <div className="row">
     <div className="col-md-12">
@@ -68,12 +68,15 @@ const UserDetailEdit = ({
             </div>
 
             <div className="col-md-4">
-              <DropDownField
-                id="dropdown1"
+              <DropDown
+                multiSelect={false}
+                simpleValue={false}
                 selectedOption={details.roles.toString()}
-                options={possibleRolesOptions(possibleRoles, rolesList)}
-                label="Roles"
+                id="RolesDropDown"
+                label="Role"
                 onChange={onRoleChange}
+                options={possibleRolesOptions(possibleRoles, rolesList)}
+                disabled={isRolesDisabled}
               />
             </div>
           </div>
@@ -119,8 +122,10 @@ const UserDetailEdit = ({
                 </ShowField>
               </div>
               <div className="col-md-3">
-                <DropDownField
-                  id="dropdown2"
+                <DropDown
+                  multiSelect={false}
+                  simpleValue={false}
+                  id="StatusDropDown"
                   selectedOption={details.enabled}
                   options={STATUS}
                   label="Account Status"
@@ -128,14 +133,16 @@ const UserDetailEdit = ({
                 />
               </div>
               <div className="col-md-6">
-                <MultiSelect
-                  id="Multiselect1"
+                <DropDown
+                  id="AssignPermissions"
                   selectedOption={details.permissions}
                   options={permissionListToOptions(permissionsList)}
                   label="Assigned Permissions"
                   onChange={selectedOptions =>
                     onPermissionChange(selectedOptions.split(','))
                   }
+                  multiSelect={true}
+                  simpleValue={true}
                 />
               </div>
             </div>
@@ -171,6 +178,7 @@ UserDetailEdit.propTypes = {
       name: PropTypes.string.isRequired,
     })
   ),
+  isRolesDisabled: PropTypes.bool,
 };
 
 UserDetailEdit.defaultProps = {
