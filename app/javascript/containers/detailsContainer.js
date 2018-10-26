@@ -12,6 +12,7 @@ import {
   fetchDetailsActions,
   clearDetails,
   saveUserDetailsActions,
+  handleDropdownChangeAction,
 } from '../actions/detailActions';
 import {
   selectResendEmailStatus,
@@ -49,6 +50,7 @@ function mapDispatchToProps(dispatch) {
     clearDetails,
     saveUserDetailsActions,
     resendRegistrationEmailActions,
+    handleDropdownChangeAction,
   };
   return {
     actions: bindActionCreators(actions, dispatch),

@@ -32,6 +32,22 @@ function fetchDetails(state = { details: null, fetching: false }, action) {
       };
     }
 
+    case actionTypes.HANDLE_DROPDOWN_CHANGE: {
+      return {
+        ...state,
+        details: {
+          ...state.details,
+          records: {
+            ...state.details.records,
+            user: {
+              ...state.details.records.user,
+              [action.payload.name]: action.payload.value,
+            },
+          },
+        },
+      };
+    }
+
     default:
       return state;
   }

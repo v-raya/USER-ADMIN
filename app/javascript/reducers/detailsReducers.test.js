@@ -45,6 +45,26 @@ describe('reducer', () => {
     });
   });
 
+  it('handles HANDLE_DROPDOWN_CHANGE', () => {
+    const name = 'permissions';
+    const value = ['Snapshot-rollout'];
+    const handleDropDownAction = {
+      type: actionTypes.HANDLE_DROPDOWN_CHANGE,
+      payload: { name, value },
+    };
+    const details = {
+      records: {
+        user: {
+          permissions: undefined,
+        },
+      },
+    };
+    const state = { details: details };
+    expect(fetchDetails(state, handleDropDownAction)).toEqual({
+      details: { records: { user: { permissions: ['Snapshot-rollout'] } } },
+    });
+  });
+
   it('handles unexpected actiontypes gracefully', () => {
     const unexpectedAction = {
       type: 'END_OF_THE_WORLD',

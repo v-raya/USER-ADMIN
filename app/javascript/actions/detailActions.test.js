@@ -1,4 +1,5 @@
 import {
+  handleDropdownChangeAction,
   fetchDetailsActions,
   clearDetails,
   saveUserDetailsActions,
@@ -7,7 +8,19 @@ import {
   FETCH_DETAILS_API_CALL_REQUEST,
   SAVE_USER_DETAILS_API_CALL_REQUEST,
   CLEAR_USER_DETAILS,
+  HANDLE_DROPDOWN_CHANGE,
 } from './actionTypes';
+
+describe('#handleDropDownChangeAction', () => {
+  it('returns type and payload', () => {
+    const name = 'roles';
+    const value = ['Office-admin'];
+    expect(handleDropdownChangeAction(name, value)).toEqual({
+      type: HANDLE_DROPDOWN_CHANGE,
+      payload: { name, value },
+    });
+  });
+});
 
 describe('#fetchDetailsActions', () => {
   it('returns type and payload', () => {

@@ -13,6 +13,7 @@ describe('UserDetail', () => {
   let mockFetchRolesActions;
   let mockClearDetailsActions;
   let mockResendRegistrationEmailActions;
+  let mockHandleDropDownChangeAction;
 
   beforeEach(() => {
     // Register mock dispatchActions
@@ -26,6 +27,7 @@ describe('UserDetail', () => {
       .fn()
       .mockReturnValue(Promise.resolve([]));
     mockFetchRolesActions = jest.fn().mockReturnValue(Promise.resolve([]));
+    mockHandleDropDownChangeAction = jest.fn();
     container = shallow(
       <MemoryRouter>
         <UserDetail
@@ -39,6 +41,7 @@ describe('UserDetail', () => {
             fetchRolesActions: mockFetchRolesActions,
             clearDetails: mockClearDetailsActions,
             saveUserDetailsActions: mockSaveUserDetailsActions,
+            handleDropdownChangeAction: mockHandleDropDownChangeAction,
             resendRegistrationEmailActions: mockResendRegistrationEmailActions,
           }}
         />
@@ -62,28 +65,22 @@ describe('UserDetail', () => {
         const instance = wrapper.instance();
         const myFunction = instance.handleDropDownChange('enabled');
         expect(() => myFunction({ value: true })).not.toThrow();
-        expect(instance.state.details).toEqual({ enabled: true });
         expect(instance.state.disableActionBtn).toBe(false);
       });
-    });
 
-    describe('#handleOnRoleChange', () => {
       it('will set the details state with updated roles when event is triggered ', () => {
         const instance = wrapper.instance();
-        const myFunc = instance.handleOnRoleChange('roles');
+        const myFunc = instance.handleDropDownChange('roles');
         expect(() => myFunc({ value: 'role2' })).not.toThrow();
-        expect(instance.state.details).toEqual({ roles: ['role2'] });
         expect(instance.state.disableActionBtn).toBe(false);
       });
     });
 
     describe('#handleOnPermissionChange', () => {
       it('should set the Permissions state when event is triggered', () => {
-        const expectedValue = { permissions: { 0: 'Hotline-rollout' } };
         const instance = wrapper.instance();
         const myFunction = instance.handleOnPermissionChange;
         expect(() => myFunction({ 0: 'Hotline-rollout' })).not.toThrow();
-        expect(instance.state.details).toEqual(expectedValue);
         expect(instance.state.disableActionBtn).toBe(false);
       });
     });
