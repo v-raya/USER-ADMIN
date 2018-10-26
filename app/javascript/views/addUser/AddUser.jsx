@@ -130,10 +130,12 @@ export default class AddUser extends Component {
           {this.addUser()}
         </div>
       </div>
-    ) : (
+    ) : this.props.id ? (
       <div>
-        <Redirect from="/verify" to={`/add_user`} />
+        <Redirect from="/verify" to={`/user_details/${this.props.id}`} />
       </div>
+    ) : (
+      ''
     );
   }
 }

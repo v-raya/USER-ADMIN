@@ -23,8 +23,9 @@ feature 'Add User Page' do
     expect(page).to have_button('Add User')
     # We could click on the Add User button but then we'd have added the user.
     click_button 'Add User'
+    expect(page).to have_button('Edit')
     message = "Successfully added new user. Registration email has been sent to #{email_address}"
-
+    page.evaluate_script('window.location.reload()')
     expect(page.find('div.success-message').text).to match(message)
 
     # Deactivate this user so we can repeat this process next time

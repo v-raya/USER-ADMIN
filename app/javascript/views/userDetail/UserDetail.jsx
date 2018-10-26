@@ -19,6 +19,7 @@ export default class UserDetail extends Component {
       resendEmailAlert: false,
       disableEditBtn: props.disableEditBtn,
       XHRStatus: props.XHRStatus,
+      addedUserID: props.id,
     };
   }
 
@@ -79,6 +80,7 @@ export default class UserDetail extends Component {
       isEdit: false,
       alert: true,
       resendEmailAlert: false,
+      addedUserID: undefined,
     });
   };
 
@@ -87,6 +89,7 @@ export default class UserDetail extends Component {
       isEdit: true,
       alert: false,
       disableActionBtn: true,
+      addedUserID: undefined,
     });
   };
 
@@ -95,6 +98,7 @@ export default class UserDetail extends Component {
     this.props.actions.fetchDetailsActions(
       this.getUserId(this.currentPathname())
     );
+    this.props.actions.clearAddedUserDetailActions();
   };
 
   showAlert = (alert, userDetailError) => {
@@ -115,11 +119,26 @@ export default class UserDetail extends Component {
     }
   };
 
+  showAddAlert = () => {
+    if (this.state.addedUserID) {
+      return (
+        <Alert
+          alertClassName="success"
+          faIcon="fa-check-circle"
+          alertCross={false}
+        >
+          {`Successfully added new user. Registration email has been sent to ${
+            this.state.details.email
+          } `}
+        </Alert>
+      );
+    }
+  };
+
   emailSent = () => {
-    if (
-      this.state.resendEmailAlert &&
-      this.props.resendEmailStatus === 'Success'
-    ) {
+    const { resendEmailAlert } = this.state;
+    const { resendEmailStatus } = this.props;
+    if (resendEmailAlert && resendEmailStatus === 'Success') {
       return (
         <Alert
           alertClassName="success"
@@ -133,7 +152,6 @@ export default class UserDetail extends Component {
   };
 
   renderCards = permissionsList => {
-    console.log(this.state);
     return this.state.XHRStatus !== 'ready' ? (
       <Cards>
         <span>{'Loading...'}</span>
@@ -193,7 +211,6 @@ export default class UserDetail extends Component {
       userDetailError,
     } = this.props;
     const { alert } = this.state;
-
     return (
       <div>
         <PageHeader pageTitle="User Profile" button="" />
@@ -209,6 +226,7 @@ export default class UserDetail extends Component {
             <Link to="/">User List</Link>
             {this.showAlert(alert, userDetailError)}
             {this.emailSent()}
+            {this.showAddAlert()}
           </div>
           {this.renderCards(permissionsList)}
         </div>
@@ -219,6 +237,7 @@ export default class UserDetail extends Component {
 
 UserDetail.propTypes = {
   details: PropTypes.object,
+  id: PropTypes.string,
   dashboardUrl: PropTypes.string,
   dashboardClickHandler: PropTypes.func,
   permissionsList: PropTypes.array,

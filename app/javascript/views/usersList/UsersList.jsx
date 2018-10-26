@@ -34,6 +34,7 @@ class UserList extends PureComponent {
     this.props.actions.fetchAccountActions();
     this.props.actions.fetchOfficesActions();
     this.props.actions.fetchRolesActions();
+    this.props.actions.clearAddedUserDetailActions();
   }
 
   componentDidUpdate(prevProps) {

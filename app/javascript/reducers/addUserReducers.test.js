@@ -44,6 +44,20 @@ describe('reducer', () => {
     });
   });
 
+  it('handles CLEAR_ADDED_USER_DETAILS', () => {
+    const clearAddedUserDetails = {
+      type: actionTypes.CLEAR_ADDED_USER_DETAILS,
+      addNewUser: null,
+      error: null,
+    };
+    const state = { addNewUser: null, fetching: true, error: null };
+    expect(addUser(state, clearAddedUserDetails)).toEqual({
+      fetching: false,
+      addNewUser: undefined,
+      error: null,
+    });
+  });
+
   it('handles unexpected actiontypes gracefully', () => {
     const unexpectedAction = {
       type: 'END_OF_THE_WORLD',

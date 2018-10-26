@@ -29,6 +29,14 @@ function addUser(
         addNewUser: null,
         error: action.error,
       };
+
+    case actionTypes.CLEAR_ADDED_USER_DETAILS:
+      return {
+        ...state,
+        fetching: false,
+        addNewUser: undefined,
+        error: action.error,
+      };
     default:
       return state;
   }

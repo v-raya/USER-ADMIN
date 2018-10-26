@@ -7,7 +7,7 @@ export function* addUser(action) {
   try {
     let userActions = action.payload;
     const addNewUser = yield call(UserService.addUser, userActions.newUser);
-    // dispatch a success action to the store with the new account details
+    // // dispatch a success action to the store with the new account details
     yield put({
       type: actionTypes.ADD_USER_API_CALL_SUCCESS,
       addNewUser,

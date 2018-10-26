@@ -1,7 +1,10 @@
 import { connect } from 'react-redux';
 import AddUser from '../views/addUser/AddUser';
 import { validateNewUserActions } from '../actions/validateNewUserActions';
-import { addUserActions } from '../actions/addUserActions';
+import {
+  addUserActions,
+  clearAddedUserDetailActions,
+} from '../actions/addUserActions';
 import { selectNewUserRecords } from '../selectors/validateNewUserSelector';
 import { addUserRecords } from '../selectors/addUserSelector';
 import { bindActionCreators } from 'redux';
@@ -28,6 +31,7 @@ function mapDispatchToProps(dispatch) {
     validateNewUserActions,
     addUserActions,
     fetchPermissionsActions,
+    clearAddedUserDetailActions,
   };
   return {
     actions: bindActionCreators(actions, dispatch),

@@ -6,7 +6,6 @@ import { store } from './store/configureStore';
 import UsersList from './containers/usersListContainer';
 import DetailsPage from './containers/detailsContainer';
 import AddUser from './containers/addUserContainer';
-import AddUserDetails from './containers/addUserDetailsContainer';
 import { makeLogoutUrl } from './_utils/makeLogoutUrl';
 
 const App = () => (
@@ -18,7 +17,6 @@ const App = () => (
           <Route path="/" exact component={UsersList} />
           <Route path="/verify" component={AddUser} />
           <Route path="/user_details/:id" component={DetailsPage} />
-          <Route path="/add_user" component={AddUserDetails} />
           <Route render={() => <h3>404</h3>} />
         </Switch>
       </Router>

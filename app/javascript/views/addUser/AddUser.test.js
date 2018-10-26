@@ -150,6 +150,15 @@ describe('VerifyUser', () => {
     });
   });
 
+  describe('Redirects when id is available as props', () => {
+    it('verifies Redirect exists', () => {
+      const wrapper = shallow(<AddUser />);
+      wrapper.setState({ addUser: false });
+      wrapper.setProps({ id: 'SOME_ID' });
+      expect(wrapper.find('Redirect').length).toBe(1);
+    });
+  });
+
   describe('renders components', () => {
     it('renders PageHeader component', () => {
       wrapper.setState({ verify: true, addUser: true });

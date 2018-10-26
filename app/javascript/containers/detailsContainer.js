@@ -10,8 +10,8 @@ import {
 } from '../selectors/detailSelector';
 import {
   fetchDetailsActions,
-  clearDetails,
   saveUserDetailsActions,
+  clearDetails,
   handleDropdownChangeAction,
 } from '../actions/detailActions';
 import {
@@ -23,9 +23,12 @@ import { fetchRolesActions } from '../actions/rolesActions';
 import { resendRegistrationEmailActions } from '../actions/resendRegistrationEmailActions';
 import { bindActionCreators } from 'redux';
 import { officesList } from '../selectors/userListSelector';
+import { addUserRecords } from '../selectors/addUserSelector';
+import { clearAddedUserDetailActions } from '../actions/addUserActions';
 
 function mapStateToProps(state) {
   return {
+    id: addUserRecords(state),
     XHRStatus: fetchingStatus(state),
     possibleRoles: possibleRoles(state),
     disableEditBtn: checkEditDisable(state),
@@ -47,9 +50,10 @@ function mapDispatchToProps(dispatch) {
     fetchDetailsActions,
     fetchPermissionsActions,
     fetchRolesActions,
-    clearDetails,
     saveUserDetailsActions,
     resendRegistrationEmailActions,
+    clearDetails,
+    clearAddedUserDetailActions,
     handleDropdownChangeAction,
   };
   return {

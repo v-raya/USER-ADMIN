@@ -11,6 +11,7 @@ describe('UsersList', () => {
   let mockSetNextSearchActions;
   let mockSetOfficesListAction;
   let mockHandleSearchChange;
+  let mockClearAddedUserDetailActions;
 
   const query = [
     {
@@ -30,6 +31,9 @@ describe('UsersList', () => {
     mockSetNextSearchActions = jest.fn().mockReturnValue(Promise.resolve([]));
     mockSetOfficesListAction = jest.fn().mockReturnValue(Promise.resolve([]));
     mockHandleSearchChange = jest.fn().mockReturnValue(Promise.resolve([]));
+    mockClearAddedUserDetailActions = jest
+      .fn()
+      .mockReturnValue(Promise.resolve([]));
 
     wrapper = shallow(
       <UsersList
@@ -41,6 +45,7 @@ describe('UsersList', () => {
           setNextSearch: mockSetNextSearchActions,
           setOfficesList: mockSetOfficesListAction,
           handleSearchChange: mockHandleSearchChange,
+          clearAddedUserDetailActions: mockClearAddedUserDetailActions,
         }}
         countyName="SomeCountyName"
         query={query}
@@ -133,6 +138,7 @@ describe('UsersList', () => {
             fetchAccountActions: () => {},
             fetchOfficesActions: () => {},
             fetchRolesActions: () => {},
+            clearAddedUserDetailActions: () => {},
             setSearch: mockSetSearchActions,
           }}
           query={query}
@@ -183,6 +189,7 @@ describe('UsersList', () => {
             fetchAccountActions: () => {},
             fetchOfficesActions: () => {},
             fetchRolesActions: () => {},
+            clearAddedUserDetailActions: () => {},
           }}
           query={query}
           lastName="last_name_value"
@@ -201,6 +208,7 @@ describe('UsersList', () => {
             fetchAccountActions: () => {},
             fetchOfficesActions: () => {},
             fetchRolesActions: () => {},
+            clearAddedUserDetailActions: () => {},
           }}
           query={query}
           lastName="new_last_name"
@@ -238,11 +246,13 @@ describe('UsersList', () => {
     let mockFetchAccountActions;
     let mockFetchOfficeListActions;
     let mockFetchRolesActions;
+    let mockClearAddedUserDetailActions;
 
     beforeEach(() => {
       mockFetchAccountActions = jest.fn();
       mockFetchOfficeListActions = jest.fn();
       mockFetchRolesActions = jest.fn();
+      mockClearAddedUserDetailActions = jest.fn();
       mount(
         <UsersList
           dashboardUrl={'dburl'}
@@ -250,6 +260,7 @@ describe('UsersList', () => {
             fetchAccountActions: mockFetchAccountActions,
             fetchOfficesActions: mockFetchOfficeListActions,
             fetchRolesActions: mockFetchRolesActions,
+            clearAddedUserDetailActions: mockClearAddedUserDetailActions,
           }}
           loggedInUserAccount={{ county_name: 'SomeCountyName' }}
           query={query}
@@ -296,6 +307,7 @@ describe('UsersList', () => {
             fetchRolesActions: () => {},
             setSearch: mockSetSearch,
             setOfficesList: mockSetOfficesListAction,
+            clearAddedUserDetailActions: () => {},
           }}
           from={0}
           sort={[]}
@@ -340,6 +352,7 @@ describe('UsersList', () => {
             fetchAccountActions: () => {},
             fetchOfficesActions: () => {},
             fetchRolesActions: () => {},
+            clearAddedUserDetailActions: () => {},
           }}
           loggedInUserAccount={{ county_name: 'SomeCountyName' }}
           sort={[

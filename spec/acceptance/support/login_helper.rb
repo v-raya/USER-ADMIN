@@ -30,8 +30,8 @@ module LoginHelper
     puts "Fill in pass with #{ENV.fetch('COGNITO_PASSWORD', 'password')}"
     fill_in 'Email', with: ENV.fetch('COGNITO_USERNAME', 'no-reply@osi.ca.gov')
     fill_in 'Password', with: ENV.fetch('COGNITO_PASSWORD', 'password')
+    # find('input[name="signInSubmitButton"]').click
     click_on 'Sign In'
-
     verify_account
   end
 

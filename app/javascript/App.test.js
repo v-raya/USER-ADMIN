@@ -9,7 +9,7 @@ describe('App', () => {
   });
 
   it('renders ', () => {
-    expect(wrapper.find('Route').length).toEqual(5);
+    expect(wrapper.find('Route').length).toEqual(4);
     expect(
       wrapper
         .find('Route')
@@ -32,12 +32,6 @@ describe('App', () => {
       wrapper
         .find('Route')
         .at(3)
-        .prop('path')
-    ).toEqual('/add_user');
-    expect(
-      wrapper
-        .find('Route')
-        .at(4)
         .prop('render')
     ).not.toThrow();
   });

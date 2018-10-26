@@ -13,6 +13,7 @@ describe('UserDetail', () => {
   let mockFetchRolesActions;
   let mockClearDetailsActions;
   let mockResendRegistrationEmailActions;
+  let mockClearAddedUserDetailActions;
   let mockHandleDropDownChangeAction;
 
   beforeEach(() => {
@@ -20,6 +21,9 @@ describe('UserDetail', () => {
     mockFetchDetailsActions = jest.fn().mockReturnValue(Promise.resolve([]));
     mockSaveUserDetailsActions = jest.fn().mockReturnValue(Promise.resolve([]));
     mockClearDetailsActions = jest.fn().mockReturnValue(Promise.resolve([]));
+    mockClearAddedUserDetailActions = jest
+      .fn()
+      .mockReturnValue(Promise.resolve([]));
     mockResendRegistrationEmailActions = jest
       .fn()
       .mockReturnValue(Promise.resolve([]));
@@ -43,6 +47,7 @@ describe('UserDetail', () => {
             saveUserDetailsActions: mockSaveUserDetailsActions,
             handleDropdownChangeAction: mockHandleDropDownChangeAction,
             resendRegistrationEmailActions: mockResendRegistrationEmailActions,
+            clearAddedUserDetailActions: mockClearAddedUserDetailActions,
           }}
         />
       </MemoryRouter>
@@ -92,6 +97,16 @@ describe('UserDetail', () => {
         expect(instance.state.isEdit).toEqual(true);
         expect(instance.state.disableActionBtn).toEqual(true);
         expect(instance.state.alert).toEqual(false);
+        expect(wrapper.instance().state.addedUserID).toEqual(undefined);
+      });
+    });
+
+    describe('#showAddAlert', () => {
+      it('verifies alert component', () => {
+        wrapper.setState({ addedUserID: 'SOME_ID' });
+        const instance = wrapper.instance();
+        instance.showAddAlert();
+        expect(wrapper.find('Alert').length).toEqual(1);
       });
     });
   });
@@ -167,6 +182,7 @@ describe('UserDetail', () => {
       wrapper.instance().onSaveDetails();
       expect(wrapper.instance().state.isEdit).toEqual(false);
       expect(wrapper.instance().state.alert).toEqual(true);
+      expect(wrapper.instance().state.addedUserID).toEqual(undefined);
     });
   });
 

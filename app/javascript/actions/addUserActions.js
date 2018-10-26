@@ -1,4 +1,7 @@
-import { ADD_USER_API_CALL_REQUEST } from './actionTypes';
+import {
+  ADD_USER_API_CALL_REQUEST,
+  CLEAR_ADDED_USER_DETAILS,
+} from './actionTypes';
 
 export function addUserActions(newUser) {
   return {
@@ -6,3 +9,7 @@ export function addUserActions(newUser) {
     payload: { newUser: newUser },
   };
 }
+
+export const clearAddedUserDetailActions = () => ({
+  type: CLEAR_ADDED_USER_DETAILS,
+});
