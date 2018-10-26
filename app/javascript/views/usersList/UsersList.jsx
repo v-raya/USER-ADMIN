@@ -34,6 +34,11 @@ class UserList extends PureComponent {
     this.props.actions.fetchAccountActions();
     this.props.actions.fetchOfficesActions();
     this.props.actions.fetchRolesActions();
+    this.props.actions.setSearch([
+      { field: 'last_name', value: this.props.lastName },
+      { field: 'office_ids', value: this.props.officeNames },
+    ]);
+    this.props.actions.setPage(Math.floor(this.props.from / this.props.size));
     this.props.actions.clearAddedUserDetailActions();
   }
 

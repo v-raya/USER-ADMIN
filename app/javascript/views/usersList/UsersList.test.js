@@ -138,6 +138,7 @@ describe('UsersList', () => {
             fetchAccountActions: () => {},
             fetchOfficesActions: () => {},
             fetchRolesActions: () => {},
+            setPage: () => {},
             clearAddedUserDetailActions: () => {},
             setSearch: mockSetSearchActions,
           }}
@@ -189,6 +190,8 @@ describe('UsersList', () => {
             fetchAccountActions: () => {},
             fetchOfficesActions: () => {},
             fetchRolesActions: () => {},
+            setSearch: () => {},
+            setPage: () => {},
             clearAddedUserDetailActions: () => {},
           }}
           query={query}
@@ -208,6 +211,8 @@ describe('UsersList', () => {
             fetchAccountActions: () => {},
             fetchOfficesActions: () => {},
             fetchRolesActions: () => {},
+            setSearch: () => {},
+            setPage: () => {},
             clearAddedUserDetailActions: () => {},
           }}
           query={query}
@@ -242,35 +247,62 @@ describe('UsersList', () => {
     });
   });
 
-  describe('#UNSAFE_componentDidMount', () => {
+  describe('#componentDidMount', () => {
     let mockFetchAccountActions;
     let mockFetchOfficeListActions;
     let mockFetchRolesActions;
+    let mockSetSearch;
+    let mockSetPage;
+    let component;
     let mockClearAddedUserDetailActions;
 
     beforeEach(() => {
       mockFetchAccountActions = jest.fn();
       mockFetchOfficeListActions = jest.fn();
       mockFetchRolesActions = jest.fn();
+      mockSetSearch = jest.fn();
+      mockSetPage = jest.fn();
       mockClearAddedUserDetailActions = jest.fn();
-      mount(
+      component = mount(
         <UsersList
           dashboardUrl={'dburl'}
           actions={{
             fetchAccountActions: mockFetchAccountActions,
             fetchOfficesActions: mockFetchOfficeListActions,
             fetchRolesActions: mockFetchRolesActions,
+            setSearch: mockSetSearch,
+            setPage: mockSetPage,
             clearAddedUserDetailActions: mockClearAddedUserDetailActions,
           }}
-          loggedInUserAccount={{ county_name: 'SomeCountyName' }}
+          from={0}
+          sort={[]}
+          size={50}
+          total={25}
           query={query}
+          countyName="SomeCountyName"
+          lastName="some_value"
+          officeNames={['north']}
+          inputData={{ officeNames: ['north'] }}
+          loggedInUserAccount={{ county_name: 'SomeCountyName' }}
           selectedOfficesList={['somevalue']}
         />
       );
     });
 
-    it('fetches the account', () => {
+    it('fetch the updated user list', () => {
+      component.instance().componentDidMount();
+      expect(mockSetSearch).toHaveBeenCalledWith([
+        { field: 'last_name', value: 'some_value' },
+        { field: 'office_ids', value: ['north'] },
+      ]);
+    });
+
+    it('fetches the account details', () => {
       expect(mockFetchAccountActions).toHaveBeenCalledWith();
+    });
+
+    it('sets the pageIndex', () => {
+      expect(mockSetPage).toHaveBeenCalledWith(0);
     });
 
     it('fetches the office list', () => {
@@ -305,6 +337,7 @@ describe('UsersList', () => {
             fetchAccountActions: () => {},
             fetchOfficesActions: () => {},
             fetchRolesActions: () => {},
+            setPage: () => {},
             setSearch: mockSetSearch,
             setOfficesList: mockSetOfficesListAction,
             clearAddedUserDetailActions: () => {},
@@ -333,12 +366,12 @@ describe('UsersList', () => {
       ]);
     });
 
-    it('fetches users not called', () => {
+    it('fetches users not called with prevProps', () => {
       const prevProps = {
         inputData: { field: 'lastName', value: 'someValiue' },
       };
       wrapperLocal.instance().componentDidUpdate(prevProps);
-      expect(mockSetSearch).not.toHaveBeenCalled();
+      expect(mockSetSearch).not.toHaveBeenCalledWith(prevProps);
     });
   });
 
@@ -352,16 +385,20 @@ describe('UsersList', () => {
             fetchAccountActions: () => {},
             fetchOfficesActions: () => {},
             fetchRolesActions: () => {},
+            setSearch: () => {},
+            setPage: () => {},
             clearAddedUserDetailActions: () => {},
           }}
-          loggedInUserAccount={{ county_name: 'SomeCountyName' }}
+          from={0}
+          size={50}
+          total={25}
+          query={query}
           sort={[
             {
               field: 'last_name',
               desc: 'value',
             },
           ]}
-          query={query}
           selectedOfficesList={['somevalue']}
         />
       );
