@@ -51,6 +51,10 @@ module UserListPageHelper
     user_hash
   end
 
+  def get_user_link(row_number)
+    page.find('.rt-table').all('.rt-tr-group')[row_number].first('.rt-td > a')
+  end
+
   def search_users(user_name)
     last_name = user_name.match(/([^,]*),/)[1]
     puts "search for #{last_name}"

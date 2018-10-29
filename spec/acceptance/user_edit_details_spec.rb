@@ -89,7 +89,7 @@ feature 'User Edit' do
                          .text.split('Assigned Permissions').last.to_s.strip
     expect(string_permissions)
       .to eq(original_selected_permissions.first(original_selected_permissions.size - 1)
-               .join(', '))
+           .join(', '))
 
     # put it back
     click_on('Edit')
@@ -117,5 +117,28 @@ feature 'User Edit' do
 
     click_link 'User List'
     page_has_user_list_headers
+  end
+
+  scenario 'user_details retain changes after clicking resend button' do
+    login
+    page_has_user_list_headers
+    sleep 2
+
+    get_user_link(11).click
+    page_is_user_details
+
+    original_account_status = details_account_status
+    new_status = (original_account_status == 'Active' ? 'Inactive' : 'Active')
+
+    click_on('Edit')
+    changed_new_status = change_status(new_status)
+
+    expect(changed_new_status.text)
+      .to eq(new_status)
+
+    click_on('Resend Invite')
+
+    expect(changed_new_status.text)
+      .to eq(new_status)
   end
 end
