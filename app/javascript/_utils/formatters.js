@@ -47,7 +47,7 @@ export function formatSelectedPermissions(assignedPermissions, permissionList) {
   if (!Array.isArray(assignedPermissions)) return '';
   return (
     assignedPermissions &&
-    assignedPermissions.length &&
+    assignedPermissions.length > 0 &&
     assignedPermissions
       .map(permission => permissionList.find(d => d.name === permission))
       .filter(value => !!value)

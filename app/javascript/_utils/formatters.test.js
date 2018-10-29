@@ -119,6 +119,9 @@ describe('#formatSelectedPermissions', () => {
     );
     expect(formatSelectedPermissions('', list)).toEqual('');
     expect(formatSelectedPermissions(['qux'], list)).toEqual('QUX_DESC');
+    expect(formatSelectedPermissions([], list)).toEqual(false);
+    expect(formatSelectedPermissions([''], list)).toEqual('');
+    expect(formatSelectedPermissions(['qux'], [])).toEqual('');
   });
 });
 

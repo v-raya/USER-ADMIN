@@ -7,6 +7,7 @@ import UserDetail from './UserDetail';
 describe('UserDetail', () => {
   let container;
   let wrapper;
+  let instance;
   let mockFetchDetailsActions;
   let mockSaveUserDetailsActions;
   let mockFetchPermissionsActions;
@@ -53,6 +54,7 @@ describe('UserDetail', () => {
       </MemoryRouter>
     );
     wrapper = container.find('UserDetail').dive();
+    instance = wrapper.instance();
   });
 
   describe('statics', () => {
@@ -67,14 +69,12 @@ describe('UserDetail', () => {
   describe('Setting state', () => {
     describe('#handleDropDownChange() function', () => {
       it('should set the Status state when event is triggered', () => {
-        const instance = wrapper.instance();
         const myFunction = instance.handleDropDownChange('enabled');
         expect(() => myFunction({ value: true })).not.toThrow();
         expect(instance.state.disableActionBtn).toBe(false);
       });
 
       it('will set the details state with updated roles when event is triggered ', () => {
-        const instance = wrapper.instance();
         const myFunc = instance.handleDropDownChange('roles');
         expect(() => myFunc({ value: 'role2' })).not.toThrow();
         expect(instance.state.disableActionBtn).toBe(false);
@@ -83,7 +83,6 @@ describe('UserDetail', () => {
 
     describe('#handleOnPermissionChange', () => {
       it('should set the Permissions state when event is triggered', () => {
-        const instance = wrapper.instance();
         const myFunction = instance.handleOnPermissionChange;
         expect(() => myFunction({ 0: 'Hotline-rollout' })).not.toThrow();
         expect(instance.state.disableActionBtn).toBe(false);
@@ -92,7 +91,6 @@ describe('UserDetail', () => {
 
     describe('#onEditClick', () => {
       it('toggles the isEdit flag', () => {
-        const instance = wrapper.instance();
         instance.onEditClick();
         expect(instance.state.isEdit).toEqual(true);
         expect(instance.state.disableActionBtn).toEqual(true);
@@ -104,7 +102,6 @@ describe('UserDetail', () => {
     describe('#showAddAlert', () => {
       it('verifies alert component', () => {
         wrapper.setState({ addedUserID: 'SOME_ID' });
-        const instance = wrapper.instance();
         instance.showAddAlert();
         expect(wrapper.find('Alert').length).toEqual(1);
       });
@@ -124,16 +121,16 @@ describe('UserDetail', () => {
 
   describe('#onResendInvite', () => {
     it('calls the service to resendRegistrationEmail', () => {
-      wrapper.instance().onResendInvite();
+      instance.onResendInvite();
       expect(mockFetchDetailsActions).toHaveBeenCalledWith('blank');
     });
   });
 
   describe('#onCancel', () => {
     it('calls the appropriate function', () => {
-      wrapper.instance().onCancel();
+      instance.onCancel();
       expect(mockFetchDetailsActions).toHaveBeenCalledWith('blank');
-      wrapper.instance().onCancel();
+      instance.onCancel();
       expect(wrapper.instance().state.isEdit).toEqual(false);
       expect(wrapper.instance().state.alert).toEqual(false);
     });
@@ -155,10 +152,7 @@ describe('UserDetail', () => {
 
   describe('#componentWillUnmount', () => {
     it('componentWillUnmount should be called on unmount', () => {
-      const componentWillUnmount = jest.spyOn(
-        wrapper.instance(),
-        'componentWillUnmount'
-      );
+      const componentWillUnmount = jest.spyOn(instance, 'componentWillUnmount');
       wrapper.unmount();
       expect(componentWillUnmount).toHaveBeenCalledWith();
     });
@@ -166,7 +160,6 @@ describe('UserDetail', () => {
 
   describe('#UNSAFE_componentWillReceiveProps', () => {
     it('passes along the props', () => {
-      const instance = wrapper.instance();
       instance.UNSAFE_componentWillReceiveProps({
         id: 'some_id',
         details: { test_prop: 'prop_value' },
@@ -177,12 +170,12 @@ describe('UserDetail', () => {
 
   describe('#onSaveDetails', () => {
     it('calls the service to patch the user record', () => {
-      wrapper.instance().onSaveDetails();
+      instance.onSaveDetails();
       expect(mockSaveUserDetailsActions).toHaveBeenCalledWith('blank', {});
-      wrapper.instance().onSaveDetails();
-      expect(wrapper.instance().state.isEdit).toEqual(false);
-      expect(wrapper.instance().state.alert).toEqual(true);
-      expect(wrapper.instance().state.addedUserID).toEqual(undefined);
+      instance.onSaveDetails();
+      expect(instance.state.isEdit).toEqual(false);
+      expect(instance.state.alert).toEqual(true);
+      expect(instance.state.addedUserID).toEqual(undefined);
     });
   });
 
@@ -219,6 +212,17 @@ describe('UserDetail', () => {
         expect(wrapper.find('UserDetailEdit').length).toBe(1);
         expect(wrapper.find('UserDetailEdit').props().disableActionBtn).toBe(
           true
+        );
+      });
+
+      it('renders card with text indicating no user found', () => {
+        wrapper.setState({
+          isEdit: true,
+          XHRStatus: 'ready',
+        });
+        expect(wrapper.find('Cards').length).toBe(1);
+        expect(wrapper.find('Cards').props().cardHeaderText).toBe(
+          'User not found'
         );
       });
     });
