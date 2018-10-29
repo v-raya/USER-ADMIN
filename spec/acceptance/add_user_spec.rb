@@ -9,6 +9,9 @@ feature 'Add User Page' do
   scenario 'entering valid info and completing the add' do
     login
     page_has_user_list_headers
+    # Make sure there's no active existing user
+    deactivate_any_active_added_user
+
     click_button '+ Add a user'
 
     email_address = new_email_address

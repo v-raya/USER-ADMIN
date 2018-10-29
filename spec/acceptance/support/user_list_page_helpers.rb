@@ -69,4 +69,39 @@ module UserListPageHelper
                    'Office Administrator']
     expect(valid_roles).to include user_row[:role]
   end
+
+  def deactivate_any_active_added_user
+    search_users 'Auto, IDM'
+    sleep 1
+
+    loop do
+      loop do
+        active_row = page.find('.rt-table').first('.rt-tr-group', text: 'Active')
+        break if active_row.nil?
+        deactivate_user active_row
+        active_row.find('a').click
+      end
+      # click next until we've seen the whole set.
+      break if click_next == false
+    end
+  end
+
+  def deactivate_user(active_row)
+    active_row.find('a').click
+    click_on 'Edit'
+    change_status 'Inactive'
+    click_button 'save'
+  end
+
+  def click_next
+    topnav = find(:xpath, "//div[@class='pagination-top']")
+    nav_page = topnav.find('input[type="number"]').value.to_i
+    total_pages = topnav.find('span.-totalPages').text.to_i
+    if nav_page < total_pages
+      topnav.find('.-next').find('button').find('span').click # doesn't work
+      true
+    else
+      false
+    end
+  end
 end
