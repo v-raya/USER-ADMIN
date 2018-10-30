@@ -32,6 +32,8 @@ module UserDetailPageHelper
     within('div.Select-menu') do
       find('div.Select-option', text: new_status).click
     end
+    # return the element with the new value
+    find(:xpath, "//label[contains(text(),'Status')]/following-sibling::div")
   end
 
   def expect_success

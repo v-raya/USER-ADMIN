@@ -10,6 +10,7 @@ feature 'Add User Page' do
     login
     page_has_user_list_headers
     # Make sure there's no active existing user
+
     deactivate_any_active_added_user
 
     click_button '+ Add a user'
@@ -40,7 +41,7 @@ feature 'Add User Page' do
   scenario 'add user page is accessible' do
     pending 'add user validation has accessibility issues'
     login
-
+    deactivate_any_active_added_user
     page_has_user_list_headers
     click_button '+ Add a user'
 
@@ -58,6 +59,7 @@ feature 'Add User Page' do
   scenario 'entering invalid info and fixing it as we go' do
     login
     page_has_user_list_headers
+    deactivate_any_active_added_user
     click_button '+ Add a user'
 
     expect(page).to have_content('Add User')
@@ -105,6 +107,7 @@ feature 'Add User Page' do
     click_button 'Verify User'
 
     # we are now cleared to add the user.
+
     expect(page).to have_button('Add User')
     # We could click on the Add User button but then we'd have added the user.
     click_link 'User List'

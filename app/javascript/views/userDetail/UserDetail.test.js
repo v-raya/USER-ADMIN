@@ -225,6 +225,20 @@ describe('UserDetail', () => {
           'User not found'
         );
       });
+
+      it('renders card with text indicating loading', () => {
+        wrapper.setProps({
+          XHRStatus: 'anything but ready',
+        });
+        expect(wrapper.find('Cards').length).toBe(1);
+        console.log(wrapper.find('Cards').debug());
+        expect(
+          wrapper
+            .find('Cards')
+            .children()
+            .text()
+        ).toContain('Loading...');
+      });
     });
 
     describe('breadcrumb', () => {

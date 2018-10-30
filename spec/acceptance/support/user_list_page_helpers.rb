@@ -55,10 +55,9 @@ module UserListPageHelper
     page.find('.rt-table').all('.rt-tr-group')[row_number].first('.rt-td > a')
   end
 
-  def search_users(user_name)
-    last_name = user_name.match(/([^,]*),/)[1]
+  def search_users(last_name)
     puts "search for #{last_name}"
-
+    return if find_field('Search user list').value == last_name
     fill_in 'searchLastName', with: last_name
     click_on 'Search'
   end
@@ -71,7 +70,7 @@ module UserListPageHelper
   end
 
   def deactivate_any_active_added_user
-    search_users 'Auto, IDM'
+    search_users 'Auto'
     sleep 1
 
     loop do
@@ -79,7 +78,6 @@ module UserListPageHelper
         active_row = page.find('.rt-table').first('.rt-tr-group', text: 'Active')
         break if active_row.nil?
         deactivate_user active_row
-        active_row.find('a').click
       end
       # click next until we've seen the whole set.
       break if click_next == false
