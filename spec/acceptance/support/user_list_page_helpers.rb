@@ -60,11 +60,14 @@ module UserListPageHelper
     puts "search for '#{last_name}''"
 
     fill_in 'searchLastName', with: last_name
-    force_capybare_execute_react_change_script('#searchLastName', 'Search user list') if last_name == ""
+    if last_name == ''
+      force_capybare_execute_react_change_script('#searchLastName',
+                                                 'Search user list')
+    end
     click_on 'Search'
   end
 
-  def force_capybare_execute_react_change_script(node_id, node_label)
+  def force_capybare_execute_react_change_script(node_id, _node_label)
     find(node_id).send_keys('a')
     find(node_id).send_keys(:backspace)
     # execute_script "React.addons.TestUtils.Simulate.change(''#{node}'')"
