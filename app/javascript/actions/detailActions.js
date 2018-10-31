@@ -3,11 +3,17 @@ import {
   CLEAR_USER_DETAILS,
   SAVE_USER_DETAILS_API_CALL_REQUEST,
   HANDLE_DROPDOWN_CHANGE,
+  HANDLE_EDIT_BUTTON_CHANGE,
 } from './actionTypes';
 
 export const handleDropdownChangeAction = (name, value) => ({
   type: HANDLE_DROPDOWN_CHANGE,
   payload: { name, value },
+});
+
+export const handleEditButtonChangeAction = value => ({
+  type: HANDLE_EDIT_BUTTON_CHANGE,
+  payload: { value },
 });
 
 export function fetchDetailsActions(id) {

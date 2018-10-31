@@ -12,7 +12,6 @@ export default class UserDetail extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      isEdit: false,
       alert: false,
       disableActionBtn: true,
       details: props.details,
@@ -69,7 +68,7 @@ export default class UserDetail extends Component {
 
   onResendInvite = () => {
     this.props.actions.resendRegistrationEmailActions(this.state.details.email);
-    this.setState({ resendEmailAlert: true });
+    this.setState({ resendEmailAlert: true, alert: false });
   };
 
   onSaveDetails = () => {
@@ -77,7 +76,6 @@ export default class UserDetail extends Component {
     const { details } = this.state;
     this.props.actions.saveUserDetailsActions(id, details);
     this.setState({
-      isEdit: false,
       alert: true,
       resendEmailAlert: false,
       addedUserID: undefined,
@@ -85,8 +83,8 @@ export default class UserDetail extends Component {
   };
 
   onEditClick = () => {
+    this.props.actions.handleEditButtonChangeAction(true);
     this.setState({
-      isEdit: true,
       alert: false,
       disableActionBtn: true,
       addedUserID: undefined,
@@ -94,7 +92,8 @@ export default class UserDetail extends Component {
   };
 
   onCancel = () => {
-    this.setState({ isEdit: false, alert: false, resendEmailAlert: false });
+    this.props.actions.handleEditButtonChangeAction(false);
+    this.setState({ alert: false, resendEmailAlert: false });
     this.props.actions.fetchDetailsActions(
       this.getUserId(this.currentPathname())
     );
@@ -160,7 +159,7 @@ export default class UserDetail extends Component {
       <div>
         {this.state.details && this.state.details.id ? (
           <div>
-            {this.state.isEdit ? (
+            {this.props.isEdit ? (
               <UserDetailEdit
                 details={this.state.details}
                 selectedPermissions={this.state.details.permissions}
@@ -237,6 +236,7 @@ export default class UserDetail extends Component {
 }
 
 UserDetail.propTypes = {
+  isEdit: PropTypes.bool,
   details: PropTypes.object,
   id: PropTypes.string,
   dashboardUrl: PropTypes.string,

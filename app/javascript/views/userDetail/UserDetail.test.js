@@ -16,6 +16,7 @@ describe('UserDetail', () => {
   let mockResendRegistrationEmailActions;
   let mockClearAddedUserDetailActions;
   let mockHandleDropDownChangeAction;
+  let mockHandleEditButtonChangeAction;
 
   beforeEach(() => {
     // Register mock dispatchActions
@@ -33,6 +34,7 @@ describe('UserDetail', () => {
       .mockReturnValue(Promise.resolve([]));
     mockFetchRolesActions = jest.fn().mockReturnValue(Promise.resolve([]));
     mockHandleDropDownChangeAction = jest.fn();
+    mockHandleEditButtonChangeAction = jest.fn();
     container = shallow(
       <MemoryRouter>
         <UserDetail
@@ -47,6 +49,7 @@ describe('UserDetail', () => {
             clearDetails: mockClearDetailsActions,
             saveUserDetailsActions: mockSaveUserDetailsActions,
             handleDropdownChangeAction: mockHandleDropDownChangeAction,
+            handleEditButtonChangeAction: mockHandleEditButtonChangeAction,
             resendRegistrationEmailActions: mockResendRegistrationEmailActions,
             clearAddedUserDetailActions: mockClearAddedUserDetailActions,
           }}
@@ -92,7 +95,6 @@ describe('UserDetail', () => {
     describe('#onEditClick', () => {
       it('toggles the isEdit flag', () => {
         instance.onEditClick();
-        expect(instance.state.isEdit).toEqual(true);
         expect(instance.state.disableActionBtn).toEqual(true);
         expect(instance.state.alert).toEqual(false);
         expect(wrapper.instance().state.addedUserID).toEqual(undefined);
@@ -131,7 +133,7 @@ describe('UserDetail', () => {
       instance.onCancel();
       expect(mockFetchDetailsActions).toHaveBeenCalledWith('blank');
       instance.onCancel();
-      expect(wrapper.instance().state.isEdit).toEqual(false);
+      expect(mockHandleEditButtonChangeAction).toHaveBeenCalledWith(false);
       expect(wrapper.instance().state.alert).toEqual(false);
     });
   });
@@ -172,8 +174,6 @@ describe('UserDetail', () => {
     it('calls the service to patch the user record', () => {
       instance.onSaveDetails();
       expect(mockSaveUserDetailsActions).toHaveBeenCalledWith('blank', {});
-      instance.onSaveDetails();
-      expect(instance.state.isEdit).toEqual(false);
       expect(instance.state.alert).toEqual(true);
       expect(instance.state.addedUserID).toEqual(undefined);
     });
@@ -204,8 +204,10 @@ describe('UserDetail', () => {
       });
 
       it('should display <UserDetailEdit/>', () => {
-        wrapper.setState({
+        wrapper.setProps({
           isEdit: true,
+        });
+        wrapper.setState({
           details: { id: '12345' },
           XHRStatus: 'ready',
         });
