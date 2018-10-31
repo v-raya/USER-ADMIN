@@ -66,11 +66,11 @@ module UserListPageHelper
     end
     click_on 'Search'
     sleep 2
-    puts "search complete"
+    puts 'search complete'
   end
 
   def force_capybare_execute_react_change_script(node_id, _node_label)
-    puts "force change script"
+    puts 'force change script'
     find(node_id).send_keys('a')
     find(node_id).send_keys(:backspace)
     # execute_script "React.addons.TestUtils.Simulate.change(''#{node}'')"
@@ -90,11 +90,11 @@ module UserListPageHelper
       loop do
         active_row = first_active_user_on_page
         break if active_row.nil?
-        puts "deactivate user"
+        puts 'deactivate user'
         deactivate_user active_row
       end
       # click next until we've seen the whole set.
-      puts "click next"
+      puts 'click next'
       break if click_next == false
     end
   end
