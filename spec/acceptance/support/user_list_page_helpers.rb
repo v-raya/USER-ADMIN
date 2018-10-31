@@ -82,17 +82,20 @@ module UserListPageHelper
 
   def deactivate_any_active_added_user
     search_users 'Auto'
-    sleep 1
 
     loop do
       loop do
-        active_row = page.find('.rt-table').first('.rt-tr-group', text: 'Active')
+        active_row = first_active_user_on_page
         break if active_row.nil?
         deactivate_user active_row
       end
       # click next until we've seen the whole set.
       break if click_next == false
     end
+  end
+
+  def first_active_user_on_page
+    page.find('.rt-table').first('.rt-tr-group', text: 'Active')
   end
 
   def deactivate_user(active_row)
