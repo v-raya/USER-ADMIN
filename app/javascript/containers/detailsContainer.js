@@ -14,6 +14,7 @@ import {
   saveUserDetailsActions,
   clearDetails,
   handleDropdownChangeAction,
+  handleEditButtonChangeAction,
 } from '../actions/detailActions';
 import {
   selectResendEmailStatus,
@@ -29,6 +30,7 @@ import { clearAddedUserDetailActions } from '../actions/addUserActions';
 
 function mapStateToProps(state) {
   return {
+    isEdit: state.fetchDetails.isEdit,
     id: addUserRecords(state),
     XHRStatus: fetchingStatus(state),
     possibleRoles: possibleRoles(state),
@@ -39,7 +41,7 @@ function mapStateToProps(state) {
     userListUrl: process.env.RAILS_RELATIVE_URL_ROOT
       ? process.env.RAILS_RELATIVE_URL_ROOT
       : '/',
-    userDetailError: state.saveUserDetails.error,
+    userDetailError: state.fetchDetails.saveDetailsError,
     resendEmailStatus: selectResendEmailStatus(state),
     disableResendEmailButton: disableResendEmailButton(state),
     officesList: officesList(state),
@@ -57,6 +59,7 @@ function mapDispatchToProps(dispatch) {
     clearDetails,
     clearAddedUserDetailActions,
     handleDropdownChangeAction,
+    handleEditButtonChangeAction,
   };
   return {
     actions: bindActionCreators(actions, dispatch),

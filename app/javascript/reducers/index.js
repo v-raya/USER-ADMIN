@@ -5,7 +5,6 @@ import fetchPermissions from './permissionsReducers';
 import fetchOffices from './officesReducers';
 import validateNewUser from './validateNewUserReducer';
 import addUser from './addUserReducers';
-import saveUserDetails from './saveUserDetailsReducers';
 import resendRegistrationEmail from './resendRegistrationEmailReducers';
 import fetchRoles from './rolesReducers';
 const reducer = combineReducers({
@@ -15,7 +14,6 @@ const reducer = combineReducers({
   fetchOffices,
   validateNewUser,
   addUser,
-  saveUserDetails,
   resendRegistrationEmail,
   fetchRoles,
 });
