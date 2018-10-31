@@ -9,6 +9,10 @@ feature 'Add User Page' do
   scenario 'entering valid info and completing the add' do
     login
     page_has_user_list_headers
+    # Make sure there's no active existing user
+
+    deactivate_any_active_added_user
+
     click_button '+ Add a user'
 
     email_address = new_email_address
@@ -21,11 +25,12 @@ feature 'Add User Page' do
 
     # we are now cleared to add the user.
     expect(page).to have_button('Add User')
-    # We could click on the Add User button but then we'd have added the user.
+
     click_button 'Add User'
     expect(page).to have_button('Edit')
     message = "Successfully added new user. Registration email has been sent to #{email_address}"
     page.evaluate_script('window.location.reload()')
+
     expect(page.find('div.success-message').text).to match(message)
 
     # Deactivate this user so we can repeat this process next time
@@ -37,7 +42,7 @@ feature 'Add User Page' do
   scenario 'add user page is accessible' do
     pending 'add user validation has accessibility issues'
     login
-
+    deactivate_any_active_added_user
     page_has_user_list_headers
     click_button '+ Add a user'
 
@@ -55,6 +60,7 @@ feature 'Add User Page' do
   scenario 'entering invalid info and fixing it as we go' do
     login
     page_has_user_list_headers
+    deactivate_any_active_added_user
     click_button '+ Add a user'
 
     expect(page).to have_content('Add User')
@@ -102,6 +108,7 @@ feature 'Add User Page' do
     click_button 'Verify User'
 
     # we are now cleared to add the user.
+
     expect(page).to have_button('Add User')
     # We could click on the Add User button but then we'd have added the user.
     click_link 'User List'

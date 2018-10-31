@@ -218,14 +218,18 @@ describe('UserDetail', () => {
       });
 
       it('renders card with text indicating no user found', () => {
-        wrapper.setState({
-          isEdit: true,
-          XHRStatus: 'ready',
-        });
+        wrapper.setState({ isEdit: true, XHRStatus: 'ready' });
         expect(wrapper.find('Cards').length).toBe(1);
         expect(wrapper.find('Cards').props().cardHeaderText).toBe(
           'User not found'
         );
+      });
+
+      it('renders card with text indicating loading', () => {
+        wrapper.setProps({ XHRStatus: 'anything but ready' });
+        const cards = wrapper.find('Cards');
+        expect(cards.length).toBe(1);
+        expect(cards.children().text()).toContain('Loading...');
       });
     });
 

@@ -55,12 +55,25 @@ module UserListPageHelper
     page.find('.rt-table').all('.rt-tr-group')[row_number].first('.rt-td > a')
   end
 
-  def search_users(user_name)
-    last_name = user_name.match(/([^,]*),/)[1]
-    puts "search for #{last_name}"
+  def search_users(last_name)
+    return if find_field('Search user list').value == last_name
+    puts "search for '#{last_name}'"
 
     fill_in 'searchLastName', with: last_name
+    if last_name == ''
+      force_capybare_execute_react_change_script('#searchLastName',
+                                                 'Search user list')
+    end
     click_on 'Search'
+    sleep 2
+    puts 'search complete'
+  end
+
+  def force_capybare_execute_react_change_script(node_id, _node_label)
+    puts 'force change script'
+    find(node_id).send_keys('a')
+    find(node_id).send_keys(:backspace)
+    # execute_script "React.addons.TestUtils.Simulate.change(''#{node}'')"
   end
 
   def expect_valid_role(user_row)
@@ -68,5 +81,47 @@ module UserListPageHelper
                    'State Administratoe',
                    'Office Administrator']
     expect(valid_roles).to include user_row[:role]
+  end
+
+  def deactivate_any_active_added_user
+    search_users 'Auto'
+
+    loop do
+      loop do
+        active_row = first_active_user_on_page
+        break if active_row.nil?
+        puts 'deactivate user'
+        deactivate_user active_row
+      end
+      # click next until we've seen the whole set.
+      puts 'click next'
+      break if click_next == false
+    end
+  end
+
+  def first_active_user_on_page
+    page.find('.rt-table').first('.rt-tr-group', text: 'Active')
+  end
+
+  def deactivate_user(active_row)
+    active_row.find('a').click
+    click_on 'Edit'
+    change_status 'Inactive'
+    click_button 'save'
+    click_on 'User List'
+  end
+
+  def click_next
+    topnav = find(:xpath, "//div[@class='pagination-top']")
+    nav_page = topnav.find('input[type="number"]').value.to_i
+    total_pages = topnav.find('span.-totalPages').text.to_i
+    if nav_page < total_pages
+      topnav.find('.-next').find('button').find('span').click # doesn't work
+      puts 'clicked next'
+      true
+    else
+      puts 'no more pages'
+      false
+    end
   end
 end

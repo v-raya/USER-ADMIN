@@ -121,10 +121,11 @@ feature 'User Edit' do
 
   scenario 'user_details retain changes after clicking resend button' do
     login
+    search_users 'Auto'
     page_has_user_list_headers
     sleep 2
 
-    get_user_link(11).click
+    get_user_link(1).click
     page_is_user_details
 
     original_account_status = details_account_status
