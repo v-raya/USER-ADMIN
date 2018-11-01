@@ -24,9 +24,9 @@ export const clearDetails = () => ({
   type: CLEAR_USER_DETAILS,
 });
 
-export function saveUserDetailsActions(id, details) {
+export function saveUserDetailsActions(id, details, isRolesDisabled) {
   return {
     type: SAVE_USER_DETAILS_API_CALL_REQUEST,
-    payload: { id: id, details: details },
+    payload: { id: id, details: details, isRolesDisabled },
   };
 }

@@ -2,7 +2,6 @@ import UserService from './user.service';
 
 jest.mock('../api');
 const ApiService = require('../api').default;
-
 const id = 'someid';
 
 describe('UserService', () => {
@@ -75,8 +74,6 @@ describe('UserService', () => {
   });
 
   describe('#resendRegistrationEmail', () => {
-    let getSpy;
-
     beforeEach(() => {
       getSpy = jest.spyOn(ApiService, 'get');
     });
@@ -92,47 +89,80 @@ describe('UserService', () => {
 
   describe('#saveUserDetails', () => {
     let patchSpy;
+    let body = {
+      enabled: true,
+      permissions: ['drivethebus', 'getapuppy'],
+      roles: 'RoleOne',
+    };
 
-    beforeEach(() => {
-      patchSpy = jest.spyOn(ApiService, 'patch');
-    });
-
-    it('calls #patch ApiService', () => {
-      patchSpy.mockReturnValue(Promise.resolve({}));
-      const body = {
-        enabled: true,
-        permissions: ['drivethebus', 'getapuppy'],
-        roles: 'RoleOne',
-      };
-      UserService.saveUserDetails(id, {
-        enabled: true,
-        permissions: ['drivethebus', 'getapuppy'],
-        roles: 'RoleOne',
-        first_name: 'Pidgeon',
+    describe('calls #patchSpy Api Service when promise is resolved', () => {
+      beforeEach(() => {
+        patchSpy = jest.spyOn(ApiService, 'patch');
+        patchSpy.mockReturnValue(Promise.resolve({}));
       });
-      expect(patchSpy).toHaveBeenCalledWith(
-        '/user_detail/someid/save_user',
-        body
-      );
-    });
 
-    it('calls #patch ApiService when permission & roles are empty', () => {
-      patchSpy.mockReturnValue(Promise.resolve({}));
-      const body = {
-        enabled: true,
-        permissions: [],
-        roles: '',
-      };
-      UserService.saveUserDetails(id, {
-        enabled: true,
-        permissions: [],
-        roles: '',
-        first_name: 'firstName',
+      it('calls #patch ApiService', () => {
+        UserService.saveUserDetails(id, {
+          enabled: true,
+          permissions: ['drivethebus', 'getapuppy'],
+          roles: 'RoleOne',
+          first_name: 'Pidgeon',
+        });
+        expect(patchSpy).toHaveBeenCalledWith(
+          '/user_detail/someid/save_user',
+          body
+        );
       });
-      expect(patchSpy).toHaveBeenCalledWith(
-        '/user_detail/someid/save_user',
-        body
-      );
+
+      it('calls #patch ApiService when permission & roles are empty', () => {
+        body.permissions = [];
+        body.roles = '';
+        UserService.saveUserDetails(id, {
+          enabled: true,
+          permissions: [],
+          roles: '',
+          first_name: 'firstName',
+        });
+        expect(patchSpy).toHaveBeenCalledWith(
+          '/user_detail/someid/save_user',
+          body
+        );
+      });
+
+      it('calls #patch ApiService when isRolesDisabled is false', () => {
+        UserService.saveUserDetails(
+          id,
+          {
+            enabled: true,
+            permissions: [],
+            roles: ['RoleOne'],
+            first_name: 'firstName',
+          },
+          false
+        );
+        expect(patchSpy).toHaveBeenCalledWith(
+          '/user_detail/someid/save_user',
+          body
+        );
+      });
+
+      it('calls #patch ApiService when isRolesDisabled is true', () => {
+        body.roles = undefined;
+        UserService.saveUserDetails(
+          id,
+          {
+            enabled: true,
+            permissions: [],
+            roles: ['Some-value'],
+            first_name: 'firstName',
+          },
+          true
+        );
+        expect(patchSpy).toHaveBeenCalledWith(
+          '/user_detail/someid/save_user',
+          body
+        );
+      });
     });
 
     describe('calls #patchSpy Api Service catch block', () => {
@@ -141,11 +171,6 @@ describe('UserService', () => {
           response: 'error',
         };
         patchSpy.mockReturnValue(Promise.reject(errorResponse));
-        const body = {
-          enabled: true,
-          permissions: ['drivethebus', 'getapuppy'],
-          roles: 'RoleOne',
-        };
         UserService.saveUserDetails(id, {
           enabled: true,
           permissions: ['drivethebus', 'getapuppy'],
@@ -161,11 +186,6 @@ describe('UserService', () => {
       it('calls #patch ApiService error block with invalid error response', () => {
         const errorResponse = 'error';
         patchSpy.mockReturnValue(Promise.reject(errorResponse));
-        const body = {
-          enabled: true,
-          permissions: ['drivethebus', 'getapuppy'],
-          roles: 'RoleOne',
-        };
         UserService.saveUserDetails(id, {
           enabled: true,
           permissions: ['drivethebus', 'getapuppy'],
@@ -182,7 +202,6 @@ describe('UserService', () => {
 
   describe('#validateUser', () => {
     let getSpy2;
-
     beforeEach(() => {
       getSpy2 = jest.spyOn(ApiService, 'get');
     });
@@ -233,7 +252,6 @@ describe('UserService', () => {
       county_name: 'Madera',
       racfid: 'RACFID1',
     };
-
     beforeEach(() => {
       getSpy2 = jest.spyOn(ApiService, 'post');
     });

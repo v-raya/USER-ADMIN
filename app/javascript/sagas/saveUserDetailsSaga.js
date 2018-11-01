@@ -9,7 +9,8 @@ export function* saveDetails(action) {
     const saveUserDetails = yield call(
       UserService.saveUserDetails,
       saveUserDetailsActions.id,
-      saveUserDetailsActions.details
+      saveUserDetailsActions.details,
+      saveUserDetailsActions.isRolesDisabled
     );
     // dispatch a success action to the store with the new account details
     yield put({

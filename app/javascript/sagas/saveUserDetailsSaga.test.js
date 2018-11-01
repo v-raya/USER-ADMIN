@@ -14,17 +14,20 @@ describe('sagas', () => {
   describe('#saveDetails', () => {
     const id = 'abcdefghijklmnopqrstuvwxyz';
     const details = { first_name: 'firstname', last_name: 'lastname' };
+    const isRolesDisabled = true;
     beforeEach(() => {
       UserService.saveUserDetails = jest.fn();
     });
 
     describe('when successful', () => {
       it('executes the happy-path saga', () => {
-        const action = { payload: { id: id, details: details } };
+        const action = {
+          payload: { id: id, details: details, isRolesDisabled },
+        };
         const gen = saveDetails(action);
 
         expect(gen.next().value).toEqual(
-          call(UserService.saveUserDetails, id, details)
+          call(UserService.saveUserDetails, id, details, true)
         );
         expect(
           gen.next({
@@ -46,11 +49,13 @@ describe('sagas', () => {
 
     describe('when failures come back from save', () => {
       it('handles the error', () => {
-        const action = { payload: { id: id, details: details } };
+        const action = {
+          payload: { id: id, details: details, isRolesDisabled: true },
+        };
         const gen = saveDetails(action);
 
         expect(gen.next().value).toEqual(
-          call(UserService.saveUserDetails, id, details)
+          call(UserService.saveUserDetails, id, details, true)
         );
         expect(gen.throw('database not accessible').value).toEqual(
           put({

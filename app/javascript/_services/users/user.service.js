@@ -35,11 +35,12 @@ class UserService {
       });
   }
 
-  static saveUserDetails(id, details) {
+  static saveUserDetails(id, details, isRolesDisabled) {
+    const roles = isRolesDisabled ? undefined : details.roles;
     const userData = {
       enabled: details['enabled'],
       permissions: details['permissions'],
-      roles: details.roles,
+      roles,
     };
     return ApiService.patch(`/user_detail/${id}/save_user`, userData)
       .then(response => response.data)

@@ -74,7 +74,8 @@ export default class UserDetail extends Component {
   onSaveDetails = () => {
     const id = this.getUserId(this.currentPathname());
     const { details } = this.state;
-    this.props.actions.saveUserDetailsActions(id, details);
+    const { isRolesDisabled } = this.props;
+    this.props.actions.saveUserDetailsActions(id, details, isRolesDisabled);
     this.setState({
       alert: true,
       resendEmailAlert: false,

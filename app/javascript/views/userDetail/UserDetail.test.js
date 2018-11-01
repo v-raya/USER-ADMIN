@@ -42,6 +42,7 @@ describe('UserDetail', () => {
           details={{}}
           dashboardUrl="dburl"
           userListUrl="myUserList"
+          isRolesDisabled={true}
           actions={{
             fetchDetailsActions: mockFetchDetailsActions,
             fetchPermissionsActions: mockFetchPermissionsActions,
@@ -173,7 +174,11 @@ describe('UserDetail', () => {
   describe('#onSaveDetails', () => {
     it('calls the service to patch the user record', () => {
       instance.onSaveDetails();
-      expect(mockSaveUserDetailsActions).toHaveBeenCalledWith('blank', {});
+      expect(mockSaveUserDetailsActions).toHaveBeenCalledWith(
+        'blank',
+        {},
+        true
+      );
       expect(instance.state.alert).toEqual(true);
       expect(instance.state.addedUserID).toEqual(undefined);
     });
