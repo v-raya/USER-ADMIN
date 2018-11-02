@@ -23,7 +23,10 @@ feature 'Add User Page' do
     fill_in('CWS Login', with: valid_racfid, match: :prefer_exact)
     click_button 'Verify User'
 
+    expect(page).not_to have_selector('.error-message')
+
     # we are now cleared to add the user.
+
     expect(page).to have_button('Add User')
 
     click_button 'Add User'
@@ -31,7 +34,7 @@ feature 'Add User Page' do
     message = "Successfully added new user. Registration email has been sent to #{email_address}"
     page.evaluate_script('window.location.reload()')
 
-    expect(page.find('div.success-message').text).to match(message)
+    expect(page.find('div.success-message').text).to eq(message)
 
     # Deactivate this user so we can repeat this process next time
     click_button 'Edit'
