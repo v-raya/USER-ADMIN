@@ -52,7 +52,6 @@ feature 'User Edit' do
 
     original_account_status = details_account_status
     new_status = (original_account_status == 'Active' ? 'Inactive' : 'Active')
-
     click_on('Edit')
     page_is_user_details
     sleep 5 # wait for things to load?

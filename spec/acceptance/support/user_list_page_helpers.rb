@@ -103,7 +103,6 @@ module UserListPageHelper
   end
 
   def first_active_user_on_page
-
     page.find('.rt-table').first('.rt-tr-group', text: 'Active')
   end
 

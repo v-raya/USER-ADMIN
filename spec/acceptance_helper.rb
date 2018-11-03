@@ -27,4 +27,3 @@ Capybara.configure do |config|
   config.app_host = ENV.fetch('COUNTY_ADMIN_WEB_BASE_URL', 'http://localhost:3000')
   Capybara.save_path = 'tmp/capybara'
 end
-

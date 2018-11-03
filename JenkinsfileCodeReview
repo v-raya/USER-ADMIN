@@ -48,6 +48,7 @@ node('cap-slave') {
       currentBuild.result = "FAILURE"
         throw e
     } finally {
+      docker cp county-admin_county-admin-test_1:cap/tmp/capybara .
       sh "docker-compose down"
       cleanWs()
     }
