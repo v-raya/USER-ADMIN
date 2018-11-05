@@ -26,7 +26,4 @@ Capybara.configure do |config|
   config.default_driver = :selenium
   config.app_host = ENV.fetch('COUNTY_ADMIN_WEB_BASE_URL', 'http://localhost:3000')
   Capybara.save_path = 'tmp/capybara'
-  Capybara::Screenshot.register_filename_prefix_formatter(:rspec) do |example|
-    "screenshot_#{example.description.gsub(' ', '-').gsub(/^.*\/spec\//,'')}"
-  end
 end
