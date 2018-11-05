@@ -10,13 +10,6 @@ feature 'User List Page' do
     login
   end
 
-  scenario 'failing test example' do
-    visit ENV['RAILS_RELATIVE_URL_ROOT'] || '/'
-    login
-    page_has_user_list_headers
-    expect(false).to be true
-  end
-
   scenario 'page is accessible' do
     pending 'page has accessibility issues'
     login
