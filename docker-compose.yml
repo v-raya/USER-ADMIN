@@ -122,6 +122,9 @@ services:
       - type: bind
         source: ./spec
         target: /app/spec
+      - type: bind
+        source: ./tmp
+        target: /app/tmp/capybara
     environment:
       - SECRET_KEY_BASE
       - PERRY_API_BASE_URL
