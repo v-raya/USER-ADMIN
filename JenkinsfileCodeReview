@@ -48,7 +48,8 @@ node('cap-slave') {
       currentBuild.result = "FAILURE"
         throw e
     } finally {
-      sh "docker cp county-admin_county-admin-test_1:   ."
+      sh "mkdir capybara"
+      sh "docker cp county-admin_county-admin-test_1:tmp/capybara/*  capybara"
       archiveArtifacts artifacts: 'capybara/*', fingerprint: true
       sh "docker-compose down"
       cleanWs()
