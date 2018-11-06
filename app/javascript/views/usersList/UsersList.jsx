@@ -129,7 +129,7 @@ class UserList extends PureComponent {
             minWidth: 60,
           },
           {
-            Header: 'Last Log in',
+            Header: 'Last Login',
             id: 'last_login_date_time',
             minWidth: 150,
             accessor: lastLoginDate,
