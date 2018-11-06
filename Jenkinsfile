@@ -101,7 +101,7 @@ node(node_to_run_on()) {
       currentBuild.result = "FAILURE"
         throw e
     } finally {
-      archiveArtifacts artifacts: 'tmp/*', excludes: '*/.keep'
+      archiveArtifacts artifacts: 'tmp/*', excludes: '*/.keep', allowEmptyArchive: true
       sh "docker-compose down"
       notify(currentBuild.result)
       cleanWs()
