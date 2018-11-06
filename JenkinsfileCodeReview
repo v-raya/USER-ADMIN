@@ -48,7 +48,7 @@ node('cap-slave') {
       currentBuild.result = "FAILURE"
         throw e
     } finally {
-      archiveArtifacts artifacts: 'tmp/*', fingerprint: true
+      archiveArtifacts artifacts: 'tmp/*', excludes: '*/.keep'
       sh "docker-compose down"
       cleanWs()
     }
