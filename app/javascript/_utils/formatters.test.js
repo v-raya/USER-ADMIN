@@ -1,10 +1,9 @@
 import {
   formatPhoneNumberWithExt,
-  formatDate,
-  formatSelectedPermissions,
   formatPhoneNumber,
   checkDate,
   formatSelectedRoles,
+  formatDate,
 } from './formatters';
 
 describe('#formatPhoneNumberWithExt', () => {
@@ -106,31 +105,12 @@ describe('#checkDate', () => {
   });
 });
 
-describe('#formatSelectedPermissions', () => {
-  it('return a concatenated comma-delimmited string ', () => {
-    const list = [
-      { name: 'foo', description: 'FOO_DESC' },
-      { name: 'bar', description: 'BAR_DESC' },
-      { name: 'quo', description: 'QUO_DESC' },
-      { name: 'qux', description: 'QUX_DESC' },
-    ];
-    expect(formatSelectedPermissions(['foo', 'bar'], list)).toEqual(
-      'FOO_DESC, BAR_DESC'
-    );
-    expect(formatSelectedPermissions('', list)).toEqual('');
-    expect(formatSelectedPermissions(['qux'], list)).toEqual('QUX_DESC');
-    expect(formatSelectedPermissions([], list)).toEqual(false);
-    expect(formatSelectedPermissions([''], list)).toEqual('');
-    expect(formatSelectedPermissions(['qux'], [])).toEqual('');
-  });
-});
-
 describe('#formatSelectedRoles', () => {
   const list = [
-    { id: 'foo', name: 'FOO_DESC' },
-    { id: 'bar', name: 'BAR_DESC' },
-    { id: 'quo', name: 'QUO_DESC' },
-    { id: 'qux', name: 'QUX_DESC' },
+    { value: 'foo', label: 'FOO_DESC' },
+    { value: 'bar', label: 'BAR_DESC' },
+    { value: 'quo', label: 'QUO_DESC' },
+    { value: 'qux', label: 'QUX_DESC' },
   ];
   it('return first index of the array ', () => {
     expect(formatSelectedRoles(['foo', 'bar'], list)).toEqual('FOO_DESC');

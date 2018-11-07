@@ -4,28 +4,14 @@ import Cards from '../../common/Card';
 import ShowField from '../../common/ShowField';
 import { Button } from 'react-wood-duck';
 import DropDown from '../../common/DropDown';
-import {
-  STATUS,
-  permissionListToOptions,
-  translateOffice,
-  possibleRolesOptions,
-} from '../../_constants/constants';
-import {
-  formatPhoneNumberWithExt,
-  formatDate,
-  checkDate,
-} from '../../_utils/formatters';
-import {
-  userStatusDescriptionTranslator,
-  userStatusTranslator,
-} from '../../_utils/codeToTextTranslator';
+import { STATUS, translateOffice } from '../../_constants/constants';
+import { checkDate, formatPhoneNumberWithExt } from '../../_utils/formatters';
 
 /* eslint camelcase: 0 */
 
 const UserDetailEdit = ({
   disableResendEmailButton,
   details,
-  selectedPermissions,
   onCancel,
   onSave,
   disableActionBtn,
@@ -35,9 +21,11 @@ const UserDetailEdit = ({
   permissionsList,
   onResendInvite,
   officesList,
-  possibleRoles,
-  rolesList,
+  possibleRolesList,
   isRolesDisabled,
+  startDate,
+  userStatus,
+  userStatusDescription,
 }) => (
   <div className="row">
     <div className="col-md-12">
@@ -75,7 +63,7 @@ const UserDetailEdit = ({
                 id="RolesDropDown"
                 label="Role"
                 onChange={onRoleChange}
-                options={possibleRolesOptions(possibleRoles, rolesList)}
+                options={possibleRolesList}
                 disabled={isRolesDisabled}
               />
             </div>
@@ -90,9 +78,7 @@ const UserDetailEdit = ({
               </ShowField>
             </div>
             <div className="col-md-2">
-              <ShowField label="Start Date">
-                {formatDate(details.start_date)}
-              </ShowField>
+              <ShowField label="Start Date">{startDate}</ShowField>
             </div>
             <div className="col-md-4">
               <ShowField label="Last Login">
@@ -105,9 +91,9 @@ const UserDetailEdit = ({
             <div>
               <div className="col-md-3">
                 <ShowField label="User Status">
-                  {userStatusTranslator(details.status)}
+                  {userStatus}
                   <div className="value-text-color">
-                    {userStatusDescriptionTranslator(details.status)}
+                    {userStatusDescription}
                     {details.status === 'FORCE_CHANGE_PASSWORD' && (
                       <div className="resend-email-btn">
                         <Button
@@ -136,7 +122,7 @@ const UserDetailEdit = ({
                 <DropDown
                   id="AssignPermissions"
                   selectedOption={details.permissions}
-                  options={permissionListToOptions(permissionsList)}
+                  options={permissionsList}
                   label="Assigned Permissions"
                   onChange={selectedOptions =>
                     onPermissionChange(selectedOptions.split(','))
@@ -155,17 +141,19 @@ const UserDetailEdit = ({
 
 UserDetailEdit.propTypes = {
   details: PropTypes.object,
-  selectedPermissions: PropTypes.array,
   onCancel: PropTypes.func,
+  startDate: PropTypes.string,
   onSave: PropTypes.func,
   disableActionBtn: PropTypes.bool,
   onStatusChange: PropTypes.func,
   onRoleChange: PropTypes.func,
   onPermissionChange: PropTypes.func,
+  userStatusDescription: PropTypes.string,
+  userStatus: PropTypes.string,
   permissionsList: PropTypes.array,
   onResendInvite: PropTypes.func,
   disableResendEmailButton: PropTypes.bool,
-  possibleRoles: PropTypes.array,
+  possibleRolesList: PropTypes.array,
   officesList: PropTypes.arrayOf(
     PropTypes.shape({
       office_name: PropTypes.string.isRequired,
@@ -174,15 +162,14 @@ UserDetailEdit.propTypes = {
   ),
   rolesList: PropTypes.arrayOf(
     PropTypes.shape({
-      id: PropTypes.string.isRequired,
-      name: PropTypes.string.isRequired,
+      id: PropTypes.string,
+      name: PropTypes.string,
     })
   ),
   isRolesDisabled: PropTypes.bool,
 };
 
 UserDetailEdit.defaultProps = {
-  selectedPermissions: [],
   permissionsList: [],
 };
 

@@ -13,7 +13,7 @@ import {
 import { fetchOfficesActions } from '../actions/officesActions';
 import { fetchRolesActions } from '../actions/rolesActions';
 import { officesList, checkOfficeNames } from '../selectors/userListSelector';
-import { rolesList } from '../selectors/detailSelector';
+import { rolesList } from '../selectors/rolesListSelector';
 import { clearAddedUserDetailActions } from '../actions/addUserActions';
 
 function mapStateToProps(state) {

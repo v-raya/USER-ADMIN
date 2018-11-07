@@ -163,7 +163,6 @@ export default class UserDetail extends Component {
             {this.props.isEdit ? (
               <UserDetailEdit
                 details={this.state.details}
-                selectedPermissions={this.state.details.permissions}
                 onCancel={this.onCancel}
                 onSave={this.onSaveDetails}
                 onStatusChange={this.handleDropDownChange('enabled')}
@@ -175,17 +174,24 @@ export default class UserDetail extends Component {
                 disableResendEmailButton={this.props.disableResendEmailButton}
                 officesList={this.props.officesList}
                 rolesList={this.props.rolesList}
-                possibleRoles={this.props.possibleRoles}
+                possibleRolesList={this.props.possibleRolesList}
                 isRolesDisabled={this.props.isRolesDisabled}
+                startDate={this.props.startDate}
+                userStatusDescription={this.props.userStatusDescription}
+                userStatus={this.props.userStatus}
               />
             ) : (
               <UserDetailShow
                 details={this.state.details}
                 onEdit={this.onEditClick}
-                permissionsList={permissionsList}
                 disableEditBtn={this.props.disableEditBtn}
                 officesList={this.props.officesList}
                 rolesList={this.props.rolesList}
+                startDate={this.props.startDate}
+                accountStatus={this.props.accountStatus}
+                assignedPermissions={this.props.assignedPermissions}
+                userStatus={this.props.userStatus}
+                userStatusDescription={this.props.userStatusDescription}
               />
             )}
           </div>
@@ -239,6 +245,7 @@ export default class UserDetail extends Component {
 UserDetail.propTypes = {
   isEdit: PropTypes.bool,
   details: PropTypes.object,
+  assignedPermissions: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
   id: PropTypes.string,
   dashboardUrl: PropTypes.string,
   dashboardClickHandler: PropTypes.func,
@@ -249,11 +256,15 @@ UserDetail.propTypes = {
   disableResendEmailButton: PropTypes.bool,
   disableEditBtn: PropTypes.bool,
   XHRStatus: PropTypes.string,
-  possibleRoles: PropTypes.array,
+  possibleRolesList: PropTypes.array,
+  accountStatus: PropTypes.string,
+  startDate: PropTypes.string,
+  userStatusDescription: PropTypes.string,
+  userStatus: PropTypes.string,
   rolesList: PropTypes.arrayOf(
     PropTypes.shape({
-      id: PropTypes.string.isRequired,
-      name: PropTypes.string.isRequired,
+      id: PropTypes.string,
+      name: PropTypes.string,
     })
   ),
   officesList: PropTypes.arrayOf(

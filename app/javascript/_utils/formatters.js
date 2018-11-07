@@ -30,30 +30,17 @@ export function formatPhoneNumberWithExt({
   return phoneNumber;
 }
 
+export function checkDate(date) {
+  return date ? formatLastLogin(date.split(' ')) : '';
+}
+
 export function formatDate(date) {
   let formattedDate = date ? DateTime.fromISO(date).toFormat('MM/dd/yyyy') : '';
   return formattedDate;
 }
 
-export function checkDate(date) {
-  return date ? formatLastLogin(date.split(' ')) : '';
-}
-
 function formatLastLogin(array) {
   return `${DateTime.fromISO(array[0]).toFormat('MM/dd/yyyy')} ${array[1]}`;
-}
-
-export function formatSelectedPermissions(assignedPermissions, permissionList) {
-  if (!Array.isArray(assignedPermissions)) return '';
-  return (
-    assignedPermissions &&
-    assignedPermissions.length > 0 &&
-    assignedPermissions
-      .map(permission => permissionList.find(d => d.name === permission))
-      .filter(value => !!value)
-      .map(({ name, description }) => description)
-      .join(', ')
-  );
 }
 
 export function formatSelectedRoles(assignedRoles, rolesList) {
@@ -61,9 +48,9 @@ export function formatSelectedRoles(assignedRoles, rolesList) {
   if (!Array.isArray(assignedRoles)) return '';
   if (assignedRoles && assignedRoles.length !== 0) {
     role = assignedRoles
-      .map(role => rolesList.find(d => d.id === role))
+      .map(role => rolesList.find(d => d.value === role))
       .filter(value => value)
-      .map(({ id, name }) => name)[0];
+      .map(({ value, label }) => label)[0];
   }
   if (role === undefined) {
     role = assignedRoles[0];

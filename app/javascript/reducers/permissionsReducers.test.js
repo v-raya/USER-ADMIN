@@ -20,13 +20,9 @@ describe('reducer', () => {
       permissions: ['Hello', 'Bye'],
     };
     const state = { permissions: null, fetching: true, error: null };
-
     expect(fetchPermissions(state, responseAction)).toEqual({
       fetching: false,
-      permissions: {
-        XHRStatus: 'ready',
-        permissions: ['Hello', 'Bye'],
-      },
+      permissions: ['Hello', 'Bye'],
       error: null,
     });
   });
