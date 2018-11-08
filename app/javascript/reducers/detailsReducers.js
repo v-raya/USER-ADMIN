@@ -1,7 +1,13 @@
 import * as actionTypes from '../actions/actionTypes';
 
 function fetchDetails(
-  state = { details: null, fetching: false, isEdit: false },
+  state = {
+    details: null,
+    fetching: false,
+    isEdit: false,
+    displayAlert: false,
+    disableActionBtn: false,
+  },
   action
 ) {
   switch (action.type) {
@@ -19,6 +25,7 @@ function fetchDetails(
         details: userRecords,
         error: null,
         isEdit: false,
+        displayAlert: false,
       };
 
     case actionTypes.FETCH_DETAILS_API_CALL_FAILURE:
@@ -27,12 +34,14 @@ function fetchDetails(
         fetching: false,
         details: null,
         error: action.error,
+        displayAlert: false,
       };
 
     case actionTypes.CLEAR_USER_DETAILS: {
       return {
         details: null,
         fetching: false,
+        displayAlert: false,
       };
     }
 
@@ -40,6 +49,8 @@ function fetchDetails(
       return {
         ...state,
         isEdit: action.payload.value,
+        displayAlert: false,
+        disableActionBtn: true,
       };
     }
 
@@ -52,6 +63,7 @@ function fetchDetails(
         fetching: false,
         saveDetailsError: null,
         isEdit: false,
+        displayAlert: true,
       };
 
     case actionTypes.SAVE_USER_DETAILS_API_CALL_FAILURE:
@@ -60,11 +72,14 @@ function fetchDetails(
         fetching: false,
         isEdit: true,
         saveDetailsError: action.error,
+        displayAlert: true,
       };
 
     case actionTypes.HANDLE_DROPDOWN_CHANGE: {
       return {
         ...state,
+        displayAlert: false,
+        disableActionBtn: false,
         details: {
           ...state.details,
           records: {

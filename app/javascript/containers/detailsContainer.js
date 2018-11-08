@@ -39,6 +39,7 @@ function mapStateToProps(state) {
     userStatusDescription: userStatusDescription(state),
     userStatus: userStatus(state),
     isEdit: state.fetchDetails.isEdit,
+    displayAlert: state.fetchDetails.displayAlert,
     id: addUserRecords(state),
     XHRStatus: fetchingStatus(state),
     possibleRolesList: selectPossibleRolesList(state),
@@ -54,6 +55,7 @@ function mapStateToProps(state) {
     disableResendEmailButton: disableResendEmailButton(state),
     officesList: officesList(state),
     isRolesDisabled: disableRolesDropDown(state),
+    disableActionBtn: state.fetchDetails.disableActionBtn,
     startDate: selectStartDate(state),
     assignedPermissions: selectAssignedPermissions(state),
   };

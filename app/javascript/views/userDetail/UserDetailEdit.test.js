@@ -16,9 +16,9 @@ describe('UserDetailEdit', () => {
     status: 'FORCE_CHANGE_PASSWORD',
   };
 
-  let onPermissionChange = () => {};
-  let onRoleChange = () => {};
   let possibleRolesOptions = () => {};
+
+  const onDropDownChangeSpy = jest.fn();
 
   const rolesList = [
     { id: 'role1', name: 'roleOne' },
@@ -31,8 +31,7 @@ describe('UserDetailEdit', () => {
     wrapper = shallow(
       <UserDetailEdit
         details={details}
-        onPermissionChange={onPermissionChange}
-        onRoleChange={onRoleChange}
+        onDropDownChange={onDropDownChangeSpy}
         possibleRoles={possibleRoles}
         rolesList={rolesList}
         possibleRolesOptions={possibleRolesOptions}
@@ -101,30 +100,6 @@ describe('UserDetailEdit', () => {
       );
     });
 
-    it('#AssignPermissions, onRoleChange function is called when onChange event triggered ', () => {
-      let possibleRolesOptions = () => {};
-      const onPermissionChange = jasmine.createSpy('onChange');
-      const rolesList = [
-        { id: 'role1', name: 'roleOne' },
-        { id: 'role2', name: 'roleTwo' },
-      ];
-      let possibleRoles = ['role1', 'role2'];
-      const onRoleChangeSpy = jasmine.createSpy('onChange');
-      const render = shallow(
-        <UserDetailEdit
-          details={details}
-          rolesList={rolesList}
-          onPermissionChange={onPermissionChange}
-          onRoleChange={onRoleChangeSpy}
-          possibleRoles={possibleRoles}
-          possibleRolesOptions={possibleRolesOptions}
-        />
-      );
-      const value = ['Asian', 'American'];
-      render.find('#AssignPermissions').simulate('change', String(value));
-      expect(onPermissionChange).toHaveBeenCalledWith(value);
-    });
-
     it('renders the <ShowField/> children at label:fullName', () => {
       let expectedValue = [
         `${details.last_name}`,
@@ -139,6 +114,26 @@ describe('UserDetailEdit', () => {
           .at(0)
           .props().children
       ).toEqual(expectedValue);
+    });
+  });
+
+  describe('#onChange', () => {
+    it('#Assign Status, onStatusChange function is called when onChange event triggered ', () => {
+      const value = 'Active';
+      wrapper.find('#StatusDropDown').simulate('change', { value });
+      expect(onDropDownChangeSpy).toHaveBeenCalledWith('enabled', value);
+    });
+
+    it('#AssignRoles, onRoleChange function is called when onChange event triggered ', () => {
+      const value = 'Asian';
+      wrapper.find('#RolesDropDown').simulate('change', { value });
+      expect(onDropDownChangeSpy).toHaveBeenCalledWith('roles', [value]);
+    });
+
+    it('#AssignPermissions, onPermissionChange function is called when onChange event triggered ', () => {
+      const value = ['Asian', 'American'];
+      wrapper.find('#AssignPermissions').simulate('change', String(value));
+      expect(onDropDownChangeSpy).toHaveBeenCalledWith('permissions', value);
     });
   });
 

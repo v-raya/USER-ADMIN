@@ -15,14 +15,12 @@ const UserDetailEdit = ({
   onCancel,
   onSave,
   disableActionBtn,
-  onStatusChange,
-  onPermissionChange,
-  onRoleChange,
   permissionsList,
   onResendInvite,
   officesList,
   possibleRolesList,
   isRolesDisabled,
+  onDropDownChange,
   startDate,
   userStatus,
   userStatusDescription,
@@ -31,9 +29,9 @@ const UserDetailEdit = ({
     <div className="col-md-12">
       <Cards
         cardHeaderText={`County: ${details.county_name}`}
-        cardActionButtons={true}
-        cardActionButton1={true}
-        cardActionButton2={true}
+        cardActionButtons
+        cardActionButton1
+        cardActionButton2
         handleOnClickButton1={onCancel}
         handleOnClickButton2={onSave}
         disableActionBtn={disableActionBtn}
@@ -62,7 +60,7 @@ const UserDetailEdit = ({
                 selectedOption={details.roles.toString()}
                 id="RolesDropDown"
                 label="Role"
-                onChange={onRoleChange}
+                onChange={event => onDropDownChange('roles', [event.value])}
                 options={possibleRolesList}
                 disabled={isRolesDisabled}
               />
@@ -122,7 +120,7 @@ const UserDetailEdit = ({
                   selectedOption={details.enabled}
                   options={STATUS}
                   label="Account Status"
-                  onChange={onStatusChange}
+                  onChange={event => onDropDownChange('enabled', event.value)}
                 />
               </div>
               <div className="col-md-6">
@@ -132,10 +130,10 @@ const UserDetailEdit = ({
                   options={permissionsList}
                   label="Assigned Permissions"
                   onChange={selectedOptions =>
-                    onPermissionChange(selectedOptions.split(','))
+                    onDropDownChange('permissions', selectedOptions.split(','))
                   }
-                  multiSelect={true}
-                  simpleValue={true}
+                  multiSelect
+                  simpleValue
                 />
               </div>
             </div>
@@ -152,6 +150,7 @@ UserDetailEdit.propTypes = {
   startDate: PropTypes.string,
   onSave: PropTypes.func,
   disableActionBtn: PropTypes.bool,
+  onDropDownChange: PropTypes.func,
   onStatusChange: PropTypes.func,
   onRoleChange: PropTypes.func,
   onPermissionChange: PropTypes.func,

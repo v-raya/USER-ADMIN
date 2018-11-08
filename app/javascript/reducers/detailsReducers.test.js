@@ -30,6 +30,7 @@ describe('reducer', () => {
       details: records,
       isEdit: false,
       error: null,
+      displayAlert: false,
     });
   });
 
@@ -44,6 +45,7 @@ describe('reducer', () => {
       fetching: false,
       details: null,
       error: 'error happened',
+      displayAlert: false,
     });
   });
 
@@ -63,7 +65,11 @@ describe('reducer', () => {
     };
     const state = { details: details };
     expect(fetchDetails(state, handleDropDownAction)).toEqual({
-      details: { records: { user: { permissions: ['Snapshot-rollout'] } } },
+      details: {
+        records: { user: { permissions: ['Snapshot-rollout'] } },
+      },
+      displayAlert: false,
+      disableActionBtn: false,
     });
   });
 
@@ -78,6 +84,8 @@ describe('reducer', () => {
       details: null,
       fetching: false,
       isEdit: true,
+      displayAlert: false,
+      disableActionBtn: true,
     });
   });
 
@@ -95,7 +103,13 @@ describe('reducer', () => {
       type: null,
       foreignObject: {},
     };
-    const state = { details: null, fetching: false, isEdit: false };
+    const state = {
+      details: null,
+      fetching: false,
+      isEdit: false,
+      displayAlert: false,
+      disableActionBtn: false,
+    };
     expect(fetchDetails(undefined, randomAction)).toEqual(state);
   });
 
@@ -132,6 +146,7 @@ describe('reducer', () => {
       error: null,
       isEdit: false,
       saveDetailsError: null,
+      displayAlert: true,
     });
   });
 
@@ -149,6 +164,7 @@ describe('reducer', () => {
       saveDetailsError: 'error happened',
       error: null,
       isEdit: true,
+      displayAlert: true,
     });
   });
 });
