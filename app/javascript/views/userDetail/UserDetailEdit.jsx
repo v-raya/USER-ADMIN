@@ -96,6 +96,13 @@ const UserDetailEdit = ({
                     {userStatusDescription}
                     {details.status === 'FORCE_CHANGE_PASSWORD' && (
                       <div className="resend-email-btn">
+                        <div className="resend-email-text">
+                          {`Registration email resent:`}
+                          <br />
+                          {checkDate(
+                            details.last_registration_resubmit_date_time
+                          )}
+                        </div>
                         <Button
                           btnClassName="primary"
                           btnName="Resend Invite"

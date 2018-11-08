@@ -44,10 +44,10 @@ describe('helpers', () => {
   });
 
   describe('#lastLoginDate', () => {
-    it('renders date in MM/DD/YYYY format', () => {
+    it('renders date & time in required format', () => {
       expect(
         lastLoginDate({ last_login_date_time: '2013-03-05 08:23:18' })
-      ).toEqual('03/05/2013 08:23:18');
+      ).toEqual('March 5, 2013 08:23 AM');
     });
 
     it('renders empty when date does not exists', () => {

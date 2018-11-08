@@ -79,6 +79,15 @@ const UserDetailShow = ({
                 <div>
                   <div className="value-text-color">
                     {userStatusDescription}
+                    {details.status === 'FORCE_CHANGE_PASSWORD' && (
+                      <div className="resend-email-text">
+                        {`Registration email resent:`}
+                        <br />
+                        {checkDate(
+                          details.last_registration_resubmit_date_time
+                        )}
+                      </div>
+                    )}
                   </div>
                 </div>
               </ShowField>

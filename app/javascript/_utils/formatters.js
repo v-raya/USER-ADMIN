@@ -40,7 +40,13 @@ export function formatDate(date) {
 }
 
 function formatLastLogin(array) {
-  return `${DateTime.fromISO(array[0]).toFormat('MM/dd/yyyy')} ${array[1]}`;
+  let hoursMinutes = array[1].slice(0, -3);
+  let time = hoursMinutes.split(':');
+  let hours = time[0] > 12 ? `${time[0] - 12}` : time[0];
+  let hour = hours < 10 ? '0' + hours : hours;
+  let formattedTime =
+    time[0] < 12 ? `${hoursMinutes} AM` : `${hour + ':' + time[1]} PM`;
+  return `${DateTime.fromISO(array[0]).toFormat('DDD')} ${formattedTime}`;
 }
 
 export function formatSelectedRoles(assignedRoles, rolesList) {
