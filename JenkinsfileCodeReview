@@ -48,6 +48,7 @@ node('cap-slave') {
       currentBuild.result = "FAILURE"
         throw e
     } finally {
+      archiveArtifacts artifacts: 'tmp/*', excludes: '*/.keep', allowEmptyArchive: true
       sh "docker-compose down"
       cleanWs()
     }

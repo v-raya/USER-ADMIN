@@ -77,12 +77,12 @@ node(node_to_run_on()) {
         }
       }
       stage('Trigger Security scan') {
-        build job: 'tenable-scan', 
+        build job: 'tenable-scan',
           parameters: [
             [$class: 'StringParameterValue', name: 'CONTAINER_NAME', value: "${DOCKER_IMAGE}"],
             [$class: 'StringParameterValue', name: 'CONTAINER_VERSION', value: "${SEMANTIC_VERSION_NUMBER}"]
           ],
-          wait: false 
+          wait: false
       }
       stage('Deploy Preint') {
         withCredentials([usernameColonPassword(credentialsId: 'fa186416-faac-44c0-a2fa-089aed50ca17', variable: 'jenkinsauth')]) {
@@ -101,8 +101,9 @@ node(node_to_run_on()) {
       currentBuild.result = "FAILURE"
         throw e
     } finally {
+      archiveArtifacts artifacts: 'tmp/*', excludes: '*/.keep', allowEmptyArchive: true
       sh "docker-compose down"
-        notify(currentBuild.result)
-        cleanWs()
+      notify(currentBuild.result)
+      cleanWs()
     }
 }

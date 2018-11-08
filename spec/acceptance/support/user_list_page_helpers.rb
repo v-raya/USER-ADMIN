@@ -65,7 +65,6 @@ module UserListPageHelper
                                                  'Search user list')
     end
     click_on 'Search'
-    sleep 2
     puts 'search complete'
   end
 
@@ -83,20 +82,24 @@ module UserListPageHelper
     expect(valid_roles).to include user_row[:role]
   end
 
+  def users_on_page_with_status(status)
+    page.all(:xpath, "//div[contains(@class,'rt-tr-group')]").to_a.select do |row|
+      row.text.match(/#{status}/)
+    end
+  end
+
   def deactivate_any_active_added_user
     search_users 'Auto'
+    # wait for initial results
+    page.find('.rt-table').first('.rt-tr-group')
 
     loop do
-      loop do
-        active_row = first_active_user_on_page
-        break if active_row.nil?
-        puts 'deactivate user'
+      users_on_page_with_status('Active').each do |active_row|
         deactivate_user active_row
       end
-      # click next until we've seen the whole set.
-      puts 'click next'
       break if click_next == false
     end
+    puts 'done deactivating users'
   end
 
   def first_active_user_on_page
@@ -106,22 +109,27 @@ module UserListPageHelper
   def deactivate_user(active_row)
     active_row.find('a').click
     click_on 'Edit'
+    expect(page).to have_button('Cancel')
     change_status 'Inactive'
     click_button 'save'
     click_on 'User List'
   end
 
   def click_next
-    topnav = find(:xpath, "//div[@class='pagination-top']")
-    nav_page = topnav.find('input[type="number"]').value.to_i
-    total_pages = topnav.find('span.-totalPages').text.to_i
-    if nav_page < total_pages
-      topnav.find('.-next').find('button').find('span').click # doesn't work
-      puts 'clicked next'
+    top_nav = find(:xpath, "//div[@class='pagination-top']")
+    if has_more_pages?(top_nav)
+      top_nav.find('.-next').find('button').find('span').click
+      page.find('.rt-table').first('.rt-tr-group')
+      puts 'next user list page'
       true
     else
-      puts 'no more pages'
       false
     end
+  end
+
+  def has_more_pages?(top_nav)
+    nav_page = top_nav.find('input[type="number"]').value.to_i
+    total_pages = top_nav.find('span.-totalPages').text.to_i
+    nav_page < total_pages
   end
 end
