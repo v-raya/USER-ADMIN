@@ -16,7 +16,7 @@ function fetchPermissions(
       return {
         ...state,
         fetching: false,
-        permissions: permissionsList,
+        permissions: permissionsList.permissions,
         error: null,
       };
 

@@ -3,12 +3,17 @@ import UserDetail from '../views/userDetail/UserDetail';
 import {
   selectDetailRecords,
   checkEditDisable,
-  permissionsList,
-  possibleRoles,
-  rolesList,
+  selectPossibleRolesList,
   disableRolesDropDown,
   fetchingStatus,
+  selectStartDate,
+  selectAccountStatus,
+  selectAssignedPermissions,
+  userStatus,
+  userStatusDescription,
 } from '../selectors/detailSelector';
+import { permissionsList } from '../selectors/permissionsListSelector';
+import { rolesList } from '../selectors/rolesListSelector';
 import {
   fetchDetailsActions,
   saveUserDetailsActions,
@@ -30,10 +35,14 @@ import { clearAddedUserDetailActions } from '../actions/addUserActions';
 
 function mapStateToProps(state) {
   return {
+    accountStatus: selectAccountStatus(state),
+    userStatusDescription: userStatusDescription(state),
+    userStatus: userStatus(state),
     isEdit: state.fetchDetails.isEdit,
+    displayAlert: state.fetchDetails.displayAlert,
     id: addUserRecords(state),
     XHRStatus: fetchingStatus(state),
-    possibleRoles: possibleRoles(state),
+    possibleRolesList: selectPossibleRolesList(state),
     disableEditBtn: checkEditDisable(state),
     details: selectDetailRecords(state),
     permissionsList: permissionsList(state),
@@ -46,6 +55,9 @@ function mapStateToProps(state) {
     disableResendEmailButton: disableResendEmailButton(state),
     officesList: officesList(state),
     isRolesDisabled: disableRolesDropDown(state),
+    disableActionBtn: state.fetchDetails.disableActionBtn,
+    startDate: selectStartDate(state),
+    assignedPermissions: selectAssignedPermissions(state),
   };
 }
 

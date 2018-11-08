@@ -13,12 +13,6 @@ export const officesListToOptions = items =>
     label: office_name,
   }));
 
-export const permissionListToOptions = items =>
-  items.map(({ name, description }) => ({ value: name, label: description }));
-
-export const roleListToOptions = items =>
-  items.map(({ id, name }) => ({ value: id, label: name }));
-
 export const toFullName = ({ first_name, last_name }) =>
   `${last_name}, ${first_name}`;
 
@@ -54,17 +48,4 @@ export const getOfficeTranslator = officesList => {
     officeMap[office.office_id] = office;
   });
   return user => translateOfficeMap(user, officeMap);
-};
-
-export const possibleRolesOptions = (possibleRoles, rolesList) => {
-  let options = [];
-  rolesList.forEach(role => {
-    possibleRoles.forEach(item => {
-      if (item === role.id) {
-        options.push({ value: role.id, label: role.name });
-      }
-    });
-  });
-
-  return options;
 };

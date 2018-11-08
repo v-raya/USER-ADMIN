@@ -8,7 +8,7 @@ import {
 import { selectNewUserRecords } from '../selectors/validateNewUserSelector';
 import { addUserRecords } from '../selectors/addUserSelector';
 import { bindActionCreators } from 'redux';
-import { permissionsList } from '../selectors/detailSelector';
+import { permissionsList } from '../selectors/permissionsListSelector';
 import { fetchPermissionsActions } from '../actions/permissionsActions';
 import { officesList } from '../selectors/userListSelector';
 

@@ -300,6 +300,7 @@ UserList.propTypes = {
         PropTypes.string,
         PropTypes.number,
         PropTypes.bool,
+        PropTypes.array,
       ]),
     })
   ),

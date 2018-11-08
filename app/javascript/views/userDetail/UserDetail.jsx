@@ -12,20 +12,12 @@ export default class UserDetail extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      alert: false,
-      disableActionBtn: true,
-      details: props.details,
       resendEmailAlert: false,
-      disableEditBtn: props.disableEditBtn,
-      XHRStatus: props.XHRStatus,
-      addedUserID: props.id,
     };
   }
 
   componentDidMount() {
-    this.props.actions.fetchDetailsActions(
-      this.getUserId(this.currentPathname())
-    );
+    this.props.actions.fetchDetailsActions(this.props.match.params.id);
     this.props.actions.fetchPermissionsActions();
     this.props.actions.fetchRolesActions();
   }
@@ -34,75 +26,35 @@ export default class UserDetail extends Component {
     this.props.actions.clearDetails();
   }
 
-  currentPathname() {
-    return window.location.pathname;
-  }
-
-  getUserId(pathname) {
-    const pathArray = pathname.split('/');
-    const id = pathArray[pathArray.length - 1];
-    return id;
-  }
-
-  UNSAFE_componentWillReceiveProps(nextProps) {
-    const details = nextProps.details;
-    const XHRStatus = nextProps.XHRStatus;
-    this.setState({ details, XHRStatus });
-  }
-
-  handleDropDownChange = name => ({ value }) => {
-    name === 'roles'
-      ? this.props.actions.handleDropdownChangeAction(name, [value])
-      : this.props.actions.handleDropdownChangeAction(name, value);
+  onSaveDetails = () => {
+    const { details, isRolesDisabled, match, actions } = this.props;
+    actions.saveUserDetailsActions(match.params.id, details, isRolesDisabled);
     this.setState({
-      disableActionBtn: false,
-    });
-  };
-
-  handleOnPermissionChange = value => {
-    this.props.actions.handleDropdownChangeAction('permissions', value);
-    this.setState({
-      disableActionBtn: false,
+      resendEmailAlert: false,
     });
   };
 
   onResendInvite = () => {
-    this.props.actions.resendRegistrationEmailActions(this.state.details.email);
-    this.setState({ resendEmailAlert: true, alert: false });
-  };
-
-  onSaveDetails = () => {
-    const id = this.getUserId(this.currentPathname());
-    const { details } = this.state;
-    const { isRolesDisabled } = this.props;
-    this.props.actions.saveUserDetailsActions(id, details, isRolesDisabled);
-    this.setState({
-      alert: true,
-      resendEmailAlert: false,
-      addedUserID: undefined,
-    });
+    this.props.actions.resendRegistrationEmailActions(this.props.details.email);
+    this.setState({ resendEmailAlert: true });
   };
 
   onEditClick = () => {
     this.props.actions.handleEditButtonChangeAction(true);
-    this.setState({
-      alert: false,
-      disableActionBtn: true,
-      addedUserID: undefined,
-    });
   };
 
   onCancel = () => {
     this.props.actions.handleEditButtonChangeAction(false);
-    this.setState({ alert: false, resendEmailAlert: false });
-    this.props.actions.fetchDetailsActions(
-      this.getUserId(this.currentPathname())
-    );
     this.props.actions.clearAddedUserDetailActions();
+    this.setState({ resendEmailAlert: false });
   };
 
-  showAlert = (alert, userDetailError) => {
-    if (alert) {
+  handleDropDownChange = (name, value) => {
+    this.props.actions.handleDropdownChangeAction(name, value);
+  };
+
+  showAlert = (displayAlert, userDetailError) => {
+    if (displayAlert) {
       if (userDetailError) {
         return <ErrorMessage error={userDetailError} />;
       } else {
@@ -120,7 +72,7 @@ export default class UserDetail extends Component {
   };
 
   showAddAlert = () => {
-    if (this.state.addedUserID) {
+    if (this.props.id) {
       return (
         <Alert
           alertClassName="success"
@@ -128,7 +80,7 @@ export default class UserDetail extends Component {
           alertCross={false}
         >
           {`Successfully added new user. Registration email has been sent to ${
-            this.state.details.email
+            this.props.details.email
           } `}
         </Alert>
       );
@@ -151,41 +103,63 @@ export default class UserDetail extends Component {
     }
   };
 
-  renderCards = permissionsList => {
-    return this.state.XHRStatus !== 'ready' ? (
+  renderCards = (
+    permissionsList,
+    XHRStatus,
+    details,
+    disableResendEmailButton,
+    officesList,
+    rolesList,
+    possibleRolesList,
+    isRolesDisabled,
+    disableActionBtn,
+    disableEditBtn,
+    accountStatus,
+    assignedPermissions,
+    startDate,
+    userStatusDescription,
+    userStatus
+  ) => {
+    return XHRStatus !== 'ready' ? (
       <Cards>
         <span>{'Loading...'}</span>
       </Cards>
     ) : (
       <div>
-        {this.state.details && this.state.details.id ? (
+        {details && details.id ? (
           <div>
             {this.props.isEdit ? (
               <UserDetailEdit
-                details={this.state.details}
-                selectedPermissions={this.state.details.permissions}
+                details={details}
+                selectedPermissions={details.permissions}
                 onCancel={this.onCancel}
                 onSave={this.onSaveDetails}
-                onStatusChange={this.handleDropDownChange('enabled')}
-                onPermissionChange={this.handleOnPermissionChange}
-                onRoleChange={this.handleDropDownChange('roles')}
-                disableActionBtn={this.state.disableActionBtn}
+                onDropDownChange={this.handleDropDownChange}
+                disableActionBtn={disableActionBtn}
                 permissionsList={permissionsList}
                 onResendInvite={this.onResendInvite}
-                disableResendEmailButton={this.props.disableResendEmailButton}
-                officesList={this.props.officesList}
-                rolesList={this.props.rolesList}
-                possibleRoles={this.props.possibleRoles}
-                isRolesDisabled={this.props.isRolesDisabled}
+                disableResendEmailButton={disableResendEmailButton}
+                officesList={officesList}
+                rolesList={rolesList}
+                possibleRolesList={possibleRolesList}
+                isRolesDisabled={isRolesDisabled}
+                startDate={startDate}
+                userStatusDescription={userStatusDescription}
+                userStatus={userStatus}
               />
             ) : (
               <UserDetailShow
-                details={this.state.details}
+                details={details}
                 onEdit={this.onEditClick}
                 permissionsList={permissionsList}
-                disableEditBtn={this.props.disableEditBtn}
-                officesList={this.props.officesList}
-                rolesList={this.props.rolesList}
+                disableEditBtn={disableEditBtn}
+                officesList={officesList}
+                rolesList={rolesList}
+                startDate={startDate}
+                accountStatus={accountStatus}
+                assignedPermissions={assignedPermissions}
+                userStatus={userStatus}
+                userStatusDescription={userStatusDescription}
               />
             )}
           </div>
@@ -209,9 +183,23 @@ export default class UserDetail extends Component {
       dashboardUrl,
       dashboardClickHandler,
       permissionsList,
+      XHRStatus,
+      details,
+      disableResendEmailButton,
+      officesList,
+      rolesList,
+      possibleRolesList,
+      isRolesDisabled,
       userDetailError,
+      displayAlert,
+      disableActionBtn,
+      disableEditBtn,
+      accountStatus,
+      assignedPermissions,
+      startDate,
+      userStatusDescription,
+      userStatus,
     } = this.props;
-    const { alert } = this.state;
     return (
       <div>
         <PageHeader pageTitle="User Profile" button="" />
@@ -225,11 +213,27 @@ export default class UserDetail extends Component {
             />
             &nbsp;&gt;&nbsp;
             <Link to="/">User List</Link>
-            {this.showAlert(alert, userDetailError)}
+            {this.showAlert(displayAlert, userDetailError)}
             {this.emailSent()}
             {this.showAddAlert()}
           </div>
-          {this.renderCards(permissionsList)}
+          {this.renderCards(
+            permissionsList,
+            XHRStatus,
+            details,
+            disableResendEmailButton,
+            officesList,
+            rolesList,
+            possibleRolesList,
+            isRolesDisabled,
+            disableActionBtn,
+            disableEditBtn,
+            accountStatus,
+            assignedPermissions,
+            startDate,
+            userStatusDescription,
+            userStatus
+          )}
         </div>
       </div>
     );
@@ -239,6 +243,7 @@ export default class UserDetail extends Component {
 UserDetail.propTypes = {
   isEdit: PropTypes.bool,
   details: PropTypes.object,
+  assignedPermissions: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
   id: PropTypes.string,
   dashboardUrl: PropTypes.string,
   dashboardClickHandler: PropTypes.func,
@@ -247,13 +252,18 @@ UserDetail.propTypes = {
   userDetailError: PropTypes.object,
   resendEmailStatus: PropTypes.string,
   disableResendEmailButton: PropTypes.bool,
+  possibleRoles: PropTypes.array,
   disableEditBtn: PropTypes.bool,
   XHRStatus: PropTypes.string,
-  possibleRoles: PropTypes.array,
+  possibleRolesList: PropTypes.array,
+  accountStatus: PropTypes.string,
+  startDate: PropTypes.string,
+  userStatusDescription: PropTypes.string,
+  userStatus: PropTypes.string,
   rolesList: PropTypes.arrayOf(
     PropTypes.shape({
-      id: PropTypes.string.isRequired,
-      name: PropTypes.string.isRequired,
+      id: PropTypes.string,
+      name: PropTypes.string,
     })
   ),
   officesList: PropTypes.arrayOf(
@@ -263,6 +273,9 @@ UserDetail.propTypes = {
     })
   ),
   isRolesDisabled: PropTypes.bool,
+  displayAlert: PropTypes.bool,
+  disableActionBtn: PropTypes.bool,
+  match: PropTypes.object,
 };
 
 UserDetail.defaultProps = {

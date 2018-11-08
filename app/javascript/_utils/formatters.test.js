@@ -1,10 +1,9 @@
 import {
   formatPhoneNumberWithExt,
-  formatDate,
-  formatSelectedPermissions,
   formatPhoneNumber,
   checkDate,
   formatSelectedRoles,
+  formatDate,
 } from './formatters';
 
 describe('#formatPhoneNumberWithExt', () => {
@@ -98,39 +97,63 @@ describe('#checkDate', () => {
     expect(checkDate(details.last_login_date)).toEqual('');
   });
 
-  it('formats the date as required', () => {
+  it('formats the date, time to 12hr format when time is given in 24hr format', () => {
     const details = {
-      last_login_date: '2001-09-01 08:23:18',
+      last_login_date: '2001-09-01 21:23:18',
     };
-    expect(checkDate(details.last_login_date)).toEqual('09/01/2001 08:23:18');
-  });
-});
-
-describe('#formatSelectedPermissions', () => {
-  it('return a concatenated comma-delimmited string ', () => {
-    const list = [
-      { name: 'foo', description: 'FOO_DESC' },
-      { name: 'bar', description: 'BAR_DESC' },
-      { name: 'quo', description: 'QUO_DESC' },
-      { name: 'qux', description: 'QUX_DESC' },
-    ];
-    expect(formatSelectedPermissions(['foo', 'bar'], list)).toEqual(
-      'FOO_DESC, BAR_DESC'
+    expect(checkDate(details.last_login_date)).toEqual(
+      'September 1, 2001 09:23 PM'
     );
-    expect(formatSelectedPermissions('', list)).toEqual('');
-    expect(formatSelectedPermissions(['qux'], list)).toEqual('QUX_DESC');
-    expect(formatSelectedPermissions([], list)).toEqual(false);
-    expect(formatSelectedPermissions([''], list)).toEqual('');
-    expect(formatSelectedPermissions(['qux'], [])).toEqual('');
+  });
+
+  it('formats the date & time to 12hr format and 0 infront of hrs when hrs > 12', () => {
+    const details = {
+      last_login_date: '2001-09-01 20:23:18',
+    };
+    expect(checkDate(details.last_login_date)).toEqual(
+      'September 1, 2001 08:23 PM'
+    );
+  });
+
+  it('returns empty when date is null', () => {
+    const details = {
+      last_login_date: null,
+    };
+    expect(checkDate(details.last_login_date)).toEqual('');
+  });
+
+  it('returns empty when date is undefined', () => {
+    const details = {
+      last_login_date: undefined,
+    };
+    expect(checkDate(details.last_login_date)).toEqual('');
+  });
+
+  it('returns 1st as date when date is passed with year and month', () => {
+    const details = {
+      last_login_date: '2013-03 08:23:18',
+    };
+    expect(checkDate(details.last_login_date)).toEqual(
+      'March 1, 2013 08:23 AM'
+    );
+  });
+
+  it('formats the date & time to 12hr format when time is in 24hr format & hours is equal to 12', () => {
+    const details = {
+      last_login_date: '2001-09-01 12:23:18',
+    };
+    expect(checkDate(details.last_login_date)).toEqual(
+      'September 1, 2001 12:23 PM'
+    );
   });
 });
 
 describe('#formatSelectedRoles', () => {
   const list = [
-    { id: 'foo', name: 'FOO_DESC' },
-    { id: 'bar', name: 'BAR_DESC' },
-    { id: 'quo', name: 'QUO_DESC' },
-    { id: 'qux', name: 'QUX_DESC' },
+    { value: 'foo', label: 'FOO_DESC' },
+    { value: 'bar', label: 'BAR_DESC' },
+    { value: 'quo', label: 'QUO_DESC' },
+    { value: 'qux', label: 'QUX_DESC' },
   ];
   it('return first index of the array ', () => {
     expect(formatSelectedRoles(['foo', 'bar'], list)).toEqual('FOO_DESC');

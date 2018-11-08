@@ -5,26 +5,23 @@ import ShowField from '../../common/ShowField';
 import { translateOffice } from '../../_constants/constants';
 import {
   formatPhoneNumberWithExt,
-  formatDate,
-  formatSelectedPermissions,
   checkDate,
   formatSelectedRoles,
 } from '../../_utils/formatters';
-import {
-  userStatusDescriptionTranslator,
-  userStatusTranslator,
-  accountStatus,
-} from '../../_utils/codeToTextTranslator';
 
 /* eslint camelcase: 0 */
 
 const UserDetailShow = ({
   details,
   onEdit,
-  permissionsList,
+  startDate,
   disableEditBtn,
   officesList,
   rolesList,
+  accountStatus,
+  userStatus,
+  userStatusDescription,
+  assignedPermissions,
 }) => (
   <div className="row">
     <div className="col-md-12">
@@ -65,9 +62,7 @@ const UserDetailShow = ({
               </ShowField>
             </div>
             <div className="col-md-2">
-              <ShowField label="Start Date">
-                {formatDate(details.start_date)}
-              </ShowField>
+              <ShowField label="Start Date">{startDate}</ShowField>
             </div>
             <div className="col-md-4">
               <ShowField label="Last Login">
@@ -80,25 +75,29 @@ const UserDetailShow = ({
           <div className="row">
             <div className="col-md-3">
               <ShowField label="User Status">
-                {userStatusTranslator(details.status)}
+                {userStatus}
                 <div>
                   <div className="value-text-color">
-                    {userStatusDescriptionTranslator(details.status)}
+                    {userStatusDescription}
+                    {details.status === 'FORCE_CHANGE_PASSWORD' && (
+                      <div className="resend-email-text">
+                        {`Registration email resent:`}
+                        <br />
+                        {checkDate(
+                          details.last_registration_resubmit_date_time
+                        )}
+                      </div>
+                    )}
                   </div>
                 </div>
               </ShowField>
             </div>
             <div className="col-md-3">
-              <ShowField label="Account Status">
-                {accountStatus(details.enabled)}
-              </ShowField>
+              <ShowField label="Account Status">{accountStatus}</ShowField>
             </div>
             <div className="col-md-6">
               <ShowField label="Assigned Permissions">
-                {formatSelectedPermissions(
-                  details.permissions,
-                  permissionsList
-                )}
+                {assignedPermissions}
               </ShowField>
             </div>
           </div>
@@ -110,30 +109,26 @@ const UserDetailShow = ({
 
 UserDetailShow.propTypes = {
   details: PropTypes.object,
+  userStatus: PropTypes.string,
+  userStatusDescription: PropTypes.string,
+  accountStatus: PropTypes.string,
+  assignedPermissions: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
   onEdit: PropTypes.func,
+  startDate: PropTypes.string,
   rolesList: PropTypes.arrayOf(
     PropTypes.shape({
-      id: PropTypes.string.isRequired,
-      name: PropTypes.string.isRequired,
-    })
-  ),
-  permissionsList: PropTypes.arrayOf(
-    PropTypes.shape({
-      description: PropTypes.string.isRequired,
-      name: PropTypes.string.isRequired,
+      id: PropTypes.string,
+      name: PropTypes.string,
     })
   ),
   disableEditBtn: PropTypes.bool,
+
   officesList: PropTypes.arrayOf(
     PropTypes.shape({
       office_name: PropTypes.string.isRequired,
       office_id: PropTypes.string.isRequired,
     })
   ),
-};
-
-UserDetailShow.defaultProps = {
-  permissionsList: [],
 };
 
 export default UserDetailShow;

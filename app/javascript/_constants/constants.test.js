@@ -1,50 +1,13 @@
 import {
-  permissionListToOptions,
   officesListToOptions,
-  roleListToOptions,
   toFullName,
   userStatusFormat,
   lastLoginDate,
   translateOffice,
   getOfficeTranslator,
-  possibleRolesOptions,
 } from './constants';
 
 describe('helpers', () => {
-  describe('#permissionListToOptions', () => {
-    it('renders a permissions list', () => {
-      const items = [
-        {
-          name: 'permission1',
-          description: 'permission1',
-        },
-      ];
-      expect(permissionListToOptions(items)).toEqual([
-        {
-          value: 'permission1',
-          label: 'permission1',
-        },
-      ]);
-    });
-  });
-
-  describe('#roleListToOptions', () => {
-    it('renders a role list', () => {
-      const items = [
-        {
-          id: 'role1',
-          name: 'Role One',
-        },
-      ];
-      expect(roleListToOptions(items)).toEqual([
-        {
-          value: 'role1',
-          label: 'Role One',
-        },
-      ]);
-    });
-  });
-
   describe('#officesListToOptions', () => {
     it('renders a offices list', () => {
       const items = [
@@ -81,10 +44,10 @@ describe('helpers', () => {
   });
 
   describe('#lastLoginDate', () => {
-    it('renders date in MM/DD/YYYY format', () => {
+    it('renders date & time in required format', () => {
       expect(
         lastLoginDate({ last_login_date_time: '2013-03-05 08:23:18' })
-      ).toEqual('03/05/2013 08:23:18');
+      ).toEqual('March 5, 2013 08:23 AM');
     });
 
     it('renders empty when date does not exists', () => {
@@ -109,23 +72,6 @@ describe('helpers', () => {
 
     it('renders a safe message if no office was assigned', () => {
       expect(translateOffice({ first_name: 'Someone' }, offices)).toEqual('');
-    });
-  });
-
-  describe('#possibleRolesOptions', () => {
-    const rolesList = [
-      { id: 'role1', name: 'roleOne' },
-      { id: 'role2', name: 'roleTwo' },
-    ];
-    const possibleRoles = ['role1', 'role2'];
-    const expectedValue = [
-      { label: 'roleOne', value: 'role1' },
-      { label: 'roleTwo', value: 'role2' },
-    ];
-    it('renders the name of a role given possibleRoles with role_id', () => {
-      expect(possibleRolesOptions(possibleRoles, rolesList)).toEqual(
-        expectedValue
-      );
     });
   });
 

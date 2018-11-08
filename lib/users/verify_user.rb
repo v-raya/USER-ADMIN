@@ -13,6 +13,6 @@ module Users
     attribute :error_code, Types::String.optional
     attribute :verification_passed, Types::Bool.optional
     attribute :verification_message, Types::String.optional
-    attribute :user, UserData
+    attribute :user, UserDetails
   end
 end

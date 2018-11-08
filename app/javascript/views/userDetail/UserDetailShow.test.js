@@ -9,6 +9,7 @@ describe('UserDetailShow', () => {
     last_name: 'Lastname0',
     middle_name: 'Middlename0',
     county_name: 'MyCounty',
+    status: 'FORCE_CHANGE_PASSWORD',
   };
 
   const userDetailObject = {

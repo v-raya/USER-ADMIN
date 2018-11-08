@@ -4,48 +4,34 @@ import Cards from '../../common/Card';
 import ShowField from '../../common/ShowField';
 import { Button } from 'react-wood-duck';
 import DropDown from '../../common/DropDown';
-import {
-  STATUS,
-  permissionListToOptions,
-  translateOffice,
-  possibleRolesOptions,
-} from '../../_constants/constants';
-import {
-  formatPhoneNumberWithExt,
-  formatDate,
-  checkDate,
-} from '../../_utils/formatters';
-import {
-  userStatusDescriptionTranslator,
-  userStatusTranslator,
-} from '../../_utils/codeToTextTranslator';
+import { STATUS, translateOffice } from '../../_constants/constants';
+import { checkDate, formatPhoneNumberWithExt } from '../../_utils/formatters';
 
 /* eslint camelcase: 0 */
 
 const UserDetailEdit = ({
   disableResendEmailButton,
   details,
-  selectedPermissions,
   onCancel,
   onSave,
   disableActionBtn,
-  onStatusChange,
-  onPermissionChange,
-  onRoleChange,
   permissionsList,
   onResendInvite,
   officesList,
-  possibleRoles,
-  rolesList,
+  possibleRolesList,
   isRolesDisabled,
+  onDropDownChange,
+  startDate,
+  userStatus,
+  userStatusDescription,
 }) => (
   <div className="row">
     <div className="col-md-12">
       <Cards
         cardHeaderText={`County: ${details.county_name}`}
-        cardActionButtons={true}
-        cardActionButton1={true}
-        cardActionButton2={true}
+        cardActionButtons
+        cardActionButton1
+        cardActionButton2
         handleOnClickButton1={onCancel}
         handleOnClickButton2={onSave}
         disableActionBtn={disableActionBtn}
@@ -74,8 +60,8 @@ const UserDetailEdit = ({
                 selectedOption={details.roles.toString()}
                 id="RolesDropDown"
                 label="Role"
-                onChange={onRoleChange}
-                options={possibleRolesOptions(possibleRoles, rolesList)}
+                onChange={event => onDropDownChange('roles', [event.value])}
+                options={possibleRolesList}
                 disabled={isRolesDisabled}
               />
             </div>
@@ -90,9 +76,7 @@ const UserDetailEdit = ({
               </ShowField>
             </div>
             <div className="col-md-2">
-              <ShowField label="Start Date">
-                {formatDate(details.start_date)}
-              </ShowField>
+              <ShowField label="Start Date">{startDate}</ShowField>
             </div>
             <div className="col-md-4">
               <ShowField label="Last Login">
@@ -105,11 +89,18 @@ const UserDetailEdit = ({
             <div>
               <div className="col-md-3">
                 <ShowField label="User Status">
-                  {userStatusTranslator(details.status)}
+                  {userStatus}
                   <div className="value-text-color">
-                    {userStatusDescriptionTranslator(details.status)}
+                    {userStatusDescription}
                     {details.status === 'FORCE_CHANGE_PASSWORD' && (
                       <div className="resend-email-btn">
+                        <div className="resend-email-text">
+                          {`Registration email resent:`}
+                          <br />
+                          {checkDate(
+                            details.last_registration_resubmit_date_time
+                          )}
+                        </div>
                         <Button
                           btnClassName="primary"
                           btnName="Resend Invite"
@@ -129,20 +120,20 @@ const UserDetailEdit = ({
                   selectedOption={details.enabled}
                   options={STATUS}
                   label="Account Status"
-                  onChange={onStatusChange}
+                  onChange={event => onDropDownChange('enabled', event.value)}
                 />
               </div>
               <div className="col-md-6">
                 <DropDown
                   id="AssignPermissions"
                   selectedOption={details.permissions}
-                  options={permissionListToOptions(permissionsList)}
+                  options={permissionsList}
                   label="Assigned Permissions"
                   onChange={selectedOptions =>
-                    onPermissionChange(selectedOptions.split(','))
+                    onDropDownChange('permissions', selectedOptions.split(','))
                   }
-                  multiSelect={true}
-                  simpleValue={true}
+                  multiSelect
+                  simpleValue
                 />
               </div>
             </div>
@@ -155,17 +146,20 @@ const UserDetailEdit = ({
 
 UserDetailEdit.propTypes = {
   details: PropTypes.object,
-  selectedPermissions: PropTypes.array,
   onCancel: PropTypes.func,
+  startDate: PropTypes.string,
   onSave: PropTypes.func,
   disableActionBtn: PropTypes.bool,
+  onDropDownChange: PropTypes.func,
   onStatusChange: PropTypes.func,
   onRoleChange: PropTypes.func,
   onPermissionChange: PropTypes.func,
+  userStatusDescription: PropTypes.string,
+  userStatus: PropTypes.string,
   permissionsList: PropTypes.array,
   onResendInvite: PropTypes.func,
   disableResendEmailButton: PropTypes.bool,
-  possibleRoles: PropTypes.array,
+  possibleRolesList: PropTypes.array,
   officesList: PropTypes.arrayOf(
     PropTypes.shape({
       office_name: PropTypes.string.isRequired,
@@ -174,15 +168,14 @@ UserDetailEdit.propTypes = {
   ),
   rolesList: PropTypes.arrayOf(
     PropTypes.shape({
-      id: PropTypes.string.isRequired,
-      name: PropTypes.string.isRequired,
+      id: PropTypes.string,
+      name: PropTypes.string,
     })
   ),
   isRolesDisabled: PropTypes.bool,
 };
 
 UserDetailEdit.defaultProps = {
-  selectedPermissions: [],
   permissionsList: [],
 };
 
