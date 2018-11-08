@@ -110,7 +110,7 @@ export default class UserDetail extends Component {
     disableResendEmailButton,
     officesList,
     rolesList,
-    possibleRoles,
+    possibleRolesList,
     isRolesDisabled,
     disableActionBtn,
     disableEditBtn,
@@ -141,7 +141,7 @@ export default class UserDetail extends Component {
                 disableResendEmailButton={disableResendEmailButton}
                 officesList={officesList}
                 rolesList={rolesList}
-                possibleRoles={possibleRoles}
+                possibleRolesList={possibleRolesList}
                 isRolesDisabled={isRolesDisabled}
                 startDate={startDate}
                 userStatusDescription={userStatusDescription}
@@ -188,7 +188,7 @@ export default class UserDetail extends Component {
       disableResendEmailButton,
       officesList,
       rolesList,
-      possibleRoles,
+      possibleRolesList,
       isRolesDisabled,
       userDetailError,
       displayAlert,
@@ -224,7 +224,7 @@ export default class UserDetail extends Component {
             disableResendEmailButton,
             officesList,
             rolesList,
-            possibleRoles,
+            possibleRolesList,
             isRolesDisabled,
             disableActionBtn,
             disableEditBtn,
