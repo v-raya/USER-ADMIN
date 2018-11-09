@@ -89,18 +89,24 @@ const UserDetailEdit = ({
                   <div className="value-text-color">
                     {userStatusDescription}
                     {details.status === 'FORCE_CHANGE_PASSWORD' && (
-                      <div className="resend-email-btn">
-                        <div className="resend-email-text">
-                          {`Registration email resent:`}
-                          <br />
-                          {checkDate(details.last_registration_resubmit_date_time)}
+                      <div>
+                        <div>
+                          {details.last_registration_resubmit_date_time && (
+                            <div className="resend-email-text">
+                              {`Registration email resent:`}
+                              <br />
+                              {checkDate(details.last_registration_resubmit_date_time)}
+                            </div>
+                          )}
                         </div>
-                        <Button
-                          btnClassName="primary"
-                          btnName="Resend Invite"
-                          onClick={onResendInvite}
-                          disabled={disableResendEmailButton}
-                        />
+                        <div className="resend-email-btn">
+                          <Button
+                            btnClassName="primary"
+                            btnName="Resend Invite"
+                            onClick={onResendInvite}
+                            disabled={disableResendEmailButton}
+                          />
+                        </div>
                       </div>
                     )}
                   </div>

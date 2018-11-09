@@ -10,6 +10,7 @@ describe('UserDetailShow', () => {
     middle_name: 'Middlename0',
     county_name: 'MyCounty',
     status: 'FORCE_CHANGE_PASSWORD',
+    last_registration_resubmit_date_time: '2012-09-22 11:22:33',
   }
 
   const userDetailObject = {
@@ -93,6 +94,30 @@ describe('UserDetailShow', () => {
           .at(10)
           .props().label
       ).toEqual('Assigned Permissions')
+      expect(
+        wrapper
+          .find('div')
+          .at(17)
+          .text()
+      ).toEqual('Registration email resent:September 22, 2012 11:22 AM')
+    })
+
+    it('returns empty text when value for last_registration_resubmit_date_time is null', () => {
+      const details = {
+        id: 'id',
+        first_name: 'Firstname0',
+        last_name: 'Lastname0',
+        middle_name: 'Middlename0',
+        county_name: 'MyCounty',
+        status: 'FORCE_CHANGE_PASSWORD',
+      }
+      wrapper = shallow(<UserDetailShow details={details} />)
+      expect(
+        wrapper
+          .find('div')
+          .at(16)
+          .text()
+      ).toEqual('')
     })
 
     it('renders the <ShowField/> props.children at label:fullName', () => {

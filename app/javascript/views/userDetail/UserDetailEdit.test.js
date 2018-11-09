@@ -14,6 +14,7 @@ describe('UserDetailEdit', () => {
     racfid: 'my RACFID',
     roles: ['ROLE1', 'ROLE2'],
     status: 'FORCE_CHANGE_PASSWORD',
+    last_registration_resubmit_date_time: '2012-09-22 11:22:33',
   }
 
   const possibleRolesOptions = () => {}
@@ -91,6 +92,35 @@ describe('UserDetailEdit', () => {
       ).toEqual('User Status')
       expect(wrapper.find('[label="Account Status"]').exists()).toBe(true)
       expect(wrapper.find('[label="Assigned Permissions"]').exists()).toBe(true)
+      expect(
+        wrapper
+          .find('div')
+          .at(19)
+          .text()
+      ).toEqual('Registration email resent:September 22, 2012 11:22 AM')
+    })
+
+    it('returns empty text when value for last_registration_resubmit_date_time is null', () => {
+      const details = {
+        id: 'id',
+        first_name: 'Firstname0',
+        last_name: 'Lastname0',
+        middle_name: 'Middlename0',
+        office: 'officeNames',
+        county_name: 'MyCounty',
+        permissions: ['x', 'y'],
+        racfid: 'my RACFID',
+        roles: ['ROLE1', 'ROLE2'],
+        status: 'FORCE_CHANGE_PASSWORD',
+        last_registration_resubmit_date_time: null,
+      }
+      wrapper = shallow(<UserDetailEdit details={details} />)
+      expect(
+        wrapper
+          .find('div')
+          .at(18)
+          .text()
+      ).toEqual('')
     })
 
     it('renders the <ShowField/> children at label:fullName', () => {
