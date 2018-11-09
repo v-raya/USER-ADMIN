@@ -1,15 +1,15 @@
-import React, { Component } from 'react';
-import { Link, Redirect } from 'react-router-dom';
-import PropTypes from 'prop-types';
-import { Link as LinkRWD, PageHeader } from 'react-wood-duck';
-import AddVerifiedUser from './AddVerifiedUser';
-import VerifyUser from './VerifyUser';
-import ErrorMessage from '../../common/ErrorMessage';
+import React, { Component } from 'react'
+import { Link, Redirect } from 'react-router-dom'
+import PropTypes from 'prop-types'
+import { Link as LinkRWD, PageHeader } from 'react-wood-duck'
+import AddVerifiedUser from './AddVerifiedUser'
+import VerifyUser from './VerifyUser'
+import ErrorMessage from '../../common/ErrorMessage'
 
 /* eslint camelcase: 0 */
 export default class AddUser extends Component {
   constructor(props) {
-    super(props);
+    super(props)
     this.state = {
       verify: false,
       racfid: '',
@@ -23,53 +23,45 @@ export default class AddUser extends Component {
       errorMessage: {
         emailError: '',
       },
-    };
+    }
   }
 
   UNSAFE_componentWillReceiveProps(nextProps) {
-    let verifyNewUserDetails = nextProps.verifyNewUserDetails;
-    this.setState({ verifyNewUserDetails });
+    const verifyNewUserDetails = nextProps.verifyNewUserDetails
+    this.setState({ verifyNewUserDetails })
   }
 
   handleEmail = event => {
-    this.setState({ email: event.target.value });
-    this.validateField(event.target.value);
-    if (
-      event.target.value !== '' &&
-      this.state.racfid !== '' &&
-      this.state.errorMessage.emailError === ''
-    ) {
-      this.setState({ disableActionBtn: false });
+    this.setState({ email: event.target.value })
+    this.validateField(event.target.value)
+    if (event.target.value !== '' && this.state.racfid !== '' && this.state.errorMessage.emailError === '') {
+      this.setState({ disableActionBtn: false })
     } else {
-      this.setState({ disableActionBtn: true });
+      this.setState({ disableActionBtn: true })
     }
-  };
+  }
 
   validateField = value => {
-    let errorMessage = this.state.errorMessage;
-    const emailValueValid = /^[a-zA-Z0-9_!#$%&’*+/=?`'{^.-]*@(?:[A-Z0-9-]+\.)+[A-Z]{2,6}$/i.test(
-      value
-    );
-    emailValueValid
-      ? (errorMessage.emailError = '')
-      : (errorMessage.emailError = 'Please enter a valid email.');
-  };
+    const errorMessage = this.state.errorMessage
+    const emailValueValid = /^[a-zA-Z0-9_!#$%&’*+/=?`'{^.-]*@(?:[A-Z0-9-]+\.)+[A-Z]{2,6}$/i.test(value)
+    emailValueValid ? (errorMessage.emailError = '') : (errorMessage.emailError = 'Please enter a valid email.')
+  }
 
   handleRacfid = event => {
-    this.setState({ racfid: event.target.value });
+    this.setState({ racfid: event.target.value })
     if (event.target.value !== '' && this.state.email !== '') {
-      this.setState({ disableActionBtn: false });
+      this.setState({ disableActionBtn: false })
     } else {
-      this.setState({ disableActionBtn: true });
+      this.setState({ disableActionBtn: true })
     }
-  };
+  }
 
   onVerify = () => {
-    const { email, racfid } = this.state;
-    this.props.actions.fetchPermissionsActions();
-    this.props.actions.validateNewUserActions(email, racfid);
-    this.setState({ verify: true });
-  };
+    const { email, racfid } = this.state
+    this.props.actions.fetchPermissionsActions()
+    this.props.actions.validateNewUserActions(email, racfid)
+    this.setState({ verify: true })
+  }
 
   verifyUser = () => {
     if (this.state.addUser) {
@@ -82,14 +74,15 @@ export default class AddUser extends Component {
           valid={this.state.valid}
           errorMessage={this.state.errorMessage}
         />
-      );
+      )
     }
-  };
+    return null
+  }
 
   onAddUser = () => {
-    this.props.actions.addUserActions(this.state.verifyNewUserDetails.user);
-    this.setState({ addUser: false, verify: false });
-  };
+    this.props.actions.addUserActions(this.state.verifyNewUserDetails.user)
+    this.setState({ addUser: false, verify: false })
+  }
 
   addUser = () => {
     if (this.state.verify) {
@@ -101,27 +94,19 @@ export default class AddUser extends Component {
           racfid={this.state.racfid}
           officesList={this.props.officesList}
         />
-      );
+      )
     }
-  };
+    return null
+  }
 
   render() {
-    const {
-      dashboardUrl,
-      dashboardClickHandler,
-      validateNewUserError,
-    } = this.props;
+    const { dashboardUrl, dashboardClickHandler, validateNewUserError } = this.props
     return this.state.addUser ? (
       <div>
         <PageHeader pageTitle="Add User" button="" />
         <div className="container">
           <div className="col-md-12">
-            Back to:{' '}
-            <LinkRWD
-              text="Dashboard"
-              href={dashboardUrl}
-              clickHandler={dashboardClickHandler}
-            />
+            Back to: <LinkRWD text="Dashboard" href={dashboardUrl} clickHandler={dashboardClickHandler} />
             &nbsp;&gt;&nbsp;
             <Link to="/">User List</Link>
           </div>
@@ -136,7 +121,7 @@ export default class AddUser extends Component {
       </div>
     ) : (
       ''
-    );
+    )
   }
 }
 
@@ -156,9 +141,9 @@ AddUser.propTypes = {
       office_id: PropTypes.string.isRequired,
     })
   ),
-};
+}
 
 AddUser.defaultProps = {
   dashboardUrl: '/',
   dashboardClickHandler: () => {},
-};
+}

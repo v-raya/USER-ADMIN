@@ -6,13 +6,13 @@ export const getAdminOfficeIDs = account => {
     !isCountyAdmin(account) &&
     account.roles.includes('Office-admin')
   ) {
-    return account.admin_office_ids;
-  } else return [];
-};
+    return account.admin_office_ids
+  } else return []
+}
 const isStateAdmin = account => {
-  return account.roles.includes('State-admin');
-};
+  return account.roles.includes('State-admin')
+}
 
 const isCountyAdmin = account => {
-  return account.roles.includes('County-admin');
-};
+  return account.roles.includes('County-admin')
+}

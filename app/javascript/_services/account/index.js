@@ -1,1 +1,1 @@
-export { default } from './account.service';
+export { default } from './account.service'

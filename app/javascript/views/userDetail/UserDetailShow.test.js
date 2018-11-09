@@ -1,6 +1,6 @@
-import React from 'react';
-import { shallow } from 'enzyme';
-import UserDetailShow from './UserDetailShow';
+import React from 'react'
+import { shallow } from 'enzyme'
+import UserDetailShow from './UserDetailShow'
 
 describe('UserDetailShow', () => {
   const details = {
@@ -10,116 +10,110 @@ describe('UserDetailShow', () => {
     middle_name: 'Middlename0',
     county_name: 'MyCounty',
     status: 'FORCE_CHANGE_PASSWORD',
-  };
+  }
 
   const userDetailObject = {
     editable: true,
     user: {},
-  };
+  }
 
-  let wrapper;
+  let wrapper
   beforeEach(() => {
-    wrapper = shallow(<UserDetailShow details={details} />);
-  });
+    wrapper = shallow(<UserDetailShow details={details} />)
+  })
 
   describe('when label and className props are passed', () => {
     it('renders the label inside the grid wrapper', () => {
-      wrapper = shallow(
-        <UserDetailShow details={details} userDetailObject={userDetailObject} />
-      );
-      expect(wrapper.find('Cards').props().cardHeaderText).toBe(
-        `County: ${details.county_name}`
-      );
-      expect(wrapper.find('ShowField').length).toBe(11);
+      wrapper = shallow(<UserDetailShow details={details} userDetailObject={userDetailObject} />)
+      expect(wrapper.find('Cards').props().cardHeaderText).toBe(`County: ${details.county_name}`)
+      expect(wrapper.find('ShowField').length).toBe(11)
       expect(
         wrapper
           .find('ShowField')
           .at(0)
           .props().label
-      ).toEqual('Full Name');
+      ).toEqual('Full Name')
       expect(
         wrapper
           .find('ShowField')
           .at(1)
           .props().label
-      ).toEqual('Office Name');
+      ).toEqual('Office Name')
       expect(
         wrapper
           .find('ShowField')
           .at(2)
           .props().label
-      ).toEqual('CWS Login');
+      ).toEqual('CWS Login')
       expect(
         wrapper
           .find('ShowField')
           .at(3)
           .props().label
-      ).toEqual('Role');
+      ).toEqual('Role')
       expect(
         wrapper
           .find('ShowField')
           .at(4)
           .props().label
-      ).toEqual('Email');
+      ).toEqual('Email')
       expect(
         wrapper
           .find('ShowField')
           .at(5)
           .props().label
-      ).toEqual('Office Phone Number');
+      ).toEqual('Office Phone Number')
       expect(
         wrapper
           .find('ShowField')
           .at(6)
           .props().label
-      ).toEqual('Start Date');
+      ).toEqual('Start Date')
       expect(
         wrapper
           .find('ShowField')
           .at(7)
           .props().label
-      ).toEqual('Last Login');
+      ).toEqual('Last Login')
       expect(
         wrapper
           .find('ShowField')
           .at(8)
           .props().label
-      ).toEqual('User Status');
+      ).toEqual('User Status')
       expect(
         wrapper
           .find('ShowField')
           .at(9)
           .props().label
-      ).toEqual('Account Status');
+      ).toEqual('Account Status')
       expect(
         wrapper
           .find('ShowField')
           .at(10)
           .props().label
-      ).toEqual('Assigned Permissions');
-    });
+      ).toEqual('Assigned Permissions')
+    })
 
     it('renders the <ShowField/> props.children at label:fullName', () => {
-      let expectedValue = [
+      const expectedValue = [
         `${details.last_name}`,
         `${', '}`,
         `${details.first_name}`,
         `${' '}`,
         `${details.middle_name}`,
-      ];
+      ]
       expect(
         wrapper
           .find('ShowField')
           .at(0)
           .props().children
-      ).toEqual(expectedValue);
-    });
+      ).toEqual(expectedValue)
+    })
 
     it('sets card disabled prop to true based on disableEditBtn', () => {
-      wrapper = shallow(
-        <UserDetailShow details={details} disableEditBtn={true} />
-      );
-      expect(wrapper.find('Cards').props().disabled).toEqual(true);
-    });
-  });
-});
+      wrapper = shallow(<UserDetailShow details={details} disableEditBtn={true} />)
+      expect(wrapper.find('Cards').props().disabled).toEqual(true)
+    })
+  })
+})

@@ -1,5 +1,5 @@
-import { connect } from 'react-redux';
-import UserDetail from '../views/userDetail/UserDetail';
+import { connect } from 'react-redux'
+import UserDetail from '../views/userDetail/UserDetail'
 import {
   selectDetailRecords,
   checkEditDisable,
@@ -11,27 +11,24 @@ import {
   selectAssignedPermissions,
   userStatus,
   userStatusDescription,
-} from '../selectors/detailSelector';
-import { permissionsList } from '../selectors/permissionsListSelector';
-import { rolesList } from '../selectors/rolesListSelector';
+} from '../selectors/detailSelector'
+import { permissionsList } from '../selectors/permissionsListSelector'
+import { rolesList } from '../selectors/rolesListSelector'
 import {
   fetchDetailsActions,
   saveUserDetailsActions,
   clearDetails,
   handleDropdownChangeAction,
   handleEditButtonChangeAction,
-} from '../actions/detailActions';
-import {
-  selectResendEmailStatus,
-  disableResendEmailButton,
-} from '../selectors/resendEmailSelector';
-import { fetchPermissionsActions } from '../actions/permissionsActions';
-import { fetchRolesActions } from '../actions/rolesActions';
-import { resendRegistrationEmailActions } from '../actions/resendRegistrationEmailActions';
-import { bindActionCreators } from 'redux';
-import { officesList } from '../selectors/userListSelector';
-import { addUserRecords } from '../selectors/addUserSelector';
-import { clearAddedUserDetailActions } from '../actions/addUserActions';
+} from '../actions/detailActions'
+import { selectResendEmailStatus, disableResendEmailButton } from '../selectors/resendEmailSelector'
+import { fetchPermissionsActions } from '../actions/permissionsActions'
+import { fetchRolesActions } from '../actions/rolesActions'
+import { resendRegistrationEmailActions } from '../actions/resendRegistrationEmailActions'
+import { bindActionCreators } from 'redux'
+import { officesList } from '../selectors/userListSelector'
+import { addUserRecords } from '../selectors/addUserSelector'
+import { clearAddedUserDetailActions } from '../actions/addUserActions'
 
 function mapStateToProps(state) {
   return {
@@ -47,9 +44,7 @@ function mapStateToProps(state) {
     details: selectDetailRecords(state),
     permissionsList: permissionsList(state),
     rolesList: rolesList(state),
-    userListUrl: process.env.RAILS_RELATIVE_URL_ROOT
-      ? process.env.RAILS_RELATIVE_URL_ROOT
-      : '/',
+    userListUrl: process.env.RAILS_RELATIVE_URL_ROOT ? process.env.RAILS_RELATIVE_URL_ROOT : '/',
     userDetailError: state.fetchDetails.saveDetailsError,
     resendEmailStatus: selectResendEmailStatus(state),
     disableResendEmailButton: disableResendEmailButton(state),
@@ -58,7 +53,7 @@ function mapStateToProps(state) {
     disableActionBtn: state.fetchDetails.disableActionBtn,
     startDate: selectStartDate(state),
     assignedPermissions: selectAssignedPermissions(state),
-  };
+  }
 }
 
 function mapDispatchToProps(dispatch) {
@@ -72,12 +67,12 @@ function mapDispatchToProps(dispatch) {
     clearAddedUserDetailActions,
     handleDropdownChangeAction,
     handleEditButtonChangeAction,
-  };
+  }
   return {
     actions: bindActionCreators(actions, dispatch),
-  };
+  }
 }
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(UserDetail);
+)(UserDetail)

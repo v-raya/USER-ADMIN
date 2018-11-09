@@ -1,12 +1,12 @@
-import React, { Fragment } from 'react';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-import { Provider } from 'react-redux';
-import GlobalHeader from './containers/globalHeaderContainer';
-import { store } from './store/configureStore';
-import UsersList from './containers/usersListContainer';
-import DetailsPage from './containers/detailsContainer';
-import AddUser from './containers/addUserContainer';
-import { makeLogoutUrl } from './_utils/makeLogoutUrl';
+import React, { Fragment } from 'react'
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
+import { Provider } from 'react-redux'
+import GlobalHeader from './containers/globalHeaderContainer'
+import { store } from './store/configureStore'
+import UsersList from './containers/usersListContainer'
+import DetailsPage from './containers/detailsContainer'
+import AddUser from './containers/addUserContainer'
+import { makeLogoutUrl } from './_utils/makeLogoutUrl'
 
 const App = () => (
   <Provider store={store}>
@@ -22,6 +22,6 @@ const App = () => (
       </Router>
     </Fragment>
   </Provider>
-);
+)
 
-export default App;
+export default App

@@ -1,13 +1,9 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import Cards from '../../common/Card';
-import ShowField from '../../common/ShowField';
-import { translateOffice } from '../../_constants/constants';
-import {
-  formatPhoneNumberWithExt,
-  checkDate,
-  formatSelectedRoles,
-} from '../../_utils/formatters';
+import React from 'react'
+import PropTypes from 'prop-types'
+import Cards from '../../common/Card'
+import ShowField from '../../common/ShowField'
+import { translateOffice } from '../../_constants/constants'
+import { formatPhoneNumberWithExt, checkDate, formatSelectedRoles } from '../../_utils/formatters'
 
 /* eslint camelcase: 0 */
 
@@ -39,17 +35,13 @@ const UserDetailShow = ({
               </ShowField>
             </div>
             <div className="col-md-3">
-              <ShowField label="Office Name">
-                {translateOffice(details, officesList)}
-              </ShowField>
+              <ShowField label="Office Name">{translateOffice(details, officesList)}</ShowField>
             </div>
             <div className="col-md-2">
               <ShowField label="CWS Login">{details.racfid}</ShowField>
             </div>
             <div className="col-md-4">
-              <ShowField label="Role">
-                {formatSelectedRoles(details.roles, rolesList)}
-              </ShowField>
+              <ShowField label="Role">{formatSelectedRoles(details.roles, rolesList)}</ShowField>
             </div>
           </div>
           <div className="row">
@@ -65,9 +57,7 @@ const UserDetailShow = ({
               <ShowField label="Start Date">{startDate}</ShowField>
             </div>
             <div className="col-md-4">
-              <ShowField label="Last Login">
-                {checkDate(details.last_login_date_time)}
-              </ShowField>
+              <ShowField label="Last Login">{checkDate(details.last_login_date_time)}</ShowField>
             </div>
           </div>
           <br />
@@ -83,9 +73,7 @@ const UserDetailShow = ({
                       <div className="resend-email-text">
                         {`Registration email resent:`}
                         <br />
-                        {checkDate(
-                          details.last_registration_resubmit_date_time
-                        )}
+                        {checkDate(details.last_registration_resubmit_date_time)}
                       </div>
                     )}
                   </div>
@@ -96,16 +84,14 @@ const UserDetailShow = ({
               <ShowField label="Account Status">{accountStatus}</ShowField>
             </div>
             <div className="col-md-6">
-              <ShowField label="Assigned Permissions">
-                {assignedPermissions}
-              </ShowField>
+              <ShowField label="Assigned Permissions">{assignedPermissions}</ShowField>
             </div>
           </div>
         </div>
       </Cards>
     </div>
   </div>
-);
+)
 
 UserDetailShow.propTypes = {
   details: PropTypes.object,
@@ -129,6 +115,6 @@ UserDetailShow.propTypes = {
       office_id: PropTypes.string.isRequired,
     })
   ),
-};
+}
 
-export default UserDetailShow;
+export default UserDetailShow

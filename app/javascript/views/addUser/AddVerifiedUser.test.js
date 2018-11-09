@@ -1,6 +1,6 @@
-import React from 'react';
-import { shallow } from 'enzyme';
-import AddVerifiedUser from './AddVerifiedUser';
+import React from 'react'
+import { shallow } from 'enzyme'
+import AddVerifiedUser from './AddVerifiedUser'
 
 describe('AddVerifiedUser', () => {
   const verifyNewUserDetails = {
@@ -12,72 +12,68 @@ describe('AddVerifiedUser', () => {
       county_name: 'MyCounty',
     },
     verification_passed: true,
-  };
+  }
 
-  let wrapper;
+  let wrapper
   beforeEach(() => {
-    wrapper = shallow(
-      <AddVerifiedUser verifyNewUserDetails={verifyNewUserDetails} />
-    );
-  });
+    wrapper = shallow(<AddVerifiedUser verifyNewUserDetails={verifyNewUserDetails} />)
+  })
 
   describe('when verification passed', () => {
     it('renders the Showfields with verifyNewUserDetails', () => {
-      wrapper = shallow(
-        <AddVerifiedUser verifyNewUserDetails={verifyNewUserDetails} />
-      );
+      wrapper = shallow(<AddVerifiedUser verifyNewUserDetails={verifyNewUserDetails} />)
       expect(wrapper.find('label').text()).toBe(
         'Please Verify the details of the CWS/CMS user you want to add to CWS-CARES'
-      );
-      expect(wrapper.find('ShowField').length).toBe(5);
+      )
+      expect(wrapper.find('ShowField').length).toBe(5)
       expect(
         wrapper
           .find('ShowField')
           .at(0)
           .props().label
-      ).toEqual('Full Name');
+      ).toEqual('Full Name')
       expect(
         wrapper
           .find('ShowField')
           .at(1)
           .props().label
-      ).toEqual('Office Name');
+      ).toEqual('Office Name')
       expect(
         wrapper
           .find('ShowField')
           .at(2)
           .props().label
-      ).toEqual('CWS Login');
+      ).toEqual('CWS Login')
       expect(
         wrapper
           .find('ShowField')
           .at(3)
           .props().label
-      ).toEqual('Email');
+      ).toEqual('Email')
       expect(
         wrapper
           .find('ShowField')
           .at(4)
           .props().label
-      ).toEqual('Office Phone Number');
-    });
+      ).toEqual('Office Phone Number')
+    })
 
     it('renders the <ShowField/> props.children at label:fullName', () => {
-      let expectedValue = [
+      const expectedValue = [
         `${verifyNewUserDetails.user.last_name}`,
         `${', '}`,
         `${verifyNewUserDetails.user.first_name}`,
         `${' '}`,
         `${verifyNewUserDetails.user.middle_name}`,
-      ];
+      ]
       expect(
         wrapper
           .find('ShowField')
           .at(0)
           .props().children
-      ).toEqual(expectedValue);
-    });
-  });
+      ).toEqual(expectedValue)
+    })
+  })
 
   describe('when verification not passed', () => {
     it('renders the label inside the grid wrapper', () => {
@@ -85,45 +81,39 @@ describe('AddVerifiedUser', () => {
         verification_passed: false,
         verification_message: 'No ID',
         error_code: 'CAP',
-      };
-      wrapper = shallow(
-        <AddVerifiedUser verifyNewUserDetails={newUserDetails} />
-      );
-      expect(wrapper.find('Alert').length).toBe(1);
-    });
-  });
+      }
+      wrapper = shallow(<AddVerifiedUser verifyNewUserDetails={newUserDetails} />)
+      expect(wrapper.find('Alert').length).toBe(1)
+    })
+  })
 
   describe('when verification is still in progress', () => {
     it('renders the card with Loading.....', () => {
       const newUserDetails = {
         verification_message: 'No ID',
-      };
-      wrapper = shallow(
-        <AddVerifiedUser verifyNewUserDetails={newUserDetails} />
-      );
-      expect(wrapper.find('Cards').length).toBe(1);
+      }
+      wrapper = shallow(<AddVerifiedUser verifyNewUserDetails={newUserDetails} />)
+      expect(wrapper.find('Cards').length).toBe(1)
       expect(
         wrapper
           .find('span')
           .at(0)
           .text()
-      ).toBe('Loading.....');
-    });
-  });
+      ).toBe('Loading.....')
+    })
+  })
 
   describe('when props(verifyNewUserDetails) is empty object', () => {
     it('renders the card with Loading.....', () => {
-      const verifyNewUserDetails = {};
-      const wrapper = shallow(
-        <AddVerifiedUser verifyNewUserDetails={verifyNewUserDetails} />
-      );
-      expect(wrapper.find('Cards').length).toBe(1);
+      const verifyNewUserDetails = {}
+      const wrapper = shallow(<AddVerifiedUser verifyNewUserDetails={verifyNewUserDetails} />)
+      expect(wrapper.find('Cards').length).toBe(1)
       expect(
         wrapper
           .find('span')
           .at(0)
           .text()
-      ).toBe('Loading.....');
-    });
-  });
-});
+      ).toBe('Loading.....')
+    })
+  })
+})

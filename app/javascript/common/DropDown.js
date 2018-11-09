@@ -1,6 +1,6 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import Select from '@cwds/components/lib/Select';
+import React from 'react'
+import PropTypes from 'prop-types'
+import Select from '@cwds/components/lib/Select'
 
 class DropDown extends React.Component {
   render() {
@@ -16,7 +16,7 @@ class DropDown extends React.Component {
       placeholder,
       multiSelect,
       simpleValue,
-    } = this.props;
+    } = this.props
     return (
       <div className="form-group">
         <div className={gridClassName}>
@@ -34,18 +34,14 @@ class DropDown extends React.Component {
           />
         </div>
       </div>
-    );
+    )
   }
 }
 
 DropDown.propTypes = {
   options: PropTypes.array,
   id: PropTypes.string,
-  selectedOption: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.array,
-    PropTypes.bool,
-  ]),
+  selectedOption: PropTypes.oneOfType([PropTypes.string, PropTypes.array, PropTypes.bool]),
   onChange: PropTypes.func,
   placeholder: PropTypes.string,
   gridClassName: PropTypes.string,
@@ -54,6 +50,6 @@ DropDown.propTypes = {
   disabled: PropTypes.bool,
   multiSelect: PropTypes.bool,
   simpleValue: PropTypes.bool,
-};
+}
 
-export default DropDown;
+export default DropDown

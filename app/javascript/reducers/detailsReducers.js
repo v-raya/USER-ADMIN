@@ -1,4 +1,4 @@
-import * as actionTypes from '../actions/actionTypes';
+import * as actionTypes from '../actions/actionTypes'
 
 function fetchDetails(
   state = {
@@ -12,13 +12,13 @@ function fetchDetails(
 ) {
   switch (action.type) {
     case actionTypes.FETCH_DETAILS_API_CALL_REQUEST:
-      return { ...state, fetching: true, error: null };
+      return { ...state, fetching: true, error: null }
 
     case actionTypes.FETCH_DETAILS_API_CALL_SUCCESS:
       const userRecords = {
         XHRStatus: 'ready',
         records: { ...action.details },
-      };
+      }
       return {
         ...state,
         fetching: false,
@@ -26,7 +26,7 @@ function fetchDetails(
         error: null,
         isEdit: false,
         displayAlert: false,
-      };
+      }
 
     case actionTypes.FETCH_DETAILS_API_CALL_FAILURE:
       return {
@@ -35,14 +35,14 @@ function fetchDetails(
         details: null,
         error: action.error,
         displayAlert: false,
-      };
+      }
 
     case actionTypes.CLEAR_USER_DETAILS: {
       return {
         details: null,
         fetching: false,
         displayAlert: false,
-      };
+      }
     }
 
     case actionTypes.HANDLE_EDIT_BUTTON_CHANGE: {
@@ -51,11 +51,11 @@ function fetchDetails(
         isEdit: action.payload.value,
         displayAlert: false,
         disableActionBtn: true,
-      };
+      }
     }
 
     case actionTypes.SAVE_USER_DETAILS_API_CALL_REQUEST:
-      return { ...state, fetching: true, saveDetailsError: null };
+      return { ...state, fetching: true, saveDetailsError: null }
 
     case actionTypes.SAVE_USER_DETAILS_API_CALL_SUCCESS:
       return {
@@ -64,7 +64,7 @@ function fetchDetails(
         saveDetailsError: null,
         isEdit: false,
         displayAlert: true,
-      };
+      }
 
     case actionTypes.SAVE_USER_DETAILS_API_CALL_FAILURE:
       return {
@@ -73,7 +73,7 @@ function fetchDetails(
         isEdit: true,
         saveDetailsError: action.error,
         displayAlert: true,
-      };
+      }
 
     case actionTypes.HANDLE_DROPDOWN_CHANGE: {
       return {
@@ -90,12 +90,12 @@ function fetchDetails(
             },
           },
         },
-      };
+      }
     }
 
     default:
-      return state;
+      return state
   }
 }
 
-export default fetchDetails;
+export default fetchDetails

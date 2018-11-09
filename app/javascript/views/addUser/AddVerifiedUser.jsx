@@ -1,10 +1,10 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import Cards from '../../common/Card';
-import { Alert } from 'react-wood-duck';
-import ShowField from '../../common/ShowField';
-import { formatPhoneNumberWithExt } from '../../_utils/formatters';
-import { translateOffice } from '../../_constants/constants';
+import React from 'react'
+import PropTypes from 'prop-types'
+import Cards from '../../common/Card'
+import { Alert } from 'react-wood-duck'
+import ShowField from '../../common/ShowField'
+import { formatPhoneNumberWithExt } from '../../_utils/formatters'
+import { translateOffice } from '../../_constants/constants'
 
 /* eslint camelcase: 0 */
 
@@ -24,39 +24,29 @@ const AddNewUser = ({ onAddUser, verifyNewUserDetails, officesList }) => {
               <div className="col-md-12">
                 <div className="row">
                   <label htmlFor="text">
-                    Please Verify the details of the CWS/CMS user you want to
-                    add to CWS-CARES
+                    Please Verify the details of the CWS/CMS user you want to add to CWS-CARES
                   </label>
                   <div className="col-md-3">
                     <ShowField label="Full Name">
                       {verifyNewUserDetails.user.last_name}
                       {', '}
-                      {verifyNewUserDetails.user.first_name}{' '}
-                      {verifyNewUserDetails.user.middle_name}
+                      {verifyNewUserDetails.user.first_name} {verifyNewUserDetails.user.middle_name}
                     </ShowField>
                   </div>
                   <div className="col-md-3">
-                    <ShowField label="Office Name">
-                      {translateOffice(verifyNewUserDetails.user, officesList)}
-                    </ShowField>
+                    <ShowField label="Office Name">{translateOffice(verifyNewUserDetails.user, officesList)}</ShowField>
                   </div>
                   <div className="col-md-3">
-                    <ShowField label="CWS Login">
-                      {verifyNewUserDetails.user.racfid}
-                    </ShowField>
+                    <ShowField label="CWS Login">{verifyNewUserDetails.user.racfid}</ShowField>
                   </div>
                 </div>
                 <div className="row">
                   <div className="col-md-3">
-                    <ShowField label="Email">
-                      {verifyNewUserDetails.user.email}
-                    </ShowField>
+                    <ShowField label="Email">{verifyNewUserDetails.user.email}</ShowField>
                   </div>
                   <div className="col-md-3">
                     <ShowField label="Office Phone Number">
-                      <span>
-                        {formatPhoneNumberWithExt(verifyNewUserDetails.user)}
-                      </span>
+                      <span>{formatPhoneNumberWithExt(verifyNewUserDetails.user)}</span>
                     </ShowField>
                   </div>
                 </div>
@@ -68,11 +58,7 @@ const AddNewUser = ({ onAddUser, verifyNewUserDetails, officesList }) => {
         <div className="row">
           <div className="col-md-12">
             <div className="alert">
-              <Alert
-                alertClassName="error"
-                faIcon="fa-exclamation-triangle"
-                alertCross={false}
-              >
+              <Alert alertClassName="error" faIcon="fa-exclamation-triangle" alertCross={false}>
                 {verifyNewUserDetails.verification_message}
               </Alert>
             </div>
@@ -84,8 +70,8 @@ const AddNewUser = ({ onAddUser, verifyNewUserDetails, officesList }) => {
         </Cards>
       )}
     </div>
-  );
-};
+  )
+}
 
 AddNewUser.propTypes = {
   onAddUser: PropTypes.func,
@@ -98,6 +84,6 @@ AddNewUser.propTypes = {
       office_id: PropTypes.string.isRequired,
     })
   ),
-};
+}
 
-export default AddNewUser;
+export default AddNewUser

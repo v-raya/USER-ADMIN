@@ -1,14 +1,14 @@
-import * as actionTypes from './actionTypes';
+import * as actionTypes from './actionTypes'
 
 export const fetchAccountActions = token => ({
   type: actionTypes.FETCH_ACCOUNT_API_CALL_REQUEST,
   payload: token,
-});
+})
 
 export const searchUsers = params => ({
   type: actionTypes.FETCH_USERS_API_CALL_REQUEST,
   payload: params,
-});
+})
 
 /**
  * Set number of records per page
@@ -17,7 +17,7 @@ export const searchUsers = params => ({
 export const setPageSize = size => ({
   type: actionTypes.USER_LIST_SET_PAGE_SIZE,
   payload: size,
-});
+})
 
 /**
  * Set the current page of paged results
@@ -26,7 +26,7 @@ export const setPageSize = size => ({
 export const setPage = pageNumber => ({
   type: actionTypes.USER_LIST_SET_PAGE,
   payload: pageNumber,
-});
+})
 
 /**
  * Set search
@@ -37,7 +37,7 @@ export const setPage = pageNumber => ({
 export const setSearch = query => ({
   type: actionTypes.USER_LIST_SET_SEARCH,
   payload: query,
-});
+})
 
 /**
  * Updates the "preflight" search input for both `last_name` and `office_name`)
@@ -47,7 +47,7 @@ export const setSearch = query => ({
 export const handleSearchChange = (key, value) => ({
   type: actionTypes.HANDLE_INPUT_CHANGE,
   payload: { key, value },
-});
+})
 
 /**
  * Sets the sort criteria for the table
@@ -56,4 +56,4 @@ export const handleSearchChange = (key, value) => ({
 export const setSort = sort => ({
   payload: sort,
   type: actionTypes.USER_LIST_SET_SORT,
-});
+})

@@ -1,12 +1,12 @@
-import { combineReducers } from 'redux';
-import userList from './userListReducers';
-import fetchDetails from './detailsReducers';
-import fetchPermissions from './permissionsReducers';
-import fetchOffices from './officesReducers';
-import validateNewUser from './validateNewUserReducer';
-import addUser from './addUserReducers';
-import resendRegistrationEmail from './resendRegistrationEmailReducers';
-import fetchRoles from './rolesReducers';
+import { combineReducers } from 'redux'
+import userList from './userListReducers'
+import fetchDetails from './detailsReducers'
+import fetchPermissions from './permissionsReducers'
+import fetchOffices from './officesReducers'
+import validateNewUser from './validateNewUserReducer'
+import addUser from './addUserReducers'
+import resendRegistrationEmail from './resendRegistrationEmailReducers'
+import fetchRoles from './rolesReducers'
 const reducer = combineReducers({
   userList,
   fetchDetails,
@@ -16,6 +16,6 @@ const reducer = combineReducers({
   addUser,
   resendRegistrationEmail,
   fetchRoles,
-});
+})
 
-export default reducer;
+export default reducer

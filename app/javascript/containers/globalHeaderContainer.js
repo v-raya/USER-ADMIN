@@ -1,13 +1,13 @@
-import { connect } from 'react-redux';
-import GlobalHeader from '../common/GlobalHeader';
-import { bindActionCreators } from 'redux';
-import { fetchAccountActions } from '../actions/userListActions';
-import { userName } from '../selectors/globalHeaderSelectors';
+import { connect } from 'react-redux'
+import GlobalHeader from '../common/GlobalHeader'
+import { bindActionCreators } from 'redux'
+import { fetchAccountActions } from '../actions/userListActions'
+import { userName } from '../selectors/globalHeaderSelectors'
 
 function mapStateToProps(state) {
   return {
     fullName: userName(state),
-  };
+  }
 }
 
 function mapDispatchToProps(dispatch) {
@@ -18,10 +18,10 @@ function mapDispatchToProps(dispatch) {
       },
       dispatch
     ),
-  };
+  }
 }
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(GlobalHeader);
+)(GlobalHeader)

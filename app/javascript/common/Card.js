@@ -1,7 +1,7 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import classNames from 'classnames';
-import { Button } from 'react-wood-duck';
+import React from 'react'
+import PropTypes from 'prop-types'
+import classNames from 'classnames'
+import { Button } from 'react-wood-duck'
 
 const Cards = props => {
   const {
@@ -20,7 +20,7 @@ const Cards = props => {
     rightActionBtnName,
     leftActionBtnName,
     disabled,
-  } = props;
+  } = props
   const classField = classNames(
     cardbgcolor,
     wrapContainer,
@@ -28,8 +28,8 @@ const Cards = props => {
     `col-md-${columnMediumWidth}`,
     `col-md-offset-${offsetMediumValue}`,
     `col-xs-${columnXsmallWidth}`
-  );
-  const editClass = props.cardActionButtons ? 'edit' : '';
+  )
+  const editClass = props.cardActionButtons ? 'edit' : ''
   return (
     <div className={classField} id={props.id}>
       <div className={`card ${editClass} double-gap-top`}>
@@ -37,12 +37,7 @@ const Cards = props => {
           <span>{props.cardHeaderText}</span>
           {props.cardHeaderButton &&
             !props.cardActionButtons && (
-              <Button
-                btnClassName="default pull-right"
-                btnName={headerBtnName}
-                onClick={onEdit}
-                disabled={disabled}
-              />
+              <Button btnClassName="default pull-right" btnName={headerBtnName} onClick={onEdit} disabled={disabled} />
             )}
         </div>
         <div className="card-body">
@@ -50,11 +45,7 @@ const Cards = props => {
           {!props.cardHeaderButton && (
             <div className="pull-right">
               {props.cardActionButton1 && (
-                <Button
-                  btnName={leftActionBtnName}
-                  btnClassName="default cancel"
-                  onClick={handleOnClickButton1}
-                />
+                <Button btnName={leftActionBtnName} btnClassName="default cancel" onClick={handleOnClickButton1} />
               )}
               {props.cardActionButton2 && (
                 <Button
@@ -70,8 +61,8 @@ const Cards = props => {
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
 Cards.propTypes = {
   cardHeaderText: PropTypes.string,
@@ -96,7 +87,7 @@ Cards.propTypes = {
   rightActionBtnName: PropTypes.string,
   leftActionBtnName: PropTypes.string,
   disabled: PropTypes.bool,
-};
+}
 
 Cards.defaultProps = {
   cardbgcolor: 'transparent',
@@ -110,6 +101,6 @@ Cards.defaultProps = {
   rightActionBtnName: 'save',
   headerBtnName: 'Edit',
   disabled: false,
-};
+}
 
-export default Cards;
+export default Cards

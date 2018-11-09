@@ -1,5 +1,5 @@
-import * as actionTypes from '../actions/actionTypes';
-import { getAdminOfficeIDs } from '../_utils/checkAdminRoles';
+import * as actionTypes from '../actions/actionTypes'
+import { getAdminOfficeIDs } from '../_utils/checkAdminRoles'
 
 const initialValue = {
   sort: [
@@ -27,18 +27,18 @@ const initialValue = {
   countyName: '',
   userFirstName: '',
   userLastName: '',
-};
+}
 
 function userListReducer(state = initialValue, { type, payload, error, meta }) {
   switch (type) {
     case actionTypes.FETCH_USERS_API_CALL_REQUEST:
-      return { ...state, fetching: true, error: null, query: payload.query };
+      return { ...state, fetching: true, error: null, query: payload.query }
 
     case actionTypes.FETCH_USERS_API_CALL_SUCCESS: {
       const {
         records: users,
         meta: { total, request },
-      } = payload;
+      } = payload
       return {
         ...state,
         users,
@@ -46,7 +46,7 @@ function userListReducer(state = initialValue, { type, payload, error, meta }) {
         total,
         fetching: false,
         error: null,
-      };
+      }
     }
 
     case actionTypes.FETCH_USERS_API_CALL_FAILURE: {
@@ -55,16 +55,16 @@ function userListReducer(state = initialValue, { type, payload, error, meta }) {
         error,
         fetching: false,
         users: null,
-      };
+      }
     }
 
     // TODO: fix FSA
     case actionTypes.USER_LIST_SET_SORT: {
-      const sort = payload;
+      const sort = payload
       return {
         ...state,
         sort,
-      };
+      }
     }
 
     case actionTypes.HANDLE_INPUT_CHANGE:
@@ -74,33 +74,33 @@ function userListReducer(state = initialValue, { type, payload, error, meta }) {
           ...state.inputData,
           [payload.key]: payload.value,
         },
-      };
+      }
 
     case actionTypes.USER_LIST_SET_SEARCH: {
-      const query = payload;
+      const query = payload
       return {
         ...state,
         from: 0,
         query,
-      };
+      }
     }
 
     // TODO: fix FSA
     case actionTypes.USER_LIST_SET_PAGE_SIZE: {
-      const size = payload;
-      return { ...state, size, from: 0 };
+      const size = payload
+      return { ...state, size, from: 0 }
     }
 
     case actionTypes.USER_LIST_SET_PAGE: {
-      const pageIndex = payload;
+      const pageIndex = payload
       return {
         ...state,
         from: pageIndex * state.size,
-      };
+      }
     }
 
     case actionTypes.FETCH_ACCOUNT_API_CALL_REQUEST:
-      return { ...state, fetching: true, error: null };
+      return { ...state, fetching: true, error: null }
 
     case actionTypes.FETCH_ACCOUNT_API_CALL_SUCCESS:
       return {
@@ -109,15 +109,13 @@ function userListReducer(state = initialValue, { type, payload, error, meta }) {
         inputData: {
           ...state.inputData,
           officeNames:
-            state.inputData.officeNames === undefined
-              ? getAdminOfficeIDs(payload)
-              : state.inputData.officeNames,
+            state.inputData.officeNames === undefined ? getAdminOfficeIDs(payload) : state.inputData.officeNames,
         },
         countyName: payload.county_name,
         userFirstName: payload.first_name,
         userLastName: payload.last_name,
         error: null,
-      };
+      }
 
     case actionTypes.FETCH_ACCOUNT_API_CALL_FAILURE:
       return {
@@ -125,11 +123,11 @@ function userListReducer(state = initialValue, { type, payload, error, meta }) {
         fetching: false,
         inputData: {},
         error: payload.error,
-      };
+      }
 
     default:
-      return state;
+      return state
   }
 }
 
-export default userListReducer;
+export default userListReducer

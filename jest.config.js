@@ -1,4 +1,4 @@
-const path = require('path');
+const path = require('path')
 module.exports = {
   verbose: true,
   rootDir: './app/javascript',
@@ -7,4 +7,4 @@ module.exports = {
   moduleNameMapper: {
     '\\.(css|scss)$': 'identity-obj-proxy',
   },
-};
+}

@@ -1,23 +1,15 @@
-import React from 'react';
-import classnames from 'classnames';
-import PaginationRT from 'react-table/lib/pagination';
-import { Button as ButtonRWD } from 'react-wood-duck';
+import React from 'react'
+import classnames from 'classnames'
+import PaginationRT from 'react-table/lib/pagination'
+import { Button as ButtonRWD } from 'react-wood-duck'
 
 const previousButton = props => (
-  <ButtonRWD
-    btnClassName="default"
-    btnName={<span className="glyphicon glyphicon-chevron-left" />}
-    {...props}
-  />
-);
+  <ButtonRWD btnClassName="default" btnName={<span className="glyphicon glyphicon-chevron-left" />} {...props} />
+)
 
 const nextButton = props => (
-  <ButtonRWD
-    btnClassName="default"
-    btnName={<span className="glyphicon glyphicon-chevron-right" />}
-    {...props}
-  />
-);
+  <ButtonRWD btnClassName="default" btnName={<span className="glyphicon glyphicon-chevron-right" />} {...props} />
+)
 
 class Pagination extends PaginationRT {
   render() {
@@ -36,19 +28,12 @@ class Pagination extends PaginationRT {
       className,
       PreviousComponent = previousButton,
       NextComponent = nextButton,
-    } = this.props;
+    } = this.props
     return (
-      <div
-        className={classnames(className, '-pagination')}
-        style={this.props.style}
-      >
+      <div className={classnames(className, '-pagination')} style={this.props.style}>
         {showPageSizeOptions && (
           <span className="select-wrap -pageSizeOptions">
-            <select
-              onBlur={_ => {}}
-              onChange={e => onPageSizeChange(Number(e.target.value))}
-              value={pageSize}
-            >
+            <select onBlur={_ => {}} onChange={e => onPageSizeChange(Number(e.target.value))} value={pageSize}>
               {pageSizeOptions.map((option, i) => (
                 // eslint-disable-next-line react/no-array-index-key
                 <option key={i} value={option}>
@@ -61,8 +46,8 @@ class Pagination extends PaginationRT {
         <div className="-previous">
           <PreviousComponent
             onClick={() => {
-              if (!canPrevious) return;
-              this.changePage(page - 1);
+              if (!canPrevious) return
+              this.changePage(page - 1)
             }}
             disabled={!canPrevious}
           >
@@ -76,18 +61,18 @@ class Pagination extends PaginationRT {
                 <input
                   type={this.state.page === '' ? 'text' : 'number'}
                   onChange={e => {
-                    const val = e.target.value;
-                    const page = val - 1;
+                    const val = e.target.value
+                    const page = val - 1
                     if (val === '') {
-                      return this.setState({ page: val });
+                      return this.setState({ page: val })
                     }
-                    this.setState({ page: this.getSafePage(page) });
+                    return this.setState({ page: this.getSafePage(page) })
                   }}
                   value={this.state.page === '' ? '' : this.state.page + 1}
                   onBlur={this.applyPage}
                   onKeyPress={e => {
                     if (e.which === 13 || e.keyCode === 13) {
-                      this.applyPage();
+                      this.applyPage()
                     }
                   }}
                 />
@@ -95,15 +80,14 @@ class Pagination extends PaginationRT {
             ) : (
               <span className="-currentPage">{page + 1}</span>
             )}{' '}
-            {this.props.ofText}{' '}
-            <span className="-totalPages">{pages || 1}</span>
+            {this.props.ofText} <span className="-totalPages">{pages || 1}</span>
           </span>
         </div>
         <div className="-next">
           <NextComponent
             onClick={() => {
-              if (!canNext) return;
-              this.changePage(page + 1);
+              if (!canNext) return
+              this.changePage(page + 1)
             }}
             disabled={!canNext}
           >
@@ -111,8 +95,8 @@ class Pagination extends PaginationRT {
           </NextComponent>
         </div>
       </div>
-    );
+    )
   }
 }
 
-export default Pagination;
+export default Pagination

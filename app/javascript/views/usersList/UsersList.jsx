@@ -1,45 +1,40 @@
-import React, { PureComponent } from 'react';
-import PropTypes from 'prop-types';
-import { Link, Redirect } from 'react-router-dom';
-import {
-  Link as LinkRWD,
-  InputComponent,
-  PageHeader,
-  Alert,
-} from 'react-wood-duck';
-import DropDown from '../../common/DropDown';
-import Cards from '../../common/Card';
-import ReactTable from 'react-table';
-import Pagination from './Pagination';
-import './UsersList.scss';
+import React, { PureComponent } from 'react'
+import PropTypes from 'prop-types'
+import { Link, Redirect } from 'react-router-dom'
+import { Link as LinkRWD, InputComponent, PageHeader, Alert } from 'react-wood-duck'
+import DropDown from '../../common/DropDown'
+import Cards from '../../common/Card'
+import ReactTable from 'react-table'
+import Pagination from './Pagination'
+import './UsersList.scss'
 import {
   toFullName,
   userStatusFormat,
   lastLoginDate,
   officesListToOptions,
   getOfficeTranslator,
-} from '../../_constants/constants';
-import { isEqual } from 'lodash';
-import { formatSelectedRoles } from '../../_utils/formatters';
+} from '../../_constants/constants'
+import { isEqual } from 'lodash'
+import { formatSelectedRoles } from '../../_utils/formatters'
 
 class UserList extends PureComponent {
   constructor(props) {
-    super(props);
+    super(props)
     this.state = {
       addUser: false,
-    };
+    }
   }
 
   componentDidMount() {
-    this.props.actions.fetchAccountActions();
-    this.props.actions.fetchOfficesActions();
-    this.props.actions.fetchRolesActions();
+    this.props.actions.fetchAccountActions()
+    this.props.actions.fetchOfficesActions()
+    this.props.actions.fetchRolesActions()
     this.props.actions.setSearch([
       { field: 'last_name', value: this.props.lastName },
       { field: 'office_ids', value: this.props.officeNames },
-    ]);
-    this.props.actions.setPage(Math.floor(this.props.from / this.props.size));
-    this.props.actions.clearAddedUserDetailActions();
+    ])
+    this.props.actions.setPage(Math.floor(this.props.from / this.props.size))
+    this.props.actions.clearAddedUserDetailActions()
   }
 
   componentDidUpdate(prevProps) {
@@ -47,65 +42,59 @@ class UserList extends PureComponent {
       this.props.actions.setSearch([
         { field: 'last_name', value: this.props.lastName },
         { field: 'office_ids', value: this.props.officeNames },
-      ]);
+      ])
     }
   }
 
   handleOnAdd = () => {
-    this.setState({ addUser: true });
-  };
+    this.setState({ addUser: true })
+  }
 
   handlePageChange = pageIndex => {
-    window.scrollTo(0, 0);
-    this.props.actions.setPage(pageIndex);
-  };
+    window.scrollTo(0, 0)
+    this.props.actions.setPage(pageIndex)
+  }
 
   handlePageSizeChange = (pageSize, pageIndex) => {
-    window.scrollTo(0, 0);
-    this.props.actions.setPageSize(pageSize);
-  };
+    window.scrollTo(0, 0)
+    this.props.actions.setPageSize(pageSize)
+  }
 
   handleSortChange = (newSorted, column, shiftKey) => {
-    this.props.actions.setSort(
-      newSorted.map(s => ({ field: s.id, desc: s.desc }))
-    );
-  };
+    this.props.actions.setSort(newSorted.map(s => ({ field: s.id, desc: s.desc })))
+  }
 
   submitSearch = e => {
-    e.preventDefault();
+    e.preventDefault()
     this.props.actions.setSearch([
       { field: 'last_name', value: this.props.lastName },
       { field: 'office_ids', value: this.props.officeNames },
-    ]);
-  };
+    ])
+  }
 
   isDisabledSearchBtn = () => {
-    const { officeNames, lastName, query } = this.props;
+    const { officeNames, lastName, query } = this.props
 
-    const lastNameSearch = query.find(({ field }) => field === 'last_name');
+    const lastNameSearch = query.find(({ field }) => field === 'last_name')
 
-    const officeSearch = query.find(({ field }) => field === 'office_ids');
+    const officeSearch = query.find(({ field }) => field === 'office_ids')
 
-    return (
-      lastNameSearch &&
-      lastNameSearch.value === lastName &&
-      isEqual(officeSearch.value.sort(), officeNames.sort())
-    );
-  };
+    return lastNameSearch && lastNameSearch.value === lastName && isEqual(officeSearch.value.sort(), officeNames.sort())
+  }
 
   getTotalPages = () => {
-    const { userList: records, total, size } = this.props;
-    if (!records) return -1;
-    if (records && Array.isArray(records) && !records.length) return 1;
-    if (total && size) return Math.ceil(total / size);
-    return -1;
-  };
+    const { userList: records, total, size } = this.props
+    if (!records) return -1
+    if (records && Array.isArray(records) && !records.length) return 1
+    if (total && size) return Math.ceil(total / size)
+    return -1
+  }
 
-  getCurrentPageNumber = () => Math.floor(this.props.from / this.props.size);
+  getCurrentPageNumber = () => Math.floor(this.props.from / this.props.size)
 
   renderUsersTable = ({ data, officesList, rolesList }) => {
-    const translateOffice = getOfficeTranslator(officesList);
-    const translateRoles = data => formatSelectedRoles(data.roles, rolesList);
+    const translateOffice = getOfficeTranslator(officesList)
+    const translateRoles = data => formatSelectedRoles(data.roles, rolesList)
 
     return (
       <ReactTable
@@ -117,9 +106,7 @@ class UserList extends PureComponent {
             Header: 'Full Name',
             id: 'last_name',
             accessor: toFullName,
-            Cell: ({ value, original }) => (
-              <Link to={`/user_details/${original.id}`}>{value}</Link>
-            ),
+            Cell: ({ value, original }) => <Link to={`/user_details/${original.id}`}>{value}</Link>,
             minWidth: 200,
           },
           {
@@ -166,25 +153,20 @@ class UserList extends PureComponent {
         onSortedChange={this.handleSortChange}
         PaginationComponent={Pagination}
       />
-    );
-  };
+    )
+  }
 
   renderBreadcrumb = () => {
-    const { dashboardUrl, dashboardClickHandler } = this.props;
+    const { dashboardUrl, dashboardClickHandler } = this.props
     return (
       <div>
-        Back to:{' '}
-        <LinkRWD
-          text="Dashboard"
-          href={dashboardUrl}
-          clickHandler={dashboardClickHandler}
-        />
+        Back to: <LinkRWD text="Dashboard" href={dashboardUrl} clickHandler={dashboardClickHandler} />
       </div>
-    );
-  };
+    )
+  }
 
   render() {
-    const { countyName, officesList, officeNames, lastName } = this.props;
+    const { countyName, officesList, officeNames, lastName } = this.props
     return (
       <div role="main">
         {this.state.addUser ? (
@@ -195,7 +177,7 @@ class UserList extends PureComponent {
             <div className="container">
               {this.renderBreadcrumb()}
               <Cards
-                cardHeaderText={'County: ' + countyName}
+                cardHeaderText={`County: ${countyName}`}
                 cardHeaderButton={true}
                 headerBtnName="+ Add a user"
                 onEdit={this.handleOnAdd}
@@ -210,10 +192,7 @@ class UserList extends PureComponent {
                         label="Filter by Office Name"
                         placeholder={`(${officesList.length})`}
                         onChange={selectedOptions =>
-                          this.props.actions.handleSearchChange(
-                            'officeNames',
-                            selectedOptions.split(',')
-                          )
+                          this.props.actions.handleSearchChange('officeNames', selectedOptions.split(','))
                         }
                         multiSelect={true}
                         simpleValue={true}
@@ -226,12 +205,7 @@ class UserList extends PureComponent {
                         fieldClassName="form-group"
                         type="text"
                         value={lastName}
-                        onChange={event =>
-                          this.props.actions.handleSearchChange(
-                            'lastName',
-                            event.target.value
-                          )
-                        }
+                        onChange={event => this.props.actions.handleSearchChange('lastName', event.target.value)}
                         placeholder="Search users by Last name"
                         autocomplete="off"
                       />
@@ -248,11 +222,7 @@ class UserList extends PureComponent {
                   </div>
                 </form>
                 {this.props.error && (
-                  <Alert
-                    alertClassName="error"
-                    faIcon="fa-exclamation-triangle"
-                    alertCross={false}
-                  >
+                  <Alert alertClassName="error" faIcon="fa-exclamation-triangle" alertCross={false}>
                     <strong>Oh no!</strong> An unexpected error occurred!
                   </Alert>
                 )}
@@ -269,7 +239,7 @@ class UserList extends PureComponent {
           </div>
         )}
       </div>
-    );
+    )
   }
 }
 
@@ -296,12 +266,7 @@ UserList.propTypes = {
   query: PropTypes.arrayOf(
     PropTypes.shape({
       field: PropTypes.string,
-      value: PropTypes.oneOfType([
-        PropTypes.string,
-        PropTypes.number,
-        PropTypes.bool,
-        PropTypes.array,
-      ]),
+      value: PropTypes.oneOfType([PropTypes.string, PropTypes.number, PropTypes.bool, PropTypes.array]),
     })
   ),
   pageSizeOptions: PropTypes.arrayOf(PropTypes.number),
@@ -312,7 +277,7 @@ UserList.propTypes = {
   lastName: PropTypes.string,
   inputData: PropTypes.object,
   rolesList: PropTypes.array,
-};
+}
 
 UserList.defaultProps = {
   dashboardUrl: '/',
@@ -322,5 +287,5 @@ UserList.defaultProps = {
   officesList: [],
   lastName: '',
   officeNames: [],
-};
-export default UserList;
+}
+export default UserList

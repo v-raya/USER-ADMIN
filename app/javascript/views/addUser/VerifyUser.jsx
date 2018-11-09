@@ -1,18 +1,11 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import Cards from '../../common/Card';
-import { InputComponent } from 'react-wood-duck/';
+import React from 'react'
+import PropTypes from 'prop-types'
+import Cards from '../../common/Card'
+import { InputComponent } from 'react-wood-duck/'
 
 /* eslint camelcase: 0 */
 
-const VerifyUser = ({
-  onVerify,
-  handleEmailChange,
-  handleRacfChange,
-  disableActionBtn,
-  errorMessage,
-  valid,
-}) => {
+const VerifyUser = ({ onVerify, handleEmailChange, handleRacfChange, disableActionBtn, errorMessage, valid }) => {
   return (
     <div className="row">
       <div className="col-md-12">
@@ -27,8 +20,8 @@ const VerifyUser = ({
           <div className="col-md-12">
             <div className="row">
               <label htmlFor="text">
-                Enter the CWS Login and email address of the user you are adding
-                in order to verify that this is a new CWS-CARES user
+                Enter the CWS Login and email address of the user you are adding in order to verify that this is a new
+                CWS-CARES user
               </label>
               <div className="col-md-3">
                 <InputComponent
@@ -55,8 +48,8 @@ const VerifyUser = ({
         </Cards>
       </div>
     </div>
-  );
-};
+  )
+}
 
 VerifyUser.propTypes = {
   onVerifyCancel: PropTypes.func,
@@ -66,6 +59,6 @@ VerifyUser.propTypes = {
   disableActionBtn: PropTypes.bool,
   errorMessage: PropTypes.any,
   valid: PropTypes.any,
-};
+}
 
-export default VerifyUser;
+export default VerifyUser

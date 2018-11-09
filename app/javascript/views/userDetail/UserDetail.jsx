@@ -1,107 +1,96 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
-import { Link as LinkRWD, Alert, PageHeader } from 'react-wood-duck';
-import UserDetailEdit from './UserDetailEdit';
-import UserDetailShow from './UserDetailShow';
-import ErrorMessage from '../../common/ErrorMessage';
-import Cards from '../../common/Card';
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
+import { Link } from 'react-router-dom'
+import { Link as LinkRWD, Alert, PageHeader } from 'react-wood-duck'
+import UserDetailEdit from './UserDetailEdit'
+import UserDetailShow from './UserDetailShow'
+import ErrorMessage from '../../common/ErrorMessage'
+import Cards from '../../common/Card'
 
 /* eslint camelcase: 0 */
 export default class UserDetail extends Component {
   constructor(props) {
-    super(props);
+    super(props)
     this.state = {
       resendEmailAlert: false,
-    };
+    }
   }
 
   componentDidMount() {
-    this.props.actions.fetchDetailsActions(this.props.match.params.id);
-    this.props.actions.fetchPermissionsActions();
-    this.props.actions.fetchRolesActions();
+    this.props.actions.fetchDetailsActions(this.props.match.params.id)
+    this.props.actions.fetchPermissionsActions()
+    this.props.actions.fetchRolesActions()
   }
 
   componentWillUnmount() {
-    this.props.actions.clearDetails();
+    this.props.actions.clearDetails()
   }
 
   onSaveDetails = () => {
-    const { details, isRolesDisabled, match, actions } = this.props;
-    actions.saveUserDetailsActions(match.params.id, details, isRolesDisabled);
+    const { details, isRolesDisabled, match, actions } = this.props
+    actions.saveUserDetailsActions(match.params.id, details, isRolesDisabled)
     this.setState({
       resendEmailAlert: false,
-    });
-  };
+    })
+  }
 
   onResendInvite = () => {
-    this.props.actions.resendRegistrationEmailActions(this.props.details.email);
-    this.setState({ resendEmailAlert: true });
-  };
+    this.props.actions.resendRegistrationEmailActions(this.props.details.email)
+    this.setState({ resendEmailAlert: true })
+  }
 
   onEditClick = () => {
-    this.props.actions.handleEditButtonChangeAction(true);
-  };
+    this.props.actions.handleEditButtonChangeAction(true)
+  }
 
   onCancel = () => {
-    this.props.actions.handleEditButtonChangeAction(false);
-    this.props.actions.clearAddedUserDetailActions();
-    this.setState({ resendEmailAlert: false });
-  };
+    this.props.actions.handleEditButtonChangeAction(false)
+    this.props.actions.clearAddedUserDetailActions()
+    this.setState({ resendEmailAlert: false })
+  }
 
   handleDropDownChange = (name, value) => {
-    this.props.actions.handleDropdownChangeAction(name, value);
-  };
+    this.props.actions.handleDropdownChangeAction(name, value)
+  }
 
   showAlert = (displayAlert, userDetailError) => {
     if (displayAlert) {
       if (userDetailError) {
-        return <ErrorMessage error={userDetailError} />;
+        return <ErrorMessage error={userDetailError} />
       } else {
         return (
-          <Alert
-            alertClassName="success"
-            faIcon="fa-check-circle"
-            alertCross={false}
-          >
+          <Alert alertClassName="success" faIcon="fa-check-circle" alertCross={false}>
             {'Your changes have been made successfully'}
           </Alert>
-        );
+        )
       }
     }
-  };
+    return null
+  }
 
   showAddAlert = () => {
     if (this.props.id) {
       return (
-        <Alert
-          alertClassName="success"
-          faIcon="fa-check-circle"
-          alertCross={false}
-        >
-          {`Successfully added new user. Registration email has been sent to ${
-            this.props.details.email
-          } `}
+        <Alert alertClassName="success" faIcon="fa-check-circle" alertCross={false}>
+          {`Successfully added new user. Registration email has been sent to ${this.props.details.email} `}
         </Alert>
-      );
+      )
     }
-  };
+    return null
+  }
 
   emailSent = () => {
-    const { resendEmailAlert } = this.state;
-    const { resendEmailStatus } = this.props;
+    const { resendEmailAlert } = this.state
+    const { resendEmailStatus } = this.props
     if (resendEmailAlert && resendEmailStatus === 'Success') {
       return (
-        <Alert
-          alertClassName="success"
-          faIcon="fa-check-circle"
-          alertCross={false}
-        >
+        <Alert alertClassName="success" faIcon="fa-check-circle" alertCross={false}>
           {'Registration email has been sent successfully'}
         </Alert>
-      );
+      )
     }
-  };
+    return null
+  }
 
   renderCards = (
     permissionsList,
@@ -166,17 +155,13 @@ export default class UserDetail extends Component {
         ) : (
           <div className="row">
             <div className="col-md-12">
-              <Cards
-                cardHeaderText={'User not found'}
-                cardHeaderButton={false}
-                disabled={this.props.disableEditBtn}
-              />
+              <Cards cardHeaderText={'User not found'} cardHeaderButton={false} disabled={this.props.disableEditBtn} />
             </div>
           </div>
         )}
       </div>
-    );
-  };
+    )
+  }
 
   render() {
     const {
@@ -199,18 +184,13 @@ export default class UserDetail extends Component {
       startDate,
       userStatusDescription,
       userStatus,
-    } = this.props;
+    } = this.props
     return (
       <div>
         <PageHeader pageTitle="User Profile" button="" />
         <div className="container">
           <div className="col-md-12">
-            Back to:{' '}
-            <LinkRWD
-              text="Dashboard"
-              href={dashboardUrl}
-              clickHandler={dashboardClickHandler}
-            />
+            Back to: <LinkRWD text="Dashboard" href={dashboardUrl} clickHandler={dashboardClickHandler} />
             &nbsp;&gt;&nbsp;
             <Link to="/">User List</Link>
             {this.showAlert(displayAlert, userDetailError)}
@@ -236,7 +216,7 @@ export default class UserDetail extends Component {
           )}
         </div>
       </div>
-    );
+    )
   }
 }
 
@@ -276,9 +256,9 @@ UserDetail.propTypes = {
   displayAlert: PropTypes.bool,
   disableActionBtn: PropTypes.bool,
   match: PropTypes.object,
-};
+}
 
 UserDetail.defaultProps = {
   dashboardUrl: '/',
   dashboardClickHandler: () => {},
-};
+}
