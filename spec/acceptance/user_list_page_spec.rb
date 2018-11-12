@@ -8,6 +8,8 @@ feature 'User List Page' do
   scenario 'Can log in' do
     visit ENV['RAILS_RELATIVE_URL_ROOT'] || '/'
     login
+    visit ENV.fetch('RAILS_RELATIVE_URL_ROOT', '') + '/system-information'
+    expect(page.body).to have_content('dora')
   end
 
   scenario 'page is accessible' do

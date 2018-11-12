@@ -17,9 +17,11 @@ module CountyAdmin
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded.
+    config.middleware.use SystemInformation::SystemInformationMiddleware
     require 'infrastructure/cwds_authenticator'
-    config.middleware.use Infrastructure::CwdsAuthenticator
-    
+    # add Authenticator AFTER the system information middleware
+    config.middleware.insert_after(SystemInformation::SystemInformationMiddleware, Infrastructure::CwdsAuthenticator)
+
     config.logger = ActiveSupport::Logger.new(STDOUT)
     config.log_level = :debug
     config.micro_services = config_for(:micro_services)
