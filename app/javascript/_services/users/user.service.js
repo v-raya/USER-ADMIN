@@ -60,7 +60,7 @@ class UserService {
   }
 
   static resendRegistrationEmail(id) {
-    return ApiService.get(`/resend_registration_email?email=${encodeURIComponent(id)}`).then(response => response.data)
+    return ApiService.get(`/resend_registration_email?id=${encodeURIComponent(id)}`).then(response => response.data)
   }
 
   static addUser(newUser) {

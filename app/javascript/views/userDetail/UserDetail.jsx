@@ -35,7 +35,7 @@ export default class UserDetail extends Component {
   }
 
   onResendInvite = () => {
-    this.props.actions.resendRegistrationEmailActions(this.props.details.email)
+    this.props.actions.resendRegistrationEmailActions(this.props.details.id)
     this.setState({ resendEmailAlert: true })
   }
 

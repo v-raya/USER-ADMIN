@@ -124,6 +124,7 @@ describe('UserDetail', () => {
     it('calls the service to resendRegistrationEmail', () => {
       wrapper.instance().onResendInvite()
       expect(mockFetchDetailsActions).toHaveBeenCalledWith('12345')
+      expect(wrapper.instance().state.resendEmailAlert).toEqual(true)
     })
   })
 

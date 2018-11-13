@@ -5,7 +5,7 @@ module Api
     def index
       resend_registration_email =
         Users::UserRepository.new.resend_registration_email(
-          params.permit(:email).to_h,
+          params.permit(:id).to_h,
           session[:token]
         )
       render json: resend_registration_email

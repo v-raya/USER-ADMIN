@@ -20,9 +20,9 @@ module Api
         allow(Users::UserRepository).to receive(:new)
           .with(no_args).and_return(user_repository)
         allow(user_repository).to receive(:resend_registration_email)
-          .with({ 'email' => 'no-reply@osi.ca.gov' }, 'token').and_return(200)
+          .with({ 'id' => 'some=id' }, 'token').and_return(200)
         request.session[:token] = 'token'
-        get :index, params: { email: 'no-reply@osi.ca.gov' }
+        get :index, params: { id: 'some=id' }
         expect(response.body).to eq '200'
       end
 
@@ -30,9 +30,9 @@ module Api
         allow(Users::UserRepository).to receive(:new)
           .with(no_args).and_return(user_repository)
         allow(user_repository).to receive(:resend_registration_email)
-          .with({ 'email' => 'no-reply@osi.ca.gov' }, 'token').and_return(404)
+          .with({ 'id' => 'some=id' }, 'token').and_return(404)
         request.session[:token] = 'token'
-        get :index, params: { email: 'no-reply@osi.ca.gov' }
+        get :index, params: { id: 'some=id' }
         expect(response.body).to eq '404'
       end
     end
