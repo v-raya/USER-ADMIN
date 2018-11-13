@@ -5,7 +5,7 @@ SystemInformation.configure do |config|
   config.checks =
     [
       { name: :redis,   url: "redis://#{ENV.fetch('REDIS_HOST', 'localhost')}:#{ENV.fetch('REDIS_PORT', 6379)}" },
-      { name: :perry,   url: "#{ENV.fetch('PERRY_BASE_URL', 'http://localhost/perry')}/system-information" },
-      { name: :dora_api, url: "#{ENV.fetch('DORA_API_URL', 'http://localhost/dora')}/system-information" }
+      { name: :perry,   url: "#{ENV.fetch('PERRY_API_BASE_URL', 'http://localhost/perry')}/system-information" },
+      { name: :dora_api, url: "#{ENV.fetch('BASE_SEARCH_API_URL', 'http://localhost/dora')}/system-information" }
     ]
 end
