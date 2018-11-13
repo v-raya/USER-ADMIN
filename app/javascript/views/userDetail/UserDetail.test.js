@@ -161,6 +161,7 @@ describe('UserDetail', () => {
     it('calls the service to patch the user record', () => {
       instance.onSaveDetails()
       expect(mockSaveUserDetailsActions).toHaveBeenCalledWith('12345', { id: '12345' }, true)
+      expect(mockClearAddedUserDetailActions).toHaveBeenCalledWith()
     })
   })
 

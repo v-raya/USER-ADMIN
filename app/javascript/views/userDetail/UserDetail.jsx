@@ -32,6 +32,7 @@ export default class UserDetail extends Component {
     this.setState({
       resendEmailAlert: false,
     })
+    actions.clearAddedUserDetailActions()
   }
 
   onResendInvite = () => {
