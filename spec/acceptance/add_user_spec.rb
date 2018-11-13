@@ -3,7 +3,6 @@
 require 'acceptance_helper'
 require 'feature'
 require 'axe/rspec'
-require 'pry'
 
 feature 'Add User Page' do
   scenario 'entering valid info and completing the add' do
@@ -22,8 +21,10 @@ feature 'Add User Page' do
     valid_racfid = 'AUTO1I'
     fill_in('CWS Login', with: valid_racfid, match: :prefer_exact)
     click_button 'Verify User'
+    expect(page).to have_content('Add User')
 
-    expect(page).not_to have_selector('.error-message')
+    sleep 1 # seems like we have to sleep to wait for this error to show up
+    expect(page).not_to have_selector('.alert-message')
 
     # we are now cleared to add the user.
 
@@ -36,8 +37,17 @@ feature 'Add User Page' do
 
     expect(page.find('div.success-message').text).to eq(message)
 
+    # Should be able to click the 'edit' button now, but the test becomes unstable in our
+    # environments.
+    # Instead, capture the new user's detail pae and revisit.
+
+    new_user_detail_page = current_url
+    click_link 'User List'
+    visit new_user_detail_page
+
     # Deactivate this user so we can repeat this process next time
-    click_button 'Edit'
+    page.click_button 'Edit'
+
     change_status 'Inactive'
     click_button 'save'
   end

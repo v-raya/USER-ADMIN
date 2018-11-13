@@ -82,33 +82,42 @@ module UserListPageHelper
     expect(valid_roles).to include user_row[:role]
   end
 
-  def users_on_page_with_status(status)
-    page.all(:xpath, "//div[contains(@class,'rt-tr-group')]").to_a.select do |row|
-      row.text.match(/#{status}/)
-    end
-  end
-
   def deactivate_any_active_added_user
     search_users 'Auto'
     # wait for initial results
     page.find('.rt-table').first('.rt-tr-group')
 
     loop do
-      users_on_page_with_status('Active').each do |active_row|
-        deactivate_user active_row
+      puts 'get first active...'
+      active_row = first_active_user_on_page
+      puts "returned from search for first #{active_row}  <<"
+      deactivate_user active_row unless active_row.nil?
+      if active_row.nil?
+        break unless click_next
       end
-      break if click_next == false
     end
     puts 'done deactivating users'
   end
 
   def first_active_user_on_page
-    page.find('.rt-table').first('.rt-tr-group', text: 'Active')
+    find(:xpath, "//div[@class='pagination-top']")
+
+    sleep 1
+    puts "Scrolling page #{current_page_number} of #{total_pages}"
+
+    active_count = page.all(:xpath,
+                            "//div[@class='rt-tr-group']//div[contains(text(), 'Active')]/..").count
+
+    puts "Searched for Active on this page.  Found #{active_count}"
+    return nil if active_count == 0
+
+    page.first(:xpath, "//div[@class='rt-tr-group']//div[contains(text(), 'Active')]/..")
   end
 
   def deactivate_user(active_row)
     active_row.find('a').click
     click_on 'Edit'
+    puts "Deactivating user #{current_url}"
     expect(page).to have_button('Cancel')
     change_status 'Inactive'
     click_button 'save'
@@ -116,8 +125,8 @@ module UserListPageHelper
   end
 
   def click_next
-    top_nav = find(:xpath, "//div[@class='pagination-top']")
-    if has_more_pages?(top_nav)
+    if has_more_pages?
+      top_nav = find(:xpath, "//div[@class='pagination-top']")
       top_nav.find('.-next').find('button').find('span').click
       page.find('.rt-table').first('.rt-tr-group')
       puts 'next user list page'
@@ -127,9 +136,15 @@ module UserListPageHelper
     end
   end
 
-  def has_more_pages?(top_nav)
-    nav_page = top_nav.find('input[type="number"]').value.to_i
-    total_pages = top_nav.find('span.-totalPages').text.to_i
-    nav_page < total_pages
+  def current_page_number
+    find(:xpath, "//div[@class='pagination-top']//input").value.to_i
+  end
+
+  def total_pages
+    find(:xpath, "//div[@class='pagination-top']//span[@class='-totalPages']").text.to_i
+  end
+
+  def has_more_pages?
+    current_page_number < total_pages
   end
 end

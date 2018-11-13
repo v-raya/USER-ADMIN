@@ -3,13 +3,12 @@
 require 'acceptance_helper'
 require 'feature'
 require 'axe/rspec'
+require 'faraday'
 
 feature 'User List Page' do
   scenario 'Can log in' do
     visit ENV['RAILS_RELATIVE_URL_ROOT'] || '/'
     login
-    visit ENV.fetch('RAILS_RELATIVE_URL_ROOT', '') + '/system-information'
-    expect(page.body).to have_content('dora')
   end
 
   scenario 'page is accessible' do
@@ -32,10 +31,6 @@ feature 'User List Page' do
     user1_link = first_user_link
     user2_link = second_user_link
 
-    # TODO: restore this when pre-int and test bubble accounts have users in them which have
-    # roles.
-    # first_user_values = text_values(first_user)
-    # expect_valid_role first_user_values
     puts "We have two links:  #{user1_link.text} and #{user2_link.text}"
 
     last_name = user2_link.text.match(/([^,]*),/)[1]
