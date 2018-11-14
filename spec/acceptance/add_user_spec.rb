@@ -31,21 +31,21 @@ feature 'Add User Page' do
     expect(page).to have_button('Add User')
 
     click_button 'Add User'
-    expect(page).to have_button('Edit')
-    message = "Successfully added new user. Registration email has been sent to #{email_address}"
-    page.evaluate_script('window.location.reload()')
+    page.find('div.success-message')
+    expect(find(:label, 'CWS Login').find(:xpath, './/../span').text).to eq valid_racfid
 
+    message = "Successfully added new user. Registration email has been sent to #{email_address}"
     expect(page.find('div.success-message').text).to eq(message)
 
     # Should be able to click the 'edit' button now, but the test becomes unstable in our
     # environments.
-    # Instead, capture the new user's detail pae and revisit.
-
+    # Instead, capture the new user's detail page URL and revisit.
     new_user_detail_page = current_url
     click_link 'User List'
     visit new_user_detail_page
+    expect(page).to have_button('Edit')
 
-    # Deactivate this user so we can repeat this process next time
+    # Deactivate this user so we can add him again using this process next time
     page.click_button 'Edit'
 
     change_status 'Inactive'
