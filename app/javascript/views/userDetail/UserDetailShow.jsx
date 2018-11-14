@@ -2,7 +2,6 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import Cards from '../../common/Card'
 import ShowField from '../../common/ShowField'
-import { translateOffice } from '../../_constants/constants'
 import { formatPhoneNumberWithExt, checkDate, formatSelectedRoles } from '../../_utils/formatters'
 
 /* eslint camelcase: 0 */
@@ -12,12 +11,12 @@ const UserDetailShow = ({
   onEdit,
   startDate,
   disableEditBtn,
-  officesList,
   rolesList,
   accountStatus,
   userStatus,
   userStatusDescription,
   assignedPermissions,
+  officeName,
 }) => (
   <div className="row">
     <div className="col-md-12">
@@ -35,7 +34,7 @@ const UserDetailShow = ({
               </ShowField>
             </div>
             <div className="col-md-3">
-              <ShowField label="Office Name">{translateOffice(details, officesList)}</ShowField>
+              <ShowField label="Office Name">{officeName}</ShowField>
             </div>
             <div className="col-md-2">
               <ShowField label="CWS Login">{details.racfid}</ShowField>
@@ -96,6 +95,7 @@ const UserDetailShow = ({
 
 UserDetailShow.propTypes = {
   details: PropTypes.object,
+  officeName: PropTypes.string,
   userStatus: PropTypes.string,
   userStatusDescription: PropTypes.string,
   accountStatus: PropTypes.string,
@@ -109,13 +109,6 @@ UserDetailShow.propTypes = {
     })
   ),
   disableEditBtn: PropTypes.bool,
-
-  officesList: PropTypes.arrayOf(
-    PropTypes.shape({
-      office_name: PropTypes.string.isRequired,
-      office_id: PropTypes.string.isRequired,
-    })
-  ),
 }
 
 export default UserDetailShow

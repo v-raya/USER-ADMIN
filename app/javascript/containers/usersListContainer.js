@@ -12,7 +12,8 @@ import {
 } from '../actions/userListActions'
 import { fetchOfficesActions } from '../actions/officesActions'
 import { fetchRolesActions } from '../actions/rolesActions'
-import { officesList, checkOfficeNames } from '../selectors/userListSelector'
+import { checkOfficeNames } from '../selectors/userListSelector'
+import { officesList } from '../selectors/officeListSelector'
 import { rolesList } from '../selectors/rolesListSelector'
 import { clearAddedUserDetailActions } from '../actions/addUserActions'
 

@@ -7,13 +7,7 @@ import Cards from '../../common/Card'
 import ReactTable from 'react-table'
 import Pagination from './Pagination'
 import './UsersList.scss'
-import {
-  toFullName,
-  userStatusFormat,
-  lastLoginDate,
-  officesListToOptions,
-  getOfficeTranslator,
-} from '../../_constants/constants'
+import { toFullName, userStatusFormat, lastLoginDate, getOfficeTranslator } from '../../_constants/constants'
 import { isEqual } from 'lodash'
 import { formatSelectedRoles } from '../../_utils/formatters'
 
@@ -188,7 +182,7 @@ class UserList extends PureComponent {
                       <DropDown
                         id="searchOfficeName"
                         selectedOption={officeNames}
-                        options={officesListToOptions(officesList)}
+                        options={officesList}
                         label="Filter by Office Name"
                         placeholder={`(${officesList.length})`}
                         onChange={selectedOptions =>

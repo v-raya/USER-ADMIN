@@ -23,10 +23,7 @@ describe('reducer', () => {
 
     expect(fetchOffices(state, responseAction)).toEqual({
       fetching: false,
-      offices: {
-        XHRStatus: 'ready',
-        offices: ['Hello', 'Bye'],
-      },
+      offices: ['Hello', 'Bye'],
       error: null,
     })
   })

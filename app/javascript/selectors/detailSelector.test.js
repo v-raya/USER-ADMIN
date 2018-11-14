@@ -10,6 +10,7 @@ import {
   selectPossibleRolesList,
   selectAccountStatus,
   selectAssignedPermissions,
+  officeName,
 } from './detailSelector'
 
 describe('selectors', () => {
@@ -40,6 +41,7 @@ describe('selectors', () => {
     status,
     rolesList,
     permissionList,
+    officeId,
   }) => {
     return {
       fetchDetails: {
@@ -58,6 +60,7 @@ describe('selectors', () => {
               county_name: countyName,
               permissions: assignedPermissions,
               status: status,
+              office_id: officeId,
             },
           },
         },
@@ -67,6 +70,12 @@ describe('selectors', () => {
       },
       fetchRoles: {
         roles: rolesList,
+      },
+      fetchOffices: {
+        offices: [
+          { office_id: 'north', office_name: 'North Office' },
+          { office_id: 'south', office_name: 'South Office' },
+        ],
       },
     }
   }
@@ -122,6 +131,22 @@ describe('selectors', () => {
       it('returns empty string ', () => {
         const state = getState({ startDate: '' })
         expect(selectStartDate(state)).toEqual('')
+      })
+    })
+  })
+
+  describe('#officeName', () => {
+    describe('When officeId exists ', () => {
+      it('returns officeName', () => {
+        const state = getState({ officeId: 'north' })
+        expect(officeName(state)).toEqual('North Office')
+      })
+    })
+
+    describe('When officeId is an empty string', () => {
+      it('returns empty string ', () => {
+        const state = getState({ officeId: '' })
+        expect(officeName(state)).toEqual('')
       })
     })
   })

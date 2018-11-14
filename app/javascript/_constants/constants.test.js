@@ -1,30 +1,6 @@
-import {
-  officesListToOptions,
-  toFullName,
-  userStatusFormat,
-  lastLoginDate,
-  translateOffice,
-  getOfficeTranslator,
-} from './constants'
+import { toFullName, userStatusFormat, lastLoginDate, getOfficeTranslator } from './constants'
 
 describe('helpers', () => {
-  describe('#officesListToOptions', () => {
-    it('renders a offices list', () => {
-      const items = [
-        {
-          office_id: 'office_id_value',
-          office_name: 'offices1',
-        },
-      ]
-      expect(officesListToOptions(items)).toEqual([
-        {
-          value: 'office_id_value',
-          label: 'offices1',
-        },
-      ])
-    })
-  })
-
   describe('toFullName', () => {
     it('renders a full name', () => {
       expect(toFullName({ first_name: 'First', last_name: 'Last' })).toEqual('Last, First')
@@ -51,28 +27,10 @@ describe('helpers', () => {
     })
   })
 
-  describe('#translateOffice', () => {
-    const offices = [
-      { office_id: 'north', office_name: 'North Office' },
-      { office_id: 'south', office_name: 'South Office' },
-    ]
-    it('renders the name of an office given a record containing office_id', () => {
-      expect(translateOffice({ office_id: 'north' }, offices)).toEqual('North Office')
-    })
-
-    it('renders the id if no office was found', () => {
-      expect(translateOffice({ office_id: 'wrong' }, offices)).toEqual('wrong')
-    })
-
-    it('renders a safe message if no office was assigned', () => {
-      expect(translateOffice({ first_name: 'Someone' }, offices)).toEqual('')
-    })
-  })
-
   describe('#getOfficeTranslator', () => {
     const translate = getOfficeTranslator([
-      { office_id: 'north', office_name: 'North Office' },
-      { office_id: 'south', office_name: 'South Office' },
+      { value: 'north', label: 'North Office' },
+      { value: 'south', label: 'South Office' },
     ])
 
     it('returns a translator function which can translate office_ids', () => {

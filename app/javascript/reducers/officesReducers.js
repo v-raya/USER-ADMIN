@@ -13,7 +13,7 @@ function fetchOffices(state = { offices: null, fetching: false }, action) {
       return {
         ...state,
         fetching: false,
-        offices: officesList,
+        offices: officesList.offices,
         error: null,
       }
 

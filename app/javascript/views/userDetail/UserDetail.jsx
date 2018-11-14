@@ -98,7 +98,6 @@ export default class UserDetail extends Component {
     XHRStatus,
     details,
     disableResendEmailButton,
-    officesList,
     rolesList,
     possibleRolesList,
     isRolesDisabled,
@@ -108,7 +107,8 @@ export default class UserDetail extends Component {
     assignedPermissions,
     startDate,
     userStatusDescription,
-    userStatus
+    userStatus,
+    officeName
   ) => {
     return XHRStatus !== 'ready' ? (
       <Cards>
@@ -129,13 +129,13 @@ export default class UserDetail extends Component {
                 permissionsList={permissionsList}
                 onResendInvite={this.onResendInvite}
                 disableResendEmailButton={disableResendEmailButton}
-                officesList={officesList}
                 rolesList={rolesList}
                 possibleRolesList={possibleRolesList}
                 isRolesDisabled={isRolesDisabled}
                 startDate={startDate}
                 userStatusDescription={userStatusDescription}
                 userStatus={userStatus}
+                officeName={officeName}
               />
             ) : (
               <UserDetailShow
@@ -143,13 +143,13 @@ export default class UserDetail extends Component {
                 onEdit={this.onEditClick}
                 permissionsList={permissionsList}
                 disableEditBtn={disableEditBtn}
-                officesList={officesList}
                 rolesList={rolesList}
                 startDate={startDate}
                 accountStatus={accountStatus}
                 assignedPermissions={assignedPermissions}
                 userStatus={userStatus}
                 userStatusDescription={userStatusDescription}
+                officeName={officeName}
               />
             )}
           </div>
@@ -172,7 +172,6 @@ export default class UserDetail extends Component {
       XHRStatus,
       details,
       disableResendEmailButton,
-      officesList,
       rolesList,
       possibleRolesList,
       isRolesDisabled,
@@ -185,6 +184,7 @@ export default class UserDetail extends Component {
       startDate,
       userStatusDescription,
       userStatus,
+      officeName,
     } = this.props
     return (
       <div>
@@ -203,7 +203,6 @@ export default class UserDetail extends Component {
             XHRStatus,
             details,
             disableResendEmailButton,
-            officesList,
             rolesList,
             possibleRolesList,
             isRolesDisabled,
@@ -213,7 +212,8 @@ export default class UserDetail extends Component {
             assignedPermissions,
             startDate,
             userStatusDescription,
-            userStatus
+            userStatus,
+            officeName
           )}
         </div>
       </div>
@@ -247,12 +247,7 @@ UserDetail.propTypes = {
       name: PropTypes.string,
     })
   ),
-  officesList: PropTypes.arrayOf(
-    PropTypes.shape({
-      office_name: PropTypes.string.isRequired,
-      office_id: PropTypes.string.isRequired,
-    })
-  ),
+  officeName: PropTypes.string,
   isRolesDisabled: PropTypes.bool,
   displayAlert: PropTypes.bool,
   disableActionBtn: PropTypes.bool,

@@ -1,4 +1,4 @@
-import { selectNewUserRecords } from './validateNewUserSelector'
+import { selectNewUserRecords, officeName } from './validateNewUserSelector'
 
 describe('selectors', () => {
   describe('#selectNewUserRecords', () => {
@@ -100,6 +100,39 @@ describe('selectors', () => {
       }
       expect(selectNewUserRecords(state)).toEqual({
         roles: ['CWS-worker'],
+      })
+    })
+  })
+
+  describe('#officeName', () => {
+    const getState = officeId => {
+      return {
+        validateNewUser: {
+          verifyUserDetails: {
+            user: {
+              office_id: officeId,
+            },
+          },
+        },
+        fetchOffices: {
+          offices: [
+            { office_id: 'north', office_name: 'North Office' },
+            { office_id: 'south', office_name: 'South Office' },
+          ],
+        },
+      }
+    }
+    describe('When officeId exists ', () => {
+      it('returns officeName', () => {
+        const state = getState('north')
+        expect(officeName(state)).toEqual('North Office')
+      })
+    })
+
+    describe('When officeId is an empty string', () => {
+      it('returns empty string ', () => {
+        const state = getState('')
+        expect(officeName(state)).toEqual('')
       })
     })
   })

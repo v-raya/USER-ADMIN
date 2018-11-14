@@ -92,7 +92,7 @@ export default class AddUser extends Component {
           onAddUser={this.onAddUser}
           email={this.state.email}
           racfid={this.state.racfid}
-          officesList={this.props.officesList}
+          officeName={this.props.officeName}
         />
       )
     }
@@ -134,13 +134,8 @@ AddUser.propTypes = {
   permissionRoles: PropTypes.any,
   details: PropTypes.any,
   id: PropTypes.string,
+  officeName: PropTypes.string,
   validateNewUserError: PropTypes.object,
-  officesList: PropTypes.arrayOf(
-    PropTypes.shape({
-      office_name: PropTypes.string.isRequired,
-      office_id: PropTypes.string.isRequired,
-    })
-  ),
 }
 
 AddUser.defaultProps = {

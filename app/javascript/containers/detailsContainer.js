@@ -11,6 +11,7 @@ import {
   selectAssignedPermissions,
   userStatus,
   userStatusDescription,
+  officeName,
 } from '../selectors/detailSelector'
 import { permissionsList } from '../selectors/permissionsListSelector'
 import { rolesList } from '../selectors/rolesListSelector'
@@ -26,7 +27,6 @@ import { fetchPermissionsActions } from '../actions/permissionsActions'
 import { fetchRolesActions } from '../actions/rolesActions'
 import { resendRegistrationEmailActions } from '../actions/resendRegistrationEmailActions'
 import { bindActionCreators } from 'redux'
-import { officesList } from '../selectors/userListSelector'
 import { addUserRecords } from '../selectors/addUserSelector'
 import { clearAddedUserDetailActions } from '../actions/addUserActions'
 
@@ -48,11 +48,11 @@ function mapStateToProps(state) {
     userDetailError: state.fetchDetails.saveDetailsError,
     resendEmailStatus: selectResendEmailStatus(state),
     disableResendEmailButton: disableResendEmailButton(state),
-    officesList: officesList(state),
     isRolesDisabled: disableRolesDropDown(state),
     disableActionBtn: state.fetchDetails.disableActionBtn,
     startDate: selectStartDate(state),
     assignedPermissions: selectAssignedPermissions(state),
+    officeName: officeName(state),
   }
 }
 

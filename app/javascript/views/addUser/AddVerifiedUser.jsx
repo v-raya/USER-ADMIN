@@ -4,11 +4,10 @@ import Cards from '../../common/Card'
 import { Alert } from 'react-wood-duck'
 import ShowField from '../../common/ShowField'
 import { formatPhoneNumberWithExt } from '../../_utils/formatters'
-import { translateOffice } from '../../_constants/constants'
 
 /* eslint camelcase: 0 */
 
-const AddNewUser = ({ onAddUser, verifyNewUserDetails, officesList }) => {
+const AddNewUser = ({ onAddUser, verifyNewUserDetails, officeName }) => {
   return (
     <div>
       {verifyNewUserDetails.verification_passed ? (
@@ -34,7 +33,7 @@ const AddNewUser = ({ onAddUser, verifyNewUserDetails, officesList }) => {
                     </ShowField>
                   </div>
                   <div className="col-md-3">
-                    <ShowField label="Office Name">{translateOffice(verifyNewUserDetails.user, officesList)}</ShowField>
+                    <ShowField label="Office Name">{officeName}</ShowField>
                   </div>
                   <div className="col-md-3">
                     <ShowField label="CWS Login">{verifyNewUserDetails.user.racfid}</ShowField>
@@ -78,12 +77,7 @@ AddNewUser.propTypes = {
   verifyNewUserDetails: PropTypes.object,
   email: PropTypes.string,
   racfid: PropTypes.string,
-  officesList: PropTypes.arrayOf(
-    PropTypes.shape({
-      office_name: PropTypes.string.isRequired,
-      office_id: PropTypes.string.isRequired,
-    })
-  ),
+  officeName: PropTypes.string,
 }
 
 export default AddNewUser

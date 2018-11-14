@@ -3,7 +3,6 @@ import {
   isLoading,
   getSearchParams,
   getSerializedSearchParams,
-  officesList,
   checkOfficeNames,
 } from './userListSelector'
 
@@ -78,28 +77,6 @@ describe('selectors', () => {
       let parsed
       expect(() => (parsed = JSON.parse(decodeURIComponent(serialized)))).not.toThrow()
       expect(parsed).toEqual({ size: 20, from: 40 })
-    })
-  })
-
-  describe('#officesList', () => {
-    it('selects the offices when available', () => {
-      const expectedValue = [{ office_name: 'foo-name' }, { office_name: 'bar-name' }]
-      const state = {
-        fetchOffices: {
-          offices: {
-            XHRStatus: 'ready',
-            offices: [{ office_name: 'foo-name' }, { office_name: 'bar-name' }],
-          },
-        },
-      }
-      expect(officesList(state)).toEqual(expectedValue)
-    })
-
-    it('returns empty array when offices are not available', () => {
-      const state = {
-        fetchOffices: {},
-      }
-      expect(officesList(state)).toEqual([])
     })
   })
 

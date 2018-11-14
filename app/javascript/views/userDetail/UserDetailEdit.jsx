@@ -4,7 +4,7 @@ import Cards from '../../common/Card'
 import ShowField from '../../common/ShowField'
 import { Button } from 'react-wood-duck'
 import DropDown from '../../common/DropDown'
-import { STATUS, translateOffice } from '../../_constants/constants'
+import { STATUS } from '../../_constants/constants'
 import { checkDate, formatPhoneNumberWithExt } from '../../_utils/formatters'
 
 /* eslint camelcase: 0 */
@@ -17,13 +17,13 @@ const UserDetailEdit = ({
   disableActionBtn,
   permissionsList,
   onResendInvite,
-  officesList,
   possibleRolesList,
   isRolesDisabled,
   onDropDownChange,
   startDate,
   userStatus,
   userStatusDescription,
+  officeName,
 }) => (
   <div className="row">
     <div className="col-md-12">
@@ -45,7 +45,7 @@ const UserDetailEdit = ({
               </ShowField>
             </div>
             <div className="col-md-3">
-              <ShowField label="Office Name">{translateOffice(details, officesList)}</ShowField>
+              <ShowField label="Office Name">{officeName}</ShowField>
             </div>
             <div className="col-md-2">
               <ShowField label="CWS Login">{details.racfid}</ShowField>
@@ -143,6 +143,7 @@ const UserDetailEdit = ({
 )
 
 UserDetailEdit.propTypes = {
+  officeName: PropTypes.string,
   details: PropTypes.object,
   onCancel: PropTypes.func,
   startDate: PropTypes.string,
@@ -158,12 +159,6 @@ UserDetailEdit.propTypes = {
   onResendInvite: PropTypes.func,
   disableResendEmailButton: PropTypes.bool,
   possibleRolesList: PropTypes.array,
-  officesList: PropTypes.arrayOf(
-    PropTypes.shape({
-      office_name: PropTypes.string.isRequired,
-      office_id: PropTypes.string.isRequired,
-    })
-  ),
   rolesList: PropTypes.arrayOf(
     PropTypes.shape({
       id: PropTypes.string,

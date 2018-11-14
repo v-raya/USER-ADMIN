@@ -2,6 +2,7 @@ import safeGet from 'lodash.get'
 import { formatDate } from '../_utils/formatters'
 import { rolesList } from './rolesListSelector'
 import { permissionsList } from './permissionsListSelector'
+import { translateOfficeName } from './officeListSelector'
 
 export const selectUserDetailObject = state => {
   const usersObject = state.fetchDetails ? state.fetchDetails.details : null
@@ -87,4 +88,9 @@ export const userStatus = state => {
     FORCE_CHANGE_PASSWORD: 'Registration Incomplete',
   }
   return userText[userStatus] || ''
+}
+
+export const officeName = state => {
+  const officeId = safeGet(state, 'fetchDetails.details.records.user.office_id')
+  return translateOfficeName(state, officeId)
 }
