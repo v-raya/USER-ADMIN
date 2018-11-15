@@ -163,7 +163,6 @@ describe('UserDetail', () => {
       instance.onSaveDetails()
       expect(mockSaveUserDetailsActions).toHaveBeenCalledWith('12345', { id: '12345' }, true)
       expect(mockClearAddedUserDetailActions).toHaveBeenCalledWith()
-      expect(mockFetchDetailsActions).toHaveBeenCalledWith('12345')
     })
   })
 

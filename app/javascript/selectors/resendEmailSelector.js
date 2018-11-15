@@ -1,13 +1,13 @@
 import safeGet from 'lodash.get'
 
 export const selectResendEmailStatus = state => {
-  const resendEmail = state.resendRegistrationEmail ? state.resendRegistrationEmail.resendEmailStatus : null
+  const resendEmail = state.fetchDetails ? state.fetchDetails.resendEmailStatus : null
   const statusMessage = resendEmail === 200 ? 'Success' : 'Failure'
   return statusMessage
 }
 
 export const selectResendEmailUserId = state => {
-  const userId = state.resendRegistrationEmail ? state.resendRegistrationEmail.resendEmailUserId : null
+  const userId = state.fetchDetails ? state.fetchDetails.resendEmailUserId : null
   return userId
 }
 

@@ -5,7 +5,6 @@ import fetchPermissions from './permissionsReducers'
 import fetchOffices from './officesReducers'
 import validateNewUser from './validateNewUserReducer'
 import addUser from './addUserReducers'
-import resendRegistrationEmail from './resendRegistrationEmailReducers'
 import fetchRoles from './rolesReducers'
 const reducer = combineReducers({
   userList,
@@ -14,7 +13,6 @@ const reducer = combineReducers({
   fetchOffices,
   validateNewUser,
   addUser,
-  resendRegistrationEmail,
   fetchRoles,
 })
 

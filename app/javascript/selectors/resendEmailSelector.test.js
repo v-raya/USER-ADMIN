@@ -3,7 +3,7 @@ import { selectResendEmailStatus, disableResendEmailButton, selectResendEmailUse
 describe('#selectDetailRecords', () => {
   it('returns the statusMessage as Success', () => {
     const state = {
-      resendRegistrationEmail: {
+      fetchDetails: {
         resendEmailStatus: 200,
       },
     }
@@ -12,16 +12,16 @@ describe('#selectDetailRecords', () => {
 
   it('returns the statusMessage as Failure', () => {
     const state = {
-      resendRegistrationEmail: {
+      fetchDetails: {
         resendEmailStatus: 500,
       },
     }
     expect(selectResendEmailStatus(state)).toEqual('Failure')
   })
 
-  it('returns failure when resendRegistrationEmail is not available', () => {
+  it('returns failure when fetchDetails is not available', () => {
     const state = {
-      resendRegistrationEmail: {},
+      fetchDetails: {},
     }
     expect(selectResendEmailStatus(state)).toEqual('Failure')
   })
@@ -35,7 +35,7 @@ describe('#selectDetailRecords', () => {
 describe('#selectResendEmailUserId', () => {
   it('returns resendEmailUserId', () => {
     const state = {
-      resendRegistrationEmail: {
+      fetchDetails: {
         resendEmailUserId: 'id1',
       },
     }
@@ -58,10 +58,6 @@ describe('#disableResendEmailButton', () => {
             user: { id: 'id1' },
           },
         },
-        fetching: false,
-        error: null,
-      },
-      resendRegistrationEmail: {
         resendEmailUserId: ['id1', 'id2'],
         resendEmailStatus: 200,
         fetching: false,
@@ -80,10 +76,6 @@ describe('#disableResendEmailButton', () => {
             user: { id: 'id1' },
           },
         },
-        fetching: false,
-        error: null,
-      },
-      resendRegistrationEmail: {
         resendEmailUserId: [],
         resendEmailStatus: 200,
         fetching: false,
@@ -102,10 +94,6 @@ describe('#disableResendEmailButton', () => {
             user: { id: 'id1' },
           },
         },
-        fetching: false,
-        error: null,
-      },
-      resendRegistrationEmail: {
         resendEmailUserId: ['id3', 'id2'],
         resendEmailStatus: 200,
         fetching: false,

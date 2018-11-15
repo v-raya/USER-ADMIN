@@ -29,7 +29,6 @@ export default class UserDetail extends Component {
   onSaveDetails = () => {
     const { details, isRolesDisabled, match, actions } = this.props
     actions.saveUserDetailsActions(match.params.id, details, isRolesDisabled)
-    this.props.actions.fetchDetailsActions(this.props.match.params.id)
     this.setState({
       resendEmailAlert: false,
     })
