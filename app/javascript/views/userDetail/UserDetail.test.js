@@ -132,6 +132,7 @@ describe('UserDetail', () => {
     it('calls the appropriate function', () => {
       instance.onCancel()
       expect(mockHandleEditButtonChangeAction).toHaveBeenCalledWith(false)
+      expect(mockFetchDetailsActions).toHaveBeenCalledWith('12345')
     })
   })
 
@@ -162,6 +163,7 @@ describe('UserDetail', () => {
       instance.onSaveDetails()
       expect(mockSaveUserDetailsActions).toHaveBeenCalledWith('12345', { id: '12345' }, true)
       expect(mockClearAddedUserDetailActions).toHaveBeenCalledWith()
+      expect(mockFetchDetailsActions).toHaveBeenCalledWith('12345')
     })
   })
 

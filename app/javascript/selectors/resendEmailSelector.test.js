@@ -55,7 +55,7 @@ describe('#disableResendEmailButton', () => {
         details: {
           XHRStatus: 'ready',
           records: {
-            user: { email: 'id1' },
+            user: { id: 'id1' },
           },
         },
         fetching: false,

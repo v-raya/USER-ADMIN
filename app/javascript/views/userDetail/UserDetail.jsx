@@ -29,6 +29,7 @@ export default class UserDetail extends Component {
   onSaveDetails = () => {
     const { details, isRolesDisabled, match, actions } = this.props
     actions.saveUserDetailsActions(match.params.id, details, isRolesDisabled)
+    this.props.actions.fetchDetailsActions(this.props.match.params.id)
     this.setState({
       resendEmailAlert: false,
     })
@@ -46,6 +47,7 @@ export default class UserDetail extends Component {
 
   onCancel = () => {
     this.props.actions.handleEditButtonChangeAction(false)
+    this.props.actions.fetchDetailsActions(this.props.match.params.id)
     this.props.actions.clearAddedUserDetailActions()
     this.setState({ resendEmailAlert: false })
   }

@@ -12,7 +12,7 @@ export const selectResendEmailUserId = state => {
 }
 
 export const disableResendEmailButton = state => {
-  const userDetailsId = safeGet(state, 'fetchDetails.details.records.user.email')
+  const userDetailsId = safeGet(state, 'fetchDetails.details.records.user.id')
   const resendEmailUserId = selectResendEmailUserId(state)
   let index = -1
   if (resendEmailUserId && resendEmailUserId.length > 0 && userDetailsId) {
