@@ -33,28 +33,22 @@ feature 'User Edit' do
     check_accessibility
   end
 
-  scenario 'user_details edit/save' do
+  scenario 'user_details edit/save successfully' do
     login
     page_has_user_list_headers
     sleep 2
+    user_name = first_user_link.text
     first_user_link.click
     page_is_user_details
+
+    original_account_status = detail_page_value('Account Status')
 
     click_on('Edit')
-    find('.cancel').click
-    page_is_user_details
-    click_link 'User List'
-    page_has_user_list_headers
 
-    first_user_link.click
-
-    page_is_user_details
-
-    original_account_status = details_account_status
     new_status = (original_account_status == 'Active' ? 'Inactive' : 'Active')
-    click_on('Edit')
-    page_is_user_details
+    expect(detail_page_value('Full Name')).to eq user_name
     sleep 5 # wait for things to load?
+
     expect(page).to have_button('save', disabled: true)
     expect(page).to have_button('Cancel', disabled: false)
 
