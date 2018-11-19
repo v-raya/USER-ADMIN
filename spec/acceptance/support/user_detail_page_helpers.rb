@@ -26,6 +26,10 @@ module UserDetailPageHelper
     permissions_select.find(:xpath, ".//*[contains(text(), '#{permission}')]").click
   end
 
+  def detail_page_value(label_name)
+    find(:xpath, "//label[contains(text(),'" + label_name + "')]/following-sibling::span").text
+  end
+
   def change_status(new_status)
     # find the status selectbox and drop it down
 
@@ -48,6 +52,10 @@ module UserDetailPageHelper
   def details_account_status
     find(:xpath,
          "//label[contains(text(),'Account Status')]/following-sibling::span").text
+  end
+
+  def resend_registration_email_success
+    expect(page).to have_content('Registration email has been sent successfully')
   end
 
   private
