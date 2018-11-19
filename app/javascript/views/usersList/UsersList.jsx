@@ -293,6 +293,7 @@ UserList.propTypes = {
   lastName: PropTypes.string,
   inputData: PropTypes.object,
   rolesList: PropTypes.array,
+  includeInactive: PropTypes.bool,
 }
 
 UserList.defaultProps = {
