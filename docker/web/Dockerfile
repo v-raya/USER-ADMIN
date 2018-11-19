@@ -1,4 +1,4 @@
-FROM ratneshraval/cals-base:0.8
+FROM cwds/ruby:11
 ENV ENVIRONMENT_REFRESH=2017-10-11 \
   RAILS_RELATIVE_URL_ROOT=/cap
 
