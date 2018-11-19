@@ -54,6 +54,10 @@ module UserDetailPageHelper
          "//label[contains(text(),'Account Status')]/following-sibling::span").text
   end
 
+  def resend_registration_email_success
+    expect(page).to have_content('Registration email has been sent successfully')
+  end
+
   private
 
   def permissions_select

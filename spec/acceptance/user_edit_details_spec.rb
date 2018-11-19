@@ -135,4 +135,22 @@ feature 'User Edit' do
     expect(changed_new_status.text)
       .to eq(new_status)
   end
+
+  scenario 'if user is confirmed there is no resend invite button' do
+    login
+    search_users 'Auto'
+    page_has_user_list_headers
+    sleep 2
+
+    get_user_link(0).click
+
+    page_is_user_details
+
+    expect(detail_page_value('User Status'))
+      .to eq('Confirmed User has been confirmed.')
+
+    click_on('Edit')
+
+    expect(page).to have_no_button('Resend Invite')
+  end
 end
