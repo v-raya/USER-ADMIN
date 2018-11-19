@@ -27,6 +27,7 @@ class UserList extends PureComponent {
     this.props.actions.setSearch([
       { field: 'last_name', value: this.props.lastName },
       { field: 'office_ids', value: this.props.officeNames },
+      { field: 'enabled', value: !this.props.includeInactive },
     ])
     this.props.actions.setPage(Math.floor(this.props.from / this.props.size))
     this.props.actions.clearAddedUserDetailActions()
@@ -37,6 +38,7 @@ class UserList extends PureComponent {
       this.props.actions.setSearch([
         { field: 'last_name', value: this.props.lastName },
         { field: 'office_ids', value: this.props.officeNames },
+        { field: 'enabled', value: !this.props.includeInactive },
       ])
     }
   }
@@ -47,6 +49,11 @@ class UserList extends PureComponent {
 
   handleCheckBoxChange = () => {
     this.props.actions.handleCheckBoxChangeActions()
+    this.props.actions.setSearch([
+      { field: 'last_name', value: this.props.lastName },
+      { field: 'office_ids', value: this.props.officeNames },
+      { field: 'enabled', value: this.props.includeInactive },
+    ])
   }
 
   handlePageChange = pageIndex => {
@@ -68,6 +75,7 @@ class UserList extends PureComponent {
     this.props.actions.setSearch([
       { field: 'last_name', value: this.props.lastName },
       { field: 'office_ids', value: this.props.officeNames },
+      { field: 'enabled', value: !this.props.includeInactive },
     ])
   }
 

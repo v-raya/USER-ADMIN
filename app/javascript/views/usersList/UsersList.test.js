@@ -13,6 +13,7 @@ describe('UsersList', () => {
   let mockHandleSearchChange
   let mockClearAddedUserDetailActions
   let mockHandleCheckBoxChangeActions
+  let mockSetSearchActions
 
   const query = [
     {
@@ -23,6 +24,7 @@ describe('UsersList', () => {
       field: 'office_ids',
       value: ['north', 'south', 'east', 'west'],
     },
+    { field: 'enabled', value: true },
   ]
 
   beforeEach(() => {
@@ -33,6 +35,7 @@ describe('UsersList', () => {
     mockSetOfficesListAction = jest.fn().mockReturnValue(Promise.resolve([]))
     mockHandleSearchChange = jest.fn().mockReturnValue(Promise.resolve([]))
     mockClearAddedUserDetailActions = jest.fn().mockReturnValue(Promise.resolve([]))
+    mockSetSearchActions = jest.fn().mockReturnValue(Promise.resolve([]))
     mockHandleCheckBoxChangeActions = jest.fn()
 
     wrapper = shallow(
@@ -47,6 +50,7 @@ describe('UsersList', () => {
           handleSearchChange: mockHandleSearchChange,
           clearAddedUserDetailActions: mockClearAddedUserDetailActions,
           handleCheckBoxChangeActions: mockHandleCheckBoxChangeActions,
+          setSearch: mockSetSearchActions,
         }}
         countyName="SomeCountyName"
         query={query}
@@ -120,7 +124,6 @@ describe('UsersList', () => {
 
   describe('#submitSearch', () => {
     it('calls the setSearch Actions', () => {
-      const mockSetSearchActions = jest.fn().mockReturnValue(Promise.resolve([]))
       const wrapperLocal = shallow(
         <UsersList
           dashboardUrl={'dburl'}
@@ -162,8 +165,20 @@ describe('UsersList', () => {
 
   describe('#handleCheckBoxChange', () => {
     it('calls the handleCheckBoxChange Actions', () => {
+      const query = [
+        {
+          field: 'last_name',
+          value: '',
+        },
+        {
+          field: 'office_ids',
+          value: [],
+        },
+        { field: 'enabled', value: false },
+      ]
       wrapper.instance().handleCheckBoxChange()
       expect(mockHandleCheckBoxChangeActions).toHaveBeenCalledWith()
+      expect(mockSetSearchActions).toHaveBeenCalledWith(query)
     })
   })
 
@@ -294,6 +309,7 @@ describe('UsersList', () => {
       expect(mockSetSearch).toHaveBeenCalledWith([
         { field: 'last_name', value: 'some_value' },
         { field: 'office_ids', value: ['north'] },
+        { field: 'enabled', value: true },
       ])
     })
 
@@ -364,6 +380,7 @@ describe('UsersList', () => {
       expect(mockSetSearch).toHaveBeenCalledWith([
         { field: 'last_name', value: 'some_value' },
         { field: 'office_ids', value: ['north'] },
+        { field: 'enabled', value: true },
       ])
     })
 
