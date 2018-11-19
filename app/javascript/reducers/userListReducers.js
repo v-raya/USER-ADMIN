@@ -27,6 +27,7 @@ const initialValue = {
   countyName: '',
   userFirstName: '',
   userLastName: '',
+  includeInactive: false,
 }
 
 function userListReducer(state = initialValue, { type, payload, error, meta }) {
@@ -75,6 +76,13 @@ function userListReducer(state = initialValue, { type, payload, error, meta }) {
           [payload.key]: payload.value,
         },
       }
+
+    case actionTypes.HANDLE_CHECKBOX_CHANGE: {
+      return {
+        ...state,
+        includeInactive: !state.includeInactive,
+      }
+    }
 
     case actionTypes.USER_LIST_SET_SEARCH: {
       const query = payload

@@ -145,6 +145,17 @@ describe('reducer', () => {
     expect(after.inputData).toEqual({ lastName: 'newLastName' })
   })
 
+  it('handles checkbox change', () => {
+    const before = {
+      includeInactive: false,
+    }
+    const action = {
+      type: actionTypes.HANDLE_CHECKBOX_CHANGE,
+    }
+    const after = reducer(before, action)
+    expect(after.includeInactive).toBeTruthy()
+  })
+
   it('handles search criteria updates', () => {
     const myQuery = [{ field: 'haystack', value: 'needle' }]
     const state = reducer(

@@ -12,6 +12,7 @@ describe('UsersList', () => {
   let mockSetOfficesListAction
   let mockHandleSearchChange
   let mockClearAddedUserDetailActions
+  let mockHandleCheckBoxChangeActions
 
   const query = [
     {
@@ -32,6 +33,7 @@ describe('UsersList', () => {
     mockSetOfficesListAction = jest.fn().mockReturnValue(Promise.resolve([]))
     mockHandleSearchChange = jest.fn().mockReturnValue(Promise.resolve([]))
     mockClearAddedUserDetailActions = jest.fn().mockReturnValue(Promise.resolve([]))
+    mockHandleCheckBoxChangeActions = jest.fn()
 
     wrapper = shallow(
       <UsersList
@@ -44,9 +46,11 @@ describe('UsersList', () => {
           setOfficesList: mockSetOfficesListAction,
           handleSearchChange: mockHandleSearchChange,
           clearAddedUserDetailActions: mockClearAddedUserDetailActions,
+          handleCheckBoxChangeActions: mockHandleCheckBoxChangeActions,
         }}
         countyName="SomeCountyName"
         query={query}
+        includeInactive={false}
       />,
       {
         disableLifecycleMethods: true,
@@ -132,6 +136,7 @@ describe('UsersList', () => {
           query={query}
           lastName="last_name_value"
           officeNames={['north', 'south', 'east', 'west']}
+          includeInactive={false}
         />
       )
       const event = { preventDefault: () => {} }
@@ -152,6 +157,13 @@ describe('UsersList', () => {
       ]
       wrapper.instance().handleSortChange(newSorted, column, shiftKey)
       expect(mockSetSortActions).toHaveBeenCalledWith([{ desc: 'someValue', field: 'someId' }])
+    })
+  })
+
+  describe('#handleCheckBoxChange', () => {
+    it('calls the handleCheckBoxChange Actions', () => {
+      wrapper.instance().handleCheckBoxChange()
+      expect(mockHandleCheckBoxChangeActions).toHaveBeenCalledWith()
     })
   })
 
@@ -182,6 +194,7 @@ describe('UsersList', () => {
           query={query}
           lastName="last_name_value"
           officeNames={['somevalue']}
+          includeInactive={false}
         />
       )
       expect(component.instance().isDisabledSearchBtn()).toEqual(true)
@@ -203,6 +216,7 @@ describe('UsersList', () => {
           query={query}
           lastName="new_last_name"
           officeNames={['new_value']}
+          includeInactive={false}
         />
       )
       expect(component.instance().isDisabledSearchBtn()).toEqual(false)
@@ -270,6 +284,7 @@ describe('UsersList', () => {
           inputData={{ officeNames: ['north'] }}
           loggedInUserAccount={{ county_name: 'SomeCountyName' }}
           selectedOfficesList={['somevalue']}
+          includeInactive={false}
         />
       )
     })
@@ -336,6 +351,7 @@ describe('UsersList', () => {
           lastName="some_value"
           officeNames={['north']}
           inputData={{ officeNames: ['north'] }}
+          includeInactive={false}
         />
       )
     })
@@ -385,6 +401,7 @@ describe('UsersList', () => {
             },
           ]}
           selectedOfficesList={['somevalue']}
+          includeInactive={false}
         />
       )
 

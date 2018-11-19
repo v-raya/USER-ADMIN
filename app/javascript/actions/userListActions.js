@@ -57,3 +57,7 @@ export const setSort = sort => ({
   payload: sort,
   type: actionTypes.USER_LIST_SET_SORT,
 })
+
+export const handleCheckBoxChangeActions = () => ({
+  type: actionTypes.HANDLE_CHECKBOX_CHANGE,
+})

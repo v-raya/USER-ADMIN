@@ -9,6 +9,7 @@ import {
   setSearch,
   handleSearchChange,
   fetchAccountActions,
+  handleCheckBoxChangeActions,
 } from '../actions/userListActions'
 import { fetchOfficesActions } from '../actions/officesActions'
 import { fetchRolesActions } from '../actions/rolesActions'
@@ -37,6 +38,7 @@ function mapStateToProps(state) {
     lastName: userList.inputData.lastName,
     officeNames: checkOfficeNames(userList.inputData.officeNames),
     rolesList: rolesList(state),
+    includeInactive: userList.includeInactive,
   }
 }
 
@@ -54,6 +56,7 @@ function mapDispatchToProps(dispatch) {
         handleSearchChange,
         fetchRolesActions,
         clearAddedUserDetailActions,
+        handleCheckBoxChangeActions,
       },
       dispatch
     ),

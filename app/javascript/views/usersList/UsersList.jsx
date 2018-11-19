@@ -2,6 +2,7 @@ import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 import { Link, Redirect } from 'react-router-dom'
 import { Link as LinkRWD, InputComponent, PageHeader, Alert } from 'react-wood-duck'
+import CheckboxBank from '@cwds/components/lib/CheckboxBank'
 import DropDown from '../../common/DropDown'
 import Cards from '../../common/Card'
 import ReactTable from 'react-table'
@@ -42,6 +43,10 @@ class UserList extends PureComponent {
 
   handleOnAdd = () => {
     this.setState({ addUser: true })
+  }
+
+  handleCheckBoxChange = () => {
+    this.props.actions.handleCheckBoxChangeActions()
   }
 
   handlePageChange = pageIndex => {
@@ -193,6 +198,15 @@ class UserList extends PureComponent {
                       />
                     </div>
                     <div className="col-md-6 col-sm-6">
+                      <div style={{ float: 'right' }}>
+                        <CheckboxBank
+                          label="Include Inactive"
+                          options={[{ label: 'Include Inactive', value: 'true' }]}
+                          value={[this.props.includeInactive.toString()]}
+                          name="status"
+                          onChange={this.handleCheckBoxChange}
+                        />
+                      </div>
                       <InputComponent
                         label="Search user list"
                         id="searchLastName"
