@@ -17,7 +17,7 @@ describe('UserService', () => {
       getSearchSpy23 = jest.spyOn(ApiService, 'get')
     })
 
-    it('calls #search ApiService when query is empty', () => {
+    it('calls #search ApiService', () => {
       const q = encodeURIComponent(
         JSON.stringify({
           query: [],
