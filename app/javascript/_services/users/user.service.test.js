@@ -45,7 +45,10 @@ describe('UserService', () => {
       ]
 
       UserService.search({ query })
-      expect(query[2].value).toEqual('true')
+      const enabledQuery = query.find(obj => {
+        return obj.field === 'enabled';
+      });
+      expect(enabledQuery.value).toEqual('true')
     })
   })
 
