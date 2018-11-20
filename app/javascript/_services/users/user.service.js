@@ -6,6 +6,9 @@ class UserService {
   }
 
   static search({ query = [], sort = [], size = 10, from = 0 }) {
+    if (query.length > 0) {
+      query[2].value = query[2].value.toString()
+    }
     const q = encodeURIComponent(
       JSON.stringify({
         query,

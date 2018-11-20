@@ -142,9 +142,55 @@ describe('UsersList', () => {
           includeInactive={false}
         />
       )
+      const newQuery = [
+        {
+          field: 'last_name',
+          value: 'last_name_value',
+        },
+        {
+          field: 'office_ids',
+          value: ['east', 'north', 'south', 'west'],
+        },
+        { field: 'enabled', value: true },
+      ]
       const event = { preventDefault: () => {} }
       wrapperLocal.instance().submitSearch(event)
-      expect(mockSetSearchActions).toHaveBeenCalledWith(query)
+      expect(mockSetSearchActions).toHaveBeenCalledWith(newQuery)
+    })
+
+    it('calls the setSearch Actions with includeInactive props as true', () => {
+      const wrapperLocal = shallow(
+        <UsersList
+          dashboardUrl={'dburl'}
+          actions={{
+            searchUsers: () => {},
+            fetchAccountActions: () => {},
+            fetchOfficesActions: () => {},
+            fetchRolesActions: () => {},
+            setPage: () => {},
+            clearAddedUserDetailActions: () => {},
+            setSearch: mockSetSearchActions,
+          }}
+          query={query}
+          lastName="last_name_value"
+          officeNames={['north', 'south', 'east', 'west']}
+          includeInactive={true}
+        />
+      )
+      const newQuery = [
+        {
+          field: 'last_name',
+          value: 'last_name_value',
+        },
+        {
+          field: 'office_ids',
+          value: ['east', 'north', 'south', 'west'],
+        },
+        { field: 'enabled', value: '' },
+      ]
+      const event = { preventDefault: () => {} }
+      wrapperLocal.instance().submitSearch(event)
+      expect(mockSetSearchActions).toHaveBeenCalledWith(newQuery)
     })
   })
 
@@ -164,7 +210,7 @@ describe('UsersList', () => {
   })
 
   describe('#handleCheckBoxChange', () => {
-    it('calls the handleCheckBoxChange Actions', () => {
+    it('calls the handleCheckBoxChange Actions with includeInactive props as false', () => {
       const query = [
         {
           field: 'last_name',
@@ -174,8 +220,26 @@ describe('UsersList', () => {
           field: 'office_ids',
           value: [],
         },
-        { field: 'enabled', value: false },
+        { field: 'enabled', value: '' },
       ]
+      wrapper.instance().handleCheckBoxChange()
+      expect(mockHandleCheckBoxChangeActions).toHaveBeenCalledWith()
+      expect(mockSetSearchActions).toHaveBeenCalledWith(query)
+    })
+
+    it('calls the handleCheckBoxChange Actions with includeInactive props as true ', () => {
+      const query = [
+        {
+          field: 'last_name',
+          value: '',
+        },
+        {
+          field: 'office_ids',
+          value: [],
+        },
+        { field: 'enabled', value: true },
+      ]
+      wrapper.setProps({ includeInactive: true })
       wrapper.instance().handleCheckBoxChange()
       expect(mockHandleCheckBoxChangeActions).toHaveBeenCalledWith()
       expect(mockSetSearchActions).toHaveBeenCalledWith(query)

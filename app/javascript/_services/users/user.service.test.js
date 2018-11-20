@@ -17,7 +17,7 @@ describe('UserService', () => {
       getSearchSpy23 = jest.spyOn(ApiService, 'get')
     })
 
-    it('calls #search ApiService', () => {
+    it('calls #search ApiService when query is empty', () => {
       const q = encodeURIComponent(
         JSON.stringify({
           query: [],
@@ -29,6 +29,23 @@ describe('UserService', () => {
       getSearchSpy23.mockReturnValue(Promise.resolve({}))
       UserService.search(q)
       expect(getSearchSpy23).toHaveBeenCalledWith(`/user_list?q=${q}`)
+    })
+
+    it('checks if enabled parameter value is converted to string when query is not empty', () => {
+      const query = [
+        {
+          field: 'last_name',
+          value: 'last_name_value',
+        },
+        {
+          field: 'office_ids',
+          value: ['north', 'south', 'east', 'west'],
+        },
+        { field: 'enabled', value: true },
+      ]
+
+      UserService.search({ query })
+      expect(query[2].value).toEqual('true')
     })
   })
 
