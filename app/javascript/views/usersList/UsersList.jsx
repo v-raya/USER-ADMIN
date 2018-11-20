@@ -52,7 +52,7 @@ class UserList extends PureComponent {
     this.props.actions.setSearch([
       { field: 'last_name', value: this.props.lastName },
       { field: 'office_ids', value: this.props.officeNames },
-      { field: 'enabled', value: this.props.includeInactive ? this.props.includeInactive : '' },
+      { field: 'enabled', value: !this.props.includeInactive ? '' : true },
     ])
   }
 
