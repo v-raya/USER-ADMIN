@@ -377,6 +377,16 @@ describe('UsersList', () => {
       ])
     })
 
+    it('fetch the updated user list with both and inactive users', () => {
+      component.setProps({ includeInactive: true })
+      component.instance().componentDidMount()
+      expect(mockSetSearch).toHaveBeenCalledWith([
+        { field: 'last_name', value: 'some_value' },
+        { field: 'office_ids', value: ['north'] },
+        { field: 'enabled', value: '' },
+      ])
+    })
+
     it('fetches the account details', () => {
       expect(mockFetchAccountActions).toHaveBeenCalledWith()
     })
@@ -445,6 +455,18 @@ describe('UsersList', () => {
         { field: 'last_name', value: 'some_value' },
         { field: 'office_ids', value: ['north'] },
         { field: 'enabled', value: true },
+      ])
+    })
+
+    it('fetch users who are inactive and active based on includeInactive props', () => {
+      const prevProps = { inputData: {} }
+      wrapperLocal.setProps({ includeInactive: true })
+
+      wrapperLocal.instance().componentDidUpdate(prevProps)
+      expect(mockSetSearch).toHaveBeenCalledWith([
+        { field: 'last_name', value: 'some_value' },
+        { field: 'office_ids', value: ['north'] },
+        { field: 'enabled', value: '' },
       ])
     })
 
