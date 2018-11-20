@@ -30,26 +30,6 @@ describe('UserService', () => {
       UserService.search(q)
       expect(getSearchSpy23).toHaveBeenCalledWith(`/user_list?q=${q}`)
     })
-
-    it('checks if enabled parameter value is converted to string when query is not empty', () => {
-      const query = [
-        {
-          field: 'last_name',
-          value: 'last_name_value',
-        },
-        {
-          field: 'office_ids',
-          value: ['north', 'south', 'east', 'west'],
-        },
-        { field: 'enabled', value: true },
-      ]
-
-      UserService.search({ query })
-      const enabledQuery = query.find(obj => {
-        return obj.field === 'enabled'
-      })
-      expect(enabledQuery.value).toEqual('true')
-    })
   })
 
   describe('#fetch', () => {

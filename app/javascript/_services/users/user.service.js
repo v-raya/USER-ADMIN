@@ -6,10 +6,6 @@ class UserService {
   }
 
   static search({ query = [], sort = [], size = 10, from = 0 }) {
-    if (query.length > 0) {
-      const enabledField = query.find(q => q.field === 'enabled')
-      enabledField.value = enabledField.value.toString()
-    }
     const q = encodeURIComponent(
       JSON.stringify({
         query,
