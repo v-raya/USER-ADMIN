@@ -52,7 +52,7 @@ describe Elastic::UserQueryBuilder do
   end
 
   describe '.query' do
-    it 'processes the search filter for last_name ansd office_ids' do
+    it 'processes the search filter for last_name and office_ids' do
       expected_output = {
         query: {
           bool: {
@@ -73,14 +73,21 @@ describe Elastic::UserQueryBuilder do
       expect(output).to eq(expected_output)
     end
 
-    it 'processes an empty set of filters as a match_all' do
+    it 'processes the search filter for last_name, office_ids, enabled-account-status' do
       expected_output = {
         query: {
-          match_all: {}
+          bool: {
+            must: [
+              { match_phrase_prefix: { 'last_name': 'Smith' } },
+              { terms: { 'office_id.keyword': %w[north south east west] } },
+              { term: { 'enabled': 'true' } }
+            ]
+          }
         }
       }
-      input_query = { "query": [{ "field": 'last_name', "value": '' },
-                                { "field": 'office_ids', "value": [] }],
+      input_query = { "query": [{ "field": 'last_name', "value": 'Smith' },
+                                { "field": 'office_ids', "value": %w[north south east west] },
+                                { "field": 'enabled', "value": true }],
                       "sort": [], "size": 50, "from": 0 }
       # input_query[:last_name] = 'Smith'
       # q: {"query":[{"field":"last_name","value":"Bl"}],"sort":[],"size":50,"from":0}
@@ -88,6 +95,38 @@ describe Elastic::UserQueryBuilder do
       output = Elastic::UserQueryBuilder.query(input_query[:query])
       expect(output).to eq(expected_output)
     end
+
+    it 'processes a set of empty filters as a match_all' do
+      expected_output = {
+        query: {
+          match_all: {}
+        }
+      }
+      input_query = { "query": [{ "field": 'last_name', "value": '' },
+                                { "field": 'office_ids', "value": [] },
+                                { "field": 'enabled', "value": '' }],
+                      "sort": [], "size": 50, "from": 0 }
+      # input_query[:last_name] = 'Smith'
+      # q: {"query":[{"field":"last_name","value":"Bl"}],"sort":[],"size":50,"from":0}
+
+      output = Elastic::UserQueryBuilder.query(input_query[:query])
+      expect(output).to eq(expected_output)
+    end
+  end
+
+  it 'processes an empty set of filters as a match_all' do
+    expected_output = {
+      query: {
+        match_all: {}
+      }
+    }
+    input_query = { "query": [],
+                    "sort": [], "size": 50, "from": 0 }
+    # input_query[:last_name] = 'Smith'
+    # q: {"query":[{"field":"last_name","value":"Bl"}],"sort":[],"size":50,"from":0}
+
+    output = Elastic::UserQueryBuilder.query(input_query[:query])
+    expect(output).to eq(expected_output)
   end
 
   describe '.paginate_query' do
