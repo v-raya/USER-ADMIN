@@ -31,16 +31,18 @@ module Elastic
       end.compact
     end
 
+    SUBQUERIES = {
+      office_ids: ->(value) { { terms: { 'office_id.keyword': value } } unless value.empty? },
+      last_name: ->(value) { { match_phrase_prefix: { last_name: value } } unless value.empty? },
+      enabled: ->(value) { { term: { enabled: value.to_s } } unless value.to_s.empty? }
+    }.freeze
+
     def self.subquery_as_es(subquery)
-      case subquery[:field].to_sym
-      when :office_ids
-        { terms: { 'office_id.keyword': subquery[:value] } } unless subquery[:value].empty?
-      when :last_name
-        { match_phrase_prefix: { last_name: subquery[:value] } } unless subquery[:value].empty?
-      else
+      unless SUBQUERIES.key?(subquery[:field].to_sym)
         Rails.logger.debug("unrecognized query field (#{subquery[:field].to_sym})")
-        nil
+        return nil
       end
+      SUBQUERIES.fetch(subquery[:field].to_sym).call(subquery[:value])
     end
 
     def self.sort_query
