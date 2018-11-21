@@ -141,9 +141,11 @@ feature 'User Edit' do
     search_users 'Auto'
     page_has_user_list_headers
     sleep 2
+    first_user_name = get_user_link(0).text
 
     get_user_link(0).click
-
+    sleep 5
+    expect(detail_page_value('Full Name')).to eq(first_user_name)
     page_is_user_details
 
     expect(detail_page_value('User Status'))
