@@ -12,6 +12,8 @@ describe('UsersList', () => {
   let mockSetOfficesListAction
   let mockHandleSearchChange
   let mockClearAddedUserDetailActions
+  let mockHandleCheckBoxChangeActions
+  let mockSetSearchActions
 
   const query = [
     {
@@ -22,6 +24,7 @@ describe('UsersList', () => {
       field: 'office_ids',
       value: ['north', 'south', 'east', 'west'],
     },
+    { field: 'enabled', value: true },
   ]
 
   beforeEach(() => {
@@ -32,6 +35,8 @@ describe('UsersList', () => {
     mockSetOfficesListAction = jest.fn().mockReturnValue(Promise.resolve([]))
     mockHandleSearchChange = jest.fn().mockReturnValue(Promise.resolve([]))
     mockClearAddedUserDetailActions = jest.fn().mockReturnValue(Promise.resolve([]))
+    mockSetSearchActions = jest.fn().mockReturnValue(Promise.resolve([]))
+    mockHandleCheckBoxChangeActions = jest.fn()
 
     wrapper = shallow(
       <UsersList
@@ -44,9 +49,12 @@ describe('UsersList', () => {
           setOfficesList: mockSetOfficesListAction,
           handleSearchChange: mockHandleSearchChange,
           clearAddedUserDetailActions: mockClearAddedUserDetailActions,
+          handleCheckBoxChangeActions: mockHandleCheckBoxChangeActions,
+          setSearch: mockSetSearchActions,
         }}
         countyName="SomeCountyName"
         query={query}
+        includeInactive={false}
       />,
       {
         disableLifecycleMethods: true,
@@ -116,7 +124,6 @@ describe('UsersList', () => {
 
   describe('#submitSearch', () => {
     it('calls the setSearch Actions', () => {
-      const mockSetSearchActions = jest.fn().mockReturnValue(Promise.resolve([]))
       const wrapperLocal = shallow(
         <UsersList
           dashboardUrl={'dburl'}
@@ -132,11 +139,58 @@ describe('UsersList', () => {
           query={query}
           lastName="last_name_value"
           officeNames={['north', 'south', 'east', 'west']}
+          includeInactive={false}
         />
       )
+      const newQuery = [
+        {
+          field: 'last_name',
+          value: 'last_name_value',
+        },
+        {
+          field: 'office_ids',
+          value: ['east', 'north', 'south', 'west'],
+        },
+        { field: 'enabled', value: true },
+      ]
       const event = { preventDefault: () => {} }
       wrapperLocal.instance().submitSearch(event)
-      expect(mockSetSearchActions).toHaveBeenCalledWith(query)
+      expect(mockSetSearchActions).toHaveBeenCalledWith(newQuery)
+    })
+
+    it('calls the setSearch Actions with includeInactive props as true', () => {
+      const wrapperLocal = shallow(
+        <UsersList
+          dashboardUrl={'dburl'}
+          actions={{
+            searchUsers: () => {},
+            fetchAccountActions: () => {},
+            fetchOfficesActions: () => {},
+            fetchRolesActions: () => {},
+            setPage: () => {},
+            clearAddedUserDetailActions: () => {},
+            setSearch: mockSetSearchActions,
+          }}
+          query={query}
+          lastName="last_name_value"
+          officeNames={['north', 'south', 'east', 'west']}
+          includeInactive={true}
+        />
+      )
+      const newQuery = [
+        {
+          field: 'last_name',
+          value: 'last_name_value',
+        },
+        {
+          field: 'office_ids',
+          value: ['east', 'north', 'south', 'west'],
+        },
+        { field: 'enabled', value: '' },
+      ]
+      const event = { preventDefault: () => {} }
+      wrapperLocal.instance().submitSearch(event)
+      expect(mockSetSearchActions).toHaveBeenCalledWith(newQuery)
     })
   })
 
@@ -152,6 +206,43 @@ describe('UsersList', () => {
       ]
       wrapper.instance().handleSortChange(newSorted, column, shiftKey)
       expect(mockSetSortActions).toHaveBeenCalledWith([{ desc: 'someValue', field: 'someId' }])
+    })
+  })
+
+  describe('#handleCheckBoxChange', () => {
+    it('calls the handleCheckBoxChange Actions with includeInactive props as false', () => {
+      const query = [
+        {
+          field: 'last_name',
+          value: '',
+        },
+        {
+          field: 'office_ids',
+          value: [],
+        },
+        { field: 'enabled', value: '' },
+      ]
+      wrapper.instance().handleCheckBoxChange()
+      expect(mockHandleCheckBoxChangeActions).toHaveBeenCalledWith()
+      expect(mockSetSearchActions).toHaveBeenCalledWith(query)
+    })
+
+    it('calls the handleCheckBoxChange Actions with includeInactive props as true ', () => {
+      const query = [
+        {
+          field: 'last_name',
+          value: '',
+        },
+        {
+          field: 'office_ids',
+          value: [],
+        },
+        { field: 'enabled', value: true },
+      ]
+      wrapper.setProps({ includeInactive: true })
+      wrapper.instance().handleCheckBoxChange()
+      expect(mockHandleCheckBoxChangeActions).toHaveBeenCalledWith()
+      expect(mockSetSearchActions).toHaveBeenCalledWith(query)
     })
   })
 
@@ -182,6 +273,7 @@ describe('UsersList', () => {
           query={query}
           lastName="last_name_value"
           officeNames={['somevalue']}
+          includeInactive={false}
         />
       )
       expect(component.instance().isDisabledSearchBtn()).toEqual(true)
@@ -203,6 +295,7 @@ describe('UsersList', () => {
           query={query}
           lastName="new_last_name"
           officeNames={['new_value']}
+          includeInactive={false}
         />
       )
       expect(component.instance().isDisabledSearchBtn()).toEqual(false)
@@ -270,6 +363,7 @@ describe('UsersList', () => {
           inputData={{ officeNames: ['north'] }}
           loggedInUserAccount={{ county_name: 'SomeCountyName' }}
           selectedOfficesList={['somevalue']}
+          includeInactive={false}
         />
       )
     })
@@ -279,6 +373,17 @@ describe('UsersList', () => {
       expect(mockSetSearch).toHaveBeenCalledWith([
         { field: 'last_name', value: 'some_value' },
         { field: 'office_ids', value: ['north'] },
+        { field: 'enabled', value: true },
+      ])
+    })
+
+    it('fetch the updated user list with both and inactive users', () => {
+      component.setProps({ includeInactive: true })
+      component.instance().componentDidMount()
+      expect(mockSetSearch).toHaveBeenCalledWith([
+        { field: 'last_name', value: 'some_value' },
+        { field: 'office_ids', value: ['north'] },
+        { field: 'enabled', value: '' },
       ])
     })
 
@@ -336,6 +441,7 @@ describe('UsersList', () => {
           lastName="some_value"
           officeNames={['north']}
           inputData={{ officeNames: ['north'] }}
+          includeInactive={false}
         />
       )
     })
@@ -348,6 +454,19 @@ describe('UsersList', () => {
       expect(mockSetSearch).toHaveBeenCalledWith([
         { field: 'last_name', value: 'some_value' },
         { field: 'office_ids', value: ['north'] },
+        { field: 'enabled', value: true },
+      ])
+    })
+
+    it('fetch users who are inactive and active based on includeInactive props', () => {
+      const prevProps = { inputData: {} }
+      wrapperLocal.setProps({ includeInactive: true })
+
+      wrapperLocal.instance().componentDidUpdate(prevProps)
+      expect(mockSetSearch).toHaveBeenCalledWith([
+        { field: 'last_name', value: 'some_value' },
+        { field: 'office_ids', value: ['north'] },
+        { field: 'enabled', value: '' },
       ])
     })
 
@@ -385,6 +504,7 @@ describe('UsersList', () => {
             },
           ]}
           selectedOfficesList={['somevalue']}
+          includeInactive={false}
         />
       )
 

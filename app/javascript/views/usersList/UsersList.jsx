@@ -2,6 +2,7 @@ import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 import { Link, Redirect } from 'react-router-dom'
 import { Link as LinkRWD, InputComponent, PageHeader, Alert } from 'react-wood-duck'
+import CheckboxBank from '@cwds/components/lib/CheckboxBank'
 import DropDown from '../../common/DropDown'
 import Cards from '../../common/Card'
 import ReactTable from 'react-table'
@@ -26,6 +27,7 @@ class UserList extends PureComponent {
     this.props.actions.setSearch([
       { field: 'last_name', value: this.props.lastName },
       { field: 'office_ids', value: this.props.officeNames },
+      { field: 'enabled', value: this.props.includeInactive ? '' : true },
     ])
     this.props.actions.setPage(Math.floor(this.props.from / this.props.size))
     this.props.actions.clearAddedUserDetailActions()
@@ -36,12 +38,22 @@ class UserList extends PureComponent {
       this.props.actions.setSearch([
         { field: 'last_name', value: this.props.lastName },
         { field: 'office_ids', value: this.props.officeNames },
+        { field: 'enabled', value: this.props.includeInactive ? '' : true },
       ])
     }
   }
 
   handleOnAdd = () => {
     this.setState({ addUser: true })
+  }
+
+  handleCheckBoxChange = () => {
+    this.props.actions.handleCheckBoxChangeActions()
+    this.props.actions.setSearch([
+      { field: 'last_name', value: this.props.lastName },
+      { field: 'office_ids', value: this.props.officeNames },
+      { field: 'enabled', value: !this.props.includeInactive ? '' : true },
+    ])
   }
 
   handlePageChange = pageIndex => {
@@ -63,6 +75,7 @@ class UserList extends PureComponent {
     this.props.actions.setSearch([
       { field: 'last_name', value: this.props.lastName },
       { field: 'office_ids', value: this.props.officeNames },
+      { field: 'enabled', value: this.props.includeInactive ? '' : true },
     ])
   }
 
@@ -193,6 +206,15 @@ class UserList extends PureComponent {
                       />
                     </div>
                     <div className="col-md-6 col-sm-6">
+                      <div style={{ float: 'right' }}>
+                        <CheckboxBank
+                          label="Include Inactive"
+                          options={[{ label: 'Include Inactive', value: 'true' }]}
+                          value={[this.props.includeInactive.toString()]}
+                          name="status"
+                          onChange={this.handleCheckBoxChange}
+                        />
+                      </div>
                       <InputComponent
                         label="Search user list"
                         id="searchLastName"
@@ -271,6 +293,7 @@ UserList.propTypes = {
   lastName: PropTypes.string,
   inputData: PropTypes.object,
   rolesList: PropTypes.array,
+  includeInactive: PropTypes.bool,
 }
 
 UserList.defaultProps = {

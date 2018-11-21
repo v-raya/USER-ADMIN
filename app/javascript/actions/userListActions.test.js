@@ -6,6 +6,7 @@ import {
   handleSearchChange,
   setSort,
   fetchAccountActions,
+  handleCheckBoxChangeActions,
 } from './userListActions'
 import {
   FETCH_USERS_API_CALL_REQUEST,
@@ -15,6 +16,7 @@ import {
   USER_LIST_SET_SORT,
   HANDLE_INPUT_CHANGE,
   FETCH_ACCOUNT_API_CALL_REQUEST,
+  HANDLE_CHECKBOX_CHANGE,
 } from './actionTypes'
 
 describe('#fetchAccountActions', () => {
@@ -84,6 +86,14 @@ describe('UserList Actions', () => {
       expect(setSort(sort)).toEqual({
         type: USER_LIST_SET_SORT,
         payload: sort,
+      })
+    })
+  })
+
+  describe('#handleCheckBoxChangeActions', () => {
+    it('returns type', () => {
+      expect(handleCheckBoxChangeActions()).toEqual({
+        type: HANDLE_CHECKBOX_CHANGE,
       })
     })
   })
