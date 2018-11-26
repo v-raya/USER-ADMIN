@@ -21,6 +21,7 @@ feature 'Add User Page' do
     valid_racfid = 'AUTO1I'
     fill_in('CWS Login', with: valid_racfid, match: :prefer_exact)
     click_button 'Verify User'
+    sleep 5
     expect(page).to have_content('Add User')
 
     sleep 1 # seems like we have to sleep to wait for this error to show up
@@ -122,6 +123,7 @@ feature 'Add User Page' do
     unauthorized_racfid = 'AUTO1IA'
     fill_in('CWS Login', with: unauthorized_racfid, match: :prefer_exact)
     click_button 'Verify User'
+    sleep 5
     expect(page).to \
       have_content('You cannot add this user because they exist in Madera county.')
 

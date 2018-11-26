@@ -22,8 +22,9 @@ feature 'User List Page' do
     sleep 2
     page_has_basic_text
     page_has_user_list_headers
-    search_users ''
+    search_users(last_name: '', include_inactive: true)
     sleep 2
+
     first_count = page_count_users
     expect(first_count).to be > 0
     puts "count users #{first_count}"
@@ -34,7 +35,7 @@ feature 'User List Page' do
     puts "We have two links:  #{user1_link.text} and #{user2_link.text}"
 
     last_name = user2_link.text.match(/([^,]*),/)[1]
-    search_users last_name
+    search_users(last_name: last_name)
     # FUTURE  we have no visible indicator that the search finished.
     # If we don't wait the list of users on the page may fail because
     # it is still changing users

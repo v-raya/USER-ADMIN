@@ -55,21 +55,30 @@ module UserListPageHelper
     page.find('.rt-table').all('.rt-tr-group')[row_number].first('.rt-td > a')
   end
 
-  def search_users(last_name)
+  def safe_fill_in_last_name(last_name)
+    fill_in 'searchLastName', with: last_name
+    last_name == '' ? force_change_script('#searchLastName', 'Search user list') : ''
+  end
+
+  def search_users(last_name: '', include_inactive: false)
     return if find_field('Search user list').value == last_name
     puts "search for '#{last_name}'"
 
-    fill_in 'searchLastName', with: last_name
-    if last_name == ''
-      force_capybare_execute_react_change_script('#searchLastName',
-                                                 'Search user list')
+    safe_fill_in_last_name(last_name)
+
+    include_inactive_label = page.find('label', text: 'Include Inactive')
+    include_inactive_checkbox = include_inactive_label.sibling('input')
+
+    if include_inactive_checkbox.checked? != include_inactive
+      # clicking the inactive label performs a search
+      include_inactive_label.click
+    else
+      click_on 'Search'
     end
-    click_on 'Search'
-    puts 'search complete'
   end
 
-  def force_capybare_execute_react_change_script(node_id, _node_label)
-    puts 'force change script'
+  def force_change_script(node_id, _node_label)
+    puts 'force change script to execute via keyboard send'
     find(node_id).send_keys('a')
     find(node_id).send_keys(:backspace)
     # execute_script "React.addons.TestUtils.Simulate.change(''#{node}'')"
@@ -77,13 +86,13 @@ module UserListPageHelper
 
   def expect_valid_role(user_row)
     valid_roles = ['CWS Worker', 'County Administrator', 'CALS External Worker',
-                   'State Administratoe',
+                   'State Administrator',
                    'Office Administrator']
     expect(valid_roles).to include user_row[:role]
   end
 
   def deactivate_any_active_added_user
-    search_users 'Auto'
+    search_users(last_name: 'Auto')
     # wait for initial results
     page.find('.rt-table').first('.rt-tr-group')
 

@@ -12,6 +12,7 @@ feature 'User Edit' do
   scenario 'user_details view of inaccessible or missing user shows "User not found"' do
     login
     page_has_user_list_headers
+    search_users(last_name: '', include_inactive: true)
     sleep 2
     first_user_url = first_user_link[:href]
     visit "#{first_user_url}BAD_EXTRA_CHARS"
@@ -36,6 +37,7 @@ feature 'User Edit' do
   scenario 'user_details edit/save successfully' do
     login
     page_has_user_list_headers
+    search_users(last_name: '', include_inactive: true)
     sleep 2
     user_name = first_user_link.text
     first_user_link.click
@@ -114,7 +116,7 @@ feature 'User Edit' do
 
   scenario 'user_details retain changes after clicking resend button' do
     login
-    search_users 'Auto'
+    search_users(last_name: 'Auto', include_inactive: true)
     page_has_user_list_headers
     sleep 2
 
@@ -138,14 +140,18 @@ feature 'User Edit' do
 
   scenario 'if user is confirmed there is no resend invite button' do
     login
-    search_users 'Auto'
     page_has_user_list_headers
+
+    search_users(last_name: 'Auto', include_inactive: true)
+
     sleep 2
     first_user_name = get_user_link(0).text
 
     get_user_link(0).click
+
     sleep 5
     expect(detail_page_value('Full Name')).to eq(first_user_name)
+
     page_is_user_details
 
     expect(detail_page_value('User Status'))
