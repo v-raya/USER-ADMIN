@@ -92,15 +92,10 @@ describe('UserDetailEdit', () => {
       ).toEqual('User Status')
       expect(wrapper.find('[label="Account Status"]').exists()).toBe(true)
       expect(wrapper.find('[label="Assigned Permissions"]').exists()).toBe(true)
-      expect(
-        wrapper
-          .find('div')
-          .at(19)
-          .text()
-      ).toEqual('Registration email resent:September 22, 2012 11:22 AM')
+      expect(wrapper.find('.resend-email-text').text()).toEqual('Registration email resent:September 22, 2012 11:22 AM')
     })
 
-    it('returns empty text when value for last_registration_resubmit_date_time is null', () => {
+    it('returns empty text without className when value for last_registration_resubmit_date_time is null', () => {
       const details = {
         id: 'id',
         first_name: 'Firstname0',
@@ -115,12 +110,25 @@ describe('UserDetailEdit', () => {
         last_registration_resubmit_date_time: null,
       }
       wrapper = shallow(<UserDetailEdit details={details} />)
-      expect(
-        wrapper
-          .find('div')
-          .at(18)
-          .text()
-      ).toEqual('')
+      expect(wrapper.find('Button').length).toEqual(1)
+      expect(wrapper.find('Button').props().btnName).toBe('Resend Invite')
+      expect(wrapper.find('.resend-email-text').length).toEqual(0)
+    })
+
+    it('when user Status is FORCE_CHANGE_PASSWORD and registrationResentDateTime exists returns date in readable format', () => {
+      const details = {
+        id: 'id',
+        roles: ['ROLE1', 'ROLE2'],
+        status: 'FORCE_CHANGE_PASSWORD',
+        last_registration_resubmit_date_time: null,
+      }
+      const registrationResentDateTime = '2018-09-08 08:06:22'
+      const wrapper = shallow(
+        <UserDetailEdit details={details} registrationResentDateTime={registrationResentDateTime} />
+      )
+      expect(wrapper.find('Button').length).toEqual(1)
+      expect(wrapper.find('Button').props().btnName).toBe('Resend Invite')
+      expect(wrapper.find('.resend-email-text').text()).toEqual('Registration email resent:September 8, 2018 08:06 AM')
     })
 
     it('renders the <ShowField/> children at label:fullName', () => {
@@ -157,13 +165,6 @@ describe('UserDetailEdit', () => {
       const value = ['Asian', 'American']
       wrapper.find('#AssignPermissions').simulate('change', String(value))
       expect(onDropDownChangeSpy).toHaveBeenCalledWith('permissions', value)
-    })
-  })
-
-  describe('when Account Status is FORCE_CHANGE_PASSWORD', () => {
-    it('should have a button as Resend Invite', () => {
-      expect(wrapper.find('Button').length).toEqual(1)
-      expect(wrapper.find('Button').props().btnName).toBe('Resend Invite')
     })
   })
 })

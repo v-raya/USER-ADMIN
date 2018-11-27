@@ -29,9 +29,7 @@ export default class UserDetail extends Component {
   onSaveDetails = () => {
     const { details, isRolesDisabled, match, actions } = this.props
     actions.saveUserDetailsActions(match.params.id, details, isRolesDisabled)
-    this.setState({
-      resendEmailAlert: false,
-    })
+    this.setState({ resendEmailAlert: false })
     actions.clearAddedUserDetailActions()
   }
 
@@ -82,9 +80,7 @@ export default class UserDetail extends Component {
   }
 
   emailSent = () => {
-    const { resendEmailAlert } = this.state
-    const { resendEmailStatus } = this.props
-    if (resendEmailAlert && resendEmailStatus === 'Success') {
+    if (this.state.resendEmailAlert && this.props.resendEmailStatus === 'Success') {
       return (
         <Alert alertClassName="success" faIcon="fa-check-circle" alertCross={false}>
           {'Registration email has been sent successfully'}
@@ -109,7 +105,8 @@ export default class UserDetail extends Component {
     startDate,
     userStatusDescription,
     userStatus,
-    officeName
+    officeName,
+    registrationResentDateTime
   ) => {
     return XHRStatus !== 'ready' ? (
       <Cards>
@@ -137,6 +134,7 @@ export default class UserDetail extends Component {
                 userStatusDescription={userStatusDescription}
                 userStatus={userStatus}
                 officeName={officeName}
+                registrationResentDateTime={registrationResentDateTime}
               />
             ) : (
               <UserDetailShow
@@ -151,6 +149,9 @@ export default class UserDetail extends Component {
                 userStatus={userStatus}
                 userStatusDescription={userStatusDescription}
                 officeName={officeName}
+                onResendInvite={this.onResendInvite}
+                disableResendEmailButton={disableResendEmailButton}
+                registrationResentDateTime={registrationResentDateTime}
               />
             )}
           </div>
@@ -186,6 +187,7 @@ export default class UserDetail extends Component {
       userStatusDescription,
       userStatus,
       officeName,
+      registrationResentDateTime,
     } = this.props
     return (
       <div>
@@ -214,7 +216,8 @@ export default class UserDetail extends Component {
             startDate,
             userStatusDescription,
             userStatus,
-            officeName
+            officeName,
+            registrationResentDateTime
           )}
         </div>
       </div>
@@ -240,14 +243,10 @@ UserDetail.propTypes = {
   possibleRolesList: PropTypes.array,
   accountStatus: PropTypes.string,
   startDate: PropTypes.string,
+  registrationResentDateTime: PropTypes.string,
   userStatusDescription: PropTypes.string,
   userStatus: PropTypes.string,
-  rolesList: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.string,
-      name: PropTypes.string,
-    })
-  ),
+  rolesList: PropTypes.arrayOf(PropTypes.shape({ id: PropTypes.string, name: PropTypes.string })),
   officeName: PropTypes.string,
   isRolesDisabled: PropTypes.bool,
   displayAlert: PropTypes.bool,

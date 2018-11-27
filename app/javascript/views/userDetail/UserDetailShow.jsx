@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import Cards from '../../common/Card'
 import ShowField from '../../common/ShowField'
 import { formatPhoneNumberWithExt, checkDate, formatSelectedRoles } from '../../_utils/formatters'
+import { Button } from 'react-wood-duck'
 
 /* eslint camelcase: 0 */
 
@@ -17,6 +18,9 @@ const UserDetailShow = ({
   userStatusDescription,
   assignedPermissions,
   officeName,
+  onResendInvite,
+  disableResendEmailButton,
+  registrationResentDateTime,
 }) => (
   <div className="row">
     <div className="col-md-12">
@@ -68,14 +72,35 @@ const UserDetailShow = ({
                 <div>
                   <div className="value-text-color">
                     {userStatusDescription}
-                    {details.status === 'FORCE_CHANGE_PASSWORD' &&
-                      details.last_registration_resubmit_date_time && (
-                        <div className="resend-email-text">
-                          {`Registration email resent:`}
-                          <br />
-                          {checkDate(details.last_registration_resubmit_date_time)}
+                    {details.status === 'FORCE_CHANGE_PASSWORD' && (
+                      <div>
+                        <div>
+                          {registrationResentDateTime ? (
+                            <div className="resend-email-text">
+                              {'Registration email resent:'}
+                              <br />
+                              {checkDate(registrationResentDateTime)}
+                            </div>
+                          ) : details.last_registration_resubmit_date_time ? (
+                            <div className="resend-email-text">
+                              {'Registration email resent:'}
+                              <br />
+                              {checkDate(details.last_registration_resubmit_date_time)}
+                            </div>
+                          ) : (
+                            ''
+                          )}
                         </div>
-                      )}
+                        <div className="resend-email-btn">
+                          <Button
+                            btnClassName="primary"
+                            btnName="Resend Invite"
+                            onClick={onResendInvite}
+                            disabled={disableResendEmailButton}
+                          />
+                        </div>
+                      </div>
+                    )}
                   </div>
                 </div>
               </ShowField>
@@ -99,9 +124,12 @@ UserDetailShow.propTypes = {
   userStatus: PropTypes.string,
   userStatusDescription: PropTypes.string,
   accountStatus: PropTypes.string,
+  onResendInvite: PropTypes.func,
+  disableResendEmailButton: PropTypes.bool,
   assignedPermissions: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
   onEdit: PropTypes.func,
   startDate: PropTypes.string,
+  registrationResentDateTime: PropTypes.string,
   rolesList: PropTypes.arrayOf(
     PropTypes.shape({
       id: PropTypes.string,

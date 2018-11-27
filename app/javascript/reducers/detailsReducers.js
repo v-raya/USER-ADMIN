@@ -1,7 +1,5 @@
 import * as actionTypes from '../actions/actionTypes'
 
-import { DateTime } from 'luxon'
-
 function fetchDetails(
   state = {
     details: null,
@@ -60,44 +58,6 @@ function fetchDetails(
         disableActionBtn: true,
       }
     }
-
-    case actionTypes.RESEND_REGISTRATION_EMAIL_API_CALL_REQUEST:
-      return { ...state, fetching: true, error: null }
-
-    case actionTypes.RESEND_REGISTRATION_EMAIL_API_CALL_SUCCESS:
-      const status = {
-        XHRStatus: 'ready',
-        response: action.resendEmailStatus,
-      }
-
-      const date = DateTime.local().toSQL({ includeOffset: false })
-      const dateTime = date.split('.')[0]
-
-      return {
-        ...state,
-        fetching: false,
-        resendEmailStatus: status.response,
-        resendEmailUserId: state.resendEmailUserId.concat(action.id),
-        details: {
-          ...state.details,
-          records: {
-            ...state.details.records,
-            user: {
-              ...state.details.records.user,
-              last_registration_resubmit_date_time: dateTime,
-            },
-          },
-        },
-        error: null,
-      }
-
-    case actionTypes.RESEND_REGISTRATION_EMAIL_API_CALL_FAILURE:
-      return {
-        ...state,
-        fetching: false,
-        resendEmailStatus: null,
-        error: action.error,
-      }
 
     case actionTypes.SAVE_USER_DETAILS_API_CALL_REQUEST:
       return { ...state, fetching: true, saveDetailsError: null }

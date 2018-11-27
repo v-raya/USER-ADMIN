@@ -24,6 +24,7 @@ const UserDetailEdit = ({
   userStatus,
   userStatusDescription,
   officeName,
+  registrationResentDateTime,
 }) => (
   <div className="row">
     <div className="col-md-12">
@@ -91,12 +92,20 @@ const UserDetailEdit = ({
                     {details.status === 'FORCE_CHANGE_PASSWORD' && (
                       <div>
                         <div>
-                          {details.last_registration_resubmit_date_time && (
+                          {registrationResentDateTime ? (
                             <div className="resend-email-text">
-                              {`Registration email resent:`}
+                              {'Registration email resent:'}
+                              <br />
+                              {checkDate(registrationResentDateTime)}
+                            </div>
+                          ) : details.last_registration_resubmit_date_time ? (
+                            <div className="resend-email-text">
+                              {'Registration email resent:'}
                               <br />
                               {checkDate(details.last_registration_resubmit_date_time)}
                             </div>
+                          ) : (
+                            ''
                           )}
                         </div>
                         <div className="resend-email-btn">
@@ -155,6 +164,7 @@ UserDetailEdit.propTypes = {
   onPermissionChange: PropTypes.func,
   userStatusDescription: PropTypes.string,
   userStatus: PropTypes.string,
+  registrationResentDateTime: PropTypes.string,
   permissionsList: PropTypes.array,
   onResendInvite: PropTypes.func,
   disableResendEmailButton: PropTypes.bool,

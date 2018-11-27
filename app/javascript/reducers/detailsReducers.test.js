@@ -1,6 +1,5 @@
 import fetchDetails from './detailsReducers'
 import * as actionTypes from '../actions/actionTypes'
-import { DateTime } from 'luxon'
 
 describe('reducer', () => {
   it('handles FETCH_DETAILS_API_CALL_REQUEST', () => {
@@ -121,71 +120,6 @@ describe('reducer', () => {
     let after
     expect(() => (after = fetchDetails(before, { type: actionTypes.CLEAR_USER_DETAILS }))).not.toThrow()
     expect(after).not.toEqual(before)
-  })
-
-  it('handles RESEND_REGISTRATION_EMAIL_API_CALL_REQUEST', () => {
-    const requestAction = {
-      type: actionTypes.RESEND_REGISTRATION_EMAIL_API_CALL_REQUEST,
-    }
-    const state = {
-      resendEmailStatus: null,
-      resendEmailUserId: [],
-      fetching: false,
-    }
-    expect(fetchDetails(state, requestAction)).toEqual({
-      fetching: true,
-      resendEmailUserId: [],
-      resendEmailStatus: null,
-      error: null,
-    })
-  })
-
-  it('handles RESEND_REGISTRATION_EMAIL_API_CALL_SUCCESS', () => {
-    const requestAction = {
-      type: actionTypes.RESEND_REGISTRATION_EMAIL_API_CALL_SUCCESS,
-      resendEmailStatus: 200,
-      id: 'SOME_ID',
-    }
-    const date = DateTime.local().toSQL({ includeOffset: false })
-    const dateTime = date.split('.')[0]
-    const details = {
-      records: {
-        user: {
-          id: 'SOME_ID',
-          last_registration_resubmit_date_time: dateTime,
-        },
-      },
-    }
-
-    const state = {
-      details: details,
-      resendEmailStatus: null,
-      resendEmailUserId: [],
-      fetching: true,
-      error: null,
-    }
-
-    expect(fetchDetails(state, requestAction)).toEqual({
-      details: { records: { user: { id: 'SOME_ID', last_registration_resubmit_date_time: dateTime } } },
-      error: null,
-      fetching: false,
-      resendEmailStatus: 200,
-      resendEmailUserId: ['SOME_ID'],
-    })
-  })
-
-  it('handles RESEND_REGISTRATION_EMAIL_API_CALL_FAILURE', () => {
-    const failureAction = {
-      type: actionTypes.RESEND_REGISTRATION_EMAIL_API_CALL_FAILURE,
-      resendEmailStatus: null,
-      error: 'error happened',
-    }
-    const state = { resendEmailStatus: null, fetching: true, error: null }
-    expect(fetchDetails(state, failureAction)).toEqual({
-      fetching: false,
-      resendEmailStatus: null,
-      error: 'error happened',
-    })
   })
 
   it('handles SAVE_USER_DETAILS_API_CALL_REQUEST', () => {

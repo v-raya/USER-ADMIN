@@ -22,7 +22,11 @@ import {
   handleDropdownChangeAction,
   handleEditButtonChangeAction,
 } from '../actions/detailActions'
-import { selectResendEmailStatus, disableResendEmailButton } from '../selectors/resendEmailSelector'
+import {
+  selectResendEmailStatus,
+  disableResendEmailButton,
+  resendRegistrationEmailDate,
+} from '../selectors/resendEmailSelector'
 import { fetchPermissionsActions } from '../actions/permissionsActions'
 import { fetchRolesActions } from '../actions/rolesActions'
 import { resendRegistrationEmailActions } from '../actions/resendRegistrationEmailActions'
@@ -53,6 +57,7 @@ function mapStateToProps(state) {
     startDate: selectStartDate(state),
     assignedPermissions: selectAssignedPermissions(state),
     officeName: officeName(state),
+    registrationResentDateTime: resendRegistrationEmailDate(state),
   }
 }
 

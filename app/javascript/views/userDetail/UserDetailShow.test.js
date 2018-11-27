@@ -94,15 +94,10 @@ describe('UserDetailShow', () => {
           .at(10)
           .props().label
       ).toEqual('Assigned Permissions')
-      expect(
-        wrapper
-          .find('div')
-          .at(17)
-          .text()
-      ).toEqual('Registration email resent:September 22, 2012 11:22 AM')
+      expect(wrapper.find('.resend-email-text').text()).toEqual('Registration email resent:September 22, 2012 11:22 AM')
     })
 
-    it('returns empty text when value for last_registration_resubmit_date_time is null', () => {
+    it('returns empty text without className when value for last_registration_resubmit_date_time is null', () => {
       const details = {
         id: 'id',
         first_name: 'Firstname0',
@@ -110,14 +105,10 @@ describe('UserDetailShow', () => {
         middle_name: 'Middlename0',
         county_name: 'MyCounty',
         status: 'FORCE_CHANGE_PASSWORD',
+        last_registration_resubmit_date_time: null,
       }
       wrapper = shallow(<UserDetailShow details={details} />)
-      expect(
-        wrapper
-          .find('div')
-          .at(16)
-          .text()
-      ).toEqual('')
+      expect(wrapper.find('.resend-email-text').length).toEqual(0)
     })
 
     it('renders the <ShowField/> props.children at label:fullName', () => {
@@ -139,6 +130,45 @@ describe('UserDetailShow', () => {
     it('sets card disabled prop to true based on disableEditBtn', () => {
       wrapper = shallow(<UserDetailShow details={details} disableEditBtn={true} />)
       expect(wrapper.find('Cards').props().disabled).toEqual(true)
+    })
+
+    describe('resend', () => {
+      it('when user Status is FORCE_CHANGE_PASSWORD and no registrationResentDateTime it returns empty', () => {
+        const details = {
+          id: 'id',
+          first_name: 'Firstname0',
+          last_name: 'Lastname0',
+          middle_name: 'Middlename0',
+          county_name: 'MyCounty',
+          status: 'FORCE_CHANGE_PASSWORD',
+          last_registration_resubmit_date_time: null,
+        }
+        const wrapper = shallow(<UserDetailShow details={details} />)
+        expect(wrapper.find('Button').length).toEqual(1)
+        expect(wrapper.find('Button').props().btnName).toBe('Resend Invite')
+        expect(wrapper.find('.resend-email-text').length).toEqual(0)
+      })
+
+      it('when user Status is FORCE_CHANGE_PASSWORD and registrationResentDateTime exists returns date in readable format', () => {
+        const details = {
+          id: 'id',
+          first_name: 'Firstname0',
+          last_name: 'Lastname0',
+          middle_name: 'Middlename0',
+          county_name: 'MyCounty',
+          status: 'FORCE_CHANGE_PASSWORD',
+          last_registration_resubmit_date_time: null,
+        }
+        const registrationResentDateTime = '2018-09-08 08:06:22'
+        const wrapper = shallow(
+          <UserDetailShow details={details} registrationResentDateTime={registrationResentDateTime} />
+        )
+        expect(wrapper.find('Button').length).toEqual(1)
+        expect(wrapper.find('Button').props().btnName).toBe('Resend Invite')
+        expect(wrapper.find('.resend-email-text').text()).toEqual(
+          'Registration email resent:September 8, 2018 08:06 AM'
+        )
+      })
     })
   })
 })
