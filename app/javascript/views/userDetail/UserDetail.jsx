@@ -35,6 +35,7 @@ export default class UserDetail extends Component {
 
   onResendInvite = () => {
     this.props.actions.resendRegistrationEmailActions(this.props.details.id)
+    this.props.actions.clearSaveAlert()
     this.setState({ resendEmailAlert: true })
   }
 
@@ -80,7 +81,7 @@ export default class UserDetail extends Component {
   }
 
   emailSent = () => {
-    if (this.state.resendEmailAlert && this.props.resendEmailStatus === 'Success') {
+    if (this.state.resendEmailAlert && this.props.resentRegistrationEmailDateTime) {
       return (
         <Alert alertClassName="success" faIcon="fa-check-circle" alertCross={false}>
           {'Registration email has been sent successfully'}
@@ -106,7 +107,7 @@ export default class UserDetail extends Component {
     userStatusDescription,
     userStatus,
     officeName,
-    registrationResentDateTime
+    resentRegistrationEmailDateTime
   ) => {
     return XHRStatus !== 'ready' ? (
       <Cards>
@@ -134,7 +135,7 @@ export default class UserDetail extends Component {
                 userStatusDescription={userStatusDescription}
                 userStatus={userStatus}
                 officeName={officeName}
-                registrationResentDateTime={registrationResentDateTime}
+                resentRegistrationEmailDateTime={resentRegistrationEmailDateTime}
               />
             ) : (
               <UserDetailShow
@@ -151,7 +152,7 @@ export default class UserDetail extends Component {
                 officeName={officeName}
                 onResendInvite={this.onResendInvite}
                 disableResendEmailButton={disableResendEmailButton}
-                registrationResentDateTime={registrationResentDateTime}
+                resentRegistrationEmailDateTime={resentRegistrationEmailDateTime}
               />
             )}
           </div>
@@ -187,7 +188,7 @@ export default class UserDetail extends Component {
       userStatusDescription,
       userStatus,
       officeName,
-      registrationResentDateTime,
+      resentRegistrationEmailDateTime,
     } = this.props
     return (
       <div>
@@ -217,7 +218,7 @@ export default class UserDetail extends Component {
             userStatusDescription,
             userStatus,
             officeName,
-            registrationResentDateTime
+            resentRegistrationEmailDateTime
           )}
         </div>
       </div>
@@ -235,7 +236,7 @@ UserDetail.propTypes = {
   permissionsList: PropTypes.array,
   actions: PropTypes.object.isRequired,
   userDetailError: PropTypes.object,
-  resendEmailStatus: PropTypes.string,
+  resentRegistrationEmailDateTime: PropTypes.string,
   disableResendEmailButton: PropTypes.bool,
   possibleRoles: PropTypes.array,
   disableEditBtn: PropTypes.bool,
@@ -243,7 +244,6 @@ UserDetail.propTypes = {
   possibleRolesList: PropTypes.array,
   accountStatus: PropTypes.string,
   startDate: PropTypes.string,
-  registrationResentDateTime: PropTypes.string,
   userStatusDescription: PropTypes.string,
   userStatus: PropTypes.string,
   rolesList: PropTypes.arrayOf(PropTypes.shape({ id: PropTypes.string, name: PropTypes.string })),

@@ -56,6 +56,8 @@ module UserDetailPageHelper
 
   def resend_registration_email_success
     expect(page).to have_content('Registration email resent')
+    expect(page.find('div.success-message').text)
+      .to eq('Registration email has been sent successfully')
   end
 
   private

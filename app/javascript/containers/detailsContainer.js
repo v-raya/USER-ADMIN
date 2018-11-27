@@ -21,12 +21,9 @@ import {
   clearDetails,
   handleDropdownChangeAction,
   handleEditButtonChangeAction,
+  clearSaveAlert,
 } from '../actions/detailActions'
-import {
-  selectResendEmailStatus,
-  disableResendEmailButton,
-  resendRegistrationEmailDate,
-} from '../selectors/resendEmailSelector'
+import { selectResendEmailDateTime, disableResendEmailButton } from '../selectors/resendEmailSelector'
 import { fetchPermissionsActions } from '../actions/permissionsActions'
 import { fetchRolesActions } from '../actions/rolesActions'
 import { resendRegistrationEmailActions } from '../actions/resendRegistrationEmailActions'
@@ -50,14 +47,13 @@ function mapStateToProps(state) {
     rolesList: rolesList(state),
     userListUrl: process.env.RAILS_RELATIVE_URL_ROOT ? process.env.RAILS_RELATIVE_URL_ROOT : '/',
     userDetailError: state.fetchDetails.saveDetailsError,
-    resendEmailStatus: selectResendEmailStatus(state),
+    resentRegistrationEmailDateTime: selectResendEmailDateTime(state),
     disableResendEmailButton: disableResendEmailButton(state),
     isRolesDisabled: disableRolesDropDown(state),
     disableActionBtn: state.fetchDetails.disableActionBtn,
     startDate: selectStartDate(state),
     assignedPermissions: selectAssignedPermissions(state),
     officeName: officeName(state),
-    registrationResentDateTime: resendRegistrationEmailDate(state),
   }
 }
 
@@ -70,6 +66,7 @@ function mapDispatchToProps(dispatch) {
     resendRegistrationEmailActions,
     clearDetails,
     clearAddedUserDetailActions,
+    clearSaveAlert,
     handleDropdownChangeAction,
     handleEditButtonChangeAction,
   }

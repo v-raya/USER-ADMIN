@@ -55,8 +55,12 @@ module Users
     end
 
     def resend_registration_email(parameters, token)
-      response = @http_service.get('/perry/idm/users/resend', parameters, token)
-      response.status
+      response = @http_service.post(
+        "/perry/idm/users/#{parameters['id']}/registration-request", parameters,
+        token
+      )
+      return response.status if response.status != 200
+      ResendRegistration.new(response.body)
     end
 
     def self.search(query, auth_header)

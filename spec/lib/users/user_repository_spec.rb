@@ -7,7 +7,7 @@ module Users
     let(:http_service) { instance_double('Infrastructure::HttpService') }
     let(:user_repository) { UserRepository.new(http_service) }
     let(:token) { 'sample_token' }
-    let(:params) { { 'lastName' => 'pop' } }
+    let(:params) { { 'lastName' => 'pop', 'id' => 'SOME_ID' } }
 
     describe '#get_users' do
       let(:response) { instance_double('Faraday::Response') }
@@ -187,16 +187,33 @@ module Users
 
     describe '#resend_registration_email' do
       let(:response) { instance_double('Faraday::Response') }
-
       context 'with user' do
         it 'returns status as 200' do
           allow(response).to receive(:status).and_return(200)
+          allow(response).to receive(:body).and_return(
+            user_id: 'SOME_ID',
+            last_registration_resubmit_date_time: '2018-09-15 10:20:30'
+          )
           allow(http_service)
-            .to receive(:get)
-            .with('/perry/idm/users/resend', '22', token)
+            .to receive(:post)
+            .with("/perry/idm/users/#{params['id']}/registration-request", params, token)
             .and_return(response)
-          expect(user_repository.resend_registration_email('22', token))
-            .to eq 200
+          expect(user_repository.resend_registration_email(params, token))
+            .to eq ResendRegistration.new(
+              user_id: 'SOME_ID',
+              last_registration_resubmit_date_time: '2018-09-15 10:20:30'
+            )
+        end
+      end
+      context 'with no user' do
+        it 'returns an empty user_detail' do
+          allow(response).to receive(:status).and_return(404)
+          allow(http_service)
+            .to receive(:post)
+            .with("/perry/idm/users/#{params['id']}/registration-request", params, token)
+            .and_return(response)
+          expect(user_repository.resend_registration_email(params, token))
+            .to eq 404
         end
       end
     end

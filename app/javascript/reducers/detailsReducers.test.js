@@ -122,6 +122,17 @@ describe('reducer', () => {
     expect(after).not.toEqual(before)
   })
 
+  it('clears save Alert message', () => {
+    const requestAction = {
+      type: actionTypes.CLEAR_SAVE_ALERT,
+    }
+    const state = { fetching: false, displayAlert: false }
+    expect(fetchDetails(state, requestAction)).toEqual({
+      fetching: false,
+      displayAlert: false,
+    })
+  })
+
   it('handles SAVE_USER_DETAILS_API_CALL_REQUEST', () => {
     const requestAction = {
       type: actionTypes.SAVE_USER_DETAILS_API_CALL_REQUEST,

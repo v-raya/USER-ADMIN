@@ -1,9 +1,12 @@
 import safeGet from 'lodash.get'
 
-export const selectResendEmailStatus = state => {
-  const resendEmail = state.resendRegistrationEmail ? state.resendRegistrationEmail.resendEmailStatus : null
-  const statusMessage = resendEmail === 200 ? 'Success' : 'Failure'
-  return statusMessage
+export const selectResendEmailDateTime = state => {
+  const resendEmail = safeGet(
+    state,
+    'resendRegistrationEmail.registrationResentDateTime.last_registration_resubmit_date_time',
+    ''
+  )
+  return resendEmail
 }
 
 export const selectResendEmailUserId = state => {
@@ -21,6 +24,3 @@ export const disableResendEmailButton = state => {
   if (index > -1) return true
   return false
 }
-
-export const resendRegistrationEmailDate = state =>
-  safeGet(state, 'resendRegistrationEmail.registrationResentDateTime', '')

@@ -1,42 +1,39 @@
-import {
-  selectResendEmailStatus,
-  disableResendEmailButton,
-  selectResendEmailUserId,
-  resendRegistrationEmailDate,
-} from './resendEmailSelector'
+import { selectResendEmailDateTime, disableResendEmailButton, selectResendEmailUserId } from './resendEmailSelector'
 
-describe('#selectResendEmailStatus', () => {
-  it('returns the statusMessage as Success', () => {
+describe('#selectResendEmailDateTime', () => {
+  it('returns value when date & time exists for last_registration_resubmit_date_time', () => {
     const state = {
       resendRegistrationEmail: {
-        resendEmailStatus: 200,
-        resubmittedDate: null,
+        registrationResentDateTime: {
+          last_registration_resubmit_date_time: '2018-09-11 10:20:30',
+        },
       },
     }
-    expect(selectResendEmailStatus(state)).toEqual('Success')
+    expect(selectResendEmailDateTime(state)).toEqual('2018-09-11 10:20:30')
   })
 
-  it('returns the statusMessage as Failure', () => {
+  it('returns null when no date & time for last_registration_resubmit_date_time ', () => {
     const state = {
       resendRegistrationEmail: {
-        resendEmailStatus: 500,
-        resubmittedDate: null,
+        registrationResentDateTime: {
+          last_registration_resubmit_date_time: null,
+        },
       },
     }
-    expect(selectResendEmailStatus(state)).toEqual('Failure')
+    expect(selectResendEmailDateTime(state)).toEqual(null)
   })
 
-  it('returns failure when resendRegistrationEmail is not available', () => {
+  it('returns empty when resendRegistrationEmail is empty ', () => {
     const state = {
       resendRegistrationEmail: {},
       resubmittedDate: null,
     }
-    expect(selectResendEmailStatus(state)).toEqual('Failure')
+    expect(selectResendEmailDateTime(state)).toEqual('')
   })
 
-  it('returns failure when state is empty', () => {
+  it('returns empty when state is empty', () => {
     const state = {}
-    expect(selectResendEmailStatus(state)).toEqual('Failure')
+    expect(selectResendEmailDateTime(state)).toEqual('')
   })
 })
 
@@ -72,7 +69,7 @@ describe('#disableResendEmailButton', () => {
       },
       resendRegistrationEmail: {
         resendEmailUserId: ['id1', 'id2', 'id3'],
-        resendEmailStatus: 200,
+        registrationResentDateTime: { user_id: 'SOME_ID', last_registration_resubmit_date_time: '2018-10-23 10:20:30' },
         fetching: false,
         error: null,
         resubmittedDate: null,
@@ -95,7 +92,7 @@ describe('#disableResendEmailButton', () => {
       },
       resendRegistrationEmail: {
         resendEmailUserId: [],
-        resendEmailStatus: 200,
+        registrationResentDateTime: { user_id: 'SOME_ID', last_registration_resubmit_date_time: '2018-10-23 10:20:30' },
         fetching: false,
         error: null,
       },
@@ -117,28 +114,11 @@ describe('#disableResendEmailButton', () => {
       },
       resendRegistrationEmail: {
         resendEmailUserId: ['id3', 'id2'],
-        resendEmailStatus: 200,
+        registrationResentDateTime: { user_id: 'SOME_ID', last_registration_resubmit_date_time: '2018-10-23 10:20:30' },
         fetching: false,
         error: null,
       },
     }
     expect(disableResendEmailButton(state)).toBe(false)
-  })
-
-  describe('#resendRegistrationEmailDate', () => {
-    it('return date when date exists', () => {
-      const state = { resendRegistrationEmail: { registrationResentDateTime: '2018-10-11 10:44' } }
-      expect(resendRegistrationEmailDate(state)).toEqual('2018-10-11 10:44')
-    })
-
-    it('return empty when date is undefined', () => {
-      const state = { resendRegistrationEmail: { registrationResentDateTime: undefined } }
-      expect(resendRegistrationEmailDate(state)).toEqual('')
-    })
-
-    it('return empty when state is empty ', () => {
-      const state = {}
-      expect(resendRegistrationEmailDate(state)).toEqual('')
-    })
   })
 })

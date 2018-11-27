@@ -4,6 +4,7 @@ import {
   SAVE_USER_DETAILS_API_CALL_REQUEST,
   HANDLE_DROPDOWN_CHANGE,
   HANDLE_EDIT_BUTTON_CHANGE,
+  CLEAR_SAVE_ALERT,
 } from './actionTypes'
 
 export const handleDropdownChangeAction = (name, value) => ({
@@ -22,6 +23,10 @@ export function fetchDetailsActions(id) {
 
 export const clearDetails = () => ({
   type: CLEAR_USER_DETAILS,
+})
+
+export const clearSaveAlert = () => ({
+  type: CLEAR_SAVE_ALERT,
 })
 
 export function saveUserDetailsActions(id, details, isRolesDisabled) {

@@ -4,6 +4,7 @@ import {
   clearDetails,
   saveUserDetailsActions,
   handleEditButtonChangeAction,
+  clearSaveAlert,
 } from './detailActions'
 import {
   FETCH_DETAILS_API_CALL_REQUEST,
@@ -11,6 +12,7 @@ import {
   CLEAR_USER_DETAILS,
   HANDLE_DROPDOWN_CHANGE,
   HANDLE_EDIT_BUTTON_CHANGE,
+  CLEAR_SAVE_ALERT,
 } from './actionTypes'
 
 describe('#handleDropDownChangeAction', () => {
@@ -65,6 +67,14 @@ describe('#clearDetails', () => {
   it('returns type ', () => {
     expect(clearDetails()).toEqual({
       type: CLEAR_USER_DETAILS,
+    })
+  })
+})
+
+describe('#clearSaveAlert', () => {
+  it('returns type ', () => {
+    expect(clearSaveAlert()).toEqual({
+      type: CLEAR_SAVE_ALERT,
     })
   })
 })

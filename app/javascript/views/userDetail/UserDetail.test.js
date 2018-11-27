@@ -17,6 +17,7 @@ describe('UserDetail', () => {
   let mockClearAddedUserDetailActions
   let mockHandleDropDownChangeAction
   let mockHandleEditButtonChangeAction
+  let mockClearSaveAlertAction
 
   beforeEach(() => {
     // Register mock dispatchActions
@@ -28,6 +29,7 @@ describe('UserDetail', () => {
     mockFetchPermissionsActions = jest.fn().mockReturnValue(Promise.resolve([]))
     mockFetchRolesActions = jest.fn().mockReturnValue(Promise.resolve([]))
     mockHandleDropDownChangeAction = jest.fn()
+    mockClearSaveAlertAction = jest.fn()
     const match = {
       params: {
         id: '12345',
@@ -55,6 +57,7 @@ describe('UserDetail', () => {
             handleEditButtonChangeAction: mockHandleEditButtonChangeAction,
             resendRegistrationEmailActions: mockResendRegistrationEmailActions,
             clearAddedUserDetailActions: mockClearAddedUserDetailActions,
+            clearSaveAlert: mockClearSaveAlertAction,
           }}
           match={match}
         />
@@ -114,7 +117,7 @@ describe('UserDetail', () => {
   describe('#emailSent()', () => {
     it('displays <Alert/>', () => {
       wrapper.setState({ resendEmailAlert: true })
-      wrapper.setProps({ resendEmailStatus: 'Success' })
+      wrapper.setProps({ resentRegistrationEmailDateTime: '2018-10-24 10:20:30' })
       expect(wrapper.find('Alert').length).toBe(1)
       expect(wrapper.find('Alert').props().children).toBe('Registration email has been sent successfully')
     })
@@ -125,6 +128,7 @@ describe('UserDetail', () => {
       wrapper.instance().onResendInvite()
       expect(mockFetchDetailsActions).toHaveBeenCalledWith('12345')
       expect(wrapper.instance().state.resendEmailAlert).toEqual(true)
+      expect(mockClearSaveAlertAction).toHaveBeenCalledWith()
     })
   })
 

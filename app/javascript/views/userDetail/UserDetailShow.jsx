@@ -20,7 +20,7 @@ const UserDetailShow = ({
   officeName,
   onResendInvite,
   disableResendEmailButton,
-  registrationResentDateTime,
+  resentRegistrationEmailDateTime,
 }) => (
   <div className="row">
     <div className="col-md-12">
@@ -75,11 +75,11 @@ const UserDetailShow = ({
                     {details.status === 'FORCE_CHANGE_PASSWORD' && (
                       <div>
                         <div>
-                          {registrationResentDateTime ? (
+                          {resentRegistrationEmailDateTime ? (
                             <div className="resend-email-text">
                               {'Registration email resent:'}
                               <br />
-                              {checkDate(registrationResentDateTime)}
+                              {checkDate(resentRegistrationEmailDateTime)}
                             </div>
                           ) : details.last_registration_resubmit_date_time ? (
                             <div className="resend-email-text">
@@ -96,7 +96,7 @@ const UserDetailShow = ({
                             btnClassName="primary"
                             btnName="Resend Invite"
                             onClick={onResendInvite}
-                            disabled={disableResendEmailButton}
+                            disabled={disableResendEmailButton | disableEditBtn}
                           />
                         </div>
                       </div>
@@ -129,7 +129,7 @@ UserDetailShow.propTypes = {
   assignedPermissions: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
   onEdit: PropTypes.func,
   startDate: PropTypes.string,
-  registrationResentDateTime: PropTypes.string,
+  resentRegistrationEmailDateTime: PropTypes.string,
   rolesList: PropTypes.arrayOf(
     PropTypes.shape({
       id: PropTypes.string,

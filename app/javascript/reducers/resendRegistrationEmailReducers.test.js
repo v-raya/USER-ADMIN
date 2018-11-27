@@ -1,6 +1,5 @@
 import resendRegistrationEmail from './resendRegistrationEmailReducers'
 import * as actionTypes from '../actions/actionTypes'
-import { DateTime } from 'luxon'
 
 describe('reducer', () => {
   it('handles RESEND_REGISTRATION_EMAIL_API_CALL_REQUEST', () => {
@@ -8,7 +7,6 @@ describe('reducer', () => {
       type: actionTypes.RESEND_REGISTRATION_EMAIL_API_CALL_REQUEST,
     }
     const state = {
-      resendEmailStatus: null,
       resendEmailUserId: [],
       fetching: false,
       registrationResentDateTime: null,
@@ -16,18 +14,13 @@ describe('reducer', () => {
     expect(resendRegistrationEmail(state, requestAction)).toEqual({
       fetching: true,
       resendEmailUserId: [],
-      resendEmailStatus: null,
       error: null,
       registrationResentDateTime: null,
     })
   })
 
   describe('handles RESEND_REGISTRATION_EMAIL_API_CALL_SUCCESS', () => {
-    const date = DateTime.local().toSQL({ includeOffset: false })
-    const dateTime = date.split('.')[0]
-
     const state = {
-      resendEmailStatus: null,
       fetching: true,
       error: null,
       resendEmailUserId: [],
@@ -36,30 +29,28 @@ describe('reducer', () => {
     it('returns resendEmailUserId', () => {
       const responseAction = {
         type: actionTypes.RESEND_REGISTRATION_EMAIL_API_CALL_SUCCESS,
-        resendEmailStatus: 200,
+        resendEmailStatus: { user_id: 'SOME_ID', last_registration_resubmit_date_time: '2018-10-22 10:20:30' },
         id: 'SOME_ID',
       }
       expect(resendRegistrationEmail(state, responseAction)).toEqual({
         fetching: false,
-        resendEmailStatus: 200,
+        registrationResentDateTime: { last_registration_resubmit_date_time: '2018-10-22 10:20:30', user_id: 'SOME_ID' },
         resendEmailUserId: ['SOME_ID'],
         error: null,
-        registrationResentDateTime: dateTime,
       })
     })
 
     it('returns resendEmailUserId as array[id]', () => {
       const responseAction1 = {
         type: actionTypes.RESEND_REGISTRATION_EMAIL_API_CALL_SUCCESS,
-        resendEmailStatus: 200,
+        resendEmailStatus: { last_registration_resubmit_date_time: '2018-10-22 10:20:30', user_id: 'SOME_ID' },
         id: ['SOME_ID1', 'SOME_ID2'],
       }
       expect(resendRegistrationEmail(state, responseAction1)).toEqual({
         fetching: false,
-        resendEmailStatus: 200,
+        registrationResentDateTime: { last_registration_resubmit_date_time: '2018-10-22 10:20:30', user_id: 'SOME_ID' },
         resendEmailUserId: ['SOME_ID1', 'SOME_ID2'],
         error: null,
-        registrationResentDateTime: dateTime,
       })
     })
   })
@@ -67,15 +58,14 @@ describe('reducer', () => {
   it('handles RESEND_REGISTRATION_EMAIL_API_CALL_FAILURE', () => {
     const failureAction = {
       type: actionTypes.RESEND_REGISTRATION_EMAIL_API_CALL_FAILURE,
-      resendEmailStatus: null,
+      registrationResentDateTime: null,
       error: 'error happened',
     }
-    const state = { resendEmailStatus: null, fetching: true, error: null, registrationResentDateTime: null }
+    const state = { registrationResentDateTime: null, fetching: true, error: null }
     expect(resendRegistrationEmail(state, failureAction)).toEqual({
       fetching: false,
-      resendEmailStatus: null,
-      error: 'error happened',
       registrationResentDateTime: null,
+      error: 'error happened',
     })
   })
 
@@ -85,7 +75,6 @@ describe('reducer', () => {
       foreignObject: {},
     }
     const state = {
-      resendEmailStatus: null,
       fetching: false,
       resendEmailUserId: [],
       registrationResentDateTime: null,
@@ -94,7 +83,7 @@ describe('reducer', () => {
   })
 
   it('clears details', () => {
-    const before = { resendEmailStatus: {}, fetching: false, error: null }
+    const before = { registrationResentDateTime: {}, fetching: false, error: null }
     let after
     expect(
       () =>

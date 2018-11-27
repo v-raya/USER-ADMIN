@@ -80,6 +80,13 @@ function fetchDetails(
         displayAlert: true,
       }
 
+    case actionTypes.CLEAR_SAVE_ALERT:
+      return {
+        ...state,
+        fetching: false,
+        displayAlert: false,
+      }
+
     case actionTypes.HANDLE_DROPDOWN_CHANGE: {
       return {
         ...state,

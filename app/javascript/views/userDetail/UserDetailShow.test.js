@@ -159,9 +159,9 @@ describe('UserDetailShow', () => {
           status: 'FORCE_CHANGE_PASSWORD',
           last_registration_resubmit_date_time: null,
         }
-        const registrationResentDateTime = '2018-09-08 08:06:22'
+        const resentRegistrationEmailDateTime = '2018-09-08 08:06:22'
         const wrapper = shallow(
-          <UserDetailShow details={details} registrationResentDateTime={registrationResentDateTime} />
+          <UserDetailShow details={details} resentRegistrationEmailDateTime={resentRegistrationEmailDateTime} />
         )
         expect(wrapper.find('Button').length).toEqual(1)
         expect(wrapper.find('Button').props().btnName).toBe('Resend Invite')
