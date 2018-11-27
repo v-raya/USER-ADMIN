@@ -133,7 +133,7 @@ feature 'Add User Page' do
     click_button 'Verify User'
 
     # we are now cleared to add the user.
-
+    sleep 5
     expect(page).to have_button('Add User')
     # We could click on the Add User button but then we'd have added the user.
     click_link 'User List'
