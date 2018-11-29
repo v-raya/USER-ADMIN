@@ -96,7 +96,7 @@ const UserDetailShow = ({
                             btnClassName="primary"
                             btnName="Resend Invite"
                             onClick={onResendInvite}
-                            disabled={disableResendEmailButton | disableEditBtn}
+                            disabled={disableEditBtn || disableResendEmailButton}
                           />
                         </div>
                       </div>

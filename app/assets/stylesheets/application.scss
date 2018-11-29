@@ -20,6 +20,7 @@
 
 .col-md-3 {
   padding-left: 0;
+  word-break: break-all;
 }
 
 .react-bs-container-body {
@@ -52,7 +53,11 @@
     margin: 0.5rem auto;
 
     &.btn.btn-primary:hover {
-      background-color: #077873;
+      background-color: #098e88;
+    }
+
+    &.btn.btn-primary:disabled {
+      box-shadow: none;
     }
   }
 }

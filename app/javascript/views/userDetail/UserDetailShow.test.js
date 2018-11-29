@@ -161,13 +161,47 @@ describe('UserDetailShow', () => {
         }
         const resentRegistrationEmailDateTime = '2018-09-08 08:06:22'
         const wrapper = shallow(
-          <UserDetailShow details={details} resentRegistrationEmailDateTime={resentRegistrationEmailDateTime} />
+          <UserDetailShow
+            details={details}
+            resentRegistrationEmailDateTime={resentRegistrationEmailDateTime}
+            disableEditBtn={true}
+            disableResendEmailButton={true}
+          />
         )
         expect(wrapper.find('Button').length).toEqual(1)
         expect(wrapper.find('Button').props().btnName).toBe('Resend Invite')
+        expect(wrapper.find('Button').props().disabled).toBe(true)
         expect(wrapper.find('.resend-email-text').text()).toEqual(
           'Registration email resent:September 8, 2018 08:06 AM'
         )
+      })
+
+      describe('', () => {
+        const details = {
+          id: 'id',
+          first_name: 'Firstname0',
+          last_name: 'Lastname0',
+          middle_name: 'Middlename0',
+          county_name: 'MyCounty',
+          status: 'FORCE_CHANGE_PASSWORD',
+          last_registration_resubmit_date_time: null,
+        }
+        const wrapper = shallow(<UserDetailShow details={details} />)
+
+        it('Resend invite button is disabled if user is not editable', () => {
+          wrapper.setProps({ disableEditBtn: true, disableResendEmailButton: false })
+          expect(wrapper.find('Button').props().disabled).toBe(true)
+        })
+
+        it('Resend button is not disabled if user is editable and before registration email has been sent', () => {
+          wrapper.setProps({ disableEditBtn: false, disableResendEmailButton: false })
+          expect(wrapper.find('Button').props().disabled).toBe(false)
+        })
+
+        it('Resend button is disabled if user is editable & after registration email has been sent', () => {
+          wrapper.setProps({ disableEditBtn: false, disableResendEmailButton: true })
+          expect(wrapper.find('Button').props().disabled).toBe(true)
+        })
       })
     })
   })
