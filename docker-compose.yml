@@ -132,3 +132,4 @@ services:
       - DASHBOARD_URL
       - RAILS_RELATIVE_URL_ROOT
       - DEV_MODE
+      - TZ
