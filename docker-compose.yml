@@ -126,10 +126,10 @@ services:
         source: ./tmp
         target: /app/tmp/capybara
     environment:
-      - SECRET_KEY_BASE
-      - PERRY_API_BASE_URL
-      - COUNTY_ADMIN_WEB_BASE_URL
-      - DASHBOARD_URL
-      - RAILS_RELATIVE_URL_ROOT
-      - DEV_MODE
-      - "TZ=America/Los_Angeles"
+      SECRET_KEY_BASE: ${SECRET_KEY_BASE}
+      PERRY_API_BASE_URL: ${PERRY_API_BASE_URL}
+      COUNTY_ADMIN_WEB_BASE_URL: {COUNTY_ADMIN_WEB_BASE_URL}
+      DASHBOARD_URL: ${DASHBOARD_URL}
+      RAILS_RELATIVE_URL_ROOT: ${RAILS_RELATIVE_URL_ROOT}
+      DEV_MODE: ${DEV_MODE}
+      TZ: ${TZ}
