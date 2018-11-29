@@ -53,11 +53,12 @@
     margin: 0.5rem auto;
 
     &.btn.btn-primary:hover {
-      background-color: #098e88;
+      background-color: #077873;
     }
 
     &.btn.btn-primary:disabled {
       box-shadow: none;
+      background-color: #c2d6d5;
     }
   }
 }
