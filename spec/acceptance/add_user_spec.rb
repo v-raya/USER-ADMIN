@@ -21,10 +21,8 @@ feature 'Add User Page' do
     valid_racfid = 'AUTO1I'
     fill_in('CWS Login', with: valid_racfid, match: :prefer_exact)
     click_button 'Verify User'
-    sleep 5
-    expect(page).to have_content('Add User')
+    wait_for_loading_to_complete
 
-    sleep 1 # seems like we have to sleep to wait for this error to show up
     expect(page).not_to have_selector('.alert-message')
 
     # we are now cleared to add the user.
@@ -78,6 +76,7 @@ feature 'Add User Page' do
 
     check_accessibility
     click_button 'Verify User'
+    wait_for_loading_to_complete
     check_accessibility
   end
 
@@ -120,20 +119,17 @@ feature 'Add User Page' do
     # end
 
     click_button 'Verify User'
+
     unauthorized_racfid = 'AUTO1IA'
     fill_in('CWS Login', with: unauthorized_racfid, match: :prefer_exact)
     click_button 'Verify User'
-    sleep 5
-    expect(page).to \
-      have_content('You cannot add this user because they exist in Madera county.')
+    wait_for_loading_to_fail('You cannot add this user because they exist in Madera county.')
 
     # now enter a valid RACFID valid
     valid_racfid = 'AUTO1I'
     fill_in('CWS Login', with: valid_racfid, match: :prefer_exact)
     click_button 'Verify User'
-
-    # we are now cleared to add the user.
-    sleep 5
+    wait_for_loading_to_complete
     expect(page).to have_button('Add User')
     # We could click on the Add User button but then we'd have added the user.
     click_link 'User List'

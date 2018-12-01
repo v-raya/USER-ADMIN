@@ -49,6 +49,16 @@ module UserDetailPageHelper
     "capqacwds+test+#{Time.now.strftime('%y%m%d.%H%M%S')}@gmail.com"
   end
 
+  def wait_for_loading_to_complete
+    expect(page).to have_content(/Loading...|Please Verify/)
+    expect(page).to have_content('Please Verify')
+  end
+
+  def wait_for_loading_to_fail(message)
+    expect(page).to have_content(/Loading...|#{message}/)
+    expect(page).to have_content(message)
+  end
+
   def details_account_status
     find(:xpath,
          "//label[contains(text(),'Account Status')]/following-sibling::span").text
