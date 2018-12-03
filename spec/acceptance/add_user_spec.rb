@@ -20,8 +20,8 @@ feature 'Add User Page' do
     # now enter a valid RACFID valid
     valid_racfid = 'AUTO1I'
     fill_in('CWS Login', with: valid_racfid, match: :prefer_exact)
-    click_button 'Verify User'
-    wait_for_loading_to_complete
+
+    verify_and_wait_to_complete
 
     expect(page).not_to have_selector('.alert-message')
 
@@ -49,7 +49,7 @@ feature 'Add User Page' do
 
     click_on('Resend Invite')
 
-    date_time = Time.now.strftime('%B %d, %Y %I:%M %p')
+    date_time = Time.now.strftime('%B %-d, %Y %I:%M %p')
 
     resend_registration_email_success
 
@@ -75,8 +75,7 @@ feature 'Add User Page' do
     fill_in('CWS Login', with: valid_racfid, match: :prefer_exact)
 
     check_accessibility
-    click_button 'Verify User'
-    wait_for_loading_to_complete
+    verify_and_wait_to_complete
     check_accessibility
   end
 
@@ -105,9 +104,8 @@ feature 'Add User Page' do
     fill_in('Email', with: email_address, match: :prefer_exact)
     expect(page).to have_button('Verify User', disabled: false)
 
-    click_button 'Verify User'
-    puts "### No active user with CWS Login: #{not_found_racfid} was found in CWS/CMS"
-    expect(page).to have_content('No active user with CWS Login')
+    verify_and_wait_to_fail 'No active user with CWS Login'
+
     # debugging:  this is a list of known racfids.  Some may be valid for our county, or not.
     # Keep this list around for future debugging purposes becsause the data is volatile.
     # find a racfid demonstrating wrong county:
@@ -122,14 +120,14 @@ feature 'Add User Page' do
 
     unauthorized_racfid = 'AUTO1IA'
     fill_in('CWS Login', with: unauthorized_racfid, match: :prefer_exact)
-    click_button 'Verify User'
-    wait_for_loading_to_fail('You cannot add this user because they exist in Madera county.')
+
+    verify_and_wait_to_fail('You cannot add this user because they exist in Madera county.')
 
     # now enter a valid RACFID valid
     valid_racfid = 'AUTO1I'
     fill_in('CWS Login', with: valid_racfid, match: :prefer_exact)
-    click_button 'Verify User'
-    wait_for_loading_to_complete
+
+    verify_and_wait_to_complete
     expect(page).to have_button('Add User')
     # We could click on the Add User button but then we'd have added the user.
     click_link 'User List'

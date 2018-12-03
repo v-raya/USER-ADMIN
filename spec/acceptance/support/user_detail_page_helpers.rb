@@ -49,12 +49,14 @@ module UserDetailPageHelper
     "capqacwds+test+#{Time.now.strftime('%y%m%d.%H%M%S')}@gmail.com"
   end
 
-  def wait_for_loading_to_complete
+  def verify_and_wait_to_complete
+    click_button 'Verify User'
     expect(page).to have_content(/Loading...|Please Verify/)
     expect(page).to have_content('Please Verify')
   end
 
-  def wait_for_loading_to_fail(message)
+  def verify_and_wait_to_fail(message)
+    click_button 'Verify User'
     expect(page).to have_content(/Loading...|#{message}/)
     expect(page).to have_content(message)
   end
