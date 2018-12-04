@@ -1,3 +1,5 @@
+import safeGet from 'lodash.get'
+
 export const selectUserRecords = state => {
   if (!state.userList) return []
   return Array.isArray(state.userList.users) ? state.userList.users : []
@@ -28,4 +30,12 @@ export const checkOfficeNames = offices => {
   } else {
     return []
   }
+}
+
+export const cardHeaderText = state => {
+  const roles = safeGet(state, 'userList.userAccountDetails.roles', [])
+  const countyName = safeGet(state, 'userList.userAccountDetails.county_name', '')
+  const role = roles || []
+  const cardHeaderText = role.includes('State-admin') ? 'State Administrator View' : `County: ${countyName}`
+  return cardHeaderText
 }

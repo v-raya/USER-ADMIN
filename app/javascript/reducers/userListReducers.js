@@ -24,9 +24,7 @@ const initialValue = {
   fetching: false,
   error: null,
   inputData: {},
-  countyName: '',
-  userFirstName: '',
-  userLastName: '',
+  adminAccountDetails: {},
   includeInactive: false,
 }
 
@@ -119,9 +117,7 @@ function userListReducer(state = initialValue, { type, payload, error, meta }) {
           officeNames:
             state.inputData.officeNames === undefined ? getAdminOfficeIDs(payload) : state.inputData.officeNames,
         },
-        countyName: payload.county_name,
-        userFirstName: payload.first_name,
-        userLastName: payload.last_name,
+        adminAccountDetails: payload,
         error: null,
       }
 

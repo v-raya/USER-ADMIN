@@ -4,6 +4,7 @@ import {
   getSearchParams,
   getSerializedSearchParams,
   checkOfficeNames,
+  cardHeaderText,
 } from './userListSelector'
 
 describe('selectors', () => {
@@ -97,5 +98,55 @@ describe('selectors', () => {
   it('returns empty array when office is undefined', () => {
     const expectedValue = []
     expect(checkOfficeNames(undefined)).toEqual(expectedValue)
+  })
+
+  describe('#cardHeaderText', () => {
+    it('returns text based on user Roles ', () => {
+      const state = {
+        userList: {
+          userAccountDetails: {
+            county_name: 'County1',
+            roles: ['State-admin'],
+          },
+        },
+      }
+      expect(cardHeaderText(state)).toEqual('State Administrator View')
+    })
+
+    it('returns county name if user role is not state admin ', () => {
+      const state = {
+        userList: {
+          userAccountDetails: {
+            county_name: 'County1',
+            roles: ['County-admin'],
+          },
+        },
+      }
+      expect(cardHeaderText(state)).toEqual('County: County1')
+    })
+
+    it('returns county name if user role is null ', () => {
+      const state = {
+        userList: {
+          userAccountDetails: {
+            county_name: 'County1',
+            roles: null,
+          },
+        },
+      }
+      expect(cardHeaderText(state)).toEqual('County: County1')
+    })
+
+    it('returns county name if user role is undefined ', () => {
+      const state = {
+        userList: {
+          userAccountDetails: {
+            county_name: 'County1',
+            roles: undefined,
+          },
+        },
+      }
+      expect(cardHeaderText(state)).toEqual('County: County1')
+    })
   })
 })

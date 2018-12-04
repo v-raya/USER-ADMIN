@@ -52,7 +52,7 @@ describe('UsersList', () => {
           handleCheckBoxChangeActions: mockHandleCheckBoxChangeActions,
           setSearch: mockSetSearchActions,
         }}
-        countyName="SomeCountyName"
+        cardHeaderValue="County: CountyName"
         query={query}
         includeInactive={false}
       />,
@@ -69,8 +69,34 @@ describe('UsersList', () => {
 
     it('checks card component props', () => {
       expect(wrapper.find('Cards').props().cardHeaderButton).toBe(true)
-      expect(wrapper.find('Cards').props().cardHeaderText).toBe('County: SomeCountyName')
+      expect(wrapper.find('Cards').props().cardHeaderText).toBe('County: CountyName')
       expect(wrapper.find('Cards').props().headerBtnName).toBe('+ Add a user')
+    })
+
+    it('cardHeaderText is passed to Card props as value', () => {
+      const wrapperLocal = shallow(
+        <UsersList
+          dashboardUrl={'dburl'}
+          actions={{
+            searchUsers: () => {},
+            fetchAccountActions: () => {},
+            fetchOfficesActions: () => {},
+            fetchRolesActions: () => {},
+            setPage: () => {},
+            clearAddedUserDetailActions: () => {},
+            setSearch: mockSetSearchActions,
+          }}
+          userAccountDetails={{ roles: ['State-admin'] }}
+          query={query}
+          lastName="last_name_value"
+          officeNames={['north', 'south', 'east', 'west']}
+          includeInactive={false}
+          cardHeaderValue="State Administrator view"
+        />
+      )
+      expect(wrapperLocal.find('Cards').props().cardHeaderButton).toBe(true)
+      expect(wrapperLocal.find('Cards').props().cardHeaderText).toBe('State Administrator view')
+      expect(wrapperLocal.find('Cards').props().headerBtnName).toBe('+ Add a user')
     })
 
     it('renders PageHeader component', () => {
@@ -357,11 +383,9 @@ describe('UsersList', () => {
           size={50}
           total={25}
           query={query}
-          countyName="SomeCountyName"
           lastName="some_value"
           officeNames={['north']}
           inputData={{ officeNames: ['north'] }}
-          loggedInUserAccount={{ county_name: 'SomeCountyName' }}
           selectedOfficesList={['somevalue']}
           includeInactive={false}
         />
@@ -437,7 +461,6 @@ describe('UsersList', () => {
           size={50}
           total={25}
           query={query}
-          countyName="SomeCountyName"
           lastName="some_value"
           officeNames={['north']}
           inputData={{ officeNames: ['north'] }}

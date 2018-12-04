@@ -13,7 +13,7 @@ import {
 } from '../actions/userListActions'
 import { fetchOfficesActions } from '../actions/officesActions'
 import { fetchRolesActions } from '../actions/rolesActions'
-import { checkOfficeNames } from '../selectors/userListSelector'
+import { checkOfficeNames, cardHeaderText } from '../selectors/userListSelector'
 import { officesList } from '../selectors/officeListSelector'
 import { rolesList } from '../selectors/rolesListSelector'
 import { clearAddedUserDetailActions } from '../actions/addUserActions'
@@ -22,7 +22,7 @@ function mapStateToProps(state) {
   const { userList } = state
   return {
     userList: userList.users || [],
-    countyName: userList.countyName,
+    cardHeaderValue: cardHeaderText(state),
     fetching: userList.fetching,
     userListUrl: '/#',
     dashboardUrl: '/',

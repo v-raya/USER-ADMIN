@@ -5,8 +5,10 @@ describe('globalHeaderSelectors', () => {
     it('selects the firstName and lastName when available', () => {
       const state = {
         userList: {
-          userLastName: 'lastName',
-          userFirstName: 'firstName',
+          userAccountDetails: {
+            last_name: 'lastName',
+            first_name: 'firstName',
+          },
         },
       }
       expect(userName(state)).toEqual('firstName lastName')
@@ -15,8 +17,10 @@ describe('globalHeaderSelectors', () => {
     it('display empty string when there is no first name and no last name ', () => {
       const state = {
         userList: {
-          userFirstName: '',
-          userLastName: '',
+          userAccountDetails: {
+            first_name: '',
+            last_name: '',
+          },
         },
       }
       expect(userName(state)).toEqual(' ')

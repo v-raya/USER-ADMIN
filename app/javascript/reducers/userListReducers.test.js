@@ -17,9 +17,11 @@ describe('reducer', () => {
   it('handles FETCH_ACCOUNT_API_CALL_SUCCESS', () => {
     const before = {
       inputData: {},
-      countyName: '',
-      userLastName: '',
-      userFirstName: '',
+      adminAccountDetails: {
+        county_name: '',
+        first_name: '',
+        last_name: '',
+      },
     }
     const action = {
       type: actionTypes.FETCH_ACCOUNT_API_CALL_SUCCESS,
@@ -33,9 +35,6 @@ describe('reducer', () => {
     }
     const after = reducer(before, action)
     expect(after.inputData.officeNames).toEqual(['1234509876'])
-    expect(after.countyName).toEqual('Madera')
-    expect(after.userFirstName).toEqual('User first name')
-    expect(after.userLastName).toEqual('User last name')
   })
 
   it('handles FETCH_ACCOUNT_API_CALL_SUCCESS when officeNames is not undefined', () => {
@@ -43,7 +42,7 @@ describe('reducer', () => {
       inputData: {
         officeNames: ['someOffice'],
       },
-      countyName: '',
+      adminAccountDetails: {},
     }
     const action = {
       type: actionTypes.FETCH_ACCOUNT_API_CALL_SUCCESS,
@@ -51,7 +50,6 @@ describe('reducer', () => {
     }
     const after = reducer(before, action)
     expect(after.inputData.officeNames).toEqual(['someOffice'])
-    expect(after.countyName).toEqual('Madera')
   })
 
   it('handles FETCH_ACCOUNT_API_CALL_FAILURE', () => {
