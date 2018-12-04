@@ -33,8 +33,8 @@ export const checkOfficeNames = offices => {
 }
 
 export const cardHeaderText = state => {
-  const roles = safeGet(state, 'userList.userAccountDetails.roles', [])
-  const countyName = safeGet(state, 'userList.userAccountDetails.county_name', '')
+  const roles = safeGet(state, 'userList.adminAccountDetails.roles', [])
+  const countyName = safeGet(state, 'userList.adminAccountDetails.county_name', '')
   const role = roles || []
   const cardHeaderText = role.includes('State-admin') ? 'State Administrator View' : `County: ${countyName}`
   return cardHeaderText

@@ -5,7 +5,7 @@ describe('globalHeaderSelectors', () => {
     it('selects the firstName and lastName when available', () => {
       const state = {
         userList: {
-          userAccountDetails: {
+          adminAccountDetails: {
             last_name: 'lastName',
             first_name: 'firstName',
           },
@@ -17,7 +17,7 @@ describe('globalHeaderSelectors', () => {
     it('display empty string when there is no first name and no last name ', () => {
       const state = {
         userList: {
-          userAccountDetails: {
+          adminAccountDetails: {
             first_name: '',
             last_name: '',
           },

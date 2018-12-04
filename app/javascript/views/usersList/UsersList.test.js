@@ -86,7 +86,7 @@ describe('UsersList', () => {
             clearAddedUserDetailActions: () => {},
             setSearch: mockSetSearchActions,
           }}
-          userAccountDetails={{ roles: ['State-admin'] }}
+          adminAccountDetails={{ roles: ['State-admin'] }}
           query={query}
           lastName="last_name_value"
           officeNames={['north', 'south', 'east', 'west']}

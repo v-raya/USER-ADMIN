@@ -104,7 +104,7 @@ describe('selectors', () => {
     it('returns text based on user Roles ', () => {
       const state = {
         userList: {
-          userAccountDetails: {
+          adminAccountDetails: {
             county_name: 'County1',
             roles: ['State-admin'],
           },
@@ -116,7 +116,7 @@ describe('selectors', () => {
     it('returns county name if user role is not state admin ', () => {
       const state = {
         userList: {
-          userAccountDetails: {
+          adminAccountDetails: {
             county_name: 'County1',
             roles: ['County-admin'],
           },
@@ -128,7 +128,7 @@ describe('selectors', () => {
     it('returns county name if user role is null ', () => {
       const state = {
         userList: {
-          userAccountDetails: {
+          adminAccountDetails: {
             county_name: 'County1',
             roles: null,
           },
@@ -140,7 +140,7 @@ describe('selectors', () => {
     it('returns county name if user role is undefined ', () => {
       const state = {
         userList: {
-          userAccountDetails: {
+          adminAccountDetails: {
             county_name: 'County1',
             roles: undefined,
           },
