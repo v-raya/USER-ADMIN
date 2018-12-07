@@ -31,6 +31,24 @@ export const selectAssignedPermissions = state => {
   )
 }
 
+export const selectPossiblePermissionsList = state => {
+  const possiblePermissions = safeGet(
+    state,
+    'fetchDetails.details.records.edit_details.permissions.possible_values',
+    []
+  )
+  const permissions = permissionsList(state)
+  const options = []
+  permissions.forEach(permission => {
+    possiblePermissions.forEach(item => {
+      if (item === permission.value) {
+        options.push({ value: permission.value, label: permission.label })
+      }
+    })
+  })
+  return options
+}
+
 export const selectPossibleRolesList = state => {
   const possibleRoles = safeGet(state, 'fetchDetails.details.records.edit_details.roles.possible_values', [])
   const roles = rolesList(state)

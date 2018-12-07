@@ -11,6 +11,7 @@ import {
   selectAccountStatus,
   selectAssignedPermissions,
   officeName,
+  selectPossiblePermissionsList,
 } from './detailSelector'
 
 describe('selectors', () => {
@@ -40,7 +41,8 @@ describe('selectors', () => {
     isDetailsEditable,
     status,
     rolesList,
-    permissionList,
+    permissionsList,
+    possiblePermissions,
     officeId,
   }) => {
     return {
@@ -49,6 +51,10 @@ describe('selectors', () => {
           records: {
             edit_details: {
               editable: isDetailsEditable,
+              permissions: {
+                possible_values: possiblePermissions,
+                editable: true,
+              },
               roles: {
                 possible_values: possibleRoles,
                 editable: isRolesEditable,
@@ -66,7 +72,7 @@ describe('selectors', () => {
         },
       },
       fetchPermissions: {
-        permissions: permissionList,
+        permissions: permissionsList,
       },
       fetchRoles: {
         roles: rolesList,
@@ -176,7 +182,7 @@ describe('selectors', () => {
   })
 
   describe('#selectAssignedPermissions', () => {
-    const permissionList = [
+    const permissionsList = [
       { description: 'permissionOne', name: 'permission1' },
       { description: 'permissionTwo', name: 'permission2' },
     ]
@@ -185,7 +191,7 @@ describe('selectors', () => {
       const assignedPermissions = ['permission1', 'permission2']
       const state = getState({
         assignedPermissions: assignedPermissions,
-        permissionList: permissionList,
+        permissionsList: permissionsList,
       })
       expect(selectAssignedPermissions(state)).toEqual('permissionOne, permissionTwo')
     })
@@ -194,7 +200,7 @@ describe('selectors', () => {
       const assignedPermissions = ''
       const state = getState({
         assignedPermissions: assignedPermissions,
-        permissionList: permissionList,
+        permissionsList: permissionsList,
       })
       expect(selectAssignedPermissions(state)).toEqual('')
     })
@@ -203,9 +209,29 @@ describe('selectors', () => {
       const assignedPermissions = []
       const state = getState({
         assignedPermissions: assignedPermissions,
-        permissionList: permissionList,
+        permissionsList: permissionsList,
       })
       expect(selectAssignedPermissions(state)).toEqual(false)
+    })
+  })
+
+  describe('#selectPossiblePermissionsList', () => {
+    const permissionsList = [
+      { name: 'permission1', description: 'permissionOne' },
+      { name: 'permission2', description: 'permissionTwo' },
+      { name: 'permission3', description: 'permissionThree' },
+    ]
+    it('renders the description of a permission given possiblePermission with permission name', () => {
+      const possiblePermissions = ['permission1', 'permission2']
+      const expectedValue = [
+        { value: 'permission1', label: 'permissionOne' },
+        { value: 'permission2', label: 'permissionTwo' },
+      ]
+      const state = getState({
+        possiblePermissions: possiblePermissions,
+        permissionsList: permissionsList,
+      })
+      expect(selectPossiblePermissionsList(state)).toEqual(expectedValue)
     })
   })
 

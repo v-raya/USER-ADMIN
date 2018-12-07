@@ -12,8 +12,8 @@ import {
   userStatus,
   userStatusDescription,
   officeName,
+  selectPossiblePermissionsList,
 } from '../selectors/detailSelector'
-import { permissionsList } from '../selectors/permissionsListSelector'
 import { rolesList } from '../selectors/rolesListSelector'
 import {
   fetchDetailsActions,
@@ -43,7 +43,7 @@ function mapStateToProps(state) {
     possibleRolesList: selectPossibleRolesList(state),
     disableEditBtn: checkEditDisable(state),
     details: selectDetailRecords(state),
-    permissionsList: permissionsList(state),
+    possiblePermissionsList: selectPossiblePermissionsList(state),
     rolesList: rolesList(state),
     userListUrl: process.env.RAILS_RELATIVE_URL_ROOT ? process.env.RAILS_RELATIVE_URL_ROOT : '/',
     userDetailError: state.fetchDetails.saveDetailsError,

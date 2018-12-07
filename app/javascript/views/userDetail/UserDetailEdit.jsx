@@ -15,7 +15,7 @@ const UserDetailEdit = ({
   onCancel,
   onSave,
   disableActionBtn,
-  permissionsList,
+  possiblePermissionsList,
   onResendInvite,
   possibleRolesList,
   isRolesDisabled,
@@ -136,7 +136,7 @@ const UserDetailEdit = ({
                 <DropDown
                   id="AssignPermissions"
                   selectedOption={details.permissions}
-                  options={permissionsList}
+                  options={possiblePermissionsList}
                   label="Assigned Permissions"
                   onChange={selectedOptions => onDropDownChange('permissions', selectedOptions.split(','))}
                   multiSelect
@@ -165,10 +165,10 @@ UserDetailEdit.propTypes = {
   userStatusDescription: PropTypes.string,
   userStatus: PropTypes.string,
   resentRegistrationEmailDateTime: PropTypes.string,
-  permissionsList: PropTypes.array,
   onResendInvite: PropTypes.func,
   disableResendEmailButton: PropTypes.bool,
   possibleRolesList: PropTypes.array,
+  possiblePermissionsList: PropTypes.array,
   rolesList: PropTypes.arrayOf(
     PropTypes.shape({
       id: PropTypes.string,
@@ -179,7 +179,7 @@ UserDetailEdit.propTypes = {
 }
 
 UserDetailEdit.defaultProps = {
-  permissionsList: [],
+  possiblePermissionsList: [],
 }
 
 export default UserDetailEdit

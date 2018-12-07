@@ -6,6 +6,7 @@ require 'users/types'
 module Users
   class Permissions < Dry::Struct
     constructor_type :schema
-    attribute :permissions, Types::Array.optional
+    attribute :editable, Types::String.optional
+    attribute :possible_values, Types::Array.optional
   end
 end

@@ -62,6 +62,7 @@ module UserListPageHelper
 
   def search_users(last_name: '', include_inactive: false)
     return if find_field('Search user list').value == last_name
+
     puts "search for '#{last_name}'"
 
     safe_fill_in_last_name(last_name)

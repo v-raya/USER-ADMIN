@@ -10,6 +10,7 @@ module Users
       params = sanitize_keys(parameters)
       response = @http_service.get('/perry/idm/users', params, token)
       return [] if response.status == 404
+
       response.body.map { |result| User.new(result) }
     end
 
@@ -17,6 +18,7 @@ module Users
       response = @http_service.get("/perry/idm/users/#{id}", token)
       Rails.logger.info "404 response from perry with token #{token}" if response.status == 404
       return {} if response.status == 404
+
       User.new(response.body)
     end
 
@@ -28,24 +30,28 @@ module Users
     def verify_user(parameters, token)
       response = @http_service.get('/perry/idm/users/verify', parameters, token)
       return {} if response.status == 404
+
       VerifyUser.new(response.body)
     end
 
     def get_permissions_list(token)
       response = @http_service.get('/perry/idm/permissions', token)
       return [] if response.status == 404
+
       response.body { Permissions.new }
     end
 
     def get_offices_list(token)
       response = @http_service.get('/perry/idm/admin-offices', token)
       return [] if response.status == 404
+
       response.body { Offices.new }
     end
 
     def get_roles_list(token)
       response = @http_service.get('/perry/idm/roles', token)
       return [] if response.status == 404
+
       response.body { Roles.new }
     end
 
@@ -60,6 +66,7 @@ module Users
         token
       )
       return response.status if response.status != 200
+
       ResendRegistration.new(response.body)
     end
 

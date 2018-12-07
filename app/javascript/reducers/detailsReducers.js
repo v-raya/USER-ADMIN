@@ -21,7 +21,6 @@ function fetchDetails(
         XHRStatus: 'ready',
         records: { ...action.details },
       }
-
       return {
         ...state,
         fetching: false,

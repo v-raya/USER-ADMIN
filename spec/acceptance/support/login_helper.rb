@@ -26,6 +26,7 @@ module LoginHelper
   def cognito_login
     visit ENV.fetch('RAILS_RELATIVE_URL_ROOT', '/')
     return unless current_url.include?('login')
+
     puts "Fill in user name with #{ENV.fetch('COGNITO_USERNAME', 'no-reply@osi.ca.gov')}"
     puts "Fill in pass with #{ENV.fetch('COGNITO_PASSWORD', 'password')}"
     fill_in 'Email', with: ENV.fetch('COGNITO_USERNAME', 'no-reply@osi.ca.gov')
@@ -40,6 +41,7 @@ module LoginHelper
   def verify_account
     # verify via MFA using static value assigned to this user.
     return unless page.has_content?('Account Verification')
+
     fill_in 'Enter Code', with: 'LETMEIN'
     click_on 'Verify'
   end
@@ -50,6 +52,7 @@ module LoginHelper
 
   def submit_json_form(login_json)
     return unless ENV.fetch('COUNTY_AUTHORIZATION_ENABLED', false)
+
     fill_in 'Authorization JSON', with: login_json
     click_button 'Sign In'
     puts "signed in: #{current_url}"

@@ -92,7 +92,7 @@ export default class UserDetail extends Component {
   }
 
   renderCards = (
-    permissionsList,
+    possiblePermissionsList,
     XHRStatus,
     details,
     disableResendEmailButton,
@@ -125,7 +125,6 @@ export default class UserDetail extends Component {
                 onSave={this.onSaveDetails}
                 onDropDownChange={this.handleDropDownChange}
                 disableActionBtn={disableActionBtn}
-                permissionsList={permissionsList}
                 onResendInvite={this.onResendInvite}
                 disableResendEmailButton={disableResendEmailButton}
                 rolesList={rolesList}
@@ -136,12 +135,12 @@ export default class UserDetail extends Component {
                 userStatus={userStatus}
                 officeName={officeName}
                 resentRegistrationEmailDateTime={resentRegistrationEmailDateTime}
+                possiblePermissionsList={possiblePermissionsList}
               />
             ) : (
               <UserDetailShow
                 details={details}
                 onEdit={this.onEditClick}
-                permissionsList={permissionsList}
                 disableEditBtn={disableEditBtn}
                 rolesList={rolesList}
                 startDate={startDate}
@@ -171,7 +170,7 @@ export default class UserDetail extends Component {
     const {
       dashboardUrl,
       dashboardClickHandler,
-      permissionsList,
+      possiblePermissionsList,
       XHRStatus,
       details,
       disableResendEmailButton,
@@ -203,7 +202,7 @@ export default class UserDetail extends Component {
             {this.showAddAlert()}
           </div>
           {this.renderCards(
-            permissionsList,
+            possiblePermissionsList,
             XHRStatus,
             details,
             disableResendEmailButton,
@@ -233,15 +232,14 @@ UserDetail.propTypes = {
   id: PropTypes.string,
   dashboardUrl: PropTypes.string,
   dashboardClickHandler: PropTypes.func,
-  permissionsList: PropTypes.array,
   actions: PropTypes.object.isRequired,
   userDetailError: PropTypes.object,
   resentRegistrationEmailDateTime: PropTypes.string,
   disableResendEmailButton: PropTypes.bool,
-  possibleRoles: PropTypes.array,
   disableEditBtn: PropTypes.bool,
   XHRStatus: PropTypes.string,
   possibleRolesList: PropTypes.array,
+  possiblePermissionsList: PropTypes.array,
   accountStatus: PropTypes.string,
   startDate: PropTypes.string,
   userStatusDescription: PropTypes.string,

@@ -15,6 +15,7 @@ module UserDetailPageHelper
 
   def remove_permission(permission)
     return if permission.blank?
+
     permissions_select.find(:xpath,
                             "//*[contains(text(), '#{permission}')]/preceding-sibling::span")
                       .click
