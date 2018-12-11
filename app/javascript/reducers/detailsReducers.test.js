@@ -77,6 +77,29 @@ describe('reducer', () => {
     })
   })
 
+  it('handles HANDLE_EMAIL_INPUT_CHANGE', () => {
+    const value = 'hello@gmail.com'
+    const handleInputAction = {
+      type: actionTypes.HANDLE_EMAIL_INPUT_CHANGE,
+      payload: { value },
+    }
+    const details = {
+      records: {
+        user: {
+          email: value,
+        },
+      },
+    }
+    const state = { details: details }
+    expect(fetchDetails(state, handleInputAction)).toEqual({
+      details: {
+        records: { user: { email: value } },
+      },
+      displayAlert: false,
+      disableActionBtn: false,
+    })
+  })
+
   it('handles HANDLE_EDIT_BUTTON_CHANGE', () => {
     const value = true
     const handleEditButtonAction = {

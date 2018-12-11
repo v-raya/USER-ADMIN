@@ -45,6 +45,7 @@ module Api
         allow(user_repository).to receive(:update_user)
           .with('55', { enabled: 'false',
                         permissions: %w[snapshot hotline],
+                        email: 'abcd@gmail.com',
                         roles: %w[role1 role2] }, token)
           .and_return(user)
         request.session[:token] = 'my_token'
@@ -52,6 +53,7 @@ module Api
                           params: { id: 55,
                                     enabled: 'false',
                                     permissions: %w[snapshot hotline],
+                                    email: 'abcd@gmail.com',
                                     roles: %w[role1 role2] }
         expect(response.body).to eq user.to_json
       end

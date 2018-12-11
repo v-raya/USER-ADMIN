@@ -12,6 +12,8 @@ import {
   selectAssignedPermissions,
   officeName,
   selectPossiblePermissionsList,
+  disableActionButton,
+  isEmailValid,
 } from './detailSelector'
 
 describe('selectors', () => {
@@ -35,6 +37,7 @@ describe('selectors', () => {
     isEnabled,
     startDate,
     countyName,
+    disableActionBtn,
     assignedPermissions,
     possibleRoles,
     isRolesEditable,
@@ -44,9 +47,11 @@ describe('selectors', () => {
     permissionsList,
     possiblePermissions,
     officeId,
+    email,
   }) => {
     return {
       fetchDetails: {
+        disableActionBtn: disableActionBtn,
         details: {
           records: {
             edit_details: {
@@ -67,6 +72,7 @@ describe('selectors', () => {
               permissions: assignedPermissions,
               status: status,
               office_id: officeId,
+              email: email,
             },
           },
         },
@@ -366,6 +372,40 @@ describe('selectors', () => {
     it('return true if editable is undefined ', () => {
       const state = getState({ isRolesEditable: undefined })
       expect(disableRolesDropDown(state)).toEqual(true)
+    })
+  })
+
+  describe('#isEmailValid', () => {
+    it('return true when email is valid', () => {
+      const state = getState({ email: 'Hello@gmail.com' })
+      expect(isEmailValid(state)).toEqual(true)
+    })
+
+    it('return false if email is not valid', () => {
+      const state = getState({ email: 'hello@' })
+      expect(isEmailValid(state)).toEqual(false)
+    })
+  })
+
+  describe('#disableActionButton', () => {
+    it('return true when email is valid and disableActionBtn is true', () => {
+      const state = getState({ email: 'Hello@gmail.com', disableActionBtn: true })
+      expect(disableActionButton(state)).toEqual(true)
+    })
+
+    it('return true when email is not valid and disableActionBtn is false', () => {
+      const state = getState({ email: 'hello@', disableActionBtn: false })
+      expect(disableActionButton(state)).toEqual(true)
+    })
+
+    it('return false when email is valid and disableActionBtn is false', () => {
+      const state = getState({ email: 'hello@gmail.com', disableActionBtn: false })
+      expect(disableActionButton(state)).toEqual(false)
+    })
+
+    it('return true when email is not valid and disableActionBtn is true', () => {
+      const state = getState({ email: 'hello@gmai', disableActionBtn: true })
+      expect(disableActionButton(state)).toEqual(true)
     })
   })
 

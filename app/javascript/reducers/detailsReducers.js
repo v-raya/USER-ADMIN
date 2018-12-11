@@ -108,6 +108,24 @@ function fetchDetails(
       }
     }
 
+    case actionTypes.HANDLE_EMAIL_INPUT_CHANGE: {
+      return {
+        ...state,
+        displayAlert: false,
+        disableActionBtn: false,
+        details: {
+          ...state.details,
+          records: {
+            ...state.details.records,
+            user: {
+              ...state.details.records.user,
+              email: action.payload.value,
+            },
+          },
+        },
+      }
+    }
+
     default:
       return state
   }

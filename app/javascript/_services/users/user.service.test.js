@@ -92,6 +92,7 @@ describe('UserService', () => {
       user: {
         enabled: false,
         permissions: ['drivethebusOne', 'getapuppyOne'],
+        email: 'abcd@gmail.com',
         roles: 'RoleOne',
       },
     }
@@ -106,12 +107,14 @@ describe('UserService', () => {
           enabled: true,
           permissions: ['drivethebus', 'getapuppy'],
           roles: 'RoleOneTwo',
+          email: 'abcdefg@gmail.com',
           first_name: 'Pidgeon',
         }
         UserService.saveUserDetails(id, details, initialDetails, false)
         expect(patchSpy).toHaveBeenCalledWith('/user_detail/someid/save_user', {
           enabled: true,
           permissions: ['drivethebus', 'getapuppy'],
+          email: 'abcdefg@gmail.com',
           roles: 'RoleOneTwo',
         })
       })
@@ -152,6 +155,19 @@ describe('UserService', () => {
         })
       })
 
+      it('calls #patch ApiService when only email is changed', () => {
+        const details = {
+          email: 'cwdscares@gmail.com',
+        }
+        UserService.saveUserDetails(id, details, initialDetails, false)
+        expect(patchSpy).toHaveBeenCalledWith('/user_detail/someid/save_user', {
+          enabled: undefined,
+          permissions: undefined,
+          roles: undefined,
+          email: 'cwdscares@gmail.com',
+        })
+      })
+
       it('calls #patch ApiService when nothing changed', () => {
         const details = {
           first_name: 'firstName',
@@ -170,6 +186,7 @@ describe('UserService', () => {
         enabled: true,
         permissions: [],
         roles: '',
+        email: 'ab@gmail.com',
         first_name: 'firstName',
       }
       UserService.saveUserDetails(id, details, initialDetails)
@@ -177,6 +194,7 @@ describe('UserService', () => {
         enabled: true,
         permissions: [],
         roles: '',
+        email: 'ab@gmail.com',
       })
     })
 
@@ -186,12 +204,14 @@ describe('UserService', () => {
         permissions: ['drivethebus', 'getapuppy'],
         roles: 'RoleTwo',
         first_name: 'firstName',
+        email: 'hello@gmail.com',
       }
       UserService.saveUserDetails(id, details, initialDetails, false)
       expect(patchSpy).toHaveBeenCalledWith('/user_detail/someid/save_user', {
         enabled: false,
         permissions: ['drivethebus', 'getapuppy'],
         roles: 'RoleTwo',
+        email: 'hello@gmail.com',
       })
     })
 
@@ -201,6 +221,7 @@ describe('UserService', () => {
         permissions: ['permission1', 'permission2'],
         roles: ['Some-value'],
         first_name: 'firstName',
+        email: 'abcd@gmail.com',
       }
       UserService.saveUserDetails(id, details, initialDetails, true)
       expect(patchSpy).toHaveBeenCalledWith('/user_detail/someid/save_user', {

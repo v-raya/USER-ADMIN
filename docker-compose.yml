@@ -1,7 +1,7 @@
 version: '3.2'
 services:
   perry:
-    image: cwds/perry:4.0.0_1051-RC
+    image: cwds/perry:4.1.0_1183-RC
 
     hostname: perry
     depends_on:

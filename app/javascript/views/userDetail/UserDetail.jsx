@@ -54,6 +54,10 @@ export default class UserDetail extends Component {
     this.props.actions.handleDropdownChangeAction(name, value)
   }
 
+  handleInputChange = value => {
+    this.props.actions.handleEmailChangeAction(value)
+  }
+
   showAlert = (displayAlert, userDetailError) => {
     if (displayAlert) {
       if (userDetailError) {
@@ -107,7 +111,8 @@ export default class UserDetail extends Component {
     userStatusDescription,
     userStatus,
     officeName,
-    resentRegistrationEmailDateTime
+    resentRegistrationEmailDateTime,
+    isEmailValid
   ) => {
     return XHRStatus !== 'ready' ? (
       <Cards>
@@ -124,10 +129,8 @@ export default class UserDetail extends Component {
                 onCancel={this.onCancel}
                 onSave={this.onSaveDetails}
                 onDropDownChange={this.handleDropDownChange}
+                onInputChange={this.handleInputChange}
                 disableActionBtn={disableActionBtn}
-                onResendInvite={this.onResendInvite}
-                disableResendEmailButton={disableResendEmailButton}
-                rolesList={rolesList}
                 possibleRolesList={possibleRolesList}
                 isRolesDisabled={isRolesDisabled}
                 startDate={startDate}
@@ -135,6 +138,7 @@ export default class UserDetail extends Component {
                 userStatus={userStatus}
                 officeName={officeName}
                 resentRegistrationEmailDateTime={resentRegistrationEmailDateTime}
+                isEmailValid={isEmailValid}
                 possiblePermissionsList={possiblePermissionsList}
               />
             ) : (
@@ -142,8 +146,8 @@ export default class UserDetail extends Component {
                 details={details}
                 onEdit={this.onEditClick}
                 disableEditBtn={disableEditBtn}
-                rolesList={rolesList}
                 startDate={startDate}
+                rolesList={rolesList}
                 accountStatus={accountStatus}
                 assignedPermissions={assignedPermissions}
                 userStatus={userStatus}
@@ -174,8 +178,8 @@ export default class UserDetail extends Component {
       XHRStatus,
       details,
       disableResendEmailButton,
-      rolesList,
       possibleRolesList,
+      rolesList,
       isRolesDisabled,
       userDetailError,
       displayAlert,
@@ -188,6 +192,7 @@ export default class UserDetail extends Component {
       userStatus,
       officeName,
       resentRegistrationEmailDateTime,
+      isEmailValid,
     } = this.props
     return (
       <div>
@@ -206,8 +211,8 @@ export default class UserDetail extends Component {
             XHRStatus,
             details,
             disableResendEmailButton,
-            rolesList,
             possibleRolesList,
+            rolesList,
             isRolesDisabled,
             disableActionBtn,
             disableEditBtn,
@@ -217,7 +222,8 @@ export default class UserDetail extends Component {
             userStatusDescription,
             userStatus,
             officeName,
-            resentRegistrationEmailDateTime
+            resentRegistrationEmailDateTime,
+            isEmailValid
           )}
         </div>
       </div>
@@ -245,12 +251,13 @@ UserDetail.propTypes = {
   startDate: PropTypes.string,
   userStatusDescription: PropTypes.string,
   userStatus: PropTypes.string,
-  rolesList: PropTypes.arrayOf(PropTypes.shape({ id: PropTypes.string, name: PropTypes.string })),
   officeName: PropTypes.string,
   isRolesDisabled: PropTypes.bool,
+  rolesList: PropTypes.arrayOf(PropTypes.shape({ id: PropTypes.string, name: PropTypes.string })),
   displayAlert: PropTypes.bool,
   disableActionBtn: PropTypes.bool,
   match: PropTypes.object,
+  isEmailValid: PropTypes.bool,
 }
 
 UserDetail.defaultProps = {

@@ -5,6 +5,7 @@ import {
   saveUserDetailsActions,
   handleEditButtonChangeAction,
   clearSaveAlert,
+  handleEmailChangeAction,
 } from './detailActions'
 import {
   FETCH_DETAILS_API_CALL_REQUEST,
@@ -13,6 +14,7 @@ import {
   HANDLE_DROPDOWN_CHANGE,
   HANDLE_EDIT_BUTTON_CHANGE,
   CLEAR_SAVE_ALERT,
+  HANDLE_EMAIL_INPUT_CHANGE,
 } from './actionTypes'
 
 describe('#handleDropDownChangeAction', () => {
@@ -31,6 +33,16 @@ describe('#handleEditButtonChangeAction', () => {
     const value = true
     expect(handleEditButtonChangeAction(value)).toEqual({
       type: HANDLE_EDIT_BUTTON_CHANGE,
+      payload: { value },
+    })
+  })
+})
+
+describe('#handleEmailChangeAction', () => {
+  it('returns type and payload', () => {
+    const value = 'hello@gmail.com'
+    expect(handleEmailChangeAction(value)).toEqual({
+      type: HANDLE_EMAIL_INPUT_CHANGE,
       payload: { value },
     })
   })

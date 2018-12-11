@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import Cards from '../../common/Card'
-import { InputComponent } from 'react-wood-duck/'
+import { InputComponent } from 'react-wood-duck'
 
 /* eslint camelcase: 0 */
 

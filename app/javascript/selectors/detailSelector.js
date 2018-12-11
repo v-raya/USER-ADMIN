@@ -63,6 +63,18 @@ export const selectPossibleRolesList = state => {
   return options
 }
 
+export const isEmailValid = state => {
+  const email = safeGet(state, 'fetchDetails.details.records.user.email')
+  return /^[a-zA-Z0-9_!#$%&’*+/=?`'{^.-]*@(?:[A-Z0-9-]+\.)+[A-Z]{2,6}$/i.test(email)
+}
+
+export const disableActionButton = state => {
+  if (!isEmailValid(state)) {
+    return true
+  }
+  return safeGet(state, 'fetchDetails.disableActionBtn')
+}
+
 export const checkEditDisable = state => !safeGet(state, 'fetchDetails.details.records.edit_details.editable')
 
 export const disableRolesDropDown = state => !safeGet(state, 'fetchDetails.details.records.edit_details.roles.editable')

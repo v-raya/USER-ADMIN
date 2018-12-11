@@ -15,11 +15,13 @@ describe('UserDetailEdit', () => {
     roles: ['ROLE1', 'ROLE2'],
     status: 'FORCE_CHANGE_PASSWORD',
     last_registration_resubmit_date_time: '2012-09-22 11:22:33',
+    email: 'hello@gmail.com',
   }
 
   const possibleRolesOptions = () => {}
 
   const onDropDownChangeSpy = jest.fn()
+  const onInputChangeSpy = jest.fn()
 
   const rolesList = [{ id: 'role1', name: 'roleOne' }, { id: 'role2', name: 'roleTwo' }]
   const possibleRoles = ['role1', 'role2']
@@ -33,6 +35,7 @@ describe('UserDetailEdit', () => {
         possibleRoles={possibleRoles}
         rolesList={rolesList}
         possibleRolesOptions={possibleRolesOptions}
+        onInputChange={onInputChangeSpy}
       />
     )
   })
@@ -41,7 +44,7 @@ describe('UserDetailEdit', () => {
     it('renders the label inside the grid wrapper', () => {
       expect(wrapper.find('Cards').props().cardHeaderText).toBe(`County: ${details.county_name}`)
 
-      expect(wrapper.find('ShowField').length).toBe(8)
+      expect(wrapper.find('ShowField').length).toBe(7)
       expect(
         wrapper
           .find('ShowField')
@@ -65,33 +68,28 @@ describe('UserDetailEdit', () => {
           .find('ShowField')
           .at(3)
           .props().label
-      ).toEqual('Email')
+      ).toEqual('Office Phone Number')
       expect(
         wrapper
           .find('ShowField')
           .at(4)
           .props().label
-      ).toEqual('Office Phone Number')
+      ).toEqual('Start Date')
       expect(
         wrapper
           .find('ShowField')
           .at(5)
           .props().label
-      ).toEqual('Start Date')
+      ).toEqual('Last Login')
       expect(
         wrapper
           .find('ShowField')
           .at(6)
           .props().label
-      ).toEqual('Last Login')
-      expect(
-        wrapper
-          .find('ShowField')
-          .at(7)
-          .props().label
       ).toEqual('User Status')
       expect(wrapper.find('[label="Account Status"]').exists()).toBe(true)
       expect(wrapper.find('[label="Assigned Permissions"]').exists()).toBe(true)
+      expect(wrapper.find('[label="Email"]').exists()).toBe(true)
       expect(wrapper.find('.resend-email-text').text()).toEqual('Registration email resent:September 22, 2012 11:22 AM')
     })
 
@@ -110,8 +108,6 @@ describe('UserDetailEdit', () => {
         last_registration_resubmit_date_time: null,
       }
       wrapper = shallow(<UserDetailEdit details={details} />)
-      expect(wrapper.find('Button').length).toEqual(1)
-      expect(wrapper.find('Button').props().btnName).toBe('Resend Invite')
       expect(wrapper.find('.resend-email-text').length).toEqual(0)
     })
 
@@ -126,8 +122,6 @@ describe('UserDetailEdit', () => {
       const wrapper = shallow(
         <UserDetailEdit details={details} resentRegistrationEmailDateTime={resentRegistrationEmailDateTime} />
       )
-      expect(wrapper.find('Button').length).toEqual(1)
-      expect(wrapper.find('Button').props().btnName).toBe('Resend Invite')
       expect(wrapper.find('.resend-email-text').text()).toEqual('Registration email resent:September 8, 2018 08:06 AM')
     })
 
@@ -165,6 +159,14 @@ describe('UserDetailEdit', () => {
       const value = ['Asian', 'American']
       wrapper.find('#AssignPermissions').simulate('change', String(value))
       expect(onDropDownChangeSpy).toHaveBeenCalledWith('permissions', value)
+    })
+
+    it('#Email, handleInputChange function is called when onChange event triggered', () => {
+      const value = 'abcd@gmail.com'
+      wrapper.find('InputComponent').simulate('change', {
+        target: { value: 'abcd@gmail.com' },
+      })
+      expect(onInputChangeSpy).toHaveBeenCalledWith(value)
     })
   })
 })

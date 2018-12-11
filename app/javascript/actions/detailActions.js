@@ -5,11 +5,17 @@ import {
   HANDLE_DROPDOWN_CHANGE,
   HANDLE_EDIT_BUTTON_CHANGE,
   CLEAR_SAVE_ALERT,
+  HANDLE_EMAIL_INPUT_CHANGE,
 } from './actionTypes'
 
 export const handleDropdownChangeAction = (name, value) => ({
   type: HANDLE_DROPDOWN_CHANGE,
   payload: { name, value },
+})
+
+export const handleEmailChangeAction = value => ({
+  type: HANDLE_EMAIL_INPUT_CHANGE,
+  payload: { value },
 })
 
 export const handleEditButtonChangeAction = value => ({

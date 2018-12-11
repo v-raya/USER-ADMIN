@@ -114,28 +114,36 @@ feature 'User Edit' do
     page_has_user_list_headers
   end
 
-  scenario 'user_details retain changes after clicking resend button' do
+  scenario 'user_details edit/save email successfully' do
     login
-    search_users(last_name: 'Auto', include_inactive: true)
     page_has_user_list_headers
     sleep 2
-
-    get_user_link(1).click
+    first_user_link.click
     page_is_user_details
 
-    original_account_status = details_account_status
-    new_status = (original_account_status == 'Active' ? 'Inactive' : 'Active')
+    original_email_address = detail_page_value('Email')
 
     click_on('Edit')
-    changed_new_status = change_status(new_status)
+    expect(page).to have_button('save', disabled: true)
+    expect(page).to have_button('Cancel', disabled: false)
+    fill_in('Email', with: 'cwds3raval', match: :prefer_exact)
+    # bad email address won't let us proceed
+    expect(page).to have_button('save', disabled: true)
+    expect(page).to have_content('Please enter a valid email.')
 
-    expect(changed_new_status.text)
-      .to eq(new_status)
+    # correct the email to a proper address
+    email_address = new_email_address
+    fill_in('Email', with: email_address, match: :prefer_exact)
+    expect(page).to have_button('save', disabled: false)
+    # put back the original email address
+    fill_in('Email', with: original_email_address, match: :prefer_exact)
+    expect(page).to have_button('save', disabled: false)
 
-    click_on('Resend Invite')
+    click_button 'save'
+    expect_success
 
-    expect(changed_new_status.text)
-      .to eq(new_status)
+    click_link 'User List'
+    page_has_user_list_headers
   end
 
   scenario 'if user is confirmed there is no resend invite button' do

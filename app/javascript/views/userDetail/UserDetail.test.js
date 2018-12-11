@@ -18,6 +18,7 @@ describe('UserDetail', () => {
   let mockHandleDropDownChangeAction
   let mockHandleEditButtonChangeAction
   let mockClearSaveAlertAction
+  let mockHandleEmailChangeAction
 
   beforeEach(() => {
     // Register mock dispatchActions
@@ -30,6 +31,7 @@ describe('UserDetail', () => {
     mockFetchRolesActions = jest.fn().mockReturnValue(Promise.resolve([]))
     mockHandleDropDownChangeAction = jest.fn()
     mockClearSaveAlertAction = jest.fn()
+    mockHandleEmailChangeAction = jest.fn()
     const initialDetails = { id: '12345' }
     const match = {
       params: {
@@ -60,6 +62,7 @@ describe('UserDetail', () => {
             resendRegistrationEmailActions: mockResendRegistrationEmailActions,
             clearAddedUserDetailActions: mockClearAddedUserDetailActions,
             clearSaveAlert: mockClearSaveAlertAction,
+            handleEmailChangeAction: mockHandleEmailChangeAction,
           }}
           match={match}
         />
@@ -103,6 +106,14 @@ describe('UserDetail', () => {
       it('toggles the isEdit flag', () => {
         instance.onEditClick()
         expect(mockHandleEditButtonChangeAction).toHaveBeenCalledWith(true)
+      })
+    })
+
+    describe('#onInputChange', () => {
+      it('should set the email state when event is triggered', () => {
+        const instance = wrapper.instance()
+        const myFunction = instance.handleInputChange
+        expect(() => myFunction('Hello@gmail.com')).not.toThrow()
       })
     })
 

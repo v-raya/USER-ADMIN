@@ -13,6 +13,8 @@ import {
   userStatusDescription,
   officeName,
   selectPossiblePermissionsList,
+  isEmailValid,
+  disableActionButton,
 } from '../selectors/detailSelector'
 import { rolesList } from '../selectors/rolesListSelector'
 import {
@@ -21,6 +23,7 @@ import {
   clearDetails,
   handleDropdownChangeAction,
   handleEditButtonChangeAction,
+  handleEmailChangeAction,
   clearSaveAlert,
 } from '../actions/detailActions'
 import { selectResendEmailDateTime, disableResendEmailButton } from '../selectors/resendEmailSelector'
@@ -38,6 +41,7 @@ function mapStateToProps(state) {
     userStatus: userStatus(state),
     isEdit: state.fetchDetails.isEdit,
     displayAlert: state.fetchDetails.displayAlert,
+    isEmailValid: isEmailValid(state),
     id: addUserRecords(state),
     XHRStatus: fetchingStatus(state),
     possibleRolesList: selectPossibleRolesList(state),
@@ -50,7 +54,7 @@ function mapStateToProps(state) {
     resentRegistrationEmailDateTime: selectResendEmailDateTime(state),
     disableResendEmailButton: disableResendEmailButton(state),
     isRolesDisabled: disableRolesDropDown(state),
-    disableActionBtn: state.fetchDetails.disableActionBtn,
+    disableActionBtn: disableActionButton(state),
     startDate: selectStartDate(state),
     assignedPermissions: selectAssignedPermissions(state),
     officeName: officeName(state),
@@ -70,6 +74,7 @@ function mapDispatchToProps(dispatch) {
     clearSaveAlert,
     handleDropdownChangeAction,
     handleEditButtonChangeAction,
+    handleEmailChangeAction,
   }
   return {
     actions: bindActionCreators(actions, dispatch),

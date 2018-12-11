@@ -44,9 +44,6 @@ feature 'Add User Page' do
     visit new_user_detail_page
     expect(page).to have_button('Edit')
 
-    # Deactivate this user so we can add him again using this process next time
-    page.click_button 'Edit'
-
     click_on('Resend Invite')
 
     date_time = Time.now.strftime('%B %-d, %Y %I:%M %p')
@@ -56,6 +53,8 @@ feature 'Add User Page' do
     expect(detail_page_value('User Status'))
       .to have_text("Registration Incomplete User has never logged in. Registration email resent:
       #{date_time} ")
+    # Deactivate this user so we can add him again using this process next time
+    page.click_button 'Edit'
 
     change_status 'Inactive'
     click_button 'save'

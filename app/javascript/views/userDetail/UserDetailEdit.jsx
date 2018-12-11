@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import Cards from '../../common/Card'
 import ShowField from '../../common/ShowField'
-import { Button } from 'react-wood-duck'
+import { InputComponent } from 'react-wood-duck'
 import DropDown from '../../common/DropDown'
 import { STATUS } from '../../_constants/constants'
 import { checkDate, formatPhoneNumberWithExt } from '../../_utils/formatters'
@@ -10,13 +10,11 @@ import { checkDate, formatPhoneNumberWithExt } from '../../_utils/formatters'
 /* eslint camelcase: 0 */
 
 const UserDetailEdit = ({
-  disableResendEmailButton,
   details,
   onCancel,
   onSave,
   disableActionBtn,
   possiblePermissionsList,
-  onResendInvite,
   possibleRolesList,
   isRolesDisabled,
   onDropDownChange,
@@ -25,6 +23,8 @@ const UserDetailEdit = ({
   userStatusDescription,
   officeName,
   resentRegistrationEmailDateTime,
+  onInputChange,
+  isEmailValid,
 }) => (
   <div className="row">
     <div className="col-md-12">
@@ -51,7 +51,6 @@ const UserDetailEdit = ({
             <div className="col-md-2">
               <ShowField label="CWS Login">{details.racfid}</ShowField>
             </div>
-
             <div className="col-md-4">
               <DropDown
                 multiSelect={false}
@@ -67,7 +66,17 @@ const UserDetailEdit = ({
           </div>
           <div className="row">
             <div className="col-md-3">
-              <ShowField label="Email">{details.email}</ShowField>
+              <InputComponent
+                id="InputEmail"
+                label="Email"
+                fieldClassName="form-group"
+                type="email"
+                placeholder="Add Email Address"
+                value={details.email}
+                onChange={event => onInputChange(event.target.value)}
+                validationError={!isEmailValid}
+                validationErrorMessage={'Please enter a valid email'}
+              />
             </div>
             <div className="col-md-3">
               <ShowField label="Office Phone Number">
@@ -107,14 +116,6 @@ const UserDetailEdit = ({
                           ) : (
                             ''
                           )}
-                        </div>
-                        <div className="resend-email-btn">
-                          <Button
-                            btnClassName="primary"
-                            btnName="Resend Invite"
-                            onClick={onResendInvite}
-                            disabled={disableResendEmailButton}
-                          />
                         </div>
                       </div>
                     )}
@@ -161,13 +162,14 @@ UserDetailEdit.propTypes = {
   onDropDownChange: PropTypes.func,
   onStatusChange: PropTypes.func,
   onRoleChange: PropTypes.func,
+  onInputChange: PropTypes.func,
   onPermissionChange: PropTypes.func,
   userStatusDescription: PropTypes.string,
   userStatus: PropTypes.string,
   resentRegistrationEmailDateTime: PropTypes.string,
-  onResendInvite: PropTypes.func,
-  disableResendEmailButton: PropTypes.bool,
   possibleRolesList: PropTypes.array,
+  isEmailValid: PropTypes.bool,
+  disableResendEmailButton: PropTypes.bool,
   possiblePermissionsList: PropTypes.array,
   rolesList: PropTypes.arrayOf(
     PropTypes.shape({
