@@ -31,9 +31,39 @@ module LoginHelper
     puts "Fill in pass with #{ENV.fetch('COGNITO_PASSWORD', 'password')}"
     fill_in 'Email', with: ENV.fetch('COGNITO_USERNAME', 'no-reply@osi.ca.gov')
     fill_in 'Password', with: ENV.fetch('COGNITO_PASSWORD', 'password')
-    # find('input[name="signInSubmitButton"]').click
     click_on 'Sign In'
     verify_account
+  end
+
+  def cognito_invalid_login
+    visit ENV.fetch('RAILS_RELATIVE_URL_ROOT', '/')
+    return unless current_url.include?('login')
+
+    fill_in 'Email', with: 'no-reply@osi.ca.gov'
+    fill_in 'Password', with: 'password'
+    click_on 'Sign In'
+  end
+
+  def cognito_login_with_invalid_mfa
+    visit ENV.fetch('RAILS_RELATIVE_URL_ROOT', '/')
+    return unless current_url.include?('login')
+
+    fill_in 'Email', with: ENV.fetch('COGNITO_USERNAME', 'no-reply@osi.ca.gov')
+    fill_in 'Password', with: ENV.fetch('COGNITO_PASSWORD', 'password')
+    click_on 'Sign In'
+    invalid_mfa
+  end
+
+  def click_forgot_password_link
+    visit ENV.fetch('RAILS_RELATIVE_URL_ROOT', '/')
+    return unless current_url.include?('login')
+
+    click_link 'Forgot your password?'
+  end
+
+  def reset_password
+    fill_in 'Email', with: ENV.fetch('COGNITO_USERNAME', 'y_test111+role1@outlook.com')
+    click_button 'Reset my password'
   end
 
   private
@@ -43,6 +73,14 @@ module LoginHelper
     return unless page.has_content?('Account Verification')
 
     fill_in 'Enter Code', with: 'LETMEIN'
+    click_on 'Verify'
+  end
+
+  def invalid_mfa
+    # verify via MFA using static value assigned to this user.
+    return unless page.has_content?('Account Verification')
+
+    fill_in 'Enter Code', with: 'LETMEI1'
     click_on 'Verify'
   end
 
