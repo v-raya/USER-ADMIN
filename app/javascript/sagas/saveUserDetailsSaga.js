@@ -10,6 +10,7 @@ export function* saveDetails(action) {
       UserService.saveUserDetails,
       saveUserDetailsActions.id,
       saveUserDetailsActions.details,
+      saveUserDetailsActions.initialDetails,
       saveUserDetailsActions.isRolesDisabled
     )
     // dispatch a success action to the store with the new account details

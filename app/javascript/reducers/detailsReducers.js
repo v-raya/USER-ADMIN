@@ -9,6 +9,7 @@ function fetchDetails(
     disableActionBtn: false,
     resendEmailUserId: [],
     resendEmailStatus: null,
+    initialDetails: null,
   },
   action
 ) {
@@ -29,6 +30,7 @@ function fetchDetails(
         isEdit: false,
         displayAlert: false,
         resendEmailUserId: state.resendEmailUserId,
+        initialDetails: userRecords.records,
       }
 
     case actionTypes.FETCH_DETAILS_API_CALL_FAILURE:
@@ -38,6 +40,7 @@ function fetchDetails(
         details: null,
         error: action.error,
         displayAlert: false,
+        initialDetails: null,
       }
 
     case actionTypes.CLEAR_USER_DETAILS: {
@@ -46,6 +49,7 @@ function fetchDetails(
         fetching: false,
         displayAlert: false,
         resendEmailUserId: state.resendEmailUserId,
+        initialDetails: null,
       }
     }
 

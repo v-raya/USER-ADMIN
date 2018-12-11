@@ -368,7 +368,7 @@ DEPENDENCIES
   byebug
   capybara (~> 2.13)
   capybara-screenshot
-  chromedriver-helper (~> 1.2.0)
+  chromedriver-helper
   cwds_store!
   dotenv-rails
   dry-struct (~> 0.4.0)

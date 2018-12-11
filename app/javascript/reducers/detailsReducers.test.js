@@ -6,11 +6,12 @@ describe('reducer', () => {
     const requestAction = {
       type: actionTypes.FETCH_DETAILS_API_CALL_REQUEST,
     }
-    const state = { details: null, fetching: false }
+    const state = { details: null, initialDetails: null, fetching: false }
     expect(fetchDetails(state, requestAction)).toEqual({
       fetching: true,
       details: null,
       error: null,
+      initialDetails: null,
     })
   })
 
@@ -31,6 +32,7 @@ describe('reducer', () => {
       isEdit: false,
       error: null,
       displayAlert: false,
+      initialDetails: records.records,
     })
   })
 
@@ -38,14 +40,16 @@ describe('reducer', () => {
     const failureAction = {
       type: actionTypes.FETCH_DETAILS_API_CALL_FAILURE,
       details: null,
+      initialDetails: null,
       error: 'error happened',
     }
-    const state = { details: null, fetching: true, error: null }
+    const state = { details: null, initialDetails: null, fetching: true, error: null }
     expect(fetchDetails(state, failureAction)).toEqual({
       fetching: false,
       details: null,
       error: 'error happened',
       displayAlert: false,
+      initialDetails: null,
     })
   })
 
@@ -111,12 +115,13 @@ describe('reducer', () => {
       disableActionBtn: false,
       resendEmailUserId: [],
       resendEmailStatus: null,
+      initialDetails: null,
     }
     expect(fetchDetails(undefined, randomAction)).toEqual(state)
   })
 
   it('clears details', () => {
-    const before = { details: {}, fetching: false, error: null, isEdit: false }
+    const before = { details: {}, initialDetails: {}, fetching: false, error: null, isEdit: false }
     let after
     expect(() => (after = fetchDetails(before, { type: actionTypes.CLEAR_USER_DETAILS }))).not.toThrow()
     expect(after).not.toEqual(before)

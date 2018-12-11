@@ -27,8 +27,8 @@ export default class UserDetail extends Component {
   }
 
   onSaveDetails = () => {
-    const { details, isRolesDisabled, match, actions } = this.props
-    actions.saveUserDetailsActions(match.params.id, details, isRolesDisabled)
+    const { details, isRolesDisabled, initialDetails, match, actions } = this.props
+    actions.saveUserDetailsActions(match.params.id, details, initialDetails, isRolesDisabled)
     this.setState({ resendEmailAlert: false })
     actions.clearAddedUserDetailActions()
   }
@@ -228,6 +228,7 @@ export default class UserDetail extends Component {
 UserDetail.propTypes = {
   isEdit: PropTypes.bool,
   details: PropTypes.object,
+  initialDetails: PropTypes.object,
   assignedPermissions: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
   id: PropTypes.string,
   dashboardUrl: PropTypes.string,

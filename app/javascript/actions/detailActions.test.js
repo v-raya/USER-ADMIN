@@ -49,16 +49,24 @@ describe('#fetchDetailsActions', () => {
 describe('#saveUserDetailsActions', () => {
   it('returns type and payload', () => {
     const id = 'SOMEID'
+    const isRolesDisabled = false
     const details = {
       first_name: 'firstName',
       last_name: 'lastName',
-      racfid: 'SOMETHING',
-      email: 'Email@email.ocm',
-      phone: '000000000',
+      enabled: true,
+      permissions: ['permission1'],
+      role: ['roleOne'],
     }
-    expect(saveUserDetailsActions(id, details)).toEqual({
+    const initialDetails = {
+      first_name: 'firstName',
+      last_name: 'lastName',
+      enabled: false,
+      permissions: ['permission'],
+      role: ['role'],
+    }
+    expect(saveUserDetailsActions(id, details, initialDetails, isRolesDisabled)).toEqual({
       type: SAVE_USER_DETAILS_API_CALL_REQUEST,
-      payload: { id: id, details: details },
+      payload: { id: id, details: details, initialDetails: initialDetails, isRolesDisabled },
     })
   })
 })

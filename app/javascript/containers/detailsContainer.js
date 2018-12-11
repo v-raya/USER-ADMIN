@@ -54,6 +54,7 @@ function mapStateToProps(state) {
     startDate: selectStartDate(state),
     assignedPermissions: selectAssignedPermissions(state),
     officeName: officeName(state),
+    initialDetails: state.fetchDetails.initialDetails,
   }
 }
 

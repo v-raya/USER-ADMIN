@@ -30,6 +30,7 @@ describe('UserDetail', () => {
     mockFetchRolesActions = jest.fn().mockReturnValue(Promise.resolve([]))
     mockHandleDropDownChangeAction = jest.fn()
     mockClearSaveAlertAction = jest.fn()
+    const initialDetails = { id: '12345' }
     const match = {
       params: {
         id: '12345',
@@ -43,6 +44,7 @@ describe('UserDetail', () => {
         <UserDetail
           userEditOption={{ editable: true }}
           details={details}
+          initialDetails={initialDetails}
           XHRStatus={XHRStatus}
           dashboardUrl="dburl"
           userListUrl="myUserList"
@@ -165,7 +167,7 @@ describe('UserDetail', () => {
   describe('#onSaveDetails', () => {
     it('calls the service to patch the user record', () => {
       instance.onSaveDetails()
-      expect(mockSaveUserDetailsActions).toHaveBeenCalledWith('12345', { id: '12345' }, true)
+      expect(mockSaveUserDetailsActions).toHaveBeenCalledWith('12345', { id: '12345' }, { id: '12345' }, true)
       expect(mockClearAddedUserDetailActions).toHaveBeenCalledWith()
     })
   })
