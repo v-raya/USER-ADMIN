@@ -88,14 +88,6 @@ describe('UserService', () => {
 
   describe('#saveUserDetails', () => {
     let patchSpy
-    const initialDetails = {
-      user: {
-        enabled: false,
-        permissions: ['drivethebusOne', 'getapuppyOne'],
-        email: 'abcd@gmail.com',
-        roles: 'RoleOne',
-      },
-    }
     describe('calls #patchSpy Api Service when promise is resolved', () => {
       beforeEach(() => {
         patchSpy = jest.spyOn(ApiService, 'patch')
@@ -103,173 +95,41 @@ describe('UserService', () => {
       })
 
       it('calls #patch ApiService', () => {
-        const details = {
+        const updatedDetails = {
           enabled: true,
-          permissions: ['drivethebus', 'getapuppy'],
+          permissions: 'drivethebus, getapuppy',
           roles: 'RoleOneTwo',
           email: 'abcdefg@gmail.com',
-          first_name: 'Pidgeon',
         }
-        UserService.saveUserDetails(id, details, initialDetails, false)
+        UserService.saveUserDetails(id, updatedDetails)
         expect(patchSpy).toHaveBeenCalledWith('/user_detail/someid/save_user', {
           enabled: true,
-          permissions: ['drivethebus', 'getapuppy'],
-          email: 'abcdefg@gmail.com',
+          permissions: 'drivethebus, getapuppy',
           roles: 'RoleOneTwo',
+          email: 'abcdefg@gmail.com',
         })
       })
 
-      it('calls #patch ApiService when only permissions are changed', () => {
-        const details = {
-          permissions: ['drivethebusTwo'],
-        }
-        UserService.saveUserDetails(id, details, initialDetails, false)
-        expect(patchSpy).toHaveBeenCalledWith('/user_detail/someid/save_user', {
-          enabled: undefined,
-          permissions: ['drivethebusTwo'],
-          roles: undefined,
-        })
-      })
-
-      it('calls #patch ApiService when only enabled is changed', () => {
-        const details = {
+      describe('calls #patchSpy Api Service catch block', () => {
+        const updatedDetails = {
           enabled: true,
+          permissions: 'drivethebus, getapuppy',
+          roles: 'RoleOne',
         }
-        UserService.saveUserDetails(id, details, initialDetails, false)
-        expect(patchSpy).toHaveBeenCalledWith('/user_detail/someid/save_user', {
-          enabled: true,
-          permissions: undefined,
-          roles: undefined,
+        it('calls #patch ApiService error block with valid error response', () => {
+          const errorResponse = {
+            response: 'error',
+          }
+          patchSpy.mockReturnValue(Promise.reject(errorResponse))
+          UserService.saveUserDetails(id, updatedDetails)
+          expect(patchSpy).toHaveBeenCalledWith('/user_detail/someid/save_user', updatedDetails)
         })
-      })
 
-      it('calls #patch ApiService when only roles are changed', () => {
-        const details = {
-          roles: ['RoleTWO'],
-        }
-        UserService.saveUserDetails(id, details, initialDetails, false)
-        expect(patchSpy).toHaveBeenCalledWith('/user_detail/someid/save_user', {
-          enabled: undefined,
-          permissions: undefined,
-          roles: ['RoleTWO'],
-        })
-      })
-
-      it('calls #patch ApiService when only email is changed', () => {
-        const details = {
-          email: 'cwdscares@gmail.com',
-        }
-        UserService.saveUserDetails(id, details, initialDetails, false)
-        expect(patchSpy).toHaveBeenCalledWith('/user_detail/someid/save_user', {
-          enabled: undefined,
-          permissions: undefined,
-          roles: undefined,
-          email: 'cwdscares@gmail.com',
-        })
-      })
-
-      it('calls #patch ApiService when nothing changed', () => {
-        const details = {
-          first_name: 'firstName',
-        }
-        UserService.saveUserDetails(id, details, initialDetails, false)
-        expect(patchSpy).toHaveBeenCalledWith('/user_detail/someid/save_user', {
-          enabled: undefined,
-          permissions: undefined,
-          roles: undefined,
-        })
-      })
-    })
-
-    it('calls #patch ApiService when permission & roles are empty', () => {
-      const details = {
-        enabled: true,
-        permissions: [],
-        roles: '',
-        email: 'ab@gmail.com',
-        first_name: 'firstName',
-      }
-      UserService.saveUserDetails(id, details, initialDetails)
-      expect(patchSpy).toHaveBeenCalledWith('/user_detail/someid/save_user', {
-        enabled: true,
-        permissions: [],
-        roles: '',
-        email: 'ab@gmail.com',
-      })
-    })
-
-    it('calls #patch ApiService when isRolesDisabled is false', () => {
-      const details = {
-        enabled: false,
-        permissions: ['drivethebus', 'getapuppy'],
-        roles: 'RoleTwo',
-        first_name: 'firstName',
-        email: 'hello@gmail.com',
-      }
-      UserService.saveUserDetails(id, details, initialDetails, false)
-      expect(patchSpy).toHaveBeenCalledWith('/user_detail/someid/save_user', {
-        enabled: false,
-        permissions: ['drivethebus', 'getapuppy'],
-        roles: 'RoleTwo',
-        email: 'hello@gmail.com',
-      })
-    })
-
-    it('calls #patch ApiService when isRolesDisabled is true', () => {
-      const details = {
-        enabled: true,
-        permissions: ['permission1', 'permission2'],
-        roles: ['Some-value'],
-        first_name: 'firstName',
-        email: 'abcd@gmail.com',
-      }
-      UserService.saveUserDetails(id, details, initialDetails, true)
-      expect(patchSpy).toHaveBeenCalledWith('/user_detail/someid/save_user', {
-        enabled: true,
-        permissions: undefined,
-        roles: undefined,
-      })
-    })
-
-    describe('calls #patchSpy Api Service catch block', () => {
-      it('calls #patch ApiService error block with valid error response', () => {
-        const errorResponse = {
-          response: 'error',
-        }
-        patchSpy.mockReturnValue(Promise.reject(errorResponse))
-        UserService.saveUserDetails(
-          id,
-          {
-            enabled: true,
-            permissions: ['drivethebus', 'getapuppy'],
-            roles: 'RoleOne',
-          },
-          initialDetails
-        )
-        expect(patchSpy).toHaveBeenCalledWith('/user_detail/someid/save_user', {
-          enabled: true,
-          permissions: ['drivethebus', 'getapuppy'],
-          roles: undefined,
-        })
-      })
-
-      it('calls #patch ApiService error block with invalid error response', () => {
-        const errorResponse = 'error'
-        patchSpy.mockReturnValue(Promise.reject(errorResponse))
-        UserService.saveUserDetails(
-          id,
-          {
-            enabled: true,
-            permissions: ['drivethebus', 'getapuppy'],
-            roles: 'RoleOne',
-            first_name: 'Pidgeon',
-          },
-          initialDetails
-        )
-        expect(patchSpy).toHaveBeenCalledWith('/user_detail/someid/save_user', {
-          enabled: true,
-          permissions: ['drivethebus', 'getapuppy'],
-          roles: undefined,
+        it('calls #patch ApiService error block with invalid error response', () => {
+          const errorResponse = 'error'
+          patchSpy.mockReturnValue(Promise.reject(errorResponse))
+          UserService.saveUserDetails(id, updatedDetails)
+          expect(patchSpy).toHaveBeenCalledWith('/user_detail/someid/save_user', updatedDetails)
         })
       })
     })

@@ -38,7 +38,7 @@ describe('UserDetail', () => {
         id: '12345',
       },
     }
-    const details = { id: '12345' }
+    const details = { id: '12345', email: '' }
     const XHRStatus = 'ready'
     mockHandleEditButtonChangeAction = jest.fn()
     container = shallow(
@@ -177,8 +177,15 @@ describe('UserDetail', () => {
 
   describe('#onSaveDetails', () => {
     it('calls the service to patch the user record', () => {
+      wrapper.setProps({
+        updatedDetails: {
+          email: 'test@gmail.com',
+        },
+      })
       instance.onSaveDetails()
-      expect(mockSaveUserDetailsActions).toHaveBeenCalledWith('12345', { id: '12345' }, { id: '12345' }, true)
+      expect(mockSaveUserDetailsActions).toHaveBeenCalledWith('12345', {
+        email: 'test@gmail.com',
+      })
       expect(mockClearAddedUserDetailActions).toHaveBeenCalledWith()
     })
   })
