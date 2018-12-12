@@ -129,7 +129,7 @@ feature 'User Edit' do
     fill_in('Email', with: 'cwds3raval', match: :prefer_exact)
     # bad email address won't let us proceed
     expect(page).to have_button('save', disabled: true)
-    expect(page).to have_content('Please enter a valid email.')
+    expect(page).to have_content('Please enter a valid email')
 
     # correct the email to a proper address
     email_address = new_email_address
