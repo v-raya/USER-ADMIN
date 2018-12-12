@@ -5,6 +5,9 @@ require 'feature'
 require 'axe/rspec'
 
 feature 'User Forgot Password Page' do
+  before(:all) do
+    visit "#{ENV.fetch('COUNTY_ADMIN_WEB_BASE_URL', '/')}/logout"
+  end
   scenario 'click on forgot password link and submit email for resetting password' do
     click_forgot_password_link
     expect(page).to have_text('Password Reset')
