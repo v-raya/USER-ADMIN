@@ -14,6 +14,7 @@ import {
   selectPossiblePermissionsList,
   disableActionButton,
   isEmailValid,
+  selectModifiedDetails,
 } from './detailSelector'
 
 describe('selectors', () => {
@@ -48,10 +49,19 @@ describe('selectors', () => {
     possiblePermissions,
     officeId,
     email,
+    assignedRoles,
   }) => {
     return {
       fetchDetails: {
         disableActionBtn: disableActionBtn,
+        initialDetails: {
+          user: {
+            permissions: 'permissionOne, permissionTwo',
+            roles: 'roleOne',
+            email: 'hello@gmail.com',
+            enabled: true,
+          },
+        },
         details: {
           records: {
             edit_details: {
@@ -73,6 +83,7 @@ describe('selectors', () => {
               status: status,
               office_id: officeId,
               email: email,
+              roles: assignedRoles,
             },
           },
         },
@@ -388,30 +399,106 @@ describe('selectors', () => {
   })
 
   describe('#disableActionButton', () => {
-    it('return true when email is valid and disableActionBtn is true', () => {
+    it('return true when email is valid', () => {
       const state = getState({ email: 'Hello@gmail.com', disableActionBtn: true })
       expect(disableActionButton(state)).toEqual(true)
     })
 
-    it('return true when email is not valid and disableActionBtn is false', () => {
+    it('return true when email is not valid', () => {
       const state = getState({ email: 'hello@', disableActionBtn: false })
       expect(disableActionButton(state)).toEqual(true)
     })
 
-    it('return false when email is valid and disableActionBtn is false', () => {
+    it('return false when email is valid', () => {
       const state = getState({ email: 'hello@gmail.com', disableActionBtn: false })
       expect(disableActionButton(state)).toEqual(false)
-    })
-
-    it('return true when email is not valid and disableActionBtn is true', () => {
-      const state = getState({ email: 'hello@gmai', disableActionBtn: true })
-      expect(disableActionButton(state)).toEqual(true)
     })
   })
 
   describe('#fetchingStatus', () => {
     it('return the value of the details XHR status', () => {
       expect(fetchingStatus(initialState)).toEqual('ready')
+    })
+  })
+
+  describe('#selectModifiedDetails', () => {
+    describe('compares the updated details with initial details and returns only updated value with remaining details as undefined', () => {
+      it('returns undefined when updated values are same as initial values', () => {
+        const state = getState({
+          permissions: 'permissionOne, permissionTwo',
+          roles: 'roleOne',
+          email: 'hello@gmail.com',
+          enabled: true,
+        })
+        const expectedValue = {
+          email: undefined,
+          enabled: undefined,
+          permissions: undefined,
+          roles: undefined,
+        }
+        expect(selectModifiedDetails(state)).toEqual(expectedValue)
+      })
+
+      it('returns updated details', () => {
+        const state = getState({
+          assignedPermissions: 'permissionFour, permissionFive',
+          assignedRoles: 'roleThree',
+          email: 'hellocwds@gmail.com',
+          isEnabled: false,
+          isRolesEditable: true,
+        })
+        const expectedValue = {
+          email: 'hellocwds@gmail.com',
+          enabled: false,
+          permissions: 'permissionFour, permissionFive',
+          roles: 'roleThree',
+        }
+        expect(selectModifiedDetails(state)).toEqual(expectedValue)
+      })
+
+      it('returns updated email', () => {
+        const state = getState({ email: 'abcdefg@gmail.com', assignedRoles: 'roleOne', isRolesEditable: true })
+        const expectedValue = {
+          email: 'abcdefg@gmail.com',
+          enabled: undefined,
+          permissions: undefined,
+          roles: undefined,
+        }
+        expect(selectModifiedDetails(state)).toEqual(expectedValue)
+      })
+
+      it('returns updated role when only when roles are editable', () => {
+        const state = getState({ assignedRoles: 'roleTwo', isRolesEditable: true })
+        const expectedValue = {
+          email: undefined,
+          enabled: undefined,
+          permissions: undefined,
+          roles: 'roleTwo',
+        }
+        expect(selectModifiedDetails(state)).toEqual(expectedValue)
+      })
+
+      it('returns updated enabled', () => {
+        const state = getState({ isEnabled: false, assignedPermissions: 'permissionOne, permissionTwo' })
+        const expectedValue = {
+          email: undefined,
+          enabled: false,
+          permissions: undefined,
+          roles: undefined,
+        }
+        expect(selectModifiedDetails(state)).toEqual(expectedValue)
+      })
+
+      it('returns updated permissions', () => {
+        const state = getState({ assignedPermissions: 'permissionThree', isEnabled: true })
+        const expectedValue = {
+          email: undefined,
+          enabled: undefined,
+          permissions: 'permissionThree',
+          roles: undefined,
+        }
+        expect(selectModifiedDetails(state)).toEqual(expectedValue)
+      })
     })
   })
 })

@@ -15,6 +15,7 @@ import {
   selectPossiblePermissionsList,
   isEmailValid,
   disableActionButton,
+  selectModifiedDetails,
 } from '../selectors/detailSelector'
 import { rolesList } from '../selectors/rolesListSelector'
 import {
@@ -36,6 +37,7 @@ import { clearAddedUserDetailActions } from '../actions/addUserActions'
 
 function mapStateToProps(state) {
   return {
+    updatedDetails: selectModifiedDetails(state),
     accountStatus: selectAccountStatus(state),
     userStatusDescription: userStatusDescription(state),
     userStatus: userStatus(state),

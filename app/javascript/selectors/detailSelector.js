@@ -124,3 +124,21 @@ export const officeName = state => {
   const officeId = safeGet(state, 'fetchDetails.details.records.user.office_id')
   return translateOfficeName(state, officeId)
 }
+
+const checkForModifiedDetails = (initialDetails, updatedDetails) => {
+  return initialDetails === updatedDetails ? undefined : updatedDetails
+}
+
+export const selectModifiedDetails = state => {
+  const initialDetails = safeGet(state, 'fetchDetails.initialDetails.user', {})
+  const modifiedDetails = selectDetailRecords(state)
+  const userData = {
+    permissions: checkForModifiedDetails(initialDetails.permissions, modifiedDetails.permissions),
+    email: checkForModifiedDetails(initialDetails.email, modifiedDetails.email),
+    enabled: checkForModifiedDetails(initialDetails.enabled, modifiedDetails.enabled),
+    roles: disableRolesDropDown(state)
+      ? undefined
+      : checkForModifiedDetails(initialDetails.roles, modifiedDetails.roles),
+  }
+  return userData
+}

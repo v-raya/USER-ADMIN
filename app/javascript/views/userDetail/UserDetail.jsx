@@ -27,8 +27,8 @@ export default class UserDetail extends Component {
   }
 
   onSaveDetails = () => {
-    const { details, isRolesDisabled, initialDetails, match, actions } = this.props
-    actions.saveUserDetailsActions(match.params.id, details, initialDetails, isRolesDisabled)
+    const { updatedDetails, match, actions } = this.props
+    actions.saveUserDetailsActions(match.params.id, updatedDetails)
     this.setState({ resendEmailAlert: false })
     actions.clearAddedUserDetailActions()
   }
@@ -258,6 +258,7 @@ UserDetail.propTypes = {
   disableActionBtn: PropTypes.bool,
   match: PropTypes.object,
   isEmailValid: PropTypes.bool,
+  updatedDetails: PropTypes.object,
 }
 
 UserDetail.defaultProps = {

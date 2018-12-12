@@ -175,16 +175,25 @@ describe('reducer', () => {
   it('handles SAVE_USER_DETAILS_API_CALL_SUCCESS', () => {
     const responseAction = {
       type: actionTypes.SAVE_USER_DETAILS_API_CALL_SUCCESS,
-      saveUserDetails: { last_name: 'first', username: 'user1' },
+      saveUserDetails: {
+        last_name: 'first',
+        username: 'user1',
+      },
     }
-    const state = { fetching: true, error: null }
+    const state = {
+      fetching: true,
+      error: null,
+      details: { records: { user: { email: 'email@gmail.com' } } },
+    }
 
     expect(fetchDetails(state, responseAction)).toEqual({
+      ...state,
       fetching: false,
       error: null,
       isEdit: false,
       saveDetailsError: null,
       displayAlert: true,
+      initialDetails: { user: { email: 'email@gmail.com' } },
     })
   })
 

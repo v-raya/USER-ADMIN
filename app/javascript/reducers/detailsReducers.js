@@ -43,7 +43,7 @@ function fetchDetails(
         initialDetails: null,
       }
 
-    case actionTypes.CLEAR_USER_DETAILS: {
+    case actionTypes.CLEAR_USER_DETAILS:
       return {
         details: null,
         fetching: false,
@@ -51,16 +51,14 @@ function fetchDetails(
         resendEmailUserId: state.resendEmailUserId,
         initialDetails: null,
       }
-    }
 
-    case actionTypes.HANDLE_EDIT_BUTTON_CHANGE: {
+    case actionTypes.HANDLE_EDIT_BUTTON_CHANGE:
       return {
         ...state,
         isEdit: action.payload.value,
         displayAlert: false,
         disableActionBtn: true,
       }
-    }
 
     case actionTypes.SAVE_USER_DETAILS_API_CALL_REQUEST:
       return { ...state, fetching: true, saveDetailsError: null }
@@ -72,6 +70,7 @@ function fetchDetails(
         saveDetailsError: null,
         isEdit: false,
         displayAlert: true,
+        initialDetails: state.details.records,
       }
 
     case actionTypes.SAVE_USER_DETAILS_API_CALL_FAILURE:
@@ -90,7 +89,7 @@ function fetchDetails(
         displayAlert: false,
       }
 
-    case actionTypes.HANDLE_DROPDOWN_CHANGE: {
+    case actionTypes.HANDLE_DROPDOWN_CHANGE:
       return {
         ...state,
         displayAlert: false,
@@ -106,9 +105,8 @@ function fetchDetails(
           },
         },
       }
-    }
 
-    case actionTypes.HANDLE_EMAIL_INPUT_CHANGE: {
+    case actionTypes.HANDLE_EMAIL_INPUT_CHANGE:
       return {
         ...state,
         displayAlert: false,
@@ -124,7 +122,6 @@ function fetchDetails(
           },
         },
       }
-    }
 
     default:
       return state
