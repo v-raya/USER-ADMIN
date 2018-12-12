@@ -6,7 +6,7 @@ require 'axe/rspec'
 
 feature 'User Sign in' do
   before(:all) do
-    logout_link 
+    logout_link
   end
   scenario 'invalid login information throws an error message on the login screen' do
     cognito_invalid_login
