@@ -48,8 +48,8 @@ module LoginHelper
     visit ENV.fetch('RAILS_RELATIVE_URL_ROOT', '/')
     return unless current_url.include?('login')
 
-    fill_in 'Email', with: ENV.fetch('COGNITO_USERNAME', 'no-reply@osi.ca.gov')
-    fill_in 'Password', with: ENV.fetch('COGNITO_PASSWORD', 'password')
+    fill_in 'Email', with: 'y_test111+role2@outlook.com'
+    fill_in 'Password', with: 'Password123*'
     click_on 'Sign In'
     invalid_mfa
   end
@@ -62,8 +62,12 @@ module LoginHelper
   end
 
   def reset_password
-    fill_in 'Email', with: ENV.fetch('COGNITO_USERNAME', 'y_test111+role1@outlook.com')
+    fill_in 'Email', with: 'y_test111+role1@outlook.com'
     click_button 'Reset my password'
+  end
+
+  def logout_link
+    visit "#{ENV.fetch('COUNTY_ADMIN_WEB_BASE_URL', '/')}/logout"
   end
 
   private
@@ -72,7 +76,7 @@ module LoginHelper
     # verify via MFA using static value assigned to this user.
     return unless page.has_content?('Account Verification')
 
-    fill_in 'Enter Code', with: 'LETMEIN'
+    fill_in 'Enter Code Here', with: 'LETMEIN'
     click_on 'Verify'
   end
 
@@ -80,7 +84,7 @@ module LoginHelper
     # verify via MFA using static value assigned to this user.
     return unless page.has_content?('Account Verification')
 
-    fill_in 'Enter Code', with: 'LETMEI1'
+    fill_in 'Enter Code Here', with: 'LETMEI1'
     click_on 'Verify'
   end
 
