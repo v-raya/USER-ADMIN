@@ -66,6 +66,10 @@ module LoginHelper
     click_button 'Reset my password'
   end
 
+  def logout_link
+    visit "#{ENV.fetch('COUNTY_ADMIN_WEB_BASE_URL', '/')}/logout"
+  end
+
   private
 
   def verify_account
