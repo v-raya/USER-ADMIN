@@ -52,8 +52,10 @@ module UserDetailPageHelper
 
   def verify_and_wait_to_complete
     click_button 'Verify User'
-    expect(page).to have_content(/Loading...|Please Verify/)
-    expect(page).to have_content('Please Verify')
+    Capybara.using_wait_time 20 do
+      expect(page).to have_button('Add User')
+      expect(page).to have_content('Please Verify')
+    end
   end
 
   def verify_and_wait_to_fail(message)
