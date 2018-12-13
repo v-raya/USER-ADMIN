@@ -196,6 +196,11 @@ describe('selectors', () => {
       const state = {}
       expect(selectDetailRecords(state)).toEqual({})
     })
+
+    it('returns empty when fetchDetails returns unknown user', () => {
+      const state = { fetchDetails: { details: { records: {} } } }
+      expect(selectDetailRecords(state)).toEqual({})
+    })
   })
 
   describe('#selectAssignedPermissions', () => {
@@ -400,7 +405,10 @@ describe('selectors', () => {
 
   describe('#disableActionButton', () => {
     it('return true when email is valid', () => {
-      const state = getState({ email: 'Hello@gmail.com', disableActionBtn: true })
+      const state = getState({
+        email: 'Hello@gmail.com',
+        disableActionBtn: true,
+      })
       expect(disableActionButton(state)).toEqual(true)
     })
 
@@ -410,7 +418,10 @@ describe('selectors', () => {
     })
 
     it('return false when email is valid', () => {
-      const state = getState({ email: 'hello@gmail.com', disableActionBtn: false })
+      const state = getState({
+        email: 'hello@gmail.com',
+        disableActionBtn: false,
+      })
       expect(disableActionButton(state)).toEqual(false)
     })
   })
@@ -457,7 +468,11 @@ describe('selectors', () => {
       })
 
       it('returns updated email', () => {
-        const state = getState({ email: 'abcdefg@gmail.com', assignedRoles: 'roleOne', isRolesEditable: true })
+        const state = getState({
+          email: 'abcdefg@gmail.com',
+          assignedRoles: 'roleOne',
+          isRolesEditable: true,
+        })
         const expectedValue = {
           email: 'abcdefg@gmail.com',
           enabled: undefined,
@@ -468,7 +483,10 @@ describe('selectors', () => {
       })
 
       it('returns updated role when only when roles are editable', () => {
-        const state = getState({ assignedRoles: 'roleTwo', isRolesEditable: true })
+        const state = getState({
+          assignedRoles: 'roleTwo',
+          isRolesEditable: true,
+        })
         const expectedValue = {
           email: undefined,
           enabled: undefined,
@@ -479,7 +497,10 @@ describe('selectors', () => {
       })
 
       it('returns updated enabled', () => {
-        const state = getState({ isEnabled: false, assignedPermissions: 'permissionOne, permissionTwo' })
+        const state = getState({
+          isEnabled: false,
+          assignedPermissions: 'permissionOne, permissionTwo',
+        })
         const expectedValue = {
           email: undefined,
           enabled: false,
@@ -490,7 +511,10 @@ describe('selectors', () => {
       })
 
       it('returns updated permissions', () => {
-        const state = getState({ assignedPermissions: 'permissionThree', isEnabled: true })
+        const state = getState({
+          assignedPermissions: 'permissionThree',
+          isEnabled: true,
+        })
         const expectedValue = {
           email: undefined,
           enabled: undefined,

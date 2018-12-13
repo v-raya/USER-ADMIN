@@ -43,5 +43,20 @@ describe('sagas', () => {
         expect(gen.next().done).toBe(true)
       })
     })
+
+    describe('when empty comes back from the fetch', () => {
+      it('executes the happy-path saga', () => {
+        const action = { payload: {} }
+        const gen = getDetails(action)
+        expect(gen.next().value).toEqual(call(UserService.fetchUserDetails, action.payload.id))
+        expect(gen.next([1234, 5678]).value).toEqual(
+          put({
+            type: actionTypes.FETCH_DETAILS_API_CALL_SUCCESS,
+            details: [1234, 5678],
+          })
+        )
+        expect(gen.next().done).toBe(true)
+      })
+    })
   })
 })

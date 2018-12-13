@@ -12,7 +12,7 @@ export const selectUserDetailObject = state => {
 
 export const selectDetailRecords = state => {
   const userData = selectUserDetailObject(state)
-  const userDetails = userData ? userData.user : {}
+  const userDetails = userData && userData.user ? userData.user : {}
   return userDetails
 }
 
