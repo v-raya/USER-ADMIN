@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-# rubocop:disable Style/RedundantReturn
 # rubocop:disable Style/OptionalArguments
 
 require_relative './cap_faraday_middleware'
@@ -13,8 +12,6 @@ module Infrastructure
 
     def get(url, parameters = {}, token)
       http_connection.get("#{url}?#{parameters.to_query}&token=#{token}")
-    rescue StandardError
-      return Faraday::Response.new(status: 404)
     end
 
     def post(url, parameters, token)
@@ -52,5 +49,4 @@ module Infrastructure
     end
   end
 end
-# rubocop:enable Style/RedundantReturn
 # rubocop:enable Style/OptionalArguments

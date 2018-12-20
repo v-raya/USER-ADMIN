@@ -50,9 +50,11 @@ describe('selectors', () => {
     officeId,
     email,
     assignedRoles,
+    fetchDetailsError,
   }) => {
     return {
       fetchDetails: {
+        fetchDetailsError: fetchDetailsError,
         disableActionBtn: disableActionBtn,
         initialDetails: {
           user: {

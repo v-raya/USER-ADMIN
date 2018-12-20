@@ -15,7 +15,7 @@ function fetchDetails(
 ) {
   switch (action.type) {
     case actionTypes.FETCH_DETAILS_API_CALL_REQUEST:
-      return { ...state, fetching: true, error: null }
+      return { ...state, fetching: true, fetchDetailsError: null }
 
     case actionTypes.FETCH_DETAILS_API_CALL_SUCCESS:
       const userRecords = {
@@ -26,7 +26,7 @@ function fetchDetails(
         ...state,
         fetching: false,
         details: userRecords,
-        error: null,
+        fetchDetailsError: null,
         isEdit: false,
         displayAlert: false,
         resendEmailUserId: state.resendEmailUserId,
@@ -38,7 +38,7 @@ function fetchDetails(
         ...state,
         fetching: false,
         details: null,
-        error: action.error,
+        fetchDetailsError: action.error,
         displayAlert: false,
         initialDetails: null,
       }

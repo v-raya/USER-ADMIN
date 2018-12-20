@@ -5,6 +5,8 @@ module Api
     def show
       user_details = Users::UserRepository.new.get_users_details(params[:id], session[:token])
       render json: user_details
+    rescue ApiError => e
+      render json: e.response, status: e.status
     end
 
     def save_user

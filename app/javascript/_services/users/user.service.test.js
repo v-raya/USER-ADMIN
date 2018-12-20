@@ -42,14 +42,6 @@ describe('UserService', () => {
     })
   })
 
-  describe('#fetchUserDetails', () => {
-    it('calls #fetchUsersDetails ApiService', () => {
-      getSpy.mockReturnValue(Promise.resolve({}))
-      UserService.fetchUserDetails(id)
-      expect(getSpy).toHaveBeenCalledWith('/user_detail/someid')
-    })
-  })
-
   describe('#fetchPermissionsList', () => {
     it('calls #fetchPermissionsList ApiService', () => {
       getSpy.mockReturnValue(Promise.resolve({}))
@@ -168,6 +160,40 @@ describe('UserService', () => {
         getSpy2.mockReturnValue(Promise.reject(error))
         UserService.validateUser(email, racfid)
         expect(getSpy2).toHaveBeenCalledWith(`/verify_user?email=${encodeURIComponent(email)}&racfid=${racfid}`)
+      })
+    })
+  })
+
+  describe('#fetchUserDetails', () => {
+    let getSpy2
+    beforeEach(() => {
+      getSpy2 = jest.spyOn(ApiService, 'get')
+    })
+
+    it('calls #fetchUserDetails ApiService', () => {
+      const id = 'someID'
+      getSpy2.mockReturnValue(Promise.resolve({}))
+      UserService.fetchUserDetails(id)
+      expect(getSpy2).toHaveBeenCalledWith('/user_detail/someID')
+    })
+
+    describe('#fetchUserDetails catch block', () => {
+      it('calls #fetchUserDetails ApiService with valid error response', () => {
+        const error = {
+          response: { data: 'error' },
+        }
+        const id = 'someID'
+        getSpy2.mockReturnValue(Promise.reject(error))
+        UserService.fetchUserDetails(id)
+        expect(getSpy2).toHaveBeenCalledWith('/user_detail/someID')
+      })
+
+      it('calls #validateUser ApiService with not valid response', () => {
+        const error = 'error'
+        const id = 'someID'
+        getSpy2.mockReturnValue(Promise.reject(error))
+        UserService.fetchUserDetails(id)
+        expect(getSpy2).toHaveBeenCalledWith('/user_detail/someID')
       })
     })
   })

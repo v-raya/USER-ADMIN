@@ -21,40 +21,6 @@ module Infrastructure
             .with("/resource?#{parameters.to_query}&token=showbiz_pizza_token")
           Infrastructure::HttpService.new.get('/resource', parameters, 'showbiz_pizza_token')
         end
-
-        it 'sets json and uses the default adapter' do
-          allow(Faraday).to receive(:new)
-            .with(url: 'https://perry.test')
-            .and_yield(connection).and_return(connection)
-          expect(connection)
-            .to receive(:use)
-            .with(api_error_exception)
-          expect(connection)
-            .to receive(:response)
-            .with(:json, parser_options: { symbolize_names: true })
-          expect(connection).to receive(:adapter).with(Faraday.default_adapter)
-          allow(connection)
-            .to receive(:get)
-            .with("/resource?lastName=#{last_name}&token=showbiz_pizza_token")
-          Infrastructure::HttpService.new.get('/resource', last_name, 'showbiz_pizza_token')
-        end
-      end
-
-      context 'returns an API error' do
-        it 'returns a 404' do
-          allow(Faraday).to receive(:new)
-            .with(url: 'https://perry.test')
-            .and_yield(connection).and_return(connection)
-          allow(connection)
-            .to receive(:use)
-            .with(api_error_exception)
-          allow(connection)
-            .to receive(:response)
-            .with(:json, parser_options: { symbolize_names: true })
-            .and_raise('error message')
-          expect(Infrastructure::HttpService.new
-                 .get('/resource', last_name, 'showbiz_pizza_token').status).to eq 404
-        end
       end
     end
 

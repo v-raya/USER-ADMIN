@@ -1,10 +1,10 @@
 import PropTypes from 'prop-types'
 import React from 'react'
-import { Alert } from 'react-wood-duck'
+import { Alert } from '@cwds/components'
 
 const ErrorMessage = ({ error }) =>
   error ? (
-    <Alert alertClassName="error" faIcon="fa-exclamation-triangle" alertCross={false}>
+    <Alert className="errorMessage-customizable" color="danger">
       {error.user_message}
     </Alert>
   ) : null

@@ -84,20 +84,17 @@ describe('UserDetail', () => {
   describe('Setting state', () => {
     describe('#handleDropDownChange() function', () => {
       it('should set the Status state when event is triggered', () => {
-        const instance = wrapper.instance()
-        const myFunction = instance.handleDropDownChange
+        const myFunction = wrapper.instance().handleDropDownChange
         expect(() => myFunction('enabled', true)).not.toThrow()
       })
 
       it('will set the details state with updated roles when event is triggered ', () => {
-        const instance = wrapper.instance()
-        const myFunc = instance.handleDropDownChange
+        const myFunc = wrapper.instance().handleDropDownChange
         expect(() => myFunc('roles', ['role2'])).not.toThrow()
       })
 
       it('should set the Permissions state when event is triggered', () => {
-        const instance = wrapper.instance()
-        const myFunction = instance.handleDropDownChange
+        const myFunction = wrapper.instance().handleDropDownChange
         expect(() => myFunction('permissions', ['Hotline-rollout'])).not.toThrow()
       })
     })
@@ -212,6 +209,13 @@ describe('UserDetail', () => {
         expect(wrapper.find('UserDetailShow').length).toBe(1)
       })
 
+      it('should display <Alert/>', () => {
+        wrapper.setProps({
+          fetchDetailsError: 'Unauthorized',
+        })
+        expect(wrapper.find('ErrorMessage').length).toBe(1)
+      })
+
       it('should display <UserDetailEdit/>', () => {
         wrapper.setProps({
           isEdit: true,
@@ -222,10 +226,7 @@ describe('UserDetail', () => {
       })
 
       it('renders card with text indicating no user found', () => {
-        wrapper.setProps({
-          details: {},
-        })
-        wrapper.setProps({ isEdit: true, XHRStatus: 'ready' })
+        wrapper.setProps({ isEdit: true, XHRStatus: 'ready', details: {} })
         expect(wrapper.find('Cards').length).toBe(1)
         expect(wrapper.find('Cards').props().cardHeaderText).toBe('User not found')
       })
@@ -259,7 +260,6 @@ describe('UserDetail', () => {
       const alertBox = wrapper.find('ErrorMessage')
       expect(alertBox.length).toBe(1)
       expect(alertBox.dive().props().children).toBe(props.user_message)
-      expect(alertBox.dive().props().alertCross).toEqual(false)
     })
 
     it('displays success <Alert/>', () => {
@@ -267,7 +267,6 @@ describe('UserDetail', () => {
       const alertBox = wrapper.find('Alert')
       expect(alertBox.length).toBe(1)
       expect(alertBox.props().children).toBe('Your changes have been made successfully')
-      expect(alertBox.props().alertCross).toEqual(false)
     })
 
     it('does not display <Alert/>', () => {

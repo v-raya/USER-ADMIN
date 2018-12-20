@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
-import { Link as LinkRWD, Alert, PageHeader } from 'react-wood-duck'
+import { Link as LinkRWD, PageHeader } from 'react-wood-duck'
+import { Alert } from '@cwds/components'
 import UserDetailEdit from './UserDetailEdit'
 import UserDetailShow from './UserDetailShow'
 import ErrorMessage from '../../common/ErrorMessage'
@@ -64,7 +65,7 @@ export default class UserDetail extends Component {
         return <ErrorMessage error={userDetailError} />
       } else {
         return (
-          <Alert alertClassName="success" faIcon="fa-check-circle" alertCross={false}>
+          <Alert className="errorMessage-customizable" color="success">
             {'Your changes have been made successfully'}
           </Alert>
         )
@@ -76,7 +77,7 @@ export default class UserDetail extends Component {
   showAddAlert = () => {
     if (this.props.id) {
       return (
-        <Alert alertClassName="success" faIcon="fa-check-circle" alertCross={false}>
+        <Alert className="successMessage-customizable" color="success">
           {`Successfully added new user. Registration email has been sent to ${this.props.details.email} `}
         </Alert>
       )
@@ -87,7 +88,7 @@ export default class UserDetail extends Component {
   emailSent = () => {
     if (this.state.resendEmailAlert && this.props.resentRegistrationEmailDateTime) {
       return (
-        <Alert alertClassName="success" faIcon="fa-check-circle" alertCross={false}>
+        <Alert className="successMessage-customizable" color="success">
           {'Registration email has been sent successfully'}
         </Alert>
       )
@@ -97,11 +98,10 @@ export default class UserDetail extends Component {
 
   renderCards = (
     possiblePermissionsList,
-    XHRStatus,
     details,
     disableResendEmailButton,
-    rolesList,
     possibleRolesList,
+    rolesList,
     isRolesDisabled,
     disableActionBtn,
     disableEditBtn,
@@ -114,116 +114,93 @@ export default class UserDetail extends Component {
     resentRegistrationEmailDateTime,
     isEmailValid
   ) => {
-    return XHRStatus !== 'ready' ? (
-      <Cards>
-        <span>{'Loading...'}</span>
-      </Cards>
-    ) : (
+    return details && details.id ? (
       <div>
-        {details && details.id ? (
-          <div>
-            {this.props.isEdit ? (
-              <UserDetailEdit
-                details={details}
-                selectedPermissions={details.permissions}
-                onCancel={this.onCancel}
-                onSave={this.onSaveDetails}
-                onDropDownChange={this.handleDropDownChange}
-                onInputChange={this.handleInputChange}
-                disableActionBtn={disableActionBtn}
-                possibleRolesList={possibleRolesList}
-                isRolesDisabled={isRolesDisabled}
-                startDate={startDate}
-                userStatusDescription={userStatusDescription}
-                userStatus={userStatus}
-                officeName={officeName}
-                resentRegistrationEmailDateTime={resentRegistrationEmailDateTime}
-                isEmailValid={isEmailValid}
-                possiblePermissionsList={possiblePermissionsList}
-              />
-            ) : (
-              <UserDetailShow
-                details={details}
-                onEdit={this.onEditClick}
-                disableEditBtn={disableEditBtn}
-                startDate={startDate}
-                rolesList={rolesList}
-                accountStatus={accountStatus}
-                assignedPermissions={assignedPermissions}
-                userStatus={userStatus}
-                userStatusDescription={userStatusDescription}
-                officeName={officeName}
-                onResendInvite={this.onResendInvite}
-                disableResendEmailButton={disableResendEmailButton}
-                resentRegistrationEmailDateTime={resentRegistrationEmailDateTime}
-              />
-            )}
-          </div>
+        {this.props.isEdit ? (
+          <UserDetailEdit
+            details={details}
+            selectedPermissions={details.permissions}
+            onCancel={this.onCancel}
+            onSave={this.onSaveDetails}
+            onDropDownChange={this.handleDropDownChange}
+            onInputChange={this.handleInputChange}
+            disableActionBtn={disableActionBtn}
+            possibleRolesList={possibleRolesList}
+            isRolesDisabled={isRolesDisabled}
+            startDate={startDate}
+            userStatusDescription={userStatusDescription}
+            userStatus={userStatus}
+            officeName={officeName}
+            resentRegistrationEmailDateTime={resentRegistrationEmailDateTime}
+            isEmailValid={isEmailValid}
+            possiblePermissionsList={possiblePermissionsList}
+          />
         ) : (
-          <div className="row">
-            <div className="col-md-12">
-              <Cards cardHeaderText={'User not found'} cardHeaderButton={false} disabled={this.props.disableEditBtn} />
-            </div>
-          </div>
+          <UserDetailShow
+            details={details}
+            onEdit={this.onEditClick}
+            disableEditBtn={disableEditBtn}
+            startDate={startDate}
+            rolesList={rolesList}
+            accountStatus={accountStatus}
+            assignedPermissions={assignedPermissions}
+            userStatus={userStatus}
+            userStatusDescription={userStatusDescription}
+            officeName={officeName}
+            onResendInvite={this.onResendInvite}
+            disableResendEmailButton={disableResendEmailButton}
+            resentRegistrationEmailDateTime={resentRegistrationEmailDateTime}
+          />
         )}
+      </div>
+    ) : (
+      <div className="row">
+        <div className="col-md-12">
+          <Cards cardHeaderText="User not found" cardHeaderButton={false} disabled={this.props.disableEditBtn} />
+        </div>
       </div>
     )
   }
 
   render() {
-    const {
-      dashboardUrl,
-      dashboardClickHandler,
-      possiblePermissionsList,
-      XHRStatus,
-      details,
-      disableResendEmailButton,
-      possibleRolesList,
-      rolesList,
-      isRolesDisabled,
-      userDetailError,
-      displayAlert,
-      disableActionBtn,
-      disableEditBtn,
-      accountStatus,
-      assignedPermissions,
-      startDate,
-      userStatusDescription,
-      userStatus,
-      officeName,
-      resentRegistrationEmailDateTime,
-      isEmailValid,
-    } = this.props
     return (
       <div>
         <PageHeader pageTitle="User Profile" button="" />
         <div className="container">
           <div className="col-md-12">
-            Back to: <LinkRWD text="Dashboard" href={dashboardUrl} clickHandler={dashboardClickHandler} />
+            Back to:{' '}
+            <LinkRWD text="Dashboard" href={this.props.dashboardUrl} clickHandler={this.props.dashboardClickHandler} />
             &nbsp;&gt;&nbsp;
             <Link to="/">User List</Link>
-            {this.showAlert(displayAlert, userDetailError)}
+            {this.showAlert(this.props.displayAlert, this.props.userDetailError)}
             {this.emailSent()}
             {this.showAddAlert()}
           </div>
-          {this.renderCards(
-            possiblePermissionsList,
-            XHRStatus,
-            details,
-            disableResendEmailButton,
-            possibleRolesList,
-            rolesList,
-            isRolesDisabled,
-            disableActionBtn,
-            disableEditBtn,
-            accountStatus,
-            assignedPermissions,
-            startDate,
-            userStatusDescription,
-            userStatus,
-            officeName,
-            resentRegistrationEmailDateTime,
-            isEmailValid
+          {this.props.fetchDetailsError ? (
+            <ErrorMessage error={this.props.fetchDetailsError} />
+          ) : this.props.XHRStatus !== 'ready' ? (
+            <Cards>
+              <span>{'Loading...'}</span>
+            </Cards>
+          ) : (
+            this.renderCards(
+              this.props.possiblePermissionsList,
+              this.props.details,
+              this.props.disableResendEmailButton,
+              this.props.possibleRolesList,
+              this.props.rolesList,
+              this.props.isRolesDisabled,
+              this.props.disableActionBtn,
+              this.props.disableEditBtn,
+              this.props.accountStatus,
+              this.props.assignedPermissions,
+              this.props.startDate,
+              this.props.userStatusDescription,
+              this.props.userStatus,
+              this.props.officeName,
+              this.props.resentRegistrationEmailDateTime,
+              this.props.isEmailValid
+            )
           )}
         </div>
       </div>
@@ -240,6 +217,7 @@ UserDetail.propTypes = {
   dashboardUrl: PropTypes.string,
   dashboardClickHandler: PropTypes.func,
   actions: PropTypes.object.isRequired,
+  fetchDetailsError: PropTypes.string,
   userDetailError: PropTypes.object,
   resentRegistrationEmailDateTime: PropTypes.string,
   disableResendEmailButton: PropTypes.bool,

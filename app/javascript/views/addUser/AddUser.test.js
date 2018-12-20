@@ -195,7 +195,6 @@ describe('VerifyUser', () => {
       const alertBox = wrapper.find('ErrorMessage')
       expect(alertBox.length).toBe(1)
       expect(alertBox.dive().props().children).toBe(props.user_message)
-      expect(alertBox.dive().props().alertCross).toEqual(false)
     })
 
     it('does not display error <Alert/>', () => {

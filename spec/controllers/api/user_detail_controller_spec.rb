@@ -7,6 +7,7 @@ module Api
     let(:user_repository) { instance_double('User::UserRepository') }
     let(:user) { Users::User.new(username: 'el') }
     let(:token) { 'my_token' }
+    let(:error_response) { 'My default error response' }
 
     describe '#show' do
       it 'has a route' do
@@ -26,11 +27,16 @@ module Api
         get :show, params: { id: '12' }
         expect(response.body).to eq user.to_json
       end
+
+      it 'rescues an exception' do
+        allow(Users::UserRepository).to receive(:new).and_raise(ApiError)
+        request.session[:token] = 'my_token'
+        get :show, params: { id: '12' }
+        expect(response.body).to eq error_response
+      end
     end
 
     describe '#save_user' do
-      let(:error_response) { 'My default error response' }
-
       it 'has a route' do
         expect(patch: 'api/user_detail/33/save_user').to route_to(
           format: 'json',

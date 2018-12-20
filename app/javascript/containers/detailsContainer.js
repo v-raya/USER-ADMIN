@@ -53,6 +53,7 @@ function mapStateToProps(state) {
     rolesList: rolesList(state),
     userListUrl: process.env.RAILS_RELATIVE_URL_ROOT ? process.env.RAILS_RELATIVE_URL_ROOT : '/',
     userDetailError: state.fetchDetails.saveDetailsError,
+    fetchDetailsError: state.fetchDetails.fetchDetailsError,
     resentRegistrationEmailDateTime: selectResendEmailDateTime(state),
     disableResendEmailButton: disableResendEmailButton(state),
     isRolesDisabled: disableRolesDropDown(state),

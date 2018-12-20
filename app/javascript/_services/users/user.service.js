@@ -18,7 +18,13 @@ class UserService {
   }
 
   static fetchUserDetails(id) {
-    return ApiService.get(`/user_detail/${id}`).then(response => response.data)
+    return ApiService.get(`/user_detail/${id}`)
+      .then(response => response.data)
+      .catch(error => {
+        if (error.response) {
+          throw error.response.data
+        }
+      })
   }
 
   static validateUser(email, racfid) {

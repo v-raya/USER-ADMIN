@@ -10,8 +10,8 @@ describe('reducer', () => {
     expect(fetchDetails(state, requestAction)).toEqual({
       fetching: true,
       details: null,
-      error: null,
       initialDetails: null,
+      fetchDetailsError: null,
     })
   })
 
@@ -20,7 +20,7 @@ describe('reducer', () => {
       type: actionTypes.FETCH_DETAILS_API_CALL_SUCCESS,
       details: { id: 'key1', username: 'user1' },
     }
-    const state = { details: null, fetching: true, error: null }
+    const state = { details: null, fetching: true, fetchDetailsError: null }
     const records = {
       XHRStatus: 'ready',
       records: { id: 'key1', username: 'user1' },
@@ -30,7 +30,7 @@ describe('reducer', () => {
       fetching: false,
       details: records,
       isEdit: false,
-      error: null,
+      fetchDetailsError: null,
       displayAlert: false,
       initialDetails: records.records,
     })
@@ -41,13 +41,14 @@ describe('reducer', () => {
       type: actionTypes.FETCH_DETAILS_API_CALL_FAILURE,
       details: null,
       initialDetails: null,
-      error: 'error happened',
+      error: { user_message: 'error happened' },
     }
     const state = { details: null, initialDetails: null, fetching: true, error: null }
     expect(fetchDetails(state, failureAction)).toEqual({
       fetching: false,
       details: null,
-      error: 'error happened',
+      fetchDetailsError: { user_message: 'error happened' },
+      error: null,
       displayAlert: false,
       initialDetails: null,
     })
