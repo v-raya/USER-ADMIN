@@ -9,8 +9,6 @@ DOCKER_CONTAINER_NAME = 'cap-latest'
 SLACK_CHANNEL = '#tech-cap-updates'
 SLACK_CREDENTIALS_ID = 'slackmessagetpt2'
 
-newTag = versionString == "DEFAULT" ? "0.94.${env.BUILD_ID}" : versionString
-
 def notify(String status) {
   status = status ?: 'SUCCESS'
     def colorCode = status == 'SUCCESS' ? '#00FF00' : '#FF0000'
