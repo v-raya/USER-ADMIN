@@ -9,7 +9,6 @@ DOCKER_CONTAINER_NAME = 'cap-latest'
 SLACK_CHANNEL = '#tech-cap-updates'
 SLACK_CREDENTIALS_ID = 'slackmessagetpt2'
 
-SEMANTIC_VERSION_NUMBER = ''
 def notify(String status) {
   status = status ?: 'SUCCESS'
     def colorCode = status == 'SUCCESS' ? '#00FF00' : '#FF0000'
@@ -44,6 +43,7 @@ node(node_to_run_on()) {
       stage('Increment Tag') {
         SEMANTIC_VERSION_NUMBER = newSemVer()
       }
+
       stage('Build Docker Image') {
         app = docker.build("${DOCKER_GROUP}/${DOCKER_IMAGE}:${SEMANTIC_VERSION_NUMBER}", "-f docker/web/Dockerfile .")
       }
