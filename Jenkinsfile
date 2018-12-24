@@ -1,12 +1,15 @@
+@Library('jenkins-pipeline-utils') _
+
 DOCKER_GROUP = 'cwds'
 DOCKER_IMAGE = 'cap'
 DOCKER_REGISTRY_CREDENTIALS_ID = '6ba8d05c-ca13-4818-8329-15d41a089ec0'
+GITHUB_CREDENTIALS_ID = '433ac100-b3c2-4519-b4d6-207c029a103b'
 CC_TEST_REPORTER_ID = 'e90a72f974bf96ece9ade12a041c8559fef59fd7413cfb08f1db5adc04337197'
 DOCKER_CONTAINER_NAME = 'cap-latest'
 SLACK_CHANNEL = '#tech-cap-updates'
 SLACK_CREDENTIALS_ID = 'slackmessagetpt2'
 
-SEMANTIC_VERSION_NUMBER = versionString == "DEFAULT" ? "0.94.${env.BUILD_ID}" : versionString
+SEMANTIC_VERSION_NUMBER = ''
 def notify(String status) {
   status = status ?: 'SUCCESS'
     def colorCode = status == 'SUCCESS' ? '#00FF00' : '#FF0000'
@@ -36,6 +39,10 @@ node(node_to_run_on()) {
         sh "curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter"
         sh "chmod +x ./cc-test-reporter"
         sh "./cc-test-reporter before-build --debug"
+      }
+
+      stage('Increment Tag') {
+        SEMANTIC_VERSION_NUMBER = newSemVer()
       }
       stage('Build Docker Image') {
         app = docker.build("${DOCKER_GROUP}/${DOCKER_IMAGE}:${SEMANTIC_VERSION_NUMBER}", "-f docker/web/Dockerfile .")
@@ -70,9 +77,14 @@ node(node_to_run_on()) {
         sh "sleep ${ACCEPTANCE_SLEEP_TIME}"
         sh "docker-compose exec --env COUNTY_AUTHORIZATION_ENABLED=true --env COUNTY_ADMIN_WEB_BASE_URL=county-admin-web:3000 -T county-admin-test bundle exec rspec spec/acceptance/user_list_page_spec.rb"
       }
+
+      stage('Tag Repo') {
+        tagGithubRepo(SEMANTIC_VERSION_NUMBER, GITHUB_CREDENTIALS_ID)
+      }
       stage('Publish Image') {
         withDockerRegistry([credentialsId: DOCKER_REGISTRY_CREDENTIALS_ID]) {
           app.push()
+          app.push(SEMANTIC_VERSION_NUMBER)
           app.push('latest')
         }
       }
