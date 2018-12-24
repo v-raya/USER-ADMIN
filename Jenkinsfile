@@ -27,6 +27,11 @@ def node_to_run_on() {
 }
 
 node(node_to_run_on()) {
+  triggerProperties = pullRequestMergedTriggerProperties('cap-master')
+  properties([
+    pipelineTriggers([triggerProperties])
+  ])
+
   def app
     try {
       deleteDir()
