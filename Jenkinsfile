@@ -111,7 +111,7 @@ node(node_to_run_on()) {
           sh "curl -v -u $jenkinsauth 'http://jenkins.mgmt.cwds.io:8080/job/Integration%20Environment/job/deploy-cap/buildWithParameters?token=${JENKINS_TRIGGER_TOKEN}&cause=Caused%20by%20Build%20${newTag}&version=${newTag}'"
         }
       }
-      stage('Update Pre-int manifest') {
+      stage('Update Integration manifest') {
         updateManifest("cap", "integration", GITHUB_CREDENTIALS_ID, newTag)
       }
       stage('Clean Up') {
