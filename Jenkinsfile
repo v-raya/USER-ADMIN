@@ -40,12 +40,8 @@ node(node_to_run_on()) {
         sh "./cc-test-reporter before-build --debug"
       }
 
-      stage('Increment Tag') {
-        newTag = newSemVer()
-      }
-
       stage('Build Docker Image') {
-        app = docker.build("${DOCKER_GROUP}/${DOCKER_IMAGE}:${newTag}", "-f docker/web/Dockerfile .")
+        app = docker.build("${DOCKER_GROUP}/${DOCKER_IMAGE}:${env.BUILD_NUMBER}", "-f docker/web/Dockerfile .")
       }
 
       app.withRun("--env CI=true") { container ->
