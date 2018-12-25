@@ -1,4 +1,4 @@
-@Library('jenkins-pipeline-utils@FIT-296-Implement-SemVer-For-CAP') _
+@Library('jenkins-pipeline-utils@FIT-296-Fix-for-new-Tag') _
 
 DOCKER_GROUP = 'cwds'
 DOCKER_IMAGE = 'cap'
