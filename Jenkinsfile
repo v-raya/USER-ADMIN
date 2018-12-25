@@ -1,4 +1,4 @@
-@Library('jenkins-pipeline-utils') _
+@Library('jenkins-pipeline-utils@FIT-296-Implement-SemVer-For-CAP') _
 
 DOCKER_GROUP = 'cwds'
 DOCKER_IMAGE = 'cap'
@@ -48,15 +48,17 @@ node(node_to_run_on()) {
       stage('Build Docker Image') {
         app = docker.build("${DOCKER_GROUP}/${DOCKER_IMAGE}:${env.BUILD_NUMBER}", "-f docker/web/Dockerfile .")
       }
+
+      stage('Increment Tag') {
+        newTag = newSemVer()
+        echo newTag
+      }
+
       app.withRun("--env CI=true") { container ->
         stage('Lint') {
           sh "docker exec -t ${container.id} yarn lint"
           sh "docker exec -t ${container.id} bundler-audit"
           sh "docker exec -t ${container.id} brakeman"
-        }
-
-        stage('Increment Tag') {
-          newTag = newSemVer()
         }
 
         stage('Unit Test') {
