@@ -1,4 +1,4 @@
-@Library('jenkins-pipeline-utils@FIT-296-Fix-for-new-Tag') _
+@Library('jenkins-pipeline-utils') _
 
 DOCKER_GROUP = 'cwds'
 DOCKER_IMAGE = 'cap'
@@ -8,6 +8,8 @@ CC_TEST_REPORTER_ID = 'e90a72f974bf96ece9ade12a041c8559fef59fd7413cfb08f1db5adc0
 DOCKER_CONTAINER_NAME = 'cap-latest'
 SLACK_CHANNEL = '#tech-cap-updates'
 SLACK_CREDENTIALS_ID = 'slackmessagetpt2'
+
+newTag = versionString == "DEFAULT" ? "0.94.${env.BUILD_ID}" : versionString
 
 def notify(String status) {
   status = status ?: 'SUCCESS'
@@ -27,11 +29,6 @@ def node_to_run_on() {
 }
 
 node(node_to_run_on()) {
-  triggerProperties = pullRequestMergedTriggerProperties('cap-master')
-  properties([
-    pipelineTriggers([triggerProperties])
-  ])
-
   def app
     try {
       deleteDir()
@@ -47,11 +44,6 @@ node(node_to_run_on()) {
 
       stage('Build Docker Image') {
         app = docker.build("${DOCKER_GROUP}/${DOCKER_IMAGE}:${env.BUILD_NUMBER}", "-f docker/web/Dockerfile .")
-      }
-
-      stage('Increment Tag') {
-        newTag = newSemVer()
-        echo newTag
       }
 
       app.withRun("--env CI=true") { container ->
