@@ -9,8 +9,6 @@ DOCKER_CONTAINER_NAME = 'cap-latest'
 SLACK_CHANNEL = '#tech-cap-updates'
 SLACK_CREDENTIALS_ID = 'slackmessagetpt2'
 
-newTag = versionString == "DEFAULT" ? "0.94.${env.BUILD_ID}" : versionString
-
 def notify(String status) {
   status = status ?: 'SUCCESS'
     def colorCode = status == 'SUCCESS' ? '#00FF00' : '#FF0000'
@@ -42,8 +40,12 @@ node(node_to_run_on()) {
         sh "./cc-test-reporter before-build --debug"
       }
 
+      stage('Increment Tag') {
+        newTag = newSemVer()
+      }
+
       stage('Build Docker Image') {
-        app = docker.build("${DOCKER_GROUP}/${DOCKER_IMAGE}:${env.BUILD_NUMBER}", "-f docker/web/Dockerfile .")
+        app = docker.build("${DOCKER_GROUP}/${DOCKER_IMAGE}:${newTag}", "-f docker/web/Dockerfile .")
       }
 
       app.withRun("--env CI=true") { container ->
@@ -101,10 +103,16 @@ node(node_to_run_on()) {
           sh "curl -v -u $jenkinsauth 'http://jenkins.mgmt.cwds.io:8080/job/preint/job/deploy-cap/buildWithParameters?token=${JENKINS_TRIGGER_TOKEN}&cause=Caused%20by%20Build%20${newTag}&version=${newTag}'"
         }
       }
+      stage('Update Pre-int manifest') {
+        updateManifest("cap", "preint", GITHUB_CREDENTIALS_ID, newTag)
+      }
       stage('Deploy Integration') {
         withCredentials([usernameColonPassword(credentialsId: 'fa186416-faac-44c0-a2fa-089aed50ca17', variable: 'jenkinsauth')]) {
           sh "curl -v -u $jenkinsauth 'http://jenkins.mgmt.cwds.io:8080/job/Integration%20Environment/job/deploy-cap/buildWithParameters?token=${JENKINS_TRIGGER_TOKEN}&cause=Caused%20by%20Build%20${newTag}&version=${newTag}'"
         }
+      }
+      stage('Update Integration manifest') {
+        updateManifest("cap", "integration", GITHUB_CREDENTIALS_ID, newTag)
       }
       stage('Clean Up') {
         sh "docker images ${DOCKER_GROUP}/${DOCKER_IMAGE} --filter \"before=${DOCKER_GROUP}/${DOCKER_IMAGE}:${newTag}\" -q | xargs docker rmi -f || true"
