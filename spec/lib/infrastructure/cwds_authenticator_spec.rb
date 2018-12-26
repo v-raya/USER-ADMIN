@@ -28,6 +28,32 @@ module Infrastructure
             expect(headers['Location']).to eq 'https://perry.test/authn/login?callback=http://example.com/'
           end
         end
+
+        context('when the url doesnt ends with logout') do
+          let(:environment_bad) { Rack::MockRequest.env_for('http://example.com/cap/id=12345', {}) }
+          it 'Does not provide the logout path in the callback' do
+            Feature.run_with_activated(:authentication) do
+              allow(security_policy).to receive(:validate_access)
+                .with(instance_of(Rack::Request)).and_return(nil)
+              status, headers = cwds_authenticator.call(environment_bad)
+              expect(status).to eq 301
+              expect(headers['Location']).to eq 'https://perry.test/authn/login?callback=http://example.com/cap/id=12345'
+            end
+          end
+        end
+
+        context('when the url ends with logout') do
+          let(:environment_bad) { Rack::MockRequest.env_for('http://example.com/cap/logout', {}) }
+          it 'Does not provide the logout path in the callback' do
+            Feature.run_with_activated(:authentication) do
+              allow(security_policy).to receive(:validate_access)
+                .with(instance_of(Rack::Request)).and_return(nil)
+              status, headers = cwds_authenticator.call(environment_bad)
+              expect(status).to eq 301
+              expect(headers['Location']).to eq 'https://perry.test/authn/login?callback=http://example.com/cap'
+            end
+          end
+        end
       end
 
       context 'with feature checking' do

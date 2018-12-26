@@ -19,6 +19,11 @@ module Infrastructure
 
     def redirect_to_login(url)
       callback = QueryParamRemover.new.remove_query_param(url, 'token')
+      if URI.parse(callback).path.match?('/logout')
+        uri = URI.parse(callback)
+        uri.path.slice! '/logout'
+        callback = uri.to_s
+      end
       [301, { 'Location' => Infrastructure::SecurityGateway.get_new_url(callback, 'login') }, []]
     end
   end
