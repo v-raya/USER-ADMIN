@@ -9,6 +9,14 @@ describe('#getAdminOfficeIDs', () => {
     expect(getAdminOfficeIDs(account)).toEqual(['1234'])
   })
 
+  it('returns empty array when roles have Super-admin ', () => {
+    const account = {
+      admin_office_ids: ['1234'],
+      roles: ['Super-admin'],
+    }
+    expect(getAdminOfficeIDs(account)).toEqual([])
+  })
+
   it('returns empty array when roles have State-admin ', () => {
     const account = {
       admin_office_ids: ['1234'],

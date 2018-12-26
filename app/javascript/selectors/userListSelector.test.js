@@ -101,51 +101,38 @@ describe('selectors', () => {
   })
 
   describe('#cardHeaderText', () => {
-    it('returns text based on user Roles ', () => {
-      const state = {
+    const getState = role => {
+      return {
         userList: {
           adminAccountDetails: {
             county_name: 'County1',
-            roles: ['State-admin'],
+            roles: role,
           },
         },
       }
+    }
+    it('returns text Global Administrator view if user Role is Super-admin ', () => {
+      const state = getState(['Super-admin'])
+      expect(cardHeaderText(state)).toEqual('Global Administrator view')
+    })
+
+    it('returns text State Administrator view if user Role is State-admin ', () => {
+      const state = getState(['State-admin'])
       expect(cardHeaderText(state)).toEqual('State Administrator View')
     })
 
     it('returns county name if user role is not state admin ', () => {
-      const state = {
-        userList: {
-          adminAccountDetails: {
-            county_name: 'County1',
-            roles: ['County-admin'],
-          },
-        },
-      }
+      const state = getState(['County-admin'])
       expect(cardHeaderText(state)).toEqual('County: County1')
     })
 
     it('returns county name if user role is null ', () => {
-      const state = {
-        userList: {
-          adminAccountDetails: {
-            county_name: 'County1',
-            roles: null,
-          },
-        },
-      }
+      const state = getState(null)
       expect(cardHeaderText(state)).toEqual('County: County1')
     })
 
     it('returns county name if user role is undefined ', () => {
-      const state = {
-        userList: {
-          adminAccountDetails: {
-            county_name: 'County1',
-            roles: undefined,
-          },
-        },
-      }
+      const state = getState(undefined)
       expect(cardHeaderText(state)).toEqual('County: County1')
     })
   })

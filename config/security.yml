@@ -1,4 +1,5 @@
 permitted_roles:
+      - 'Super-admin'
       - 'County-admin'
       - 'State-admin'
       - 'Office-admin'
