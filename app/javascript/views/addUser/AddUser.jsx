@@ -93,6 +93,7 @@ export default class AddUser extends Component {
           email={this.state.email}
           racfid={this.state.racfid}
           officeName={this.props.officeName}
+          officePhoneNumber={this.props.officePhoneNumber}
         />
       )
     }
@@ -135,6 +136,7 @@ AddUser.propTypes = {
   details: PropTypes.any,
   id: PropTypes.string,
   officeName: PropTypes.string,
+  officePhoneNumber: PropTypes.string,
   validateNewUserError: PropTypes.object,
 }
 

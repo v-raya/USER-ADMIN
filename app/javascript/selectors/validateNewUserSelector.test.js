@@ -1,4 +1,4 @@
-import { selectNewUserRecords, officeName } from './validateNewUserSelector'
+import { selectNewUserRecords, officeName, formattedPhoneNumber } from './validateNewUserSelector'
 
 describe('selectors', () => {
   describe('#selectNewUserRecords', () => {
@@ -133,6 +133,48 @@ describe('selectors', () => {
       it('returns empty string ', () => {
         const state = getState('')
         expect(officeName(state)).toEqual('')
+      })
+    })
+  })
+
+  describe('#formattedPhoneNumber', () => {
+    const getState = ({ officeId, phoneNumber, phoneExtensionNumber }) => {
+      return {
+        validateNewUser: {
+          verifyUserDetails: {
+            user: {
+              office_id: officeId,
+              phone_number: phoneNumber,
+              phone_extension_number: phoneExtensionNumber,
+            },
+          },
+        },
+        fetchOffices: {
+          offices: [
+            { office_id: 'north', office_name: 'North Office' },
+            { office_id: 'south', office_name: 'South Office' },
+          ],
+        },
+      }
+    }
+    describe('When phone & extension exists ', () => {
+      it('returns phone & Extension with Ext text ', () => {
+        const state = getState({ phoneNumber: '1114445555', phoneExtensionNumber: '22' })
+        expect(formattedPhoneNumber(state)).toEqual('(111) 444-5555 Ext 22')
+      })
+    })
+
+    describe('When phone_number exists without extension', () => {
+      it('returns phone with ext ', () => {
+        const state = getState({ phoneNumber: '1114445555', phoneExtensionNumber: undefined })
+        expect(formattedPhoneNumber(state)).toEqual('(111) 444-5555 Ext')
+      })
+    })
+
+    describe('When phone_extension_number exists without phone_number ', () => {
+      it('returns just empty ', () => {
+        const state = getState({ phoneNumber: null, phoneExtensionNumber: '23' })
+        expect(formattedPhoneNumber(state)).toEqual('')
       })
     })
   })

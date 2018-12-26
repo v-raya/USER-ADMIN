@@ -3,11 +3,10 @@ import PropTypes from 'prop-types'
 import Cards from '../../common/Card'
 import UserMessage from '../../common/UserMessage'
 import ShowField from '../../common/ShowField'
-import { formatPhoneNumberWithExt } from '../../_utils/formatters'
 
 /* eslint camelcase: 0 */
 
-const AddNewUser = ({ onAddUser, verifyNewUserDetails, officeName }) => {
+const AddNewUser = ({ onAddUser, verifyNewUserDetails, officeName, officePhoneNumber }) => {
   return (
     <div>
       {verifyNewUserDetails.verification_passed ? (
@@ -45,7 +44,7 @@ const AddNewUser = ({ onAddUser, verifyNewUserDetails, officeName }) => {
                   </div>
                   <div className="col-md-3">
                     <ShowField label="Office Phone Number">
-                      <span>{formatPhoneNumberWithExt(verifyNewUserDetails.user)}</span>
+                      <span>{officePhoneNumber}</span>
                     </ShowField>
                   </div>
                 </div>
@@ -70,6 +69,7 @@ AddNewUser.propTypes = {
   email: PropTypes.string,
   racfid: PropTypes.string,
   officeName: PropTypes.string,
+  officePhoneNumber: PropTypes.string,
 }
 
 export default AddNewUser

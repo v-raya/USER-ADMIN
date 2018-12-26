@@ -2,7 +2,7 @@ import { connect } from 'react-redux'
 import AddUser from '../views/addUser/AddUser'
 import { validateNewUserActions } from '../actions/validateNewUserActions'
 import { addUserActions, clearAddedUserDetailActions } from '../actions/addUserActions'
-import { selectNewUserRecords, officeName } from '../selectors/validateNewUserSelector'
+import { selectNewUserRecords, officeName, formattedPhoneNumber } from '../selectors/validateNewUserSelector'
 import { addUserRecords } from '../selectors/addUserSelector'
 import { bindActionCreators } from 'redux'
 import { permissionsList } from '../selectors/permissionsListSelector'
@@ -17,6 +17,7 @@ function mapStateToProps(state) {
     dashboardUrl: '/',
     validateNewUserError: state.validateNewUser.error,
     officeName: officeName(state),
+    officePhoneNumber: formattedPhoneNumber(state),
   }
 }
 

@@ -16,6 +16,10 @@ import {
   isEmailValid,
   disableActionButton,
   selectModifiedDetails,
+  assignedRoles,
+  resentRegistrationDate,
+  formattedPhoneNumber,
+  lastLogin,
 } from '../selectors/detailSelector'
 import { rolesList } from '../selectors/rolesListSelector'
 import {
@@ -27,7 +31,7 @@ import {
   handleEmailChangeAction,
   clearSaveAlert,
 } from '../actions/detailActions'
-import { selectResendEmailDateTime, disableResendEmailButton } from '../selectors/resendEmailSelector'
+import { resentRegistrationNewDateTime, disableResendEmailButton } from '../selectors/resendEmailSelector'
 import { fetchPermissionsActions } from '../actions/permissionsActions'
 import { fetchRolesActions } from '../actions/rolesActions'
 import { resendRegistrationEmailActions } from '../actions/resendRegistrationEmailActions'
@@ -54,7 +58,7 @@ function mapStateToProps(state) {
     userListUrl: process.env.RAILS_RELATIVE_URL_ROOT ? process.env.RAILS_RELATIVE_URL_ROOT : '/',
     userDetailError: state.fetchDetails.saveDetailsError,
     fetchDetailsError: state.fetchDetails.fetchDetailsError,
-    resentRegistrationEmailDateTime: selectResendEmailDateTime(state),
+    resentRegistrationNewDateTime: resentRegistrationNewDateTime(state),
     disableResendEmailButton: disableResendEmailButton(state),
     isRolesDisabled: disableRolesDropDown(state),
     disableActionBtn: disableActionButton(state),
@@ -62,6 +66,10 @@ function mapStateToProps(state) {
     assignedPermissions: selectAssignedPermissions(state),
     officeName: officeName(state),
     initialDetails: state.fetchDetails.initialDetails,
+    assignedRole: assignedRoles(state),
+    lastLoginDateTime: lastLogin(state),
+    resentRegistrationExistingDateTime: resentRegistrationDate(state),
+    formattedPhoneNumber: formattedPhoneNumber(state),
   }
 }
 

@@ -12,7 +12,7 @@ describe('UserDetailShow', () => {
     status: 'FORCE_CHANGE_PASSWORD',
     last_registration_resubmit_date_time: '2012-09-22 11:22:33',
   }
-
+  const resentRegistrationExistingDateTime = 'September 22, 2012 11:22 AM'
   const userDetailObject = {
     editable: true,
     user: {},
@@ -20,12 +20,20 @@ describe('UserDetailShow', () => {
 
   let wrapper
   beforeEach(() => {
-    wrapper = shallow(<UserDetailShow details={details} />)
+    wrapper = shallow(
+      <UserDetailShow details={details} resentRegistrationExistingDateTime={resentRegistrationExistingDateTime} />
+    )
   })
 
   describe('when label and className props are passed', () => {
     it('renders the label inside the grid wrapper', () => {
-      wrapper = shallow(<UserDetailShow details={details} userDetailObject={userDetailObject} />)
+      wrapper = shallow(
+        <UserDetailShow
+          details={details}
+          userDetailObject={userDetailObject}
+          resentRegistrationExistingDateTime={resentRegistrationExistingDateTime}
+        />
+      )
       expect(wrapper.find('Cards').props().cardHeaderText).toBe(`County: ${details.county_name}`)
       expect(wrapper.find('ShowField').length).toBe(11)
       expect(
@@ -159,11 +167,11 @@ describe('UserDetailShow', () => {
           status: 'FORCE_CHANGE_PASSWORD',
           last_registration_resubmit_date_time: null,
         }
-        const resentRegistrationEmailDateTime = '2018-09-08 08:06:22'
+        const resentRegistrationNewDateTime = 'September 8, 2018 08:06 AM'
         const wrapper = shallow(
           <UserDetailShow
             details={details}
-            resentRegistrationEmailDateTime={resentRegistrationEmailDateTime}
+            resentRegistrationNewDateTime={resentRegistrationNewDateTime}
             disableEditBtn={true}
             disableResendEmailButton={true}
           />

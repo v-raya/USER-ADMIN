@@ -1,5 +1,5 @@
 import safeGet from 'lodash.get'
-import { formatDate } from '../_utils/formatters'
+import { formatDate, formatSelectedRoles, checkDate, formatPhoneNumberWithExt } from '../_utils/formatters'
 import { rolesList } from './rolesListSelector'
 import { permissionsList } from './permissionsListSelector'
 import { translateOfficeName } from './officeListSelector'
@@ -141,4 +141,26 @@ export const selectModifiedDetails = state => {
       : checkForModifiedDetails(initialDetails.roles, modifiedDetails.roles),
   }
   return userData
+}
+
+export const formattedDateTime = date => {
+  return checkDate(date)
+}
+
+export const lastLogin = state => {
+  return formattedDateTime(safeGet(state, 'fetchDetails.details.records.user.last_login_date_time', ''))
+}
+
+export const resentRegistrationDate = state => {
+  return formattedDateTime(safeGet(state, 'fetchDetails.details.records.user.last_registration_resubmit_date_time', ''))
+}
+
+export const assignedRoles = state => {
+  const assignedRole = safeGet(state, 'fetchDetails.details.records.user.roles', [])
+  return formatSelectedRoles(assignedRole, rolesList(state))
+}
+
+export const formattedPhoneNumber = state => {
+  const details = selectDetailRecords(state)
+  return formatPhoneNumberWithExt(details)
 }

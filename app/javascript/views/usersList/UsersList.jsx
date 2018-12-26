@@ -102,7 +102,6 @@ class UserList extends PureComponent {
   renderUsersTable = ({ data, officesList, rolesList }) => {
     const translateOffice = getOfficeTranslator(officesList)
     const translateRoles = data => formatSelectedRoles(data.roles, rolesList)
-
     return (
       <ReactTable
         data={data}

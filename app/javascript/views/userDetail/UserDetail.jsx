@@ -81,7 +81,7 @@ export default class UserDetail extends Component {
   }
 
   emailSent = () => {
-    if (this.state.resendEmailAlert && this.props.resentRegistrationEmailDateTime) {
+    if (this.state.resendEmailAlert && this.props.resentRegistrationNewDateTime) {
       return <UserMessage successMsg={'Registration email has been sent successfully'} />
     }
     return null
@@ -92,7 +92,6 @@ export default class UserDetail extends Component {
     details,
     disableResendEmailButton,
     possibleRolesList,
-    rolesList,
     isRolesDisabled,
     disableActionBtn,
     disableEditBtn,
@@ -102,8 +101,12 @@ export default class UserDetail extends Component {
     userStatusDescription,
     userStatus,
     officeName,
-    resentRegistrationEmailDateTime,
-    isEmailValid
+    resentRegistrationNewDateTime,
+    isEmailValid,
+    assignedRole,
+    lastLoginDateTime,
+    resentRegistrationExistingDateTime,
+    formattedPhoneNumber
   ) => {
     return details && details.id ? (
       <div>
@@ -122,9 +125,13 @@ export default class UserDetail extends Component {
             userStatusDescription={userStatusDescription}
             userStatus={userStatus}
             officeName={officeName}
-            resentRegistrationEmailDateTime={resentRegistrationEmailDateTime}
+            resentRegistrationNewDateTime={resentRegistrationNewDateTime}
+            resentRegistrationExistingDateTime={resentRegistrationExistingDateTime}
             isEmailValid={isEmailValid}
             possiblePermissionsList={possiblePermissionsList}
+            assignedRole={assignedRole}
+            lastLoginDateTime={lastLoginDateTime}
+            formattedPhoneNumber={formattedPhoneNumber}
           />
         ) : (
           <UserDetailShow
@@ -132,7 +139,6 @@ export default class UserDetail extends Component {
             onEdit={this.onEditClick}
             disableEditBtn={disableEditBtn}
             startDate={startDate}
-            rolesList={rolesList}
             accountStatus={accountStatus}
             assignedPermissions={assignedPermissions}
             userStatus={userStatus}
@@ -140,7 +146,11 @@ export default class UserDetail extends Component {
             officeName={officeName}
             onResendInvite={this.onResendInvite}
             disableResendEmailButton={disableResendEmailButton}
-            resentRegistrationEmailDateTime={resentRegistrationEmailDateTime}
+            resentRegistrationNewDateTime={resentRegistrationNewDateTime}
+            resentRegistrationExistingDateTime={resentRegistrationExistingDateTime}
+            assignedRole={assignedRole}
+            lastLoginDateTime={lastLoginDateTime}
+            formattedPhoneNumber={formattedPhoneNumber}
           />
         )}
       </div>
@@ -179,7 +189,6 @@ export default class UserDetail extends Component {
               this.props.details,
               this.props.disableResendEmailButton,
               this.props.possibleRolesList,
-              this.props.rolesList,
               this.props.isRolesDisabled,
               this.props.disableActionBtn,
               this.props.disableEditBtn,
@@ -189,8 +198,12 @@ export default class UserDetail extends Component {
               this.props.userStatusDescription,
               this.props.userStatus,
               this.props.officeName,
-              this.props.resentRegistrationEmailDateTime,
-              this.props.isEmailValid
+              this.props.resentRegistrationNewDateTime,
+              this.props.isEmailValid,
+              this.props.assignedRole,
+              this.props.lastLoginDateTime,
+              this.props.resentRegistrationExistingDateTime,
+              this.props.formattedPhoneNumber
             )
           )}
         </div>
@@ -210,7 +223,8 @@ UserDetail.propTypes = {
   actions: PropTypes.object.isRequired,
   fetchDetailsError: PropTypes.string,
   userDetailError: PropTypes.object,
-  resentRegistrationEmailDateTime: PropTypes.string,
+  resentRegistrationNewDateTime: PropTypes.string,
+  resentRegistrationExistingDateTime: PropTypes.string,
   disableResendEmailButton: PropTypes.bool,
   disableEditBtn: PropTypes.bool,
   XHRStatus: PropTypes.string,
@@ -218,16 +232,18 @@ UserDetail.propTypes = {
   possiblePermissionsList: PropTypes.array,
   accountStatus: PropTypes.string,
   startDate: PropTypes.string,
+  lastLoginDateTime: PropTypes.string,
   userStatusDescription: PropTypes.string,
   userStatus: PropTypes.string,
   officeName: PropTypes.string,
   isRolesDisabled: PropTypes.bool,
-  rolesList: PropTypes.arrayOf(PropTypes.shape({ id: PropTypes.string, name: PropTypes.string })),
+  assignedRole: PropTypes.string,
   displayAlert: PropTypes.bool,
   disableActionBtn: PropTypes.bool,
   match: PropTypes.object,
   isEmailValid: PropTypes.bool,
   updatedDetails: PropTypes.object,
+  formattedPhoneNumber: PropTypes.string,
 }
 
 UserDetail.defaultProps = {

@@ -25,7 +25,7 @@ describe('UserDetailEdit', () => {
 
   const rolesList = [{ id: 'role1', name: 'roleOne' }, { id: 'role2', name: 'roleTwo' }]
   const possibleRoles = ['role1', 'role2']
-
+  const resentRegistrationExistingDateTime = 'September 22, 2012 11:22 AM'
   let wrapper
   beforeEach(() => {
     wrapper = shallow(
@@ -36,6 +36,7 @@ describe('UserDetailEdit', () => {
         rolesList={rolesList}
         possibleRolesOptions={possibleRolesOptions}
         onInputChange={onInputChangeSpy}
+        resentRegistrationExistingDateTime={resentRegistrationExistingDateTime}
       />
     )
   })
@@ -118,9 +119,9 @@ describe('UserDetailEdit', () => {
         status: 'FORCE_CHANGE_PASSWORD',
         last_registration_resubmit_date_time: null,
       }
-      const resentRegistrationEmailDateTime = '2018-09-08 08:06:22'
+      const resentRegistrationNewDateTime = 'September 8, 2018 08:06 AM'
       const wrapper = shallow(
-        <UserDetailEdit details={details} resentRegistrationEmailDateTime={resentRegistrationEmailDateTime} />
+        <UserDetailEdit details={details} resentRegistrationNewDateTime={resentRegistrationNewDateTime} />
       )
       expect(wrapper.find('.resend-email-text').text()).toEqual('Registration email resent:September 8, 2018 08:06 AM')
     })

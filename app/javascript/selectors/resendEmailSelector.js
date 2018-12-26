@@ -1,12 +1,10 @@
 import safeGet from 'lodash.get'
+import { formattedDateTime } from './detailSelector'
 
-export const selectResendEmailDateTime = state => {
-  const resendEmail = safeGet(
-    state,
-    'resendRegistrationEmail.registrationResentDateTime.last_registration_resubmit_date_time',
-    ''
+export const resentRegistrationNewDateTime = state => {
+  return formattedDateTime(
+    safeGet(state, 'resendRegistrationEmail.registrationResentDateTime.last_registration_resubmit_date_time', '')
   )
-  return resendEmail
 }
 
 export const selectResendEmailUserId = state => {

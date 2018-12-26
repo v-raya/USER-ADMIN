@@ -15,8 +15,12 @@ import {
   disableActionButton,
   isEmailValid,
   selectModifiedDetails,
+  formattedDateTime,
+  assignedRoles,
+  lastLogin,
+  resentRegistrationDate,
+  formattedPhoneNumber,
 } from './detailSelector'
-
 describe('selectors', () => {
   const editDetails = {
     edit_details: {
@@ -51,6 +55,10 @@ describe('selectors', () => {
     email,
     assignedRoles,
     fetchDetailsError,
+    lastLoginDateTime,
+    resentRegistrationExistingDateTime,
+    phoneNumber,
+    phoneExtensionNumber,
   }) => {
     return {
       fetchDetails: {
@@ -86,6 +94,10 @@ describe('selectors', () => {
               office_id: officeId,
               email: email,
               roles: assignedRoles,
+              phone_number: phoneNumber,
+              phone_extension_number: phoneExtensionNumber,
+              last_registration_resubmit_date_time: resentRegistrationExistingDateTime,
+              last_login_date_time: lastLoginDateTime,
             },
           },
         },
@@ -524,6 +536,137 @@ describe('selectors', () => {
           roles: undefined,
         }
         expect(selectModifiedDetails(state)).toEqual(expectedValue)
+      })
+    })
+  })
+
+  describe('#lastLogin', () => {
+    describe('When last login DateTime exists ', () => {
+      it('returns date in user friendly format', () => {
+        const state = getState({ lastLoginDateTime: '2018-12-24 10:20:30' })
+        expect(lastLogin(state)).toEqual('December 24, 2018 10:20 AM')
+      })
+    })
+
+    describe('When last login DateTime is null ', () => {
+      it('returns null', () => {
+        const state = getState({ lastLoginDateTime: null })
+        expect(lastLogin(state)).toEqual('')
+      })
+    })
+
+    describe('When last login DateTime is undefined ', () => {
+      it('returns just empty', () => {
+        const state = getState({ lastLoginDateTime: undefined })
+        expect(lastLogin(state)).toEqual('')
+      })
+    })
+  })
+
+  describe('#resentRegistrationDate', () => {
+    describe('When registration resubmitted DateTime exists ', () => {
+      it('returns date in user friendly format', () => {
+        const state = getState({ resentRegistrationExistingDateTime: '2018-12-24 10:20:30' })
+        expect(resentRegistrationDate(state)).toEqual('December 24, 2018 10:20 AM')
+      })
+    })
+
+    describe('When registration resubmitted DateTime is null ', () => {
+      it('returns null', () => {
+        const state = getState({ resentRegistrationExistingDateTime: null })
+        expect(resentRegistrationDate(state)).toEqual('')
+      })
+    })
+
+    describe('When registration resubmitted DateTime is undefined ', () => {
+      it('returns just empty', () => {
+        const state = getState({ resentRegistrationExistingDateTime: undefined })
+        expect(resentRegistrationDate(state)).toEqual('')
+      })
+    })
+  })
+
+  describe('#formattedDateTime', () => {
+    describe('When  DateTime exists ', () => {
+      it('returns date in user friendly format', () => {
+        expect(formattedDateTime('2018-12-24 10:20:30')).toEqual('December 24, 2018 10:20 AM')
+      })
+    })
+
+    describe('When DateTime is null ', () => {
+      it('returns just empty', () => {
+        expect(formattedDateTime(null)).toEqual('')
+      })
+    })
+
+    describe('When  DateTime is undefined ', () => {
+      it('returns just empty', () => {
+        expect(formattedDateTime(undefined)).toEqual('')
+      })
+    })
+  })
+
+  describe('#assignedRoles', () => {
+    const rolesList = [
+      { id: 'role1', name: 'roleOne' },
+      { id: 'role2', name: 'roleTwo' },
+      { id: 'role3', name: 'roleThree' },
+    ]
+    describe('When assigned Roles exists ', () => {
+      it('returns description/label with matched value', () => {
+        const state = getState({ assignedRoles: ['role1'], rolesList })
+        expect(assignedRoles(state)).toEqual('roleOne')
+      })
+    })
+
+    describe('When assigned Roles is null ', () => {
+      it('returns just empty', () => {
+        const state = getState({ assignedRoles: null, rolesList })
+        expect(assignedRoles(state)).toEqual('')
+      })
+    })
+
+    describe('When resent assigned Roles is undefined ', () => {
+      it('returns just empty', () => {
+        const state = getState({ assignedRoles: undefined, rolesList })
+        expect(assignedRoles(state)).toEqual('')
+      })
+    })
+
+    describe('When assigned roles exist and doesnt match with the value ', () => {
+      it('returns just value ', () => {
+        const state = getState({ assignedRoles: ['role4'], rolesList })
+        expect(assignedRoles(state)).toEqual('role4')
+      })
+    })
+
+    describe('When rolesList is [] ', () => {
+      it('returns just value ', () => {
+        const state = getState({ assignedRoles: ['role1'], rolseList: [] })
+        expect(assignedRoles(state)).toEqual('role1')
+      })
+    })
+  })
+
+  describe('#formattedPhoneNumber', () => {
+    describe('When phone & extension exists ', () => {
+      it('returns phone & Extension with Ext text ', () => {
+        const state = getState({ phoneNumber: '1114445555', phoneExtensionNumber: '22' })
+        expect(formattedPhoneNumber(state)).toEqual('(111) 444-5555 Ext 22')
+      })
+    })
+
+    describe('When phone_number exists without extension', () => {
+      it('returns phone with ext ', () => {
+        const state = getState({ phoneNumber: '1114445555', phoneExtensionNumber: undefined })
+        expect(formattedPhoneNumber(state)).toEqual('(111) 444-5555 Ext')
+      })
+    })
+
+    describe('When phone_extension_number exists without phone_number ', () => {
+      it('returns just empty ', () => {
+        const state = getState({ phoneNumber: null, phoneExtensionNumber: '23' })
+        expect(formattedPhoneNumber(state)).toEqual('')
       })
     })
   })

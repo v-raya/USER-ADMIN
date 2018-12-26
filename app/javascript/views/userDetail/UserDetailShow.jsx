@@ -2,7 +2,6 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import Cards from '../../common/Card'
 import ShowField from '../../common/ShowField'
-import { formatPhoneNumberWithExt, checkDate, formatSelectedRoles } from '../../_utils/formatters'
 import { Button } from 'react-wood-duck'
 
 /* eslint camelcase: 0 */
@@ -12,7 +11,6 @@ const UserDetailShow = ({
   onEdit,
   startDate,
   disableEditBtn,
-  rolesList,
   accountStatus,
   userStatus,
   userStatusDescription,
@@ -20,7 +18,11 @@ const UserDetailShow = ({
   officeName,
   onResendInvite,
   disableResendEmailButton,
-  resentRegistrationEmailDateTime,
+  resentRegistrationNewDateTime,
+  assignedRole,
+  lastLoginDateTime,
+  resentRegistrationExistingDateTime,
+  formattedPhoneNumber,
 }) => (
   <div className="row">
     <div className="col-md-12">
@@ -44,7 +46,7 @@ const UserDetailShow = ({
               <ShowField label="CWS Login">{details.racfid}</ShowField>
             </div>
             <div className="col-md-4">
-              <ShowField label="Role">{formatSelectedRoles(details.roles, rolesList)}</ShowField>
+              <ShowField label="Role">{assignedRole}</ShowField>
             </div>
           </div>
           <div className="row">
@@ -53,14 +55,14 @@ const UserDetailShow = ({
             </div>
             <div className="col-md-3">
               <ShowField label="Office Phone Number">
-                <span>{formatPhoneNumberWithExt(details)}</span>
+                <span>{formattedPhoneNumber}</span>
               </ShowField>
             </div>
             <div className="col-md-2">
               <ShowField label="Start Date">{startDate}</ShowField>
             </div>
             <div className="col-md-4">
-              <ShowField label="Last Login">{checkDate(details.last_login_date_time)}</ShowField>
+              <ShowField label="Last Login">{lastLoginDateTime}</ShowField>
             </div>
           </div>
           <br />
@@ -75,17 +77,17 @@ const UserDetailShow = ({
                     {details.status === 'FORCE_CHANGE_PASSWORD' && (
                       <div>
                         <div>
-                          {resentRegistrationEmailDateTime ? (
+                          {resentRegistrationNewDateTime ? (
                             <div className="resend-email-text">
                               {'Registration email resent:'}
                               <br />
-                              {checkDate(resentRegistrationEmailDateTime)}
+                              {resentRegistrationNewDateTime}
                             </div>
-                          ) : details.last_registration_resubmit_date_time ? (
+                          ) : resentRegistrationExistingDateTime ? (
                             <div className="resend-email-text">
                               {'Registration email resent:'}
                               <br />
-                              {checkDate(details.last_registration_resubmit_date_time)}
+                              {resentRegistrationExistingDateTime}
                             </div>
                           ) : (
                             ''
@@ -125,18 +127,16 @@ UserDetailShow.propTypes = {
   userStatusDescription: PropTypes.string,
   accountStatus: PropTypes.string,
   onResendInvite: PropTypes.func,
+  assignedRole: PropTypes.string,
   disableResendEmailButton: PropTypes.bool,
   assignedPermissions: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
   onEdit: PropTypes.func,
   startDate: PropTypes.string,
-  resentRegistrationEmailDateTime: PropTypes.string,
-  rolesList: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.string,
-      name: PropTypes.string,
-    })
-  ),
+  lastLoginDateTime: PropTypes.string,
+  resentRegistrationNewDateTime: PropTypes.string,
+  resentRegistrationExistingDateTime: PropTypes.string,
   disableEditBtn: PropTypes.bool,
+  formattedPhoneNumber: PropTypes.string,
 }
 
 export default UserDetailShow

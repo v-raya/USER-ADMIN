@@ -5,7 +5,6 @@ import ShowField from '../../common/ShowField'
 import { InputComponent } from 'react-wood-duck'
 import DropDown from '../../common/DropDown'
 import { STATUS } from '../../_constants/constants'
-import { checkDate, formatPhoneNumberWithExt } from '../../_utils/formatters'
 
 /* eslint camelcase: 0 */
 
@@ -22,9 +21,12 @@ const UserDetailEdit = ({
   userStatus,
   userStatusDescription,
   officeName,
-  resentRegistrationEmailDateTime,
+  resentRegistrationNewDateTime,
   onInputChange,
   isEmailValid,
+  lastLoginDateTime,
+  resentRegistrationExistingDateTime,
+  formattedPhoneNumber,
 }) => (
   <div className="row">
     <div className="col-md-12">
@@ -80,14 +82,14 @@ const UserDetailEdit = ({
             </div>
             <div className="col-md-3">
               <ShowField label="Office Phone Number">
-                <span>{formatPhoneNumberWithExt(details)}</span>
+                <span>{formattedPhoneNumber}</span>
               </ShowField>
             </div>
             <div className="col-md-2">
               <ShowField label="Start Date">{startDate}</ShowField>
             </div>
             <div className="col-md-4">
-              <ShowField label="Last Login">{checkDate(details.last_login_date_time)}</ShowField>
+              <ShowField label="Last Login">{lastLoginDateTime}</ShowField>
             </div>
           </div>
           <br />
@@ -101,17 +103,17 @@ const UserDetailEdit = ({
                     {details.status === 'FORCE_CHANGE_PASSWORD' && (
                       <div>
                         <div>
-                          {resentRegistrationEmailDateTime ? (
+                          {resentRegistrationNewDateTime ? (
                             <div className="resend-email-text">
                               {'Registration email resent:'}
                               <br />
-                              {checkDate(resentRegistrationEmailDateTime)}
+                              {resentRegistrationNewDateTime}
                             </div>
-                          ) : details.last_registration_resubmit_date_time ? (
+                          ) : resentRegistrationExistingDateTime ? (
                             <div className="resend-email-text">
                               {'Registration email resent:'}
                               <br />
-                              {checkDate(details.last_registration_resubmit_date_time)}
+                              {resentRegistrationExistingDateTime}
                             </div>
                           ) : (
                             ''
@@ -157,6 +159,7 @@ UserDetailEdit.propTypes = {
   details: PropTypes.object,
   onCancel: PropTypes.func,
   startDate: PropTypes.string,
+  lastLoginDateTime: PropTypes.string,
   onSave: PropTypes.func,
   disableActionBtn: PropTypes.bool,
   onDropDownChange: PropTypes.func,
@@ -166,17 +169,13 @@ UserDetailEdit.propTypes = {
   onPermissionChange: PropTypes.func,
   userStatusDescription: PropTypes.string,
   userStatus: PropTypes.string,
-  resentRegistrationEmailDateTime: PropTypes.string,
+  resentRegistrationNewDateTime: PropTypes.string,
+  resentRegistrationExistingDateTime: PropTypes.string,
   possibleRolesList: PropTypes.array,
   isEmailValid: PropTypes.bool,
+  formattedPhoneNumber: PropTypes.string,
   disableResendEmailButton: PropTypes.bool,
   possiblePermissionsList: PropTypes.array,
-  rolesList: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.string,
-      name: PropTypes.string,
-    })
-  ),
   isRolesDisabled: PropTypes.bool,
 }
 
