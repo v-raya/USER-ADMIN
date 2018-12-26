@@ -83,7 +83,7 @@ describe('AddVerifiedUser', () => {
         error_code: 'CAP',
       }
       wrapper = shallow(<AddVerifiedUser verifyNewUserDetails={newUserDetails} />)
-      expect(wrapper.find('Alert').length).toBe(1)
+      expect(wrapper.find('UserMessage').length).toBe(1)
     })
   })
 

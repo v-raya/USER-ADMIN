@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import Cards from '../../common/Card'
-import { Alert } from 'react-wood-duck'
+import UserMessage from '../../common/UserMessage'
 import ShowField from '../../common/ShowField'
 import { formatPhoneNumberWithExt } from '../../_utils/formatters'
 
@@ -54,15 +54,7 @@ const AddNewUser = ({ onAddUser, verifyNewUserDetails, officeName }) => {
           </div>
         </div>
       ) : verifyNewUserDetails.verification_passed === false ? (
-        <div className="row">
-          <div className="col-md-12">
-            <div className="alert">
-              <Alert alertClassName="error" faIcon="fa-exclamation-triangle" alertCross={false}>
-                {verifyNewUserDetails.verification_message}
-              </Alert>
-            </div>
-          </div>
-        </div>
+        <UserMessage errorMsg={verifyNewUserDetails.verification_message} />
       ) : (
         <Cards>
           <span>{'Loading.....'}</span>

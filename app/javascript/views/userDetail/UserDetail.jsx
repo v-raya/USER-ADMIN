@@ -2,10 +2,9 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 import { Link as LinkRWD, PageHeader } from 'react-wood-duck'
-import { Alert } from '@cwds/components'
 import UserDetailEdit from './UserDetailEdit'
 import UserDetailShow from './UserDetailShow'
-import ErrorMessage from '../../common/ErrorMessage'
+import UserMessage from '../../common/UserMessage'
 import Cards from '../../common/Card'
 
 /* eslint camelcase: 0 */
@@ -62,13 +61,9 @@ export default class UserDetail extends Component {
   showAlert = (displayAlert, userDetailError) => {
     if (displayAlert) {
       if (userDetailError) {
-        return <ErrorMessage error={userDetailError} />
+        return <UserMessage errorMsg={userDetailError} />
       } else {
-        return (
-          <Alert className="errorMessage-customizable" color="success">
-            {'Your changes have been made successfully'}
-          </Alert>
-        )
+        return <UserMessage successMsg={'Your changes have been made successfully'} />
       }
     }
     return null
@@ -77,9 +72,9 @@ export default class UserDetail extends Component {
   showAddAlert = () => {
     if (this.props.id) {
       return (
-        <Alert className="successMessage-customizable" color="success">
-          {`Successfully added new user. Registration email has been sent to ${this.props.details.email} `}
-        </Alert>
+        <UserMessage
+          successMsg={`Successfully added new user. Registration email has been sent to ${this.props.details.email} `}
+        />
       )
     }
     return null
@@ -87,11 +82,7 @@ export default class UserDetail extends Component {
 
   emailSent = () => {
     if (this.state.resendEmailAlert && this.props.resentRegistrationEmailDateTime) {
-      return (
-        <Alert className="successMessage-customizable" color="success">
-          {'Registration email has been sent successfully'}
-        </Alert>
-      )
+      return <UserMessage successMsg={'Registration email has been sent successfully'} />
     }
     return null
   }
@@ -177,7 +168,7 @@ export default class UserDetail extends Component {
             {this.showAddAlert()}
           </div>
           {this.props.fetchDetailsError ? (
-            <ErrorMessage error={this.props.fetchDetailsError} />
+            <UserMessage errorMsg={this.props.fetchDetailsError} />
           ) : this.props.XHRStatus !== 'ready' ? (
             <Cards>
               <span>{'Loading...'}</span>

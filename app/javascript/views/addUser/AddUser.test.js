@@ -189,18 +189,17 @@ describe('VerifyUser', () => {
   })
 
   describe('#erroralert()', () => {
-    it('displays error <Alert/>', () => {
+    it('displays error <UserMessage/>', () => {
       const props = { user_message: 'Cognito user validation is failed' }
       wrapper = shallow(<AddUser validateNewUserError={props} />)
-      const alertBox = wrapper.find('ErrorMessage')
+      const alertBox = wrapper.find('UserMessage')
       expect(alertBox.length).toBe(1)
-      expect(alertBox.dive().props().children).toBe(props.user_message)
+      expect(alertBox.props().errorMsg).toBe(props)
     })
 
-    it('does not display error <Alert/>', () => {
+    it('does not display error with errorMsg null', () => {
       wrapper = shallow(<AddUser validateNewUserError={null} />)
-      const alertBox = wrapper.find('ErrorMessage')
-      expect(alertBox.find('Alert').length).toBe(0)
+      expect(wrapper.find('UserMessage').props().errorMsg).toBe(null)
     })
   })
 })

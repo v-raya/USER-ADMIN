@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 import { Link as LinkRWD, PageHeader } from 'react-wood-duck'
 import AddVerifiedUser from './AddVerifiedUser'
 import VerifyUser from './VerifyUser'
-import ErrorMessage from '../../common/ErrorMessage'
+import UserMessage from '../../common/UserMessage'
 
 /* eslint camelcase: 0 */
 export default class AddUser extends Component {
@@ -110,7 +110,7 @@ export default class AddUser extends Component {
             &nbsp;&gt;&nbsp;
             <Link to="/">User List</Link>
           </div>
-          <ErrorMessage error={validateNewUserError} />
+          <UserMessage errorMsg={validateNewUserError} />
           {this.verifyUser()}
           {this.addUser()}
         </div>

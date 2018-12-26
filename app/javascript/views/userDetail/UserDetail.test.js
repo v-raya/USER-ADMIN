@@ -115,21 +115,21 @@ describe('UserDetail', () => {
     })
 
     describe('#showAddAlert', () => {
-      it('verifies alert component', () => {
+      it('verifies UserMessage component to display the alert', () => {
         wrapper.setProps({ id: '123456' })
         const instance = wrapper.instance()
         instance.showAddAlert()
-        expect(wrapper.find('Alert').length).toEqual(1)
+        expect(wrapper.find('UserMessage').length).toEqual(1)
       })
     })
   })
 
   describe('#emailSent()', () => {
-    it('displays <Alert/>', () => {
+    it('displays <UserMessage/>', () => {
       wrapper.setState({ resendEmailAlert: true })
       wrapper.setProps({ resentRegistrationEmailDateTime: '2018-10-24 10:20:30' })
-      expect(wrapper.find('Alert').length).toBe(1)
-      expect(wrapper.find('Alert').props().children).toBe('Registration email has been sent successfully')
+      expect(wrapper.find('UserMessage').length).toBe(1)
+      expect(wrapper.find('UserMessage').props().successMsg).toBe('Registration email has been sent successfully')
     })
   })
 
@@ -209,11 +209,11 @@ describe('UserDetail', () => {
         expect(wrapper.find('UserDetailShow').length).toBe(1)
       })
 
-      it('should display <Alert/>', () => {
+      it('should contain <UserMessage/> to display the alert', () => {
         wrapper.setProps({
           fetchDetailsError: 'Unauthorized',
         })
-        expect(wrapper.find('ErrorMessage').length).toBe(1)
+        expect(wrapper.find('UserMessage').length).toBe(1)
       })
 
       it('should display <UserDetailEdit/>', () => {
@@ -254,24 +254,24 @@ describe('UserDetail', () => {
   })
 
   describe('#showAlert()', () => {
-    it('displays error <Alert/>', () => {
+    it('displays error <UserMessage/>', () => {
       const props = { user_message: 'Cognito user validation is failed' }
       wrapper.setProps({ displayAlert: true, userDetailError: props })
-      const alertBox = wrapper.find('ErrorMessage')
+      const alertBox = wrapper.find('UserMessage')
       expect(alertBox.length).toBe(1)
-      expect(alertBox.dive().props().children).toBe(props.user_message)
+      expect(alertBox.props().errorMsg).toEqual(props)
     })
 
-    it('displays success <Alert/>', () => {
+    it('displays success <UserMessage/>', () => {
       wrapper.setProps({ userDetailError: null, displayAlert: true })
-      const alertBox = wrapper.find('Alert')
+      const alertBox = wrapper.find('UserMessage')
       expect(alertBox.length).toBe(1)
-      expect(alertBox.props().children).toBe('Your changes have been made successfully')
+      expect(alertBox.props().successMsg).toEqual('Your changes have been made successfully')
     })
 
-    it('does not display <Alert/>', () => {
+    it('does not display <UserMessage/>', () => {
       wrapper.setProps({ userDetailError: null, displayAlert: false })
-      const alertBox = wrapper.find('ErrorMessage')
+      const alertBox = wrapper.find('UserMessage')
       expect(alertBox.length).toBe(0)
     })
   })
