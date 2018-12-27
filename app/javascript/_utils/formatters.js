@@ -11,7 +11,7 @@ export const formatPhoneNumber = phone_number => {
       return phoneNumber
     }
   }
-  return null
+  return ''
 }
 
 export function formatPhoneNumberWithExt({ phone_number, phone_extension_number }) {

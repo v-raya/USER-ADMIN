@@ -17,5 +17,8 @@ export const officeName = state => {
 
 export const formattedPhoneNumber = state => {
   const verifyDetails = selectNewUserRecords(state)
-  return formatPhoneNumberWithExt(verifyDetails.user)
+  if (verifyDetails.user) {
+    return formatPhoneNumberWithExt(verifyDetails.user)
+  }
+  return ''
 }

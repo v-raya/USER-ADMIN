@@ -162,5 +162,8 @@ export const assignedRoles = state => {
 
 export const formattedPhoneNumber = state => {
   const details = selectDetailRecords(state)
-  return formatPhoneNumberWithExt(details)
+  if (details) {
+    return formatPhoneNumberWithExt(details)
+  }
+  return ''
 }

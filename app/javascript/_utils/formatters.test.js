@@ -40,7 +40,7 @@ describe('#formatPhoneNumberWithExt', () => {
 
   describe('#formatPhoneNumber ', () => {
     it('processes an empty string', () => {
-      expect(formatPhoneNumber('')).toEqual(null)
+      expect(formatPhoneNumber('')).toEqual('')
     })
 
     it('should return formatted number when given a 10 digit number', () => {
@@ -48,15 +48,15 @@ describe('#formatPhoneNumberWithExt', () => {
     })
 
     it('should return null when given a less than 10 digit number', () => {
-      expect(formatPhoneNumber('12345')).toEqual(null)
+      expect(formatPhoneNumber('12345')).toEqual('')
     })
 
     it('should return null when given a greater than 10 digit number', () => {
-      expect(formatPhoneNumber('12345678901')).toEqual(null)
+      expect(formatPhoneNumber('12345678901')).toEqual('')
     })
 
     it('should return null when used alphabets', () => {
-      expect(formatPhoneNumber('abcd')).toEqual(null)
+      expect(formatPhoneNumber('abcd')).toEqual('')
     })
   })
 })

@@ -669,5 +669,19 @@ describe('selectors', () => {
         expect(formattedPhoneNumber(state)).toEqual('')
       })
     })
+
+    describe('when details is null ', () => {
+      it('returns just empty ', () => {
+        const state = { fetchDetails: null }
+        expect(formattedPhoneNumber(state)).toEqual('')
+      })
+    })
+
+    describe('when details is undefined ', () => {
+      it('returns just empty ', () => {
+        const state = { fetchDetails: undefined }
+        expect(formattedPhoneNumber(state)).toEqual('')
+      })
+    })
   })
 })

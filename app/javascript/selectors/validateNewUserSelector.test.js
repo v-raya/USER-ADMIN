@@ -138,12 +138,11 @@ describe('selectors', () => {
   })
 
   describe('#formattedPhoneNumber', () => {
-    const getState = ({ officeId, phoneNumber, phoneExtensionNumber }) => {
+    const getState = ({ phoneNumber, phoneExtensionNumber }) => {
       return {
         validateNewUser: {
           verifyUserDetails: {
             user: {
-              office_id: officeId,
               phone_number: phoneNumber,
               phone_extension_number: phoneExtensionNumber,
             },
@@ -174,6 +173,20 @@ describe('selectors', () => {
     describe('When phone_extension_number exists without phone_number ', () => {
       it('returns just empty ', () => {
         const state = getState({ phoneNumber: null, phoneExtensionNumber: '23' })
+        expect(formattedPhoneNumber(state)).toEqual('')
+      })
+    })
+
+    describe('when details is null ', () => {
+      it('returns just empty ', () => {
+        const state = { verifyUserDetails: null }
+        expect(formattedPhoneNumber(state)).toEqual('')
+      })
+    })
+
+    describe('when details is undefined ', () => {
+      it('returns just empty ', () => {
+        const state = { verifyUserDetails: undefined }
         expect(formattedPhoneNumber(state)).toEqual('')
       })
     })
