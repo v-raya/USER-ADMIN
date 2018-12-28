@@ -5,13 +5,15 @@ require 'feature'
 require 'axe/rspec'
 
 feature 'User Sign in' do
-  before(:all) do
+  before(:each) do
     logout_link
   end
+
   scenario 'invalid login information throws an error message on the login screen' do
     cognito_invalid_login
     expect(page).to have_text('User does not exist.')
   end
+
   scenario 'invalid mfa code throws an error message on mfa screen' do
     cognito_login_with_invalid_mfa
     sleep 2

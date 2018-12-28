@@ -67,6 +67,8 @@ module LoginHelper
   end
 
   def logout_link
+    # ensure we're on an app page and not the login page, which the logout page won't work from
+    visit ENV['RAILS_RELATIVE_URL_ROOT'] || '/'
     visit "#{ENV.fetch('COUNTY_ADMIN_WEB_BASE_URL', '/')}/logout"
   end
 
@@ -89,7 +91,7 @@ module LoginHelper
   end
 
   def go_manage_users
-    find(:xpath, '//h3[.="Manage Users"]/ancestor::div[@class="panel panel-default"]').click_on 'Go'
+    find(:xpath, "//a[contains(@href, '/cap')]").click
   end
 
   def submit_json_form(login_json)

@@ -30,11 +30,11 @@ feature 'Add User Page' do
     expect(page).to have_button('Add User')
 
     click_button 'Add User'
-    page.find('div.success-message')
+    page.find('div.successMessage-customizable')
     expect(find(:label, 'CWS Login').find(:xpath, './/../span').text).to eq valid_racfid
 
     message = "Successfully added new user. Registration email has been sent to #{email_address}"
-    expect(page.find('div.success-message').text).to eq(message)
+    expect(page.find('div.successMessage-customizable').text).to eq(message)
 
     # Should be able to click the 'edit' button now, but the test becomes unstable in our
     # environments.
