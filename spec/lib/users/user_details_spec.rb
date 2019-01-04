@@ -33,6 +33,8 @@ module Users
           :last_registration_resubmit_date_time, Types::String.optional
         )
       }
+      it { is_expected.to have_attribute(:office_phone_number, Types::String.optional) }
+      it { is_expected.to have_attribute(:office_phone_extension_number, Types::String.optional) }
     end
   end
 end

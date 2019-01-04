@@ -22,7 +22,8 @@ const UserDetailShow = ({
   assignedRole,
   lastLoginDateTime,
   resentRegistrationExistingDateTime,
-  formattedPhoneNumber,
+  officePhoneNumber,
+  workerPhoneNumber,
 }) => (
   <div className="row">
     <div className="col-md-12">
@@ -55,7 +56,7 @@ const UserDetailShow = ({
             </div>
             <div className="col-md-3">
               <ShowField label="Office Phone Number">
-                <span>{formattedPhoneNumber}</span>
+                <span>{officePhoneNumber}</span>
               </ShowField>
             </div>
             <div className="col-md-2">
@@ -65,7 +66,13 @@ const UserDetailShow = ({
               <ShowField label="Last Login">{lastLoginDateTime}</ShowField>
             </div>
           </div>
-          <br />
+          <div className="row">
+            <div className="col-md-3">
+              <ShowField label="Phone Number">
+                <span>{workerPhoneNumber}</span>
+              </ShowField>
+            </div>
+          </div>
           <br />
           <div className="row">
             <div className="col-md-3">
@@ -136,7 +143,8 @@ UserDetailShow.propTypes = {
   resentRegistrationNewDateTime: PropTypes.string,
   resentRegistrationExistingDateTime: PropTypes.string,
   disableEditBtn: PropTypes.bool,
-  formattedPhoneNumber: PropTypes.string,
+  officePhoneNumber: PropTypes.string,
+  workerPhoneNumber: PropTypes.string,
 }
 
 export default UserDetailShow

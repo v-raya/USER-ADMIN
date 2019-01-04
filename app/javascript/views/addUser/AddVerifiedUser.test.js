@@ -25,7 +25,7 @@ describe('AddVerifiedUser', () => {
       expect(wrapper.find('label').text()).toBe(
         'Please Verify the details of the CWS/CMS user you want to add to CWS-CARES'
       )
-      expect(wrapper.find('ShowField').length).toBe(5)
+      expect(wrapper.find('ShowField').length).toBe(6)
       expect(
         wrapper
           .find('ShowField')
@@ -56,6 +56,12 @@ describe('AddVerifiedUser', () => {
           .at(4)
           .props().label
       ).toEqual('Office Phone Number')
+      expect(
+        wrapper
+          .find('ShowField')
+          .at(5)
+          .props().label
+      ).toEqual('Phone Number')
     })
 
     it('renders the <ShowField/> props.children at label:fullName', () => {

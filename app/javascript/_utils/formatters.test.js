@@ -3,38 +3,32 @@ import { formatPhoneNumberWithExt, formatPhoneNumber, checkDate, formatSelectedR
 describe('#formatPhoneNumberWithExt', () => {
   describe('When phone & extension exists ', () => {
     it('returns phone & Extension with Ext text ', () => {
-      const details = {
-        phone_number: '1112222333',
-        phone_extension_number: '011',
-      }
-      expect(formatPhoneNumberWithExt(details)).toEqual('(111) 222-2333 Ext 011')
+      const phoneNumber = '1112222333'
+      const phoneExtensionNumber = '011'
+
+      expect(formatPhoneNumberWithExt(phoneNumber, phoneExtensionNumber)).toEqual('(111) 222-2333 Ext 011')
     })
   })
 
   describe('When phone_number exists without extension', () => {
     it('returns phone with ext ', () => {
-      const details = {
-        phone_number: '1114445555',
-        phone_extension_number: undefined,
-      }
-      expect(formatPhoneNumberWithExt(details)).toEqual('(111) 444-5555 Ext')
+      const phoneNumber = '1114445555'
+      const phoneExtensionNumber = undefined
+      expect(formatPhoneNumberWithExt(phoneNumber, phoneExtensionNumber)).toEqual('(111) 444-5555 Ext')
     })
   })
 
   describe('When phone_extension_number exists without phone_number ', () => {
     it('returns just empty ', () => {
-      const details = {
-        phone_number: null,
-        phone_extension_number: '111',
-      }
-      expect(formatPhoneNumberWithExt(details)).toEqual('')
+      const phoneNumber = null
+      const phoneExtensionNumber = '111'
+      expect(formatPhoneNumberWithExt(phoneNumber, phoneExtensionNumber)).toEqual('')
     })
   })
 
   describe('When no phone and no extension', () => {
     it('returns just empty ', () => {
-      const details = {}
-      expect(formatPhoneNumberWithExt(details)).toEqual('')
+      expect(formatPhoneNumberWithExt(null, null)).toEqual('')
     })
   })
 

@@ -6,7 +6,7 @@ import ShowField from '../../common/ShowField'
 
 /* eslint camelcase: 0 */
 
-const AddNewUser = ({ onAddUser, verifyNewUserDetails, officeName, officePhoneNumber }) => {
+const AddNewUser = ({ onAddUser, verifyNewUserDetails, officeName, officePhoneNumber, workerPhoneNumber }) => {
   return (
     <div>
       {verifyNewUserDetails.verification_passed ? (
@@ -47,6 +47,9 @@ const AddNewUser = ({ onAddUser, verifyNewUserDetails, officeName, officePhoneNu
                       <span>{officePhoneNumber}</span>
                     </ShowField>
                   </div>
+                  <div className="col-md-3">
+                    <ShowField label="Phone Number">{workerPhoneNumber}</ShowField>
+                  </div>
                 </div>
               </div>
             </Cards>
@@ -70,6 +73,7 @@ AddNewUser.propTypes = {
   racfid: PropTypes.string,
   officeName: PropTypes.string,
   officePhoneNumber: PropTypes.string,
+  workerPhoneNumber: PropTypes.string,
 }
 
 export default AddNewUser

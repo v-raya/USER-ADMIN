@@ -94,6 +94,7 @@ export default class AddUser extends Component {
           racfid={this.state.racfid}
           officeName={this.props.officeName}
           officePhoneNumber={this.props.officePhoneNumber}
+          workerPhoneNumber={this.props.workerPhoneNumber}
         />
       )
     }
@@ -137,6 +138,7 @@ AddUser.propTypes = {
   id: PropTypes.string,
   officeName: PropTypes.string,
   officePhoneNumber: PropTypes.string,
+  workerPhoneNumber: PropTypes.string,
   validateNewUserError: PropTypes.object,
 }
 

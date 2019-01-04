@@ -13,6 +13,7 @@ RUN apt-get install -y ruby2.4-dev ruby2.4
 RUN mkdir /app
 WORKDIR app
 ADD Gemfile Gemfile.lock /app/
+RUN gem update --system
 RUN gem install bundler && bundle install
 ADD . /app
 

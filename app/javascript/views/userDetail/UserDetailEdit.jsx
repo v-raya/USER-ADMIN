@@ -26,7 +26,8 @@ const UserDetailEdit = ({
   isEmailValid,
   lastLoginDateTime,
   resentRegistrationExistingDateTime,
-  formattedPhoneNumber,
+  officePhoneNumber,
+  workerPhoneNumber,
 }) => (
   <div className="row">
     <div className="col-md-12">
@@ -82,7 +83,7 @@ const UserDetailEdit = ({
             </div>
             <div className="col-md-3">
               <ShowField label="Office Phone Number">
-                <span>{formattedPhoneNumber}</span>
+                <span>{officePhoneNumber}</span>
               </ShowField>
             </div>
             <div className="col-md-2">
@@ -90,6 +91,13 @@ const UserDetailEdit = ({
             </div>
             <div className="col-md-4">
               <ShowField label="Last Login">{lastLoginDateTime}</ShowField>
+            </div>
+          </div>
+          <div className="row">
+            <div className="col-md-3">
+              <ShowField label="Phone Number">
+                <span>{workerPhoneNumber}</span>
+              </ShowField>
             </div>
           </div>
           <br />
@@ -173,10 +181,11 @@ UserDetailEdit.propTypes = {
   resentRegistrationExistingDateTime: PropTypes.string,
   possibleRolesList: PropTypes.array,
   isEmailValid: PropTypes.bool,
-  formattedPhoneNumber: PropTypes.string,
+  officePhoneNumber: PropTypes.string,
   disableResendEmailButton: PropTypes.bool,
   possiblePermissionsList: PropTypes.array,
   isRolesDisabled: PropTypes.bool,
+  workerPhoneNumber: PropTypes.string,
 }
 
 UserDetailEdit.defaultProps = {

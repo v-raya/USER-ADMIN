@@ -18,8 +18,8 @@ import {
   selectModifiedDetails,
   assignedRoles,
   resentRegistrationDate,
-  formattedPhoneNumber,
   lastLogin,
+  formattedPhoneNumber,
 } from '../selectors/detailSelector'
 import { rolesList } from '../selectors/rolesListSelector'
 import {
@@ -69,7 +69,8 @@ function mapStateToProps(state) {
     assignedRole: assignedRoles(state),
     lastLoginDateTime: lastLogin(state),
     resentRegistrationExistingDateTime: resentRegistrationDate(state),
-    formattedPhoneNumber: formattedPhoneNumber(state),
+    officePhoneNumber: formattedPhoneNumber(state).officePhoneNumber,
+    workerPhoneNumber: formattedPhoneNumber(state).workerPhoneNumber,
   }
 }
 

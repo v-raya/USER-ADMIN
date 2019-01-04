@@ -16,9 +16,12 @@ export const officeName = state => {
 }
 
 export const formattedPhoneNumber = state => {
-  const verifyDetails = selectNewUserRecords(state)
-  if (verifyDetails.user) {
-    return formatPhoneNumberWithExt(verifyDetails.user)
+  const workerPhone = safeGet(state, 'validateNewUser.verifyUserDetails.user.phone_number', '')
+  const workerExt = safeGet(state, 'validateNewUser.verifyUserDetails.user.phone_extension_number', '')
+  const officePhone = safeGet(state, 'validateNewUser.verifyUserDetails.user.office_phone_number', '')
+  const officeExt = safeGet(state, 'validateNewUser.verifyUserDetails.user.office_phone_extension_number', '')
+  return {
+    officePhoneNumber: formatPhoneNumberWithExt(officePhone, officeExt),
+    workerPhoneNumber: formatPhoneNumberWithExt(workerPhone, workerExt),
   }
-  return ''
 }

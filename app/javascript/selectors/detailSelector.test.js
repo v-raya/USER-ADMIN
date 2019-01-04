@@ -59,6 +59,8 @@ describe('selectors', () => {
     resentRegistrationExistingDateTime,
     phoneNumber,
     phoneExtensionNumber,
+    officePhoneNumber,
+    officePhoneExtensionNumber,
   }) => {
     return {
       fetchDetails: {
@@ -96,6 +98,8 @@ describe('selectors', () => {
               roles: assignedRoles,
               phone_number: phoneNumber,
               phone_extension_number: phoneExtensionNumber,
+              office_phone_number: officePhoneNumber,
+              office_phone_extension_number: officePhoneExtensionNumber,
               last_registration_resubmit_date_time: resentRegistrationExistingDateTime,
               last_login_date_time: lastLoginDateTime,
             },
@@ -649,38 +653,59 @@ describe('selectors', () => {
   })
 
   describe('#formattedPhoneNumber', () => {
-    describe('When phone & extension exists ', () => {
+    describe('When worker & office phone number & extension exists ', () => {
       it('returns phone & Extension with Ext text ', () => {
-        const state = getState({ phoneNumber: '1114445555', phoneExtensionNumber: '22' })
-        expect(formattedPhoneNumber(state)).toEqual('(111) 444-5555 Ext 22')
+        const state = getState({
+          phoneNumber: '1114445555',
+          phoneExtensionNumber: '22',
+          officePhoneNumber: '1114445555',
+          officePhoneExtensionNumber: '22',
+        })
+        expect(formattedPhoneNumber(state)).toEqual({
+          officePhoneNumber: '(111) 444-5555 Ext 22',
+          workerPhoneNumber: '(111) 444-5555 Ext 22',
+        })
       })
     })
 
     describe('When phone_number exists without extension', () => {
       it('returns phone with ext ', () => {
-        const state = getState({ phoneNumber: '1114445555', phoneExtensionNumber: undefined })
-        expect(formattedPhoneNumber(state)).toEqual('(111) 444-5555 Ext')
+        const state = getState({
+          phoneNumber: '1114445555',
+          phoneExtensionNumber: undefined,
+          officePhoneNumber: '1114445555',
+          officePhoneExtensionNumber: undefined,
+        })
+        expect(formattedPhoneNumber(state)).toEqual({
+          officePhoneNumber: '(111) 444-5555 Ext',
+          workerPhoneNumber: '(111) 444-5555 Ext',
+        })
       })
     })
 
     describe('When phone_extension_number exists without phone_number ', () => {
       it('returns just empty ', () => {
-        const state = getState({ phoneNumber: null, phoneExtensionNumber: '23' })
-        expect(formattedPhoneNumber(state)).toEqual('')
+        const state = getState({
+          phoneNumber: null,
+          phoneExtensionNumber: '23',
+          officePhoneNumber: null,
+          officePhoneExtensionNumber: '21',
+        })
+        expect(formattedPhoneNumber(state)).toEqual({ officePhoneNumber: '', workerPhoneNumber: '' })
       })
     })
 
     describe('when details is null ', () => {
       it('returns just empty ', () => {
         const state = { fetchDetails: null }
-        expect(formattedPhoneNumber(state)).toEqual('')
+        expect(formattedPhoneNumber(state)).toEqual({ officePhoneNumber: '', workerPhoneNumber: '' })
       })
     })
 
     describe('when details is undefined ', () => {
       it('returns just empty ', () => {
         const state = { fetchDetails: undefined }
-        expect(formattedPhoneNumber(state)).toEqual('')
+        expect(formattedPhoneNumber(state)).toEqual({ officePhoneNumber: '', workerPhoneNumber: '' })
       })
     })
   })

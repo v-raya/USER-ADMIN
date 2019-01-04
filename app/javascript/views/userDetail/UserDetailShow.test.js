@@ -35,7 +35,7 @@ describe('UserDetailShow', () => {
         />
       )
       expect(wrapper.find('Cards').props().cardHeaderText).toBe(`County: ${details.county_name}`)
-      expect(wrapper.find('ShowField').length).toBe(11)
+      expect(wrapper.find('ShowField').length).toBe(12)
       expect(
         wrapper
           .find('ShowField')
@@ -89,17 +89,23 @@ describe('UserDetailShow', () => {
           .find('ShowField')
           .at(8)
           .props().label
-      ).toEqual('User Status')
+      ).toEqual('Phone Number')
       expect(
         wrapper
           .find('ShowField')
           .at(9)
           .props().label
-      ).toEqual('Account Status')
+      ).toEqual('User Status')
       expect(
         wrapper
           .find('ShowField')
           .at(10)
+          .props().label
+      ).toEqual('Account Status')
+      expect(
+        wrapper
+          .find('ShowField')
+          .at(11)
           .props().label
       ).toEqual('Assigned Permissions')
       expect(wrapper.find('.resend-email-text').text()).toEqual('Registration email resent:September 22, 2012 11:22 AM')

@@ -45,7 +45,7 @@ describe('UserDetailEdit', () => {
     it('renders the label inside the grid wrapper', () => {
       expect(wrapper.find('Cards').props().cardHeaderText).toBe(`County: ${details.county_name}`)
 
-      expect(wrapper.find('ShowField').length).toBe(7)
+      expect(wrapper.find('ShowField').length).toBe(8)
       expect(
         wrapper
           .find('ShowField')
@@ -86,6 +86,12 @@ describe('UserDetailEdit', () => {
         wrapper
           .find('ShowField')
           .at(6)
+          .props().label
+      ).toEqual('Phone Number')
+      expect(
+        wrapper
+          .find('ShowField')
+          .at(7)
           .props().label
       ).toEqual('User Status')
       expect(wrapper.find('[label="Account Status"]').exists()).toBe(true)

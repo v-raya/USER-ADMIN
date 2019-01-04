@@ -17,7 +17,8 @@ function mapStateToProps(state) {
     dashboardUrl: '/',
     validateNewUserError: state.validateNewUser.error,
     officeName: officeName(state),
-    officePhoneNumber: formattedPhoneNumber(state),
+    officePhoneNumber: formattedPhoneNumber(state).officePhoneNumber,
+    workerPhoneNumber: formattedPhoneNumber(state).workerPhoneNumber,
   }
 }
 

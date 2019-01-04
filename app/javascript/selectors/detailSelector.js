@@ -161,9 +161,12 @@ export const assignedRoles = state => {
 }
 
 export const formattedPhoneNumber = state => {
-  const details = selectDetailRecords(state)
-  if (details) {
-    return formatPhoneNumberWithExt(details)
+  const workerPhone = safeGet(state, 'fetchDetails.details.records.user.phone_number', '')
+  const workerExt = safeGet(state, 'fetchDetails.details.records.user.phone_extension_number', '')
+  const officePhone = safeGet(state, 'fetchDetails.details.records.user.office_phone_number', '')
+  const officeExt = safeGet(state, 'fetchDetails.details.records.user.office_phone_extension_number', '')
+  return {
+    officePhoneNumber: formatPhoneNumberWithExt(officePhone, officeExt),
+    workerPhoneNumber: formatPhoneNumberWithExt(workerPhone, workerExt),
   }
-  return ''
 }

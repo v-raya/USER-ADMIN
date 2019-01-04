@@ -106,7 +106,8 @@ export default class UserDetail extends Component {
     assignedRole,
     lastLoginDateTime,
     resentRegistrationExistingDateTime,
-    formattedPhoneNumber
+    officePhoneNumber,
+    workerPhoneNumber
   ) => {
     return details && details.id ? (
       <div>
@@ -131,7 +132,8 @@ export default class UserDetail extends Component {
             possiblePermissionsList={possiblePermissionsList}
             assignedRole={assignedRole}
             lastLoginDateTime={lastLoginDateTime}
-            formattedPhoneNumber={formattedPhoneNumber}
+            officePhoneNumber={officePhoneNumber}
+            workerPhoneNumber={workerPhoneNumber}
           />
         ) : (
           <UserDetailShow
@@ -150,7 +152,8 @@ export default class UserDetail extends Component {
             resentRegistrationExistingDateTime={resentRegistrationExistingDateTime}
             assignedRole={assignedRole}
             lastLoginDateTime={lastLoginDateTime}
-            formattedPhoneNumber={formattedPhoneNumber}
+            officePhoneNumber={officePhoneNumber}
+            workerPhoneNumber={workerPhoneNumber}
           />
         )}
       </div>
@@ -203,7 +206,8 @@ export default class UserDetail extends Component {
               this.props.assignedRole,
               this.props.lastLoginDateTime,
               this.props.resentRegistrationExistingDateTime,
-              this.props.formattedPhoneNumber
+              this.props.officePhoneNumber,
+              this.props.workerPhoneNumber
             )
           )}
         </div>
@@ -243,7 +247,8 @@ UserDetail.propTypes = {
   match: PropTypes.object,
   isEmailValid: PropTypes.bool,
   updatedDetails: PropTypes.object,
-  formattedPhoneNumber: PropTypes.string,
+  officePhoneNumber: PropTypes.string,
+  workerPhoneNumber: PropTypes.string,
 }
 
 UserDetail.defaultProps = {

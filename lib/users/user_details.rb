@@ -16,6 +16,9 @@ module Users
     attribute :end_date, Types::String.optional
     attribute :office_id, Types::String.optional
     attribute :phone_number, Types::String.optional
+    attribute :phone_extension_number, Types::String.optional
+    attribute :office_phone_number, Types::String.optional
+    attribute :office_phone_extension_number, Types::String.optional
     attribute :email, Types::String.optional
     attribute :user_create_date, Types::String.optional
     attribute :user_last_modified_date, Types::String.optional
@@ -28,7 +31,6 @@ module Users
     attribute :racfid, Types::String.optional
     attribute :roles, Types::Array.optional
     attribute :auth_header, Types::String.optional
-    attribute :phone_extension_number, Types::String.optional
     attribute :last_registration_resubmit_date_time, Types::String.optional
   end
 end
