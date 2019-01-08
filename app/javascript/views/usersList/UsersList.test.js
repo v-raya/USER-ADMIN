@@ -91,6 +91,10 @@ describe('UsersList', () => {
           lastName="last_name_value"
           officeNames={['north', 'south', 'east', 'west']}
           includeInactive={false}
+          officeList={[
+            { value: 'someOffice1', label: 'someOfficeOne' },
+            { value: 'someOffice2', label: 'someOfficeTwo' },
+          ]}
           cardHeaderValue="State Administrator view"
         />
       )
@@ -128,8 +132,8 @@ describe('UsersList', () => {
 
   describe('#handleSearchInputChange', () => {
     it('office name change calls handleSearchChange Actions', () => {
-      const value = ['someOffice1', 'someOffice2']
-      wrapper.find('#searchOfficeName').simulate('change', String(value))
+      const value = [{ value: 'someOffice1', label: 'someOfficeOne' }, { value: 'someOffice2', label: 'someOfficeTwo' }]
+      wrapper.find('#searchOfficeName').simulate('change', value)
       expect(mockHandleSearchChange).toHaveBeenCalledWith('officeNames', ['someOffice1', 'someOffice2'])
     })
 
