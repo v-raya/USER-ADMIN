@@ -58,10 +58,10 @@ const UserDetailEdit = ({
               <DropDown
                 multiSelect={false}
                 simpleValue={false}
-                selectedOption={details.roles.toString()}
+                selectedOption={possibleRolesList.find(({ value }) => value === details.roles.toString())}
                 id="RolesDropDown"
                 label="Role"
-                onChange={event => onDropDownChange('roles', [event.value])}
+                onChange={selectedValue => onDropDownChange('roles', [selectedValue.value])}
                 options={possibleRolesList}
                 disabled={isRolesDisabled}
               />
@@ -137,21 +137,22 @@ const UserDetailEdit = ({
                   multiSelect={false}
                   simpleValue={false}
                   id="StatusDropDown"
-                  selectedOption={details.enabled}
+                  selectedOption={STATUS.find(({ value }) => value === details.enabled)}
                   options={STATUS}
                   label="Account Status"
-                  onChange={event => onDropDownChange('enabled', event.value)}
+                  onChange={selectedValue => onDropDownChange('enabled', selectedValue.value)}
                 />
               </div>
               <div className="col-md-6">
                 <DropDown
                   id="AssignPermissions"
-                  selectedOption={details.permissions}
+                  selectedOption={possiblePermissionsList.filter(({ value }) => details.permissions.includes(value))}
                   options={possiblePermissionsList}
                   label="Assigned Permissions"
-                  onChange={selectedOptions => onDropDownChange('permissions', selectedOptions.split(','))}
-                  multiSelect
-                  simpleValue
+                  onChange={possiblePermissionsList =>
+                    onDropDownChange('permissions', possiblePermissionsList.map(value => value.value))
+                  }
+                  multiSelect={true}
                 />
               </div>
             </div>

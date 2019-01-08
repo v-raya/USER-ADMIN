@@ -25,6 +25,11 @@ describe('DropDown', () => {
     expect(wrapper.hasClass('form-group')).toEqual(true)
   })
 
+  it('returns the Input and Label tags', () => {
+    expect(wrapper.find('Select').length).toBe(1)
+    expect(wrapper.find('label').length).toBe(1)
+  })
+
   it('has props', () => {
     expect(instance.props.options).toEqual(['Male', 'Female'])
     expect(instance.props.gridClassName).toEqual('Grid class name')

@@ -22,7 +22,7 @@ class DropDown extends React.Component {
         <div className={gridClassName}>
           <label htmlFor={label}>{label}</label>
           <Select
-            multi={multiSelect}
+            isMulti={multiSelect}
             simpleValue={simpleValue}
             value={selectedOption}
             id={id}
@@ -30,7 +30,7 @@ class DropDown extends React.Component {
             placeholder={placeholder}
             className={selectClassName}
             options={options}
-            disabled={disabled}
+            isDisabled={disabled}
           />
         </div>
       </div>
