@@ -106,45 +106,110 @@
     lodash "^4.2.0"
     to-fast-properties "^2.0.0"
 
-"@cwds/components@^0.3.8":
-  version "0.3.8"
-  resolved "https://registry.yarnpkg.com/@cwds/components/-/components-0.3.8.tgz#a6571d5ed7870fa9b1434a19696935fb16fae842"
+"@cwds/components@0.6.0":
+  version "0.6.0"
+  resolved "https://registry.yarnpkg.com/@cwds/components/-/components-0.6.0.tgz#7877c70317280699c631fb828fca95e31a1d11d6"
   dependencies:
-    "@cwds/core" "^0.3.8"
-    "@cwds/icons" "^0.3.8"
-    "@cwds/reactstrap" "^0.3.8"
+    "@cwds/core" "^0.6.0"
+    "@cwds/datagrid" "^0.6.0"
+    "@cwds/icons" "^0.6.0"
+    "@cwds/reactstrap" "^0.6.0"
+    bootstrap "^4.1.3"
+    classnames "^2.2.6"
+    lodash.omit "^4.5.0"
+    lodash.pick "^4.4.0"
+    lodash.uniqueid "^4.0.1"
+    react-select "^2.1.1"
+    react-table "^6.8.6"
+
+"@cwds/core@^0.6.0", "@cwds/core@^0.6.1":
+  version "0.6.1"
+  resolved "https://registry.yarnpkg.com/@cwds/core/-/core-0.6.1.tgz#8ca35c56dd9d9cdc8af4a315aef8b03f6cd843a4"
+
+"@cwds/datagrid@^0.6.0":
+  version "0.6.1"
+  resolved "https://registry.yarnpkg.com/@cwds/datagrid/-/datagrid-0.6.1.tgz#208e50fc69b62ba85e0323c4eca4aa381da661c7"
+  dependencies:
+    "@cwds/core" "^0.6.1"
+    "@cwds/icons" "^0.6.1"
+    "@cwds/reactstrap" "^0.6.1"
     bootstrap "^4.1.3"
     classnames "^2.2.6"
     lodash.omit "^4.5.0"
     lodash.uniqueid "^4.0.1"
-    react-select "^1.3"
+    react-select "^2.1.1"
     react-table "^6.8.6"
 
-"@cwds/core@^0.3.8":
-  version "0.3.8"
-  resolved "https://registry.yarnpkg.com/@cwds/core/-/core-0.3.8.tgz#8bad9ead5dcf34b104468f19cc78213afd7065da"
+"@cwds/icons@^0.6.0", "@cwds/icons@^0.6.1":
+  version "0.6.1"
+  resolved "https://registry.yarnpkg.com/@cwds/icons/-/icons-0.6.1.tgz#84acdd0c7edda7f31d725f2d5fdf76f0907a8532"
   dependencies:
-    bootstrap "^4.1.3"
-    color "^3.1.0"
-
-"@cwds/icons@^0.3.8":
-  version "0.3.8"
-  resolved "https://registry.yarnpkg.com/@cwds/icons/-/icons-0.3.8.tgz#d589ef1a284c2631a1c5cb71e776fa9d61bfc5b1"
-  dependencies:
-    "@cwds/core" "^0.3.8"
+    "@cwds/core" "^0.6.1"
     "@fortawesome/fontawesome-svg-core" "^1.2.5"
-    "@fortawesome/free-solid-svg-icons" "^5.4.0"
+    "@fortawesome/free-regular-svg-icons" "^5.5.0"
+    "@fortawesome/free-solid-svg-icons" "^5.5.0"
     "@fortawesome/react-fontawesome" "^0.1.3"
 
-"@cwds/reactstrap@^0.3.8":
-  version "0.3.8"
-  resolved "https://registry.yarnpkg.com/@cwds/reactstrap/-/reactstrap-0.3.8.tgz#e797a6feef47b9c7c40f14db6efcf0a6ded03dde"
+"@cwds/reactstrap@^0.6.0", "@cwds/reactstrap@^0.6.1":
+  version "0.6.1"
+  resolved "https://registry.yarnpkg.com/@cwds/reactstrap/-/reactstrap-0.6.1.tgz#c1c287cc2e4cba05f68dfa5e5a5ba9e2bb45cd7a"
   dependencies:
     reactstrap "^6.5.0"
+
+"@emotion/cache@10.0.0":
+  version "10.0.0"
+  resolved "https://registry.yarnpkg.com/@emotion/cache/-/cache-10.0.0.tgz#e22eadcb770de4131ec707c84207e9e1ce210413"
+  dependencies:
+    "@emotion/sheet" "0.9.2"
+    "@emotion/stylis" "0.8.3"
+    "@emotion/utils" "0.11.1"
+    "@emotion/weak-memoize" "0.2.2"
+
+"@emotion/hash@0.7.1":
+  version "0.7.1"
+  resolved "https://registry.yarnpkg.com/@emotion/hash/-/hash-0.7.1.tgz#9833722341379fb7d67f06a4b00ab3c37913da53"
+
+"@emotion/memoize@0.7.1":
+  version "0.7.1"
+  resolved "https://registry.yarnpkg.com/@emotion/memoize/-/memoize-0.7.1.tgz#e93c13942592cf5ef01aa8297444dc192beee52f"
+
+"@emotion/serialize@^0.11.3":
+  version "0.11.3"
+  resolved "https://registry.yarnpkg.com/@emotion/serialize/-/serialize-0.11.3.tgz#c4af2d96e3ddb9a749b7b567daa7556bcae45af2"
+  dependencies:
+    "@emotion/hash" "0.7.1"
+    "@emotion/memoize" "0.7.1"
+    "@emotion/unitless" "0.7.3"
+    "@emotion/utils" "0.11.1"
+    csstype "^2.5.7"
+
+"@emotion/sheet@0.9.2":
+  version "0.9.2"
+  resolved "https://registry.yarnpkg.com/@emotion/sheet/-/sheet-0.9.2.tgz#74e5c6b5e489a1ba30ab246ab5eedd96916487c4"
+
+"@emotion/stylis@0.8.3":
+  version "0.8.3"
+  resolved "https://registry.yarnpkg.com/@emotion/stylis/-/stylis-0.8.3.tgz#3ca7e9bcb31b3cb4afbaeb66156d86ee85e23246"
+
+"@emotion/unitless@0.7.3":
+  version "0.7.3"
+  resolved "https://registry.yarnpkg.com/@emotion/unitless/-/unitless-0.7.3.tgz#6310a047f12d21a1036fb031317219892440416f"
+
+"@emotion/utils@0.11.1":
+  version "0.11.1"
+  resolved "https://registry.yarnpkg.com/@emotion/utils/-/utils-0.11.1.tgz#8529b7412a6eb4b48bdf6e720cc1b8e6e1e17628"
+
+"@emotion/weak-memoize@0.2.2":
+  version "0.2.2"
+  resolved "https://registry.yarnpkg.com/@emotion/weak-memoize/-/weak-memoize-0.2.2.tgz#63985d3d8b02530e0869962f4da09142ee8e200e"
 
 "@fortawesome/fontawesome-common-types@^0.2.10":
   version "0.2.10"
   resolved "https://registry.yarnpkg.com/@fortawesome/fontawesome-common-types/-/fontawesome-common-types-0.2.10.tgz#ae0e6858daf6f9ff1e2396f9fbea87b244628343"
+
+"@fortawesome/fontawesome-common-types@^0.2.12":
+  version "0.2.12"
+  resolved "https://registry.yarnpkg.com/@fortawesome/fontawesome-common-types/-/fontawesome-common-types-0.2.12.tgz#42baa71f97ca06faeb0b6718fa5ed20c5eefdf07"
 
 "@fortawesome/fontawesome-svg-core@^1.2.5":
   version "1.2.10"
@@ -152,11 +217,17 @@
   dependencies:
     "@fortawesome/fontawesome-common-types" "^0.2.10"
 
-"@fortawesome/free-solid-svg-icons@^5.4.0":
-  version "5.6.1"
-  resolved "https://registry.yarnpkg.com/@fortawesome/free-solid-svg-icons/-/free-solid-svg-icons-5.6.1.tgz#5f6888639c8564a7ba98f4f295807ca5bc250e2c"
+"@fortawesome/free-regular-svg-icons@^5.5.0":
+  version "5.6.3"
+  resolved "https://registry.yarnpkg.com/@fortawesome/free-regular-svg-icons/-/free-regular-svg-icons-5.6.3.tgz#b0a44d665c347b56d064a37962e81e8d8a8f2624"
   dependencies:
-    "@fortawesome/fontawesome-common-types" "^0.2.10"
+    "@fortawesome/fontawesome-common-types" "^0.2.12"
+
+"@fortawesome/free-solid-svg-icons@^5.5.0":
+  version "5.6.3"
+  resolved "https://registry.yarnpkg.com/@fortawesome/free-solid-svg-icons/-/free-solid-svg-icons-5.6.3.tgz#1d7f6669ccd6a1ea673699e41f7e32c81401a260"
+  dependencies:
+    "@fortawesome/fontawesome-common-types" "^0.2.12"
 
 "@fortawesome/react-fontawesome@^0.1.3":
   version "0.1.3"
@@ -1895,13 +1966,6 @@ color@^2.0.1:
     color-convert "^1.9.1"
     color-string "^1.5.2"
 
-color@^3.1.0:
-  version "3.1.0"
-  resolved "https://registry.yarnpkg.com/color/-/color-3.1.0.tgz#d8e9fb096732875774c84bf922815df0308d0ffc"
-  dependencies:
-    color-convert "^1.9.1"
-    color-string "^1.5.2"
-
 colormin@^1.0.5:
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/colormin/-/colormin-1.1.2.tgz#ea2f7420a72b96881a38aae59ec124a6f7298133"
@@ -2089,6 +2153,15 @@ create-ecdh@^4.0.0:
   dependencies:
     bn.js "^4.1.0"
     elliptic "^6.0.0"
+
+create-emotion@^10.0.4:
+  version "10.0.6"
+  resolved "https://registry.yarnpkg.com/create-emotion/-/create-emotion-10.0.6.tgz#a431a4181b3f333b5deae30985efdc5971774f94"
+  dependencies:
+    "@emotion/cache" "10.0.0"
+    "@emotion/serialize" "^0.11.3"
+    "@emotion/sheet" "0.9.2"
+    "@emotion/utils" "0.11.1"
 
 create-hash@^1.1.0, create-hash@^1.1.2:
   version "1.2.0"
@@ -2284,6 +2357,10 @@ cssom@0.3.x, "cssom@>= 0.3.2 < 0.4.0":
 csstype@^2.2.0:
   version "2.5.5"
   resolved "https://registry.yarnpkg.com/csstype/-/csstype-2.5.5.tgz#4125484a3d42189a863943f23b9e4b80fedfa106"
+
+csstype@^2.5.7:
+  version "2.6.0"
+  resolved "https://registry.yarnpkg.com/csstype/-/csstype-2.6.0.tgz#6cf7b2fa7fc32aab3d746802c244d4eda71371a2"
 
 currently-unhandled@^0.4.1:
   version "0.4.1"
@@ -5181,6 +5258,10 @@ lodash.omit@^4.5.0:
   version "4.5.0"
   resolved "https://registry.yarnpkg.com/lodash.omit/-/lodash.omit-4.5.0.tgz#6eb19ae5a1ee1dd9df0b969e66ce0b7fa30b5e60"
 
+lodash.pick@^4.4.0:
+  version "4.4.0"
+  resolved "https://registry.yarnpkg.com/lodash.pick/-/lodash.pick-4.4.0.tgz#52f05610fff9ded422611441ed1fc123a03001b3"
+
 lodash.sortby@^4.7.0:
   version "4.7.0"
   resolved "https://registry.yarnpkg.com/lodash.sortby/-/lodash.sortby-4.7.0.tgz#edd14c824e2cc9c1e0b0a1b42bb5210516a42438"
@@ -5236,7 +5317,7 @@ longest@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/longest/-/longest-1.0.1.tgz#30a0b2da38f73770e8294a0d22e6625ed77d0097"
 
-loose-envify@^1.0.0, loose-envify@^1.1.0, loose-envify@^1.2.0, loose-envify@^1.3.1:
+loose-envify@^1.0.0, loose-envify@^1.1.0, loose-envify@^1.2.0, loose-envify@^1.3.1, loose-envify@^1.4.0:
   version "1.4.0"
   resolved "https://registry.yarnpkg.com/loose-envify/-/loose-envify-1.4.0.tgz#71ee51fa7be4caec1a63839f7e682d8132d30caf"
   dependencies:
@@ -5341,6 +5422,10 @@ mem@^1.1.0:
   resolved "https://registry.yarnpkg.com/mem/-/mem-1.1.0.tgz#5edd52b485ca1d900fe64895505399a0dfa45f76"
   dependencies:
     mimic-fn "^1.0.0"
+
+memoize-one@^4.0.0:
+  version "4.1.0"
+  resolved "https://registry.yarnpkg.com/memoize-one/-/memoize-one-4.1.0.tgz#a2387c58c03fff27ca390c31b764a79addf3f906"
 
 memory-fs@^0.4.0, memory-fs@~0.4.1:
   version "0.4.1"
@@ -7174,7 +7259,7 @@ react-dom@^16.3.2:
     object-assign "^4.1.1"
     prop-types "^15.6.0"
 
-react-input-autosize@^2.1.2:
+react-input-autosize@^2.1.2, react-input-autosize@^2.2.1:
   version "2.2.1"
   resolved "https://registry.yarnpkg.com/react-input-autosize/-/react-input-autosize-2.2.1.tgz#ec428fa15b1592994fb5f9aa15bb1eb6baf420f8"
   dependencies:
@@ -7286,13 +7371,17 @@ react-select@^1.2.1:
     prop-types "^15.5.8"
     react-input-autosize "^2.1.2"
 
-react-select@^1.3:
-  version "1.3.0"
-  resolved "https://registry.yarnpkg.com/react-select/-/react-select-1.3.0.tgz#1828ad5bf7f3e42a835c7e2d8cb13b5c20714876"
+react-select@^2.1.1:
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/react-select/-/react-select-2.2.0.tgz#67c8b5c2dcb8df0384f2a103efe952570f5d6b93"
   dependencies:
-    classnames "^2.2.4"
-    prop-types "^15.5.8"
-    react-input-autosize "^2.1.2"
+    classnames "^2.2.5"
+    create-emotion "^10.0.4"
+    memoize-one "^4.0.0"
+    prop-types "^15.6.0"
+    raf "^3.4.0"
+    react-input-autosize "^2.2.1"
+    react-transition-group "^2.2.1"
 
 react-table@^6.8.6:
   version "6.8.6"
@@ -7321,6 +7410,15 @@ react-transition-group@^2.0.0, react-transition-group@^2.2.0, react-transition-g
   dependencies:
     dom-helpers "^3.3.1"
     loose-envify "^1.3.1"
+    prop-types "^15.6.2"
+    react-lifecycles-compat "^3.0.4"
+
+react-transition-group@^2.2.1:
+  version "2.5.2"
+  resolved "https://registry.yarnpkg.com/react-transition-group/-/react-transition-group-2.5.2.tgz#9457166a9ba6ce697a3e1b076b3c049b9fb2c408"
+  dependencies:
+    dom-helpers "^3.3.1"
+    loose-envify "^1.4.0"
     prop-types "^15.6.2"
     react-lifecycles-compat "^3.0.4"
 

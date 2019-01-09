@@ -225,6 +225,11 @@ describe('UserDetail', () => {
         expect(wrapper.find('UserDetailEdit').props().disableActionBtn).toBe(true)
       })
 
+      it('should display <ChangeLog/> and <CWSPermissions/>', () => {
+        expect(wrapper.find('ChangeLog').length).toBe(1)
+        expect(wrapper.find('CWSPermissions').length).toBe(1)
+      })
+
       it('renders card with text indicating no user found', () => {
         wrapper.setProps({ isEdit: true, XHRStatus: 'ready', details: {} })
         expect(wrapper.find('Cards').length).toBe(1)

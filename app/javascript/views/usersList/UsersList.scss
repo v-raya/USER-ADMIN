@@ -1,5 +1,3 @@
-@import 'react-table/react-table.css';
-
 .card .card-body .ReactTable .btn {
   margin-top: 1rem;
   margin-left: 0;
@@ -37,6 +35,7 @@
     .-previous,
     .-next {
       flex: 1 1 40px;
+      margin-top: 12.5px;
     }
 
     .-center {

@@ -6,6 +6,8 @@ import UserDetailEdit from './UserDetailEdit'
 import UserDetailShow from './UserDetailShow'
 import UserMessage from '../../common/UserMessage'
 import Cards from '../../common/Card'
+import ChangeLog from './ChangeLog'
+import CWSPermissions from './CWSPermissions'
 
 /* eslint camelcase: 0 */
 export default class UserDetail extends Component {
@@ -156,6 +158,17 @@ export default class UserDetail extends Component {
             workerPhoneNumber={workerPhoneNumber}
           />
         )}
+        <br />
+        <div className="row">
+          <div className="col-md-12">
+            <div className="col-md-4">
+              <CWSPermissions />
+            </div>
+            <div className="col-md-8">
+              <ChangeLog />
+            </div>
+          </div>
+        </div>
       </div>
     ) : (
       <div className="row">

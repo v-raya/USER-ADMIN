@@ -38,9 +38,4 @@ describe('DropDown', () => {
     expect(instance.props.simpleValue).toEqual(true)
     expect(instance.props.disabled).toEqual(false)
   })
-
-  it('returns the Input and Label tags', () => {
-    expect(wrapper.find('Select').length).toBe(1)
-    expect(wrapper.find('label').length).toBe(1)
-  })
 })
