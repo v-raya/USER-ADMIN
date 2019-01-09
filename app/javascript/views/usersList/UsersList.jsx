@@ -193,15 +193,17 @@ class UserList extends PureComponent {
                     <div className="col-md-4 col-sm-6">
                       <DropDown
                         id="searchOfficeName"
-                        selectedOption={officeNames}
+                        selectedOption={officesList.filter(({ value }) => officeNames.includes(value))}
                         options={officesList}
                         label="Filter by Office Name"
                         placeholder={`(${officesList.length})`}
-                        onChange={selectedOptions =>
-                          this.props.actions.handleSearchChange('officeNames', selectedOptions.split(','))
+                        onChange={officesList =>
+                          this.props.actions.handleSearchChange(
+                            'officeNames',
+                            officesList.map(selectedOptions => selectedOptions.value)
+                          )
                         }
                         multiSelect={true}
-                        simpleValue={true}
                       />
                     </div>
                     <div className="col-md-6 col-sm-6">

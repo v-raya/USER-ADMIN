@@ -18,23 +18,25 @@ describe('UserDetailEdit', () => {
     email: 'hello@gmail.com',
   }
 
-  const possibleRolesOptions = () => {}
-
   const onDropDownChangeSpy = jest.fn()
   const onInputChangeSpy = jest.fn()
 
   const rolesList = [{ id: 'role1', name: 'roleOne' }, { id: 'role2', name: 'roleTwo' }]
-  const possibleRoles = ['role1', 'role2']
+  const possibleRoles = [{ value: 'role1', label: 'roleOne' }, { value: 'role2', label: 'roleTwo' }]
   const resentRegistrationExistingDateTime = 'September 22, 2012 11:22 AM'
+  const possiblePermissionsList = [
+    { value: 'permission1', label: 'permissionOne' },
+    { value: 'permission2', label: 'permissionTwo' },
+  ]
   let wrapper
   beforeEach(() => {
     wrapper = shallow(
       <UserDetailEdit
         details={details}
         onDropDownChange={onDropDownChangeSpy}
-        possibleRoles={possibleRoles}
+        possibleRolesList={possibleRoles}
+        possiblePermissionsList={possiblePermissionsList}
         rolesList={rolesList}
-        possibleRolesOptions={possibleRolesOptions}
         onInputChange={onInputChangeSpy}
         resentRegistrationExistingDateTime={resentRegistrationExistingDateTime}
       />
@@ -114,7 +116,13 @@ describe('UserDetailEdit', () => {
         status: 'FORCE_CHANGE_PASSWORD',
         last_registration_resubmit_date_time: null,
       }
-      wrapper = shallow(<UserDetailEdit details={details} />)
+      wrapper = shallow(
+        <UserDetailEdit
+          details={details}
+          possibleRolesList={possibleRoles}
+          possiblePermissionsList={possiblePermissionsList}
+        />
+      )
       expect(wrapper.find('.resend-email-text').length).toEqual(0)
     })
 
@@ -124,10 +132,16 @@ describe('UserDetailEdit', () => {
         roles: ['ROLE1', 'ROLE2'],
         status: 'FORCE_CHANGE_PASSWORD',
         last_registration_resubmit_date_time: null,
+        permissions: ['permission1', 'permission2'],
       }
       const resentRegistrationNewDateTime = 'September 8, 2018 08:06 AM'
       const wrapper = shallow(
-        <UserDetailEdit details={details} resentRegistrationNewDateTime={resentRegistrationNewDateTime} />
+        <UserDetailEdit
+          details={details}
+          resentRegistrationNewDateTime={resentRegistrationNewDateTime}
+          possibleRolesList={possibleRoles}
+          possiblePermissionsList={possiblePermissionsList}
+        />
       )
       expect(wrapper.find('.resend-email-text').text()).toEqual('Registration email resent:September 8, 2018 08:06 AM')
     })
@@ -163,9 +177,12 @@ describe('UserDetailEdit', () => {
     })
 
     it('#AssignPermissions, onPermissionChange function is called when onChange event triggered ', () => {
-      const value = ['Asian', 'American']
-      wrapper.find('#AssignPermissions').simulate('change', String(value))
-      expect(onDropDownChangeSpy).toHaveBeenCalledWith('permissions', value)
+      const permissions = [
+        { value: 'permission1', label: 'permissionOne' },
+        { value: 'permission2', label: 'permissionTwo' },
+      ]
+      wrapper.find('#AssignPermissions').simulate('change', permissions)
+      expect(onDropDownChangeSpy).toHaveBeenCalledWith('permissions', ['permission1', 'permission2'])
     })
 
     it('#Email, handleInputChange function is called when onChange event triggered', () => {
