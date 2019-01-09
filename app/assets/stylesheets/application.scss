@@ -17,7 +17,20 @@
 @import 'bootstrap-sprockets';
 @import 'bootstrap';
 @import 'react-wood-duck/dist/styles/application.scss';
-@import '@cwds/core/dist/styles.css';
+@import '@cwds/core/dist/styles';
+
+body {
+  background-color: #e8e8e8;
+  color: #050505;
+  font-family: ‘Source Sans Pro’, ‘Helvetica Neue’, ‘Helvetica’, ‘Roboto’, ‘Arial’, sans-serif;
+  font-size: 1.5rem;
+  line-height: 1.428571429;
+}
+
+label {
+  display: block;
+  margin-bottom: 0.5rem;
+}
 
 .col-md-3 {
   padding-left: 0;
