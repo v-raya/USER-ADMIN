@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import Select from 'react-select'
+import { Select } from '@cwds/components'
 
 class DropDown extends React.Component {
   render() {
@@ -41,7 +41,13 @@ class DropDown extends React.Component {
 DropDown.propTypes = {
   options: PropTypes.array,
   id: PropTypes.string,
-  selectedOption: PropTypes.oneOfType([PropTypes.string, PropTypes.array, PropTypes.bool]),
+  selectedOption: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.array,
+    PropTypes.bool,
+    PropTypes.func,
+    PropTypes.object,
+  ]),
   onChange: PropTypes.func,
   placeholder: PropTypes.string,
   gridClassName: PropTypes.string,
