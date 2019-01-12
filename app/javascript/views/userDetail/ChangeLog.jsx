@@ -1,11 +1,18 @@
 import React from 'react'
 import { Rolodex, Card, CardBody, CardHeader, CardTitle, DataGrid } from '@cwds/components'
 
+import { checkDate } from '../../_utils/formatters'
 const columnConfig = [
   {
     Header: 'Date/Time',
     accessor: 'time_stamp',
     minWidth: 75,
+    sortMethod: (a, b) => {
+      return a > b ? 1 : -1
+    },
+    Cell: row => {
+      return `${checkDate(row.original.time_stamp)}`
+    },
   },
   {
     Header: 'Type',
@@ -25,31 +32,35 @@ const columnConfig = [
 ]
 
 const data = [
-  { time_stamp: 'Thu Mar 03 2018 14:22:43', type: 'Permission Changes', admin_name: 'H' },
-  { time_stamp: 'Thu Mar 03 2018 12:22:43', type: 'User Creation', admin_name: 'H' },
   {
-    time_stamp: 'Wed Feb 03 2017 14:22:43',
+    time_stamp: '2018-03-03 14:22:43',
+    type: 'Permission Changes',
+    admin_name: 'H',
+  },
+  { time_stamp: '2018-03-03 12:22:43', type: 'User Creation', admin_name: 'H' },
+  {
+    time_stamp: '2017-02-03 14:22:43',
     type: 'Account Status Changes',
     admin_name: 'A',
   },
   {
-    time_stamp: 'Mon Jan 10 2018 14:22:43',
+    time_stamp: '2018-01-10 14:22:43',
     type: 'User Role Changes',
     admin_name: 'B',
   },
   {
-    time_stamp: 'Thu Jan 03 2019 14:22:43',
+    time_stamp: '2019-01-03 14:22:43',
     type: 'Registration Completion',
     admin_name: 'A',
   },
   {
-    time_stamp: 'Tue Nov 05 2017 14:22:43',
+    time_stamp: '2017-11-05 14:22:43',
     type: 'Registration Resends',
     admin_name: 'C',
   },
   {
-    time_stamp: 'Fri Dec 23 2018 09:22:43',
-    type: ' Email Address Updates',
+    time_stamp: '2018-12-23 09:22:43',
+    type: 'Email Address Updates',
     admin_name: 'K',
   },
 ]
@@ -68,6 +79,12 @@ const ChangeLog = () => (
           minRows={3}
           noDataText={'No records found'}
           showPaginationBottom={false}
+          defaultSorted={[
+            {
+              id: 'time_stamp',
+              desc: true,
+            },
+          ]}
         />
       </CardBody>
     </Card>
