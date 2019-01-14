@@ -19,7 +19,8 @@ module Users
       Rails.logger.info "404 response from perry with token #{token}" if response.status == 404
       return {} if response.status == 404
 
-      User.new(response.body)
+      audit_events = get_user_audit_events(id, token)
+      user = User.new(response.body.merge( { auditevents: audit_events } ))
     end
 
     def update_user(id, parameters, token)
@@ -78,6 +79,14 @@ module Users
 
     def self.search_base_url
       Rails.configuration.micro_services['base_search_api_url']
+    end
+
+    def get_user_audit_events(id, auth_header)
+      query = { "query":   { "match_phrase_prefix": { "user_login": id } } }
+      http_search_service = Infrastructure::HttpService.new(UserRepository.search_base_url)
+      response = http_search_service.post('/dora/auditevents/auditevent/_search', query, auth_header)
+      return {} if response.status == 404
+      response.body[:hits][:hits]
     end
 
     private
