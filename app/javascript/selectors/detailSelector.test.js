@@ -20,6 +20,8 @@ import {
   lastLogin,
   resentRegistrationDate,
   formattedPhoneNumber,
+  unformattedPhoneNumber,
+  isPhoneNumberValid,
 } from './detailSelector'
 describe('selectors', () => {
   const editDetails = {
@@ -437,6 +439,7 @@ describe('selectors', () => {
 
     it('return false when email is valid', () => {
       const state = getState({
+        phoneNumber: '1234567891',
         email: 'hello@gmail.com',
         disableActionBtn: false,
       })
@@ -686,7 +689,7 @@ describe('selectors', () => {
     describe('When phone_extension_number exists without phone_number ', () => {
       it('returns just empty ', () => {
         const state = getState({
-          phoneNumber: null,
+          phoneNumber: '',
           phoneExtensionNumber: '23',
           officePhoneNumber: null,
           officePhoneExtensionNumber: '21',
@@ -707,6 +710,74 @@ describe('selectors', () => {
         const state = { fetchDetails: undefined }
         expect(formattedPhoneNumber(state)).toEqual({ officePhoneNumber: '', workerPhoneNumber: '' })
       })
+    })
+  })
+
+  describe('#unformattedPhoneNumber', () => {
+    it('returns phone number if phone_number is 11 digits ', () => {
+      const state = getState({
+        phoneNumber: '19164445555',
+      })
+      expect(unformattedPhoneNumber(state)).toEqual('9164445555')
+    })
+  })
+
+  describe('When phone_number is 10 digits', () => {
+    it('returns phone number without stripping out 1 ', () => {
+      const state = getState({
+        phoneNumber: '9164445555',
+      })
+      expect(unformattedPhoneNumber(state)).toEqual('9164445555')
+    })
+  })
+
+  describe('When phone_extension_number exists without phone_number ', () => {
+    it('returns just empty ', () => {
+      const state = getState({
+        phoneNumber: '',
+      })
+      expect(unformattedPhoneNumber(state)).toEqual('')
+    })
+  })
+
+  describe('when details is null ', () => {
+    it('returns just empty ', () => {
+      const state = { fetchDetails: null }
+      expect(unformattedPhoneNumber(state)).toEqual('')
+    })
+  })
+
+  describe('when details is undefined ', () => {
+    it('returns just empty ', () => {
+      const state = { fetchDetails: undefined }
+      expect(unformattedPhoneNumber(state)).toEqual('')
+    })
+  })
+
+  describe('#isPhoneNumberValid', () => {
+    it('return true when phone number is valid', () => {
+      const state = getState({ phoneNumber: '9163334444' })
+      expect(isPhoneNumberValid(state)).toEqual(true)
+    })
+
+    it('return false if phone number is not valid', () => {
+      const state = getState({ phoneNumber: 'hello' })
+      expect(isPhoneNumberValid(state)).toEqual(false)
+    })
+
+    it('return false if phone number is empty', () => {
+      const state = getState({ phoneNumber: '' })
+      expect(isPhoneNumberValid(state)).toEqual(false)
+    })
+
+    it('return false if phone number is null', () => {
+      const state = getState({ phoneNumber: '' })
+      expect(isPhoneNumberValid(state)).toEqual(false)
+    })
+
+    it('return false if phone number is undefined', () => {
+      const state = getState({ phoneNumber: '' })
+      expect(isPhoneNumberValid(state)).toEqual(false)
     })
   })
 })

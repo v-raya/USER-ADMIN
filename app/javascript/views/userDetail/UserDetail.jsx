@@ -56,8 +56,8 @@ export default class UserDetail extends Component {
     this.props.actions.handleDropdownChangeAction(name, value)
   }
 
-  handleInputChange = value => {
-    this.props.actions.handleEmailChangeAction(value)
+  handleInputChange = (name, value) => {
+    this.props.actions.handleInputChangeAction(name, value)
   }
 
   showAlert = (displayAlert, userDetailError) => {
@@ -109,7 +109,9 @@ export default class UserDetail extends Component {
     lastLoginDateTime,
     resentRegistrationExistingDateTime,
     officePhoneNumber,
-    workerPhoneNumber
+    workerPhoneNumber,
+    isPhoneNumberValid,
+    unformattedPhoneNumber
   ) => {
     return details && details.id ? (
       <div>
@@ -135,7 +137,8 @@ export default class UserDetail extends Component {
             assignedRole={assignedRole}
             lastLoginDateTime={lastLoginDateTime}
             officePhoneNumber={officePhoneNumber}
-            workerPhoneNumber={workerPhoneNumber}
+            isPhoneNumberValid={isPhoneNumberValid}
+            unformattedPhoneNumber={unformattedPhoneNumber}
           />
         ) : (
           <UserDetailShow
@@ -220,7 +223,9 @@ export default class UserDetail extends Component {
               this.props.lastLoginDateTime,
               this.props.resentRegistrationExistingDateTime,
               this.props.officePhoneNumber,
-              this.props.workerPhoneNumber
+              this.props.workerPhoneNumber,
+              this.props.isPhoneNumberValid,
+              this.props.unformattedPhoneNumber
             )
           )}
         </div>
@@ -262,6 +267,8 @@ UserDetail.propTypes = {
   updatedDetails: PropTypes.object,
   officePhoneNumber: PropTypes.string,
   workerPhoneNumber: PropTypes.string,
+  isPhoneNumberValid: PropTypes.bool,
+  unformattedPhoneNumber: PropTypes.string,
 }
 
 UserDetail.defaultProps = {

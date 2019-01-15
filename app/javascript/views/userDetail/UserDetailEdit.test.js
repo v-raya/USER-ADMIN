@@ -47,7 +47,7 @@ describe('UserDetailEdit', () => {
     it('renders the label inside the grid wrapper', () => {
       expect(wrapper.find('Cards').props().cardHeaderText).toBe(`County: ${details.county_name}`)
 
-      expect(wrapper.find('ShowField').length).toBe(8)
+      expect(wrapper.find('ShowField').length).toBe(7)
       expect(
         wrapper
           .find('ShowField')
@@ -88,12 +88,6 @@ describe('UserDetailEdit', () => {
         wrapper
           .find('ShowField')
           .at(6)
-          .props().label
-      ).toEqual('Phone Number')
-      expect(
-        wrapper
-          .find('ShowField')
-          .at(7)
           .props().label
       ).toEqual('User Status')
       expect(wrapper.find('[label="Account Status"]').exists()).toBe(true)
@@ -186,11 +180,33 @@ describe('UserDetailEdit', () => {
     })
 
     it('#Email, handleInputChange function is called when onChange event triggered', () => {
-      const value = 'abcd@gmail.com'
-      wrapper.find('InputComponent').simulate('change', {
-        target: { value: 'abcd@gmail.com' },
-      })
-      expect(onInputChangeSpy).toHaveBeenCalledWith(value)
+      wrapper
+        .find('InputComponent')
+        .at(0)
+        .simulate('change', {
+          target: { value: 'abcd@gmail.com' },
+        })
+      expect(onInputChangeSpy).toHaveBeenCalledWith('email', 'abcd@gmail.com')
+    })
+
+    it('#PhoneNumber, handleInputChange function is called when onChange event triggered', () => {
+      wrapper
+        .find('InputComponent')
+        .at(1)
+        .simulate('change', {
+          target: { value: '3334445555' },
+        })
+      expect(onInputChangeSpy).toHaveBeenCalledWith('phone_number', '3334445555')
+    })
+
+    it('#PhoneExtensionNumber, handleInputChange function is called when onChange event triggered', () => {
+      wrapper
+        .find('InputComponent')
+        .at(2)
+        .simulate('change', {
+          target: { value: '333' },
+        })
+      expect(onInputChangeSpy).toHaveBeenCalledWith('phone_extension_number', '333')
     })
   })
 })
