@@ -11,9 +11,9 @@ export default class ModalComponent extends Component {
     }
   }
   toggle = () => {
-    this.setState({
-      ModalOpen: true,
-    })
+    this.setState(prevState => ({
+      ModalOpen: !prevState.ModalOpen,
+    }))
   }
   render() {
     return (
