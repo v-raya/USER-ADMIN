@@ -82,11 +82,12 @@ module Users
     end
 
     def get_user_audit_events(id, auth_header)
-      query = { "query":   { "match_phrase_prefix": { "user_login": id } } }
+      query = { "query": { "match_phrase_prefix": { "event.user_id": id } } }
+      puts query
       http_search_service = Infrastructure::HttpService.new(UserRepository.search_base_url)
       response = http_search_service.post('/dora/auditevents/auditevent/_search', query, auth_header)
       return {} if response.status == 404
-      response.body[:hits][:hits]
+      response.body[:hits][:hits].collect { |event| event[:_source] }
     end
 
     private

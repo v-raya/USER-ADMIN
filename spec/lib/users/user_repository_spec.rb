@@ -67,9 +67,10 @@ module Users
 
       context 'with a user' do
         let(:search_server) { Infrastructure::HttpService.new('http://stub.example.com') }
-        let(:audit_events_query) { { "query":   { "match_phrase_prefix": { "user_login": "33" } } } }
-        let(:audit_events) { [{details: { comments: 'creation' }}, {details: { comments: 'other'} }] }
-        let(:audit_events_response) { { hits: { hits: audit_events } } }
+        let(:audit_events_query) { { "query":   { "match_phrase_prefix": { "event.user_id": "33" } } } }
+        let(:es_audit_events) { [{_source: { comments: 'creation' }}, {_source: { comments: 'other'} }] }
+        let(:audit_events) { [{ comments: 'creation' }, { comments: 'other'} ] }
+        let(:audit_events_response) { { hits: { hits: es_audit_events } } }
         let(:token) { 'token' }
         let(:good_es_response) { double(body: audit_events_response, status: 200) }
 
